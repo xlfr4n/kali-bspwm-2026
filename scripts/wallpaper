@@ -17,9 +17,7 @@ collect() {
   local root
   for root in "${ROOTS[@]}"; do
     [ -d "$root" ] || continue
-    find "$root" -type f \(
-      -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp'
-    \) -print
+    find "$root" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print
   done | sort -u
 }
 
@@ -55,7 +53,11 @@ case "${1:-}" in
     set_wallpaper "${wallpapers[$next]}"
     ;;
   --current)
-    [ -n "$current" ] && [ -f "$current" ] && set_wallpaper "$current" || set_wallpaper "${wallpapers[0]}"
+    if [ -n "$current" ] && [ -f "$current" ]; then
+      set_wallpaper "$current"
+    else
+      set_wallpaper "${wallpapers[0]}"
+    fi
     ;;
   --set)
     [ -n "${2:-}" ] || { echo "Usage: wallpaper --set /path/to/image"; exit 2; }
