@@ -13,7 +13,7 @@ virt="$(systemd-detect-virt 2>/dev/null || true)"
 show_status() {
   printf 'VMWARE GUEST\n'
   printf '%-28s %s\n' 'open-vm-tools' "$(systemctl is-active open-vm-tools 2>/dev/null || true)"
-  printf '%-28s %s\n' 'open-vm-tools-desktop' "$(systemctl is-active open-vm-tools-desktop 2>/dev/null || true)"
+  printf '%-28s %s\n' 'desktop integration' "$([ -x /usr/bin/vmware-user ] && echo available || echo missing)"
   printf '%-28s %s\n' 'shared folder mountpoint' "$([ -d /mnt/hgfs ] && echo present || echo missing)"
   if command -v vmware-toolbox-cmd >/dev/null 2>&1; then
     printf '%-28s %s\n' 'toolbox command' 'available'
@@ -28,7 +28,6 @@ case "${1:-status}" in
     ;;
   restart)
     sudo systemctl restart open-vm-tools.service
-    sudo systemctl restart open-vm-tools-desktop.service
     show_status
     ;;
   shared-folders)
