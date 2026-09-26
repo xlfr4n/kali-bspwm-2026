@@ -75,7 +75,7 @@ mkdir -p "$BACKUP_DIR"
 
 backup_path(){
   local p="$1"
-  [ -e "$p" ] && [ ! -L "$p" ] || return 0
+  [ -e "$p" ] || [ -L "$p" ] || return 0
   local rel
   rel="$(realpath --relative-to="$HOME" "$p")"
   mkdir -p "$BACKUP_DIR/$(dirname "$rel")"
@@ -101,10 +101,16 @@ log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 
 for dir in bspwm sxhkd polybar rofi picom kitty dunst; do
+  if [ -L "$CONFIG_DIR/$dir" ]; then
+    unlink "$CONFIG_DIR/$dir"
+  fi
   mkdir -p "$CONFIG_DIR/$dir"
   cp -a "$ROOT_DIR/config/$dir/." "$CONFIG_DIR/$dir/"
 done
 
+if [ -L "$HOME/.zshrc" ]; then
+  unlink "$HOME/.zshrc"
+fi
 install -Dm644 "$ROOT_DIR/config/zshrc" "$HOME/.zshrc"
 cp -a "$ROOT_DIR/scripts/." "$BIN_DIR/"
 chmod +x "$BIN_DIR"/* 2>/dev/null || true
