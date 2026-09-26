@@ -21,7 +21,7 @@ for file in "${files[@]}"; do
   bash -n "$file"
 done
 
-if grep -RFn -- '${' install.sh uninstall.sh config scripts >/dev/null 2>&1; then
+if grep -RFn -- '\${' install.sh uninstall.sh config scripts >/dev/null 2>&1; then
   echo 'Found a literal backslash before a Bash variable expansion.' >&2
   exit 1
 fi
