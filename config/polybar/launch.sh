@@ -22,11 +22,11 @@ mapfile -t monitors < <(
     sort -u
 )
 
-if [ "\${#monitors[@]}" -eq 0 ]; then
+if [ "${#monitors[@]}" -eq 0 ]; then
   polybar main -c "$CONFIG" >>"$LOG" 2>&1 &
   exit 0
 fi
 
-for monitor in "\${monitors[@]}"; do
+for monitor in "${monitors[@]}"; do
   MONITOR="$monitor" polybar main -c "$CONFIG" >>"$LOG" 2>&1 &
 done
