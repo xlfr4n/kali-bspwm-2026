@@ -61,6 +61,18 @@ super + alt + t
 super + ctrl + t
     theme-switch
 
+super + shift + w
+    wallpaper --random
+
+super + ctrl + w
+    wallpaper --next
+
+super + shift + l
+    kitty --title Kali-Lab -e lab
+
+super + shift + e
+    thunar
+
 super + shift + p
     power-menu
 
@@ -71,7 +83,7 @@ super + shift + m
     monitor-refresh
 
 super + ctrl + r
-    doctor.sh
+    kitty --title Kali-Doctor -e doctor.sh
 
 super + ctrl + x
     settarget
@@ -87,6 +99,9 @@ super + shift + c
 
 super + shift + n
     kitty --class floating_nvim -e nvim
+
+super + shift + k
+    lock-screen
 
 XF86AudioRaiseVolume
     pamixer -i 5

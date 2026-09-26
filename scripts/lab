@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+command -v tmux >/dev/null 2>&1 || {
+  echo "tmux is not installed." >&2
+  exit 1
+}
+
+name="${1:-kali-lab}"
+dir="${2:-$PWD}"
+dir="$(realpath -m "$dir")"
+mkdir -p "$dir"
+
+if tmux has-session -t "$name" 2>/dev/null; then
+  exec tmux attach-session -t "$name"
+fi
+
+tmux new-session -d -s "$name" -c "$dir"
+tmux rename-window -t "$name:0" main
+tmux split-window -h -t "$name:0" -c "$dir"
+tmux split-window -v -t "$name:0.1" -c "$dir"
+tmux send-keys -t "$name:0.1" 'fastfetch' C-m
+tmux send-keys -t "$name:0.2" 'btop' C-m
+tmux select-pane -t "$name:0.0"
+
+exec tmux attach-session -t "$name"

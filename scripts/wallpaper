@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+STATE_DIR="$HOME/.config/wallpaper-state"
+STATE_FILE="$STATE_DIR/current"
+mkdir -p "$STATE_DIR"
+
+declare -a ROOTS=(
+  "$HOME/.local/share/backgrounds"
+  "$HOME/Pictures/Wallpapers"
+  "/usr/share/backgrounds/kali"
+  "/usr/share/backgrounds"
+  "/usr/share/wallpapers"
+)
+
+collect() {
+  local root
+  for root in "${ROOTS[@]}"; do
+    [ -d "$root" ] || continue
+    find "$root" -type f \(
+      -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp'
+    \) -print
+  done | sort -u
+}
+
+mapfile -t wallpapers < <(collect)
+if [ "${#wallpapers[@]}" -eq 0 ]; then
+  command -v xsetroot >/dev/null 2>&1 && xsetroot -solid '#101216'
+  echo "No wallpapers found." >&2
+  exit 0
+fi
+
+current="$(cat "$STATE_FILE" 2>/dev/null || true)"
+
+set_wallpaper() {
+  local image="$1"
+  feh --no-fehbg --bg-fill "$image"
+  printf '%s\n' "$image" > "$STATE_FILE"
+  printf 'Wallpaper: %s\n' "$image"
+}
+
+case "${1:-}" in
+  --random|"")
+    index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
+    set_wallpaper "${wallpapers[$index]}"
+    ;;
+  --next)
+    next=0
+    for i in "${!wallpapers[@]}"; do
+      if [ "${wallpapers[$i]}" = "$current" ]; then
+        next=$(( (i + 1) % ${#wallpapers[@]} ))
+        break
+      fi
+    done
+    set_wallpaper "${wallpapers[$next]}"
+    ;;
+  --current)
+    [ -n "$current" ] && [ -f "$current" ] && set_wallpaper "$current" || set_wallpaper "${wallpapers[0]}"
+    ;;
+  --set)
+    [ -n "${2:-}" ] || { echo "Usage: wallpaper --set /path/to/image"; exit 2; }
+    [ -f "$2" ] || { echo "File not found: $2" >&2; exit 2; }
+    set_wallpaper "$2"
+    ;;
+  *)
+    echo "Usage: wallpaper [--random|--next|--current|--set FILE]" >&2
+    exit 2
+    ;;
+esac

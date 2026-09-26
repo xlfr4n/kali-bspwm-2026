@@ -8,19 +8,62 @@ HISTFILE="$HOME/.zsh_history"
 [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+autoload -Uz add-zsh-hook
+
 alias ll='lsd -lah --group-dirs first 2>/dev/null || ls -lah'
 alias la='lsd -la 2>/dev/null || ls -la'
 alias cls='clear'
+alias ports='ss -tulpn'
+alias myip='ip -br addr'
+alias serve='python3 -m http.server'
+alias llh='history 20'
 
 cat(){ if command -v batcat >/dev/null 2>&1; then batcat "$@"; elif command -v bat >/dev/null 2>&1; then bat "$@"; else command cat "$@"; fi; }
 
 settarget(){ "$HOME/.local/bin/settarget" "$@"; }
 cleartarget(){ "$HOME/.local/bin/cleartarget"; }
-mkhtb(){ [[ -n "\${1:-}" ]] || { echo "Usage: mkhtb NAME"; return 2; }; mkdir -p "$1"/{nmap,loot,notes,web,exploits}; echo "Workspace: $1"; }
-mkcase(){ [[ -n "\${1:-}" ]] || { echo "Usage: mkcase NAME"; return 2; }; mkdir -p "$1"/{recon,loot,notes,evidence,report}; echo "Case: $1"; }
+mkhtb(){ [[ -n "${1:-}" ]] || { echo "Usage: mkhtb NAME"; return 2; }; mkdir -p "$1"/{nmap,loot,notes,web,exploits}; echo "Workspace: $1"; }
+mkcase(){ [[ -n "${1:-}" ]] || { echo "Usage: mkcase NAME"; return 2; }; mkdir -p "$1"/{recon,loot,notes,evidence,report}; echo "Case: $1"; }
 
 alias st='settarget'
 alias ct='cleartarget'
 alias ctarget='cleartarget'
+alias llab='lab'
 
-PROMPT='%F{red}%n%f@%F{white}%m%f:%F{red}%~%f %# '
+_kali_prompt() {
+  local accent='red'
+  local theme=''
+  local target=''
+  local git_branch=''
+  [ -r "$HOME/.config/theme-state/current" ] && theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || true)"
+  case "$theme" in
+    htb-green) accent='green' ;;
+    nord) accent='cyan' ;;
+    purple) accent='magenta' ;;
+    *) accent='red' ;;
+  esac
+  [ -r "$HOME/.config/polybar/target" ] && target="$(cat "$HOME/.config/polybar/target" 2>/dev/null || true)"
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    git_branch="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null || true)"
+  fi
+  PROMPT="%F{$accent}╭─%f%F{white}%n%f@%F{cyan}%m%f %F{$accent}%~%f"
+  [ -n "$git_branch" ] && PROMPT+=" %F{yellow}[$git_branch]%f"
+  PROMPT+="\n%F{$accent}╰─%f"
+  [ -n "$target" ] && PROMPT+="%F{yellow}{TARGET:$target} %f"
+  PROMPT+="%F{$accent}❯%f "
+  RPROMPT="%F{242}%D{%H:%M:%S}%f"
+}
+add-zsh-hook precmd _kali_prompt
+
+if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" ]]; then
+  export KALI_BSPWM_FASTFETCH_DONE=1
+  if command -v fastfetch >/dev/null 2>&1; then
+    fastfetch
+  fi
+fi
+
+mkws() {
+  [[ -n "${1:-}" ]] || { echo "Usage: mkws NAME"; return 2; }
+  mkdir -p "$1"
+  cd "$1"
+}

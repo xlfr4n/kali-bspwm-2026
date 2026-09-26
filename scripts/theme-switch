@@ -24,7 +24,7 @@ apply(){
   command -v notify-send >/dev/null 2>&1 && notify-send "Kali BSPWM" "Theme: $t" || true
 }
 case "\${1:-}" in
-  --apply-default) apply cyber-red ;;
+  --apply-default) apply cyber-red ;;\n  --apply-current) apply "$(cat "$STATE/current" 2>/dev/null || printf cyber-red)" ;;
   --random) apply "$(printf '%s\n' cyber-red htb-green nord purple | shuf -n1)" ;;
   "") choice="$(printf '%s\n' cyber-red htb-green nord purple | rofi -dmenu -p 'Theme' -theme "$ROFI" || true)"; [ -z "$choice" ] || apply "$choice" ;;
   *) apply "$1" ;;

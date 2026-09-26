@@ -1,31 +1,26 @@
 # Kali BSPWM 2026
 
-A clean, VM-aware BSPWM environment for Kali Linux 2026.x.
+A clean, VM-aware BSPWM environment for Kali Linux 2026.x, inspired by the modern Kali/HTB BSPWM aesthetic: dark terminal, crisp accent colors, fastfetch, tiling workflows, target awareness and a dense but readable system bar.
 
-Designed primarily for the official Kali 2026.2 VMware guest, while also detecting and supporting VirtualBox guests. The project uses Kali packages first, keeps the existing audio/display stack, and creates timestamped backups before replacing user configuration.
+The project is tuned for a Kali X11 guest under VMware while retaining VirtualBox detection/support.
 
-## Features
+## Visual + functional layer
 
-- BSPWM + SXHKD
-- Polybar
-- Kitty
-- Rofi
-- Picom
-- Dunst
-- Zsh + autosuggestions + syntax highlighting
-- Fastfetch, fzf, ripgrep, fd, bat, eza
-- btop, htop, glances
-- Flameshot, playerctl, pamixer, pavucontrol
-- Target manager with Polybar display
-- VPN/interface status
-- Power menu
-- Screenshot menu
-- Theme selector: Cyber Red, HTB Green, Nord, Purple
-- Multi-monitor refresh helper
-- VMware / VirtualBox guest detection
-- Safe timestamped backups
-- Doctor/diagnostic command
-- Optional pywal16 via pipx
+- BSPWM + SXHKD with predictable Super-key controls
+- Polybar with workspaces, target, VPN, hypervisor, CPU/RAM/disk/network/audio, active window and clock
+- Kitty with JetBrains Mono, restrained transparency and VM-friendly X11 settings
+- Fastfetch automatically on the first interactive shell in Kitty
+- Two-line Zsh prompt with Git branch and active target
+- Kali 2026 wallpapers with random/next/set controls
+- Rofi launcher, Dunst notifications and Picom
+- Thunar, Arandr and Gpick utility shortcuts
+- tmux-based `lab` workspace with fastfetch + btop panes
+- i3lock screen lock
+- Target manager and HTB/case workspace helpers
+- Cyber Red, HTB Green, Nord and Purple themes
+- Multi-monitor refresh and VMware-aware networking
+- Timestamped backups and reversible uninstall
+- Optional pywal16 isolated through pipx
 
 ## Supported target
 
@@ -33,8 +28,8 @@ Designed primarily for the official Kali 2026.2 VMware guest, while also detecti
 - x86_64
 - X11
 - VMware Workstation/Fusion
-- VirtualBox guests
-- Physical installs can work, but the project is tuned for VMs
+- VirtualBox
+- Physical installs may work, but the project is tuned for VMs
 
 ## Installation
 
@@ -54,40 +49,50 @@ After login:
 ```bash
 doctor.sh
 settarget 10.10.10.10 Web01
-monitor-refresh
+wallpaper --random
 theme-switch
-power-menu
+lab
 ```
 
 ## Keyboard shortcuts
 
-- Super+Enter: Kitty
-- Super+D: Rofi
-- Super+Shift+D: Rofi command runner
-- Super+1..0: desktops
-- Super+Shift+1..0: move window
-- Super+Arrow: focus
-- Super+Shift+Arrow: swap
-- Super+Alt+Arrow: resize floating
-- Super+Ctrl+Arrow: move floating
-- Super+F: fullscreen
-- Super+S: floating
-- Super+T: tiled
-- Super+Shift+T: pseudo-tiled
-- Super+M: monocle
-- Super+G: swap with biggest
-- Super+Alt+R: restart BSPWM
-- Super+Alt+Q: logout
-- Super+Alt+T: theme selector
-- Super+Ctrl+T: theme selector
-- Super+Shift+P: power menu
-- Super+Shift+S: screenshot menu
-- Super+Shift+M: monitor refresh
-- Super+Ctrl+R: doctor
-- Super+Ctrl+X: target prompt
-- Print: full screenshot
-- Shift+Print: screenshot UI
-- XF86 audio keys: volume/mute
+| Shortcut | Action |
+|---|---|
+| Super+Enter | Kitty |
+| Super+D | App launcher |
+| Super+Shift+D | Command runner |
+| Super+1..0 | Desktop |
+| Super+Shift+1..0 | Move window |
+| Super+Arrow | Focus |
+| Super+Shift+Arrow | Swap |
+| Super+Alt+Arrow | Resize floating |
+| Super+Ctrl+Arrow | Move floating |
+| Super+F | Fullscreen |
+| Super+S | Floating |
+| Super+T | Tiled |
+| Super+Shift+T | Pseudo-tiled |
+| Super+M | Monocle |
+| Super+G | Swap with biggest |
+| Super+Alt+R | Restart BSPWM |
+| Super+Alt+Q | Logout |
+| Super+Alt+T / Super+Ctrl+T | Theme selector |
+| Super+Shift+W | Random wallpaper |
+| Super+Ctrl+W | Next wallpaper |
+| Super+Shift+L | Kali lab terminal |
+| Super+Shift+E | Thunar |
+| Super+Shift+P | Power menu |
+| Super+Shift+S | Screenshot menu |
+| Super+Shift+M | Refresh monitors |
+| Super+Ctrl+R | Doctor in Kitty |
+| Super+Ctrl+X | Target prompt |
+| Super+Shift+K | Lock screen |
+| Super+Shift+F | Firefox |
+| Super+Shift+B | Burp Suite |
+| Super+Shift+C | VS Code |
+| Super+Shift+N | Neovim |
+| Print | Full screenshot |
+| Shift+Print | Screenshot UI |
+| XF86 audio keys | Volume/mute |
 
 ## Target workflow
 
@@ -97,33 +102,24 @@ settarget --status
 cleartarget
 ```
 
-The target is shown in Polybar and stored in `~/.config/polybar/target`.
+The target is shown in Polybar and the Zsh prompt and stored in `~/.config/polybar/target`.
 
-## Virtualization
+## VMware
 
-The installer detects the guest with `systemd-detect-virt`.
+VMware guests use `open-vm-tools` and `open-vm-tools-desktop`. See [docs/VMWARE.md](docs/VMWARE.md) for the guest checklist.
 
-VMware installs/uses:
+VirtualBox guests use the corresponding guest utilities when detected.
 
-- open-vm-tools
-- open-vm-tools-desktop
+## Design constraints
 
-VirtualBox installs/uses:
+The installer intentionally does not:
 
-- virtualbox-guest-utils
-- virtualbox-guest-x11
-
-The installer does **not** mask PipeWire or replace it with PulseAudio.
-
-## Compatibility philosophy
-
-The project intentionally avoids:
-
-- remote `curl | sh` installers
-- third-party Debian repositories
-- unnecessary source builds of core Kali packages
-- forcing a new display manager over an existing one
-- system-wide `pip --break-system-packages`
+- use remote `curl | sh` installers
+- add third-party Debian repositories
+- mask PipeWire or replace the audio stack
+- build unnecessary core packages from source
+- force a new display manager over an existing one
+- use system-wide `pip --break-system-packages`
 
 Optional Python tooling is isolated with pipx.
 

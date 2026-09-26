@@ -43,7 +43,10 @@ PACKAGES=(
   network-manager network-manager-gnome
   fastfetch fzf ripgrep fd-find bat eza btop htop glances
   flameshot playerctl pamixer pavucontrol jq rsync unzip
-  x11-xserver-utils xserver-xorg lxappearance fonts-font-awesome fonts-jetbrains-mono
+  thunar arandr gpick neovim tmux i3lock
+  x11-xserver-utils xserver-xorg lxappearance
+  fonts-font-awesome fonts-jetbrains-mono
+  kali-tweaks kali-wallpapers-2026
 )
 
 if [ "$HYPER" = "vmware" ]; then
@@ -95,6 +98,11 @@ if systemctl is-enabled display-manager.service >/dev/null 2>&1 || systemctl is-
   ok "Existing display manager preserved."
 else
   warn "No active display-manager.service detected."
+fi
+
+ZSH_BIN="$(command -v zsh || true)"
+if [ -n "$ZSH_BIN" ] && [ "$SHELL" != "$ZSH_BIN" ]; then
+  chsh -s "$ZSH_BIN" "$USER" || warn "Could not set zsh as the login shell."
 fi
 
 sudo apt-get install -y pipx python3-venv
