@@ -6,7 +6,7 @@ set -Eeuo pipefail
 
 virt="$(systemd-detect-virt 2>/dev/null || true)"
 [ "$virt" = "vmware" ] || {
-  echo "VMware guest not detected (systemd-detect-virt: \${virt:-unknown})." >&2
+  echo "VMware guest not detected (systemd-detect-virt: ${virt:-unknown})." >&2
   exit 2
 }
 
@@ -22,7 +22,7 @@ show_status() {
   fi
 }
 
-case "\${1:-status}" in
+case "${1:-status}" in
   status)
     show_status
     ;;
