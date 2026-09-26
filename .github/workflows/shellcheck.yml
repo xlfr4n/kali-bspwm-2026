@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-      - name: Install ShellCheck
-        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Install ShellCheck and Rofi
+        run: sudo apt-get update && sudo apt-get install -y shellcheck rofi
       - name: Bash syntax and static guards
         run: bash tests/static.sh
+      - name: Validate Rofi theme
+        run: rofi -no-config -theme config/rofi/launcher.rasi -dump-theme >/dev/null
       - name: Check shell scripts
         run: |
           shellcheck install.sh uninstall.sh config/bspwm/bspwmrc config/polybar/launch.sh
