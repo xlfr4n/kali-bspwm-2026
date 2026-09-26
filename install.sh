@@ -120,7 +120,7 @@ sudo install -Dm644 "$ROOT_DIR/config/bspwm.desktop" /usr/share/xsessions/bspwm.
 log "Configuring guest integration"
 if [ "$HYPER" = "vmware" ]; then
   sudo systemctl enable --now open-vm-tools.service || warn "open-vm-tools.service could not be started."
-  sudo systemctl enable --now open-vm-tools-desktop.service || warn "open-vm-tools-desktop.service could not be started."
+  # open-vm-tools-desktop installs its desktop integration as a drop-in for open-vm-tools.service.
 elif [ "$HYPER" = "virtualbox" ]; then
   sudo systemctl enable --now vboxservice.service || warn "vboxservice.service could not be started."
 fi
