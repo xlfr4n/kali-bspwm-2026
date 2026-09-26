@@ -98,7 +98,7 @@ info "session: ${XDG_SESSION_TYPE:-unknown} DISPLAY=${DISPLAY:-unset}"
 
 if [ "$virt" = "vmware" ]; then
   check "VMware tools service" systemctl is-active --quiet open-vm-tools
-  check "VMware desktop service" systemctl is-active --quiet open-vm-tools-desktop
+  check "VMware desktop integration" test -x /usr/bin/vmware-user
   if [ -d /mnt/hgfs ]; then
     info "VMware shared-folder mountpoint: /mnt/hgfs present"
   else
