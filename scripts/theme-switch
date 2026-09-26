@@ -20,8 +20,15 @@ current_theme() {
 }
 
 apply() {
-  local t="$1" silent="\${2:-0}"
+  local t="$1"
+  local silent="\${2:-0}"
   local accent good warn
+
+  case "$silent" in
+    0|1) ;;
+    --silent) silent=1 ;;
+    *) silent=0 ;;
+  esac
 
   case "$t" in
     cyber-red) accent='#ff3344'; good='#5ee881'; warn='#ffc857' ;;
@@ -46,7 +53,9 @@ apply() {
   sed -i -E "s/^frame_color = .*/frame_color = \"$accent\"/" "$DUNST"
 
   printf '%s\n' "$t" > "$STATE/current"
-  "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+  if [ -x "$HOME/.config/polybar/launch.sh" ]; then
+    "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+  fi
 
   if [ "$silent" -eq 0 ] && command -v notify-send >/dev/null 2>&1; then
     notify-send "Kali BSPWM" "Theme: $t" || true
