@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Window-manager configuration. Session services are delegated to autostart.
 
-for proc in sxhkd polybar dunst nm-applet picom; do
-  pkill -x "$proc" 2>/dev/null || true
-done
+set -u
 
-sxhkd &
-setxkbmap -layout es -variant '' >/dev/null 2>&1 || true
 bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width 2
@@ -28,11 +26,6 @@ bspc rule -a Gpick state=floating center=true
 bspc rule -a Nm-connection-editor state=floating center=true
 bspc rule -a floating_nvim state=floating center=true follow=true
 
-"$HOME/.local/bin/monitor-refresh" --startup >/dev/null 2>&1 &
-"$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 &
-"$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
-command -v dunst >/dev/null 2>&1 && dunst >/dev/null 2>&1 &
-command -v nm-applet >/dev/null 2>&1 && nm-applet >/dev/null 2>&1 &
-"$HOME/.local/bin/theme-switch" --apply-current >/dev/null 2>&1 &
-"$HOME/.local/bin/keyboard" >/dev/null 2>&1 &
-(sleep 1; "$HOME/.local/bin/start-picom" >/dev/null 2>&1) &
+if [ -x "$HOME/.local/bin/autostart" ]; then
+  "$HOME/.local/bin/autostart" >/dev/null 2>&1 &
+fi
