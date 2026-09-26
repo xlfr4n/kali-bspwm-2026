@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Static themes only: no external theme engine is required for the core desktop.
+
 set -Eeuo pipefail
 
 POLYBAR="$HOME/.config/polybar/config.ini"
@@ -6,47 +9,68 @@ KITTY="$HOME/.config/kitty/kitty.conf"
 ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
 STATE="$HOME/.config/theme-state"
-
 mkdir -p "$STATE"
 
-apply(){
-  local t="$1" accent good warn
+list_themes() {
+  printf '%s\n' cyber-red htb-green nord purple
+}
+
+current_theme() {
+  cat "$STATE/current" 2>/dev/null || printf 'cyber-red'
+}
+
+apply() {
+  local t="$1" silent="\${2:-0}"
+  local accent good warn
+
   case "$t" in
     cyber-red) accent='#ff3344'; good='#5ee881'; warn='#ffc857' ;;
     htb-green) accent='#9fef00'; good='#5ee881'; warn='#ffc857' ;;
     nord) accent='#88c0d0'; good='#a3be8c'; warn='#ebcb8b' ;;
     purple) accent='#bd93f9'; good='#50fa7b'; warn='#f1fa8c' ;;
-    *) echo "Unknown theme: $t" >&2; exit 2 ;;
+    *)
+      echo "Unknown theme: $t" >&2
+      return 2
+      ;;
   esac
 
-  sed -i -E "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/" "$POLYBAR"
-  sed -i -E "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/" "$KITTY"
+  sed -i -E \
+    "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/" \
+    "$POLYBAR"
+
+  sed -i -E \
+    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/" \
+    "$KITTY"
+
   sed -i -E "s/  accent: .*/  accent: $accent;/" "$ROFI"
   sed -i -E "s/^frame_color = .*/frame_color = \"$accent\"/" "$DUNST"
 
-  printf '%s
-' "$t" > "$STATE/current"
+  printf '%s\n' "$t" > "$STATE/current"
   "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
 
-  if command -v notify-send >/dev/null 2>&1; then
+  if [ "$silent" -eq 0 ] && command -v notify-send >/dev/null 2>&1; then
     notify-send "Kali BSPWM" "Theme: $t" || true
   fi
 }
 
-case "${1:-}" in
+case "\${1:-}" in
   --apply-default)
     apply cyber-red
     ;;
   --apply-current)
-    apply "$(cat "$STATE/current" 2>/dev/null || printf cyber-red)"
+    apply "$(current_theme)" "\${2:-0}"
+    ;;
+  --current)
+    printf '%s\n' "$(current_theme)"
+    ;;
+  --list)
+    list_themes
     ;;
   --random)
-    apply "$(printf '%s
-' cyber-red htb-green nord purple | shuf -n1)"
+    apply "$(list_themes | shuf -n1)"
     ;;
   "")
-    choice="$(printf '%s
-' cyber-red htb-green nord purple | rofi -dmenu -p 'Theme' -theme "$ROFI" || true)"
+    choice="$(list_themes | rofi -dmenu -p 'Theme' -theme "$ROFI" || true)"
     [ -z "$choice" ] || apply "$choice"
     ;;
   *)
