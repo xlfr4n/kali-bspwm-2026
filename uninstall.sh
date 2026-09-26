@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 [ "$(id -u)" -ne 0 ] || { echo "Run as a normal user."; exit 1; }
-latest_backup="$(ls -1dt "$HOME/.kali-bspwm-backups"/* 2>/dev/null | head -1 || true)"
+latest_backup="$(find "$HOME/.kali-bspwm-backups" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -nr | sed 's/^[^ ]* //' | head -1 || true)"
 if [ -n "$latest_backup" ]; then
   echo "Latest backup: $latest_backup"
   read -r -p "Restore this backup before removing the environment? [y/N] " ans
