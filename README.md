@@ -1,39 +1,68 @@
-# Kali BSPWM 2026
+# 🐉 Kali BSPWM 2026
 
-A clean, VM-aware BSPWM environment for Kali Linux 2026.x, inspired by the modern Kali/HTB BSPWM aesthetic: dark terminal, crisp accent colors, fastfetch, tiling workflows, target awareness and a dense but readable system bar.
+> 🖥️ **Modern BSPWM environment for Kali Linux, tuned for VMware.**  
+> 🖥️ **Entorno BSPWM moderno para Kali Linux, optimizado para VMware.**
 
-The project is tuned for a Kali X11 guest under VMware while retaining VirtualBox detection/support.
+[![ShellCheck](https://img.shields.io/github/actions/workflow/status/xlfr4n/kali-bspwm-2026/shellcheck.yml?label=ShellCheck&logo=github)](https://github.com/xlfr4n/kali-bspwm-2026/actions)
+![Kali](https://img.shields.io/badge/Kali-Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white)
+![BSPWM](https://img.shields.io/badge/BSPWM-0.9.x-111827?style=for-the-badge)
+![VMware](https://img.shields.io/badge/VMware-Guest-607078?style=for-the-badge)
 
-## Visual + functional layer
+## 🇪🇸 Español
 
-- BSPWM + SXHKD with predictable Super-key controls
-- Polybar with workspaces, target, VPN, hypervisor, CPU/RAM/disk/network/audio, active window and clock
-- Kitty with JetBrains Mono, restrained transparency and VM-friendly X11 settings
-- Fastfetch automatically on the first interactive shell in Kitty
-- Two-line Zsh prompt with Git branch and active target
-- Kali 2026 wallpapers with random/next/set controls
-- Rofi launcher, Dunst notifications and Picom
-- Thunar, Arandr and Gpick utility shortcuts
-- tmux-based `lab` workspace with fastfetch + btop panes
-- i3lock screen lock
-- Target manager and HTB/case workspace helpers
-- Cyber Red, HTB Green, Nord and Purple themes
-- Multi-monitor refresh and VMware-aware networking
-- Timestamped backups and reversible uninstall
-- Optional pywal16 isolated through pipx
+### 🎯 Objetivo
 
-## Supported target
+Un escritorio **Kali + BSPWM** con estética cyber/HTB y funcionalidades prácticas para una VM VMware bajo Windows 11.
 
-- Kali Linux 2026.2 and newer Kali Rolling
-- x86_64
-- X11
-- VMware Workstation/Fusion
-- VirtualBox
-- Physical installs may work, but the project is tuned for VMs
+El host es Windows; este proyecto solo modifica el guest Kali.
 
-## Installation
+### 🎨 Estética
 
-Clone and run as your normal user:
+- 🖥️ BSPWM + SXHKD
+- 🐱 Kitty + JetBrains Mono
+- 📊 Polybar densa y limpia
+- 🚀 Fastfetch
+- 🎯 Target visible en Polybar y Zsh
+- 🌐 VPN + red + hipervisor
+- 🖼️ Wallpapers Kali
+- 🎨 Themes: Cyber Red, HTB Green, Nord, Purple
+- 🌫️ Picom sin blur obligatorio para conservar compatibilidad con GPU virtual
+
+### 🧰 Funciones
+
+- 🚀 Rofi launcher
+- 🔔 Dunst
+- 📸 Flameshot
+- 🔊 audio + Pavucontrol
+- 🗂️ Thunar / Arandr / Gpick
+- 🧪 `lab` con tmux + fastfetch + btop
+- 🔐 bloqueo de pantalla
+- 🖥️ refresh multi-monitor
+- 🎯 `settarget` / `cleartarget`
+- 🩺 `doctor.sh`
+- ♻️ backups con timestamp y uninstall reversible
+- 🐍 pywal16 opcional vía pipx
+
+### ⌨️ Atajos principales
+
+| Tecla | Acción |
+|---|---|
+| Super+Enter | Kitty |
+| Super+D | Launcher |
+| Super+1..0 | Escritorios |
+| Super+Arrow | Focus |
+| Super+Shift+Arrow | Swap |
+| Super+F | Fullscreen |
+| Super+S | Floating |
+| Super+M | Monocle |
+| Super+Alt+T | Themes |
+| Super+Shift+W | Wallpaper aleatorio |
+| Super+Shift+L | Kali Lab |
+| Super+Shift+K | Lock |
+| Super+Shift+P | Power |
+| Super+Shift+S | Screenshot |
+
+### 🚀 Instalación
 
 ```bash
 git clone https://github.com/xlfr4n/kali-bspwm-2026.git
@@ -42,101 +71,82 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Reboot and choose **bspwm** from the display manager.
-
-After login:
+Después:
 
 ```bash
 doctor.sh
-settarget 10.10.10.10 Web01
-wallpaper --random
-theme-switch
-lab
+systemd-detect-virt
+systemctl is-active open-vm-tools
+systemctl is-active open-vm-tools-desktop
+xrandr --query
 ```
 
-## Keyboard shortcuts
+### 🖥️ VMware
 
-| Shortcut | Action |
-|---|---|
-| Super+Enter | Kitty |
-| Super+D | App launcher |
-| Super+Shift+D | Command runner |
-| Super+1..0 | Desktop |
-| Super+Shift+1..0 | Move window |
-| Super+Arrow | Focus |
-| Super+Shift+Arrow | Swap |
-| Super+Alt+Arrow | Resize floating |
-| Super+Ctrl+Arrow | Move floating |
-| Super+F | Fullscreen |
-| Super+S | Floating |
-| Super+T | Tiled |
-| Super+Shift+T | Pseudo-tiled |
-| Super+M | Monocle |
-| Super+G | Swap with biggest |
-| Super+Alt+R | Restart BSPWM |
-| Super+Alt+Q | Logout |
-| Super+Alt+T / Super+Ctrl+T | Theme selector |
-| Super+Shift+W | Random wallpaper |
-| Super+Ctrl+W | Next wallpaper |
-| Super+Shift+L | Kali lab terminal |
-| Super+Shift+E | Thunar |
-| Super+Shift+P | Power menu |
-| Super+Shift+S | Screenshot menu |
-| Super+Shift+M | Refresh monitors |
-| Super+Ctrl+R | Doctor in Kitty |
-| Super+Ctrl+X | Target prompt |
-| Super+Shift+K | Lock screen |
-| Super+Shift+F | Firefox |
-| Super+Shift+B | Burp Suite |
-| Super+Shift+C | VS Code |
-| Super+Shift+N | Neovim |
-| Print | Full screenshot |
-| Shift+Print | Screenshot UI |
-| XF86 audio keys | Volume/mute |
+Cuando detecta VMware instala y activa:
 
-## Target workflow
+`open-vm-tools` + `open-vm-tools-desktop`
+
+Cuando detecta VirtualBox utiliza los paquetes guest correspondientes.
+
+### 🛡️ Filosofía
+
+- ❌ No `curl | sh`
+- ❌ No repositorios Debian de terceros
+- ❌ No reemplazo forzado de PipeWire
+- ❌ No `pip --break-system-packages`
+- ✅ Paquetes Kali primero
+- ✅ Backup antes de reemplazar configuración
+- ✅ Rollback mediante uninstall
+
+### 🧪 Estado
+
+La **primera prueba real dentro de VMware** sigue pendiente. La instalación y el aspecto final deben validarse sobre tu guest real antes de marcar compatibilidad de runtime como cerrada.
+
+---
+
+## 🇬🇧 English
+
+### 🎯 Goal
+
+A modern **Kali + BSPWM** desktop with a cyber/HTB visual style and practical workflows for a VMware guest running on Windows 11.
+
+The Windows host is untouched; the project only changes the Kali guest.
+
+### 🎨 Visual layer
+
+BSPWM, SXHKD, Kitty, JetBrains Mono, Polybar, fastfetch, target/VPN/hypervisor indicators, Kali wallpapers, four themes and VM-friendly Picom settings.
+
+### 🧰 Features
+
+Rofi, Dunst, Flameshot, audio controls, Thunar, Arandr, Gpick, tmux-based lab workspace, screen locking, monitor refresh, target helpers, diagnostics, timestamped backups, reversible uninstall and optional pywal16.
+
+### 🚀 Installation
 
 ```bash
-settarget 10.10.10.10 Web01
-settarget --status
-cleartarget
+git clone https://github.com/xlfr4n/kali-bspwm-2026.git
+cd kali-bspwm-2026
+chmod +x install.sh
+./install.sh
 ```
 
-The target is shown in Polybar and the Zsh prompt and stored in `~/.config/polybar/target`.
+After reboot, select **bspwm** and run `doctor.sh`.
 
-## VMware
+### 🖥️ VMware compatibility
 
-VMware guests use `open-vm-tools` and `open-vm-tools-desktop`. See [docs/VMWARE.md](docs/VMWARE.md) for the guest checklist.
+VMware guests use `open-vm-tools` and `open-vm-tools-desktop`. VirtualBox guests use the corresponding guest packages when detected.
 
-VirtualBox guests use the corresponding guest utilities when detected.
+### 🛡️ Design principles
 
-## Design constraints
+No remote shell installers, no third-party Debian repositories, no forced PipeWire replacement, no system-wide `pip --break-system-packages`, and all overwritten user configuration is backed up before deployment.
 
-The installer intentionally does not:
+### 🧪 Validation status
 
-- use remote `curl | sh` installers
-- add third-party Debian repositories
-- mask PipeWire or replace the audio stack
-- build unnecessary core packages from source
-- force a new display manager over an existing one
-- use system-wide `pip --break-system-packages`
+The first runtime test inside the real VMware Kali guest is still pending. Static project validation is not a substitute for that live VM test.
 
-Optional Python tooling is isolated with pipx.
+## 📌 Project identity
 
-## Restore
-
-Every overwritten configuration is backed up under:
-
-```
-~/.kali-bspwm-backups/YYYYMMDD-HHMMSS/
-```
-
-To remove the environment and optionally restore the latest backup:
-
-```bash
-./uninstall.sh
-```
-
-## License
-
-MIT.
+🐉 **Kali BSPWM 2026**  
+🖥️ **Windows 11 host → VMware → Kali guest**  
+🎨 **Cyber / HTB / minimalist dark UI**  
+🌍 **Documentation / Documentación:** ES + EN
