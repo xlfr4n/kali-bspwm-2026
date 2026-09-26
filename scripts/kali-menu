@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+
+set -Eeuo pipefail
+
+ROFI_THEME="$HOME/.config/rofi/launcher.rasi"
+
+command -v rofi >/dev/null 2>&1 || {
+  echo "rofi is not installed." >&2
+  exit 1
+}
+
+choice="$(
+  printf '%s\n' \
+    'TERMINAL  Open Kitty' \
+    'TARGET    Set / clear target' \
+    'THEME     Change theme' \
+    'WALLPAPER Change wallpaper' \
+    'LAB       Open Kali Lab' \
+    'MONITOR   Refresh displays' \
+    'DOCTOR    Run diagnostics' \
+    'VMWARE    VMware tools' \
+    'SCREEN    Screenshot menu' \
+    'LOCK      Lock session' \
+    'POWER     Power menu' \
+    'EXIT      Close menu' |
+    rofi -dmenu -p 'xlfr4n // Kali' -theme "$ROFI_THEME" || true
+)"
+
+case "$choice" in
+  TERMINAL*) kitty ;;
+  TARGET*) settarget ;;
+  THEME*) theme-switch ;;
+  WALLPAPER*) wallpaper --random ;;
+  LAB*) kitty --title Kali-Lab -e lab ;;
+  MONITOR*) monitor-refresh ;;
+  DOCTOR*) kitty --title Kali-Doctor -e doctor.sh ;;
+  VMWARE*) kitty --title VMware-Tools -e vmware-tools ;;
+  SCREEN*) screenshot-menu ;;
+  LOCK*) lock-screen ;;
+  POWER*) power-menu ;;
+  EXIT*|"") exit 0 ;;
+esac
