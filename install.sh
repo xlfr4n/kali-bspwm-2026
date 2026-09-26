@@ -15,7 +15,7 @@ die(){ printf '%b[-]%b %s\n' "$red" "$reset" "$*" >&2; exit 1; }
 
 [ "$(id -u)" -ne 0 ] || die "Run this installer as your normal user, not root."
 [ -f /etc/os-release ] || die "Cannot identify the operating system."
-# shellcheck source=/etc/os-release
+# shellcheck disable=SC1091
 . /etc/os-release
 [ "$ID" = "kali" ] || die "This project targets Kali Linux. Detected: ${PRETTY_NAME:-unknown}"
 
