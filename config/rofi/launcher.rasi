@@ -1,24 +1,68 @@
-# ⚡ xlfr4n // Kali BSPWM 2026
-configuration {
-  show-icons: true;
-  drun-display-format: "{name}";
-}
+/* ⚡ xlfr4n // Kali BSPWM 2026 */
+
 * {
   bg: #101216;
   bg-alt: #171a20;
   fg: #f0f3f7;
+  muted: #7d8590;
   accent: #ff3344;
+  font: "JetBrains Mono 10";
 }
+
 window {
   width: 42%;
+  location: center;
+  anchor: center;
   background-color: @bg;
   border: 2px;
   border-color: @accent;
   border-radius: 10px;
+  padding: 14px;
 }
-mainbox { padding: 18px; }
-inputbar { padding: 8px; background-color: @bg-alt; border-radius: 6px; }
-listview { lines: 8; columns: 1; fixed-height: false; spacing: 5px; padding: 8px 0px 0px; }
-element { padding: 8px; border-radius: 5px; }
-element selected { background-color: @accent; text-color: @fg; }
-entry { text-color: @fg; }
+
+mainbox {
+  padding: 6px;
+}
+
+inputbar {
+  padding: 8px;
+  background-color: @bg-alt;
+  border-radius: 6px;
+}
+
+prompt {
+  text-color: @accent;
+  padding: 0px 8px 0px 0px;
+}
+
+entry {
+  text-color: @fg;
+  placeholder: "Search";
+  placeholder-color: @muted;
+}
+
+listview {
+  lines: 8;
+  columns: 1;
+  fixed-height: false;
+  spacing: 5px;
+  padding: 8px 0px 0px;
+}
+
+element {
+  padding: 8px;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+element selected {
+  background-color: @accent;
+}
+
+element-text {
+  text-color: @fg;
+}
+
+element-text selected {
+  text-color: @fg;
+}
