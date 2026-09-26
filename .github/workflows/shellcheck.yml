@@ -15,4 +15,5 @@ jobs:
         run: bash tests/static.sh
       - name: Check shell scripts
         run: |
-          shellcheck install.sh uninstall.sh scripts/* config/bspwm/bspwmrc config/polybar/launch.sh
+          shellcheck install.sh uninstall.sh config/bspwm/bspwmrc config/polybar/launch.sh
+          find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | xargs -0 shellcheck
