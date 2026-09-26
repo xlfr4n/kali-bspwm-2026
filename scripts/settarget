@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
+
 TARGET_FILE="$HOME/.config/polybar/target"
 mkdir -p "$(dirname "$TARGET_FILE")"
 
 if [[ "${1:-}" == "--status" ]]; then
-  [[ -s "$TARGET_FILE" ]] && cat "$TARGET_FILE" || echo "TARGET —"
+  if [[ -s "$TARGET_FILE" ]]; then
+    printf 'TARGET %s\n' "$(cat "$TARGET_FILE")"
+  else
+    printf 'TARGET —\n'
+  fi
   exit 0
 fi
 
@@ -18,14 +23,15 @@ else
   name="${2:-}"
 fi
 
-[[ "$value" =~ ^[A-Za-z0-9._:/-]+$ ]] || { echo "Invalid target format." >&2; exit 2; }
+[[ "$value" =~ ^[A-Za-z0-9._:/-]+$ ]] || {
+  echo "Invalid target format." >&2
+  exit 2
+}
 
 if [[ -n "$name" ]]; then
-  printf 'TARGET %s · %s
-' "$value" "$name" > "$TARGET_FILE"
+  printf '%s · %s\n' "$value" "$name" > "$TARGET_FILE"
 else
-  printf 'TARGET %s
-' "$value" > "$TARGET_FILE"
+  printf '%s\n' "$value" > "$TARGET_FILE"
 fi
 
 echo "Target set."
