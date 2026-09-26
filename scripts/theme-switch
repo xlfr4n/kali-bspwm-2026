@@ -57,6 +57,10 @@ apply() {
     "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
   fi
 
+  if command -v dunstctl >/dev/null 2>&1; then
+    dunstctl reload >/dev/null 2>&1 || true
+  fi
+
   if [ "$silent" -eq 0 ] && command -v notify-send >/dev/null 2>&1; then
     notify-send "Kali BSPWM" "Theme: $t" || true
   fi
