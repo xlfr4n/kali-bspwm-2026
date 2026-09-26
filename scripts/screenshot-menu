@@ -1,8 +1,25 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+
 set -Eeuo pipefail
+
+command -v flameshot >/dev/null 2>&1 || {
+  echo "Flameshot is not installed." >&2
+  exit 1
+}
+
 mkdir -p "$HOME/Pictures/Screenshots"
-choice=$(printf 'Region\nFull screen\n' | rofi -dmenu -p 'Screenshot' -theme "$HOME/.config/rofi/launcher.rasi" || true)
+
+choice="$(printf '%s\n' \
+  'REGION      Select region' \
+  'FULLSCREEN  Capture full screen' |
+  rofi -dmenu -p 'Screenshot' -theme "$HOME/.config/rofi/launcher.rasi" || true)"
+
 case "$choice" in
-  Region) flameshot gui;;
-  Full\ screen) flameshot full -p "$HOME/Pictures/Screenshots";;
+  REGION*)
+    flameshot gui
+    ;;
+  FULLSCREEN*)
+    flameshot full -p "$HOME/Pictures/Screenshots"
+    ;;
 esac
