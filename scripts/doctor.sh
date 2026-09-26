@@ -24,7 +24,7 @@ info() {
 }
 
 x11_check() {
-  [ "\${XDG_SESSION_TYPE:-}" = "x11" ] || [ -n "\${DISPLAY:-}" ]
+  [ "${XDG_SESSION_TYPE:-}" = "x11" ] || [ -n "${DISPLAY:-}" ]
 }
 
 bspwm_config_check() {
@@ -93,8 +93,8 @@ check "10 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
 
-info "virtualization: \${virt:-unknown}"
-info "session: \${XDG_SESSION_TYPE:-unknown} DISPLAY=\${DISPLAY:-unset}"
+info "virtualization: ${virt:-unknown}"
+info "session: ${XDG_SESSION_TYPE:-unknown} DISPLAY=${DISPLAY:-unset}"
 
 if [ "$virt" = "vmware" ]; then
   check "VMware tools service" systemctl is-active --quiet open-vm-tools
