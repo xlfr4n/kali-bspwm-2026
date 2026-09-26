@@ -1,3 +1,5 @@
+# ⚡ xlfr4n // Kali BSPWM 2026
+
 super + Return
     kitty
 
@@ -6,6 +8,9 @@ super + d
 
 super + shift + d
     rofi -show run -theme "$HOME/.config/rofi/launcher.rasi"
+
+super + shift + h
+    kali-menu
 
 super + {q,w}
     bspc node -{c,k}
@@ -87,6 +92,9 @@ super + ctrl + r
 
 super + ctrl + x
     settarget
+
+super + ctrl + v
+    kitty --title VMware-Tools -e vmware-tools
 
 super + shift + f
     firefox
