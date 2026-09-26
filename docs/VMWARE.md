@@ -1,49 +1,75 @@
-# VMware guest notes
+# ⚡ xlfr4n // VMware guest
 
-This project is tuned for a Kali Linux X11 guest running under VMware Workstation/Fusion.
+> 🖥️ **Windows host. Kali guest. One reproducible desktop layer.**
 
-## Guest integration
+## 🇪🇸 Español
 
-On VMware guests the installer uses:
+Este proyecto está pensado para una Kali Linux X11 ejecutándose como guest de VMware.
 
-- open-vm-tools
-- open-vm-tools-desktop
+### 🧩 Integración
 
-The installer detects VMware with `systemd-detect-virt` and only enables the VMware services when the guest is actually detected.
+Cuando `systemd-detect-virt` devuelve VMware, el instalador usa:
 
-## First boot checklist
+- `open-vm-tools`
+- `open-vm-tools-desktop`
+
+Además, el helper `vmware-tools` permite consultar el estado y reiniciar los servicios sin cambiar automáticamente la configuración de la máquina virtual.
+
+### 🖥️ Pantallas
+
+`monitor-refresh`:
+
+1. descubre las salidas conectadas mediante `xrandr`;
+2. conserva la salida marcada como primaria cuando existe;
+3. coloca las adicionales a la derecha;
+4. reparte los diez escritorios de BSPWM entre los monitores detectados.
+
+Con una sola pantalla no se necesita ninguna configuración especial.
+
+### 📁 Carpetas compartidas
+
+La presencia de `/mnt/hgfs` se informa como diagnóstico. El montaje automático no forma parte del núcleo del proyecto: se mantiene deliberadamente separado de la instalación base.
+
+### 🧪 Diagnóstico
 
 ```bash
-doctor.sh
 systemd-detect-virt
+vmware-tools status
 systemctl is-active open-vm-tools
 systemctl is-active open-vm-tools-desktop
 xrandr --query
 ```
 
-Expected virtualization output is `vmware`.
+## 🇬🇧 English
 
-## Display behaviour
+This project targets a Kali Linux X11 guest running under VMware.
 
-The desktop uses X11 because BSPWM is an X11 window manager. The monitor helper discovers connected X11 outputs with `xrandr`, makes the first output primary, places additional outputs to its right, and keeps workspaces 1-5 on the first monitor and 6-0 on the second when two displays are present.
+### 🧩 Guest integration
 
-For a single-display VM no special monitor configuration is required.
+When `systemd-detect-virt` reports VMware, the installer uses `open-vm-tools` and `open-vm-tools-desktop`.
 
-## Aesthetic layer
+The `vmware-tools` helper can inspect status and restart the services without changing VM settings automatically.
 
-The look is built around:
+### 🖥️ Displays
 
-- dark Kitty terminal with restrained transparency
-- JetBrains Mono
-- red-accent BSPWM borders
-- Polybar with workspace, target, VPN, VMware, resource and active-window data
-- Kali 2026 wallpapers when available
-- fastfetch on interactive Kitty shells
-- a two-line Zsh prompt with target and Git context
-- optional tmux lab workspace with fastfetch + btop
+`monitor-refresh` discovers connected X11 outputs with `xrandr`, keeps the primary output when available, places additional outputs to the right and distributes the ten BSPWM desktops across detected monitors.
 
-No compositor blur is required, which keeps the visual layer conservative for virtual GPUs.
+### 📁 Shared folders
 
-## Windows 11 host
+`/mnt/hgfs` is reported for diagnostics. Automatic mounting is intentionally outside the core bootstrap.
 
-Windows 11 remains the host operating system; this project only changes the Kali guest user's desktop configuration.
+### 🧪 Diagnostics
+
+```bash
+systemd-detect-virt
+vmware-tools status
+systemctl is-active open-vm-tools
+systemctl is-active open-vm-tools-desktop
+xrandr --query
+```
+
+## ⚡ xlfr4n
+
+**Compatibility before cosmetics. Reversible changes before shortcuts.**
+
+**Compatibilidad antes que cosmética. Cambios reversibles antes que atajos.**
