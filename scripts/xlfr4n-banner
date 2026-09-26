@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Personal shell identity banner.
+
+set -u
+
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+virt="$(systemd-detect-virt 2>/dev/null || printf 'host')"
+session="$DESKTOP_SESSION"
+target="$(cat "$HOME/.config/polybar/target" 2>/dev/null || true)"
+
+printf '\n'
+printf '\033[31m╭──────────────────────────────────────────────────────────╮\033[0m\n'
+printf '\033[31m│\033[0m  ⚡ \033[1;37mxlfr4n // KALI\033[0m  ·  PERSONAL SECURITY LAB       \033[31m│\033[0m\n'
+printf '\033[31m│\033[0m  SESSION  %-11s  VIRT  %-11s  THEME  %-12s \033[31m│\033[0m\n' "$session" "$virt" "$theme"
+if [ -n "$target" ]; then
+  printf '\033[31m│\033[0m  TARGET   %-42s \033[31m│\033[0m\n' "$target"
+else
+  printf '\033[31m│\033[0m  TARGET   %-42s \033[31m│\033[0m\n' "not set"
+fi
+printf '\033[31m╰──────────────────────────────────────────────────────────╯\033[0m\n'
