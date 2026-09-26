@@ -4,10 +4,10 @@ super + Return
     kitty
 
 super + d
-    rofi -show drun -theme "$HOME/.config/rofi/launcher.rasi"
+    rofi-xlfr4n -show drun -show-icons
 
 super + shift + d
-    rofi -show run -theme "$HOME/.config/rofi/launcher.rasi"
+    rofi-xlfr4n -show run
 
 super + shift + h
     kali-menu
