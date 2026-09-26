@@ -1,14 +1,53 @@
-# Themes
+# ⚡ xlfr4n // Themes
 
-Theme definitions are intentionally lightweight.
+> 🎨 **Same system. Different mood.**
 
-Theme names currently supported:
+## 🇪🇸 Español
 
-- `cyber-red`
-- `htb-green`
-- `nord`
-- `purple`
+Los temas son deliberadamente ligeros. No son un segundo instalador ni una dependencia obligatoria: cambian acentos de **Polybar, Kitty, Rofi y Dunst**, mientras Zsh lee el estado activo para adaptar el prompt.
 
-The selector changes Polybar, Kitty, Rofi and Dunst accents. The Zsh prompt reads the active theme state when the prompt is rendered.
+### 🌈 Temas actuales
 
-This layer is kept separate from package installation so future wallpaper/pywal16 work can evolve without changing VMware bootstrap logic.
+- 🔴 `cyber-red` — firma principal de xlfr4n.
+- 🟢 `htb-green` — estilo laboratorio/HTB.
+- ❄️ `nord` — variante fría y discreta.
+- 🟣 `purple` — variante más experimental.
+
+### ⌨️ Selector
+
+```bash
+theme-switch
+theme-switch --current
+theme-switch --list
+theme-switch --random
+theme-switch cyber-red
+```
+
+`pywal16` es opcional. El escritorio no depende de él para funcionar.
+
+## 🇬🇧 English
+
+Themes are intentionally lightweight. They are not a second installer or a mandatory dependency: they change **Polybar, Kitty, Rofi and Dunst** accents, while Zsh reads the active state and adapts the prompt.
+
+### 🌈 Current themes
+
+- 🔴 `cyber-red` — the primary xlfr4n signature.
+- 🟢 `htb-green` — lab/HTB inspired.
+- ❄️ `nord` — cool and restrained.
+- 🟣 `purple` — more experimental.
+
+### ⌨️ Selector
+
+```bash
+theme-switch
+theme-switch --current
+theme-switch --list
+theme-switch --random
+theme-switch cyber-red
+```
+
+`pywal16` remains optional; the desktop core does not depend on it.
+
+---
+
+<p align="center"><strong>⚡ xlfr4n</strong> · Theme the desktop. Keep the system boring.</p>
