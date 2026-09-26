@@ -1,35 +1,50 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# X11 display layout helper; it changes display layout only after xrandr is available.
+
 set -Eeuo pipefail
 
 command -v xrandr >/dev/null 2>&1 || exit 0
 xrandr >/dev/null 2>&1 || exit 0
 
-mapfile -t outputs < <(xrandr --query | awk '/ connected/ {print $1}')
-[ "${#outputs[@]}" -gt 0 ] || exit 0
-
-primary="${outputs[0]}"
-xrandr --output "$primary" --auto --primary >/dev/null 2>&1 || true
-
-if [ "${#outputs[@]}" -gt 1 ]; then
-  prev="$primary"
-  for out in "${outputs[@]:1}"; do
-    xrandr --output "$out" --auto --right-of "$prev" >/dev/null 2>&1 || true
-    prev="$out"
-  done
+if [ "\${1:-}" = "--startup" ]; then
+  sleep 0.5
 fi
 
-if command -v bspc >/dev/null 2>&1 && [ "${#outputs[@]}" -ge 2 ]; then
+mapfile -t outputs < <(xrandr --query | awk '/ connected/ {print $1}')
+[ "\${#outputs[@]}" -gt 0 ] || exit 0
+
+primary="\${outputs[0]}"
+while read -r candidate; do
+  [ -n "$candidate" ] || continue
+  primary="$candidate"
+  break
+done < <(xrandr --query | awk '/ connected primary/ {print $1}')
+
+xrandr --output "$primary" --auto --primary >/dev/null 2>&1 || true
+
+prev="$primary"
+for out in "\${outputs[@]}"; do
+  [ "$out" = "$primary" ] && continue
+  xrandr --output "$out" --auto --right-of "$prev" >/dev/null 2>&1 || true
+  prev="$out"
+done
+
+if command -v bspc >/dev/null 2>&1 && bspc wm -d >/dev/null 2>&1; then
   mapfile -t monitors < <(bspc query -M --names 2>/dev/null || true)
-  if [ "${#monitors[@]}" -ge 2 ]; then
-    for d in 6 7 8 9 0; do
-      bspc desktop "$d" --to-monitor "${monitors[1]}" >/dev/null 2>&1 || true
-    done
-    for d in 1 2 3 4 5; do
-      bspc desktop "$d" --to-monitor "${monitors[0]}" >/dev/null 2>&1 || true
+
+  if [ "\${#monitors[@]}" -gt 0 ]; then
+    desktops=(1 2 3 4 5 6 7 8 9 0)
+    monitor_count="\${#monitors[@]}"
+    desktop_count="\${#desktops[@]}"
+
+    for ((i=0; i<desktop_count; i++)); do
+      monitor_index=$(( i * monitor_count / desktop_count ))
+      bspc desktop "\${desktops[$i]}" --to-monitor "\${monitors[$monitor_index]}" >/dev/null 2>&1 || true
     done
   fi
 fi
 
-if [ "${1:-}" != "--startup" ]; then
+if [ "\${1:-}" != "--startup" ] && [ -x "$HOME/.config/polybar/launch.sh" ]; then
   "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
 fi
