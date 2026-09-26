@@ -3,27 +3,29 @@ set -Eeuo pipefail
 TARGET_FILE="$HOME/.config/polybar/target"
 mkdir -p "$(dirname "$TARGET_FILE")"
 
-if [[ "\${1:-}" == "--status" ]]; then
+if [[ "${1:-}" == "--status" ]]; then
   [[ -s "$TARGET_FILE" ]] && cat "$TARGET_FILE" || echo "TARGET —"
   exit 0
 fi
 
-if [[ -z "\${1:-}" ]]; then
+if [[ -z "${1:-}" ]]; then
   printf 'Target IP/host (empty to clear): '
   read -r value
   [[ -n "$value" ]] || { : > "$TARGET_FILE"; exit 0; }
-  name="\${2:-}"
+  name="${2:-}"
 else
   value="$1"
-  name="\${2:-}"
+  name="${2:-}"
 fi
 
 [[ "$value" =~ ^[A-Za-z0-9._:/-]+$ ]] || { echo "Invalid target format." >&2; exit 2; }
 
 if [[ -n "$name" ]]; then
-  printf 'TARGET %s · %s\n' "$value" "$name" > "$TARGET_FILE"
+  printf 'TARGET %s · %s
+' "$value" "$name" > "$TARGET_FILE"
 else
-  printf 'TARGET %s\n' "$value" > "$TARGET_FILE"
+  printf 'TARGET %s
+' "$value" > "$TARGET_FILE"
 fi
 
 echo "Target set."
