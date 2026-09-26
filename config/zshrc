@@ -45,19 +45,19 @@ settarget(){ "$HOME/.local/bin/settarget" "$@"; }
 cleartarget(){ "$HOME/.local/bin/cleartarget"; }
 
 mkhtb(){
-  [[ -n "\${1:-}" ]] || { echo "Usage: mkhtb NAME"; return 2; }
+  [[ -n "${1:-}" ]] || { echo "Usage: mkhtb NAME"; return 2; }
   mkdir -p "$1"/{nmap,loot,notes,web,exploits}
   echo "Workspace: $1"
 }
 
 mkcase(){
-  [[ -n "\${1:-}" ]] || { echo "Usage: mkcase NAME"; return 2; }
+  [[ -n "${1:-}" ]] || { echo "Usage: mkcase NAME"; return 2; }
   mkdir -p "$1"/{recon,loot,notes,evidence,report}
   echo "Case: $1"
 }
 
 mkws(){
-  [[ -n "\${1:-}" ]] || { echo "Usage: mkws NAME"; return 2; }
+  [[ -n "${1:-}" ]] || { echo "Usage: mkws NAME"; return 2; }
   mkdir -p "$1"
   cd "$1"
 }
@@ -102,7 +102,7 @@ _kali_prompt() {
 
 add-zsh-hook precmd _kali_prompt
 
-if [[ -o interactive && -z "\${KALI_BSPWM_FASTFETCH_DONE:-}" ]]; then
+if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" ]]; then
   export KALI_BSPWM_FASTFETCH_DONE=1
   command -v fastfetch >/dev/null 2>&1 && fastfetch
 fi
