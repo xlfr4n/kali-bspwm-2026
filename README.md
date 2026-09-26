@@ -30,16 +30,17 @@ El host es Windows; este proyecto solo modifica el guest Kali.
 
 ### 🧰 Funciones
 
-- 🚀 Rofi launcher
+- 🚀 Rofi launcher + `kali-menu` central
 - 🔔 Dunst
 - 📸 Flameshot
 - 🔊 audio + Pavucontrol
 - 🗂️ Thunar / Arandr / Gpick
 - 🧪 `lab` con tmux + fastfetch + btop
 - 🔐 bloqueo de pantalla
-- 🖥️ refresh multi-monitor
+- 🖥️ refresh multi-monitor + reparto automático de escritorios
 - 🎯 `settarget` / `cleartarget`
-- 🩺 `doctor.sh`
+- 🩺 `doctor.sh` de solo lectura + guardas estáticas en CI
+- 🖥️ `vmware-tools` para diagnóstico del guest
 - ♻️ backups con timestamp y uninstall reversible
 - 🐍 pywal16 opcional vía pipx
 
@@ -119,7 +120,7 @@ BSPWM, SXHKD, Kitty, JetBrains Mono, Polybar, fastfetch, target/VPN/hypervisor i
 
 ### 🧰 Features
 
-Rofi, Dunst, Flameshot, audio controls, Thunar, Arandr, Gpick, tmux-based lab workspace, screen locking, monitor refresh, target helpers, diagnostics, timestamped backups, reversible uninstall and optional pywal16.
+Rofi, the `xlfr4n // Kali` central menu, Dunst, Flameshot, audio controls, Thunar, Arandr, Gpick, tmux-based lab workspace, screen locking, multi-monitor refresh, target helpers, VMware diagnostics, read-only health checks, timestamped backups, reversible uninstall and optional pywal16.
 
 ### 🚀 Installation
 
