@@ -6,17 +6,18 @@
   fg: #f0f3f7;
   muted: #7d8590;
   accent: #ff3344;
+  dark-accent: #101216;
   font: "JetBrains Mono 10";
 }
 
 window {
-  width: 42%;
+  width: 44%;
   location: center;
   anchor: center;
   background-color: @bg;
   border: 2px;
   border-color: @accent;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 14px;
 }
 
@@ -25,24 +26,26 @@ mainbox {
 }
 
 inputbar {
-  padding: 8px;
+  padding: 9px;
   background-color: @bg-alt;
+  border: 1px;
+  border-color: @accent;
   border-radius: 6px;
 }
 
 prompt {
   text-color: @accent;
-  padding: 0px 8px 0px 0px;
+  padding: 0px 10px 0px 0px;
 }
 
 entry {
   text-color: @fg;
-  placeholder: "Search";
+  placeholder: "Search xlfr4n...";
   placeholder-color: @muted;
 }
 
 listview {
-  lines: 8;
+  lines: 9;
   columns: 1;
   fixed-height: false;
   spacing: 5px;
@@ -50,19 +53,26 @@ listview {
 }
 
 element {
-  padding: 8px;
-  border-radius: 5px;
+  padding: 9px;
+  border-radius: 6px;
   background-color: transparent;
+}
+
+element-text {
+  text-color: @fg;
+  font: "JetBrains Mono 10";
 }
 
 element selected {
   background-color: @accent;
 }
 
-element-text {
-  text-color: @fg;
+element-text selected {
+  text-color: @dark-accent;
+  font: "JetBrains Mono 10";
 }
 
-element-text selected {
-  text-color: @fg;
+element-icon {
+  size: 1.0em;
+  padding: 0px 8px 0px 0px;
 }
