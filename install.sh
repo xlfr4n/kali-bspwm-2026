@@ -16,7 +16,7 @@ die(){ printf '%b[-]%b %s\n' "$red" "$reset" "$*" >&2; exit 1; }
 [ "$(id -u)" -ne 0 ] || die "Run this installer as your normal user, not root."
 [ -f /etc/os-release ] || die "Cannot identify the operating system."
 . /etc/os-release
-[ "$ID" = "kali" ] || die "This project targets Kali Linux. Detected: \${PRETTY_NAME:-unknown}"
+[ "$ID" = "kali" ] || die "This project targets Kali Linux. Detected: ${PRETTY_NAME:-unknown}"
 
 sudo -v
 KEEPER_PID=""
@@ -53,7 +53,7 @@ elif [ "$HYPER" = "virtualbox" ]; then
 fi
 
 log "Installing packages"
-sudo apt-get install -y "\${PACKAGES[@]}"
+sudo apt-get install -y "${PACKAGES[@]}"
 
 log "Creating backup: $BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
@@ -66,9 +66,7 @@ backup_path(){
   cp -a "$p" "$BACKUP_DIR/$rel"
 }
 
-for p in "$CONFIG_DIR/bspwm" "$CONFIG_DIR/sxhkd" "$CONFIG_DIR/polybar" \
-         "$CONFIG_DIR/rofi" "$CONFIG_DIR/picom" "$CONFIG_DIR/kitty" \
-         "$CONFIG_DIR/dunst" "$HOME/.zshrc"; do
+for p in "$CONFIG_DIR/bspwm" "$CONFIG_DIR/sxhkd" "$CONFIG_DIR/polybar"          "$CONFIG_DIR/rofi" "$CONFIG_DIR/picom" "$CONFIG_DIR/kitty"          "$CONFIG_DIR/dunst" "$HOME/.zshrc"; do
   backup_path "$p"
 done
 
@@ -77,7 +75,6 @@ mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 cp -a "$ROOT_DIR/config/." "$CONFIG_DIR/"
 cp -a "$ROOT_DIR/scripts/." "$BIN_DIR/"
 chmod +x "$BIN_DIR"/* 2>/dev/null || true
-
 ln -sfn "$BIN_DIR/settarget" "$BIN_DIR/st"
 ln -sfn "$BIN_DIR/cleartarget" "$BIN_DIR/ct"
 
@@ -101,9 +98,11 @@ else
 fi
 
 sudo apt-get install -y pipx python3-venv
+export PATH="$BIN_DIR:$PATH"
 export PIPX_HOME="$HOME/.local/pipx"
 export PIPX_BIN_DIR="$BIN_DIR"
 python3 -m pipx ensurepath >/dev/null 2>&1 || true
+
 if command -v wal >/dev/null 2>&1; then
   ok "pywal16 already available."
 elif python3 -m pipx install pywal16 >/dev/null 2>&1; then
