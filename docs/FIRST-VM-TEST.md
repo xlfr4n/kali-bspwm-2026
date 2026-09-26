@@ -86,7 +86,9 @@ Super+M           → monocle
 Super+Shift+W     → wallpaper
 Super+Alt+T       → themes
 Super+Shift+L     → lab
+Super+Shift+H     → menú xlfr4n
 Super+Shift+K     → lock
+Super+Ctrl+V      → VMware tools
 ```
 
 ### 6️⃣ Prueba de target + VPN
@@ -172,7 +174,7 @@ Choose `bspwm` from the display manager.
 doctor.sh
 systemd-detect-virt
 systemctl is-active open-vm-tools
-systemctl is-active open-vm-tools-desktop
+test -x /usr/bin/vmware-user
 xrandr --query
 ```
 
