@@ -3,7 +3,7 @@
 
 set -Eeuo pipefail
 
-[ -n "\${DISPLAY:-}" ] || {
+[ -n "${DISPLAY:-}" ] || {
   echo "No X11 DISPLAY is available." >&2
   exit 1
 }
