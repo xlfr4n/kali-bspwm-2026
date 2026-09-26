@@ -16,7 +16,7 @@ while IFS= read -r -d '' file; do
   bash -n "$file"
 done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
-required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh"
+required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner"
 
 for file in $required_files; do
   test -s "$file"
