@@ -38,6 +38,10 @@ polybar_config_check() {
   [ -x "$HOME/.config/polybar/launch.sh" ]
 }
 
+rofi_theme_check() {
+  rofi -no-config -theme "$HOME/.config/rofi/launcher.rasi" -dump-theme
+}
+
 theme_check() {
   local theme
   theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
@@ -69,6 +73,8 @@ check "SXHKD command" command -v sxhkd
 check "Polybar" command -v polybar
 check "Kitty" command -v kitty
 check "Rofi" command -v rofi
+check "Rofi theme" rofi_theme_check
+check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
 check "Picom" command -v picom
 check "Dunst" command -v dunst
 check "Feh" command -v feh
@@ -87,7 +93,7 @@ check "Wallpaper helper" command -v wallpaper
 check "Kali menu" command -v kali-menu
 check "Lab helper" command -v lab
 check "Lock helper" command -v lock-screen
-check "VMware helper" command -v vmware-tools
+check "Virtualization helper" command -v vmware-tools
 check "Theme state" theme_check
 check "Target state" target_check
 check "10 BSPWM desktops" desktop_count_check
@@ -105,6 +111,10 @@ if [ "$virt" = "vmware" ]; then
   else
     info "VMware shared-folder mountpoint: /mnt/hgfs not present"
   fi
+elif [ "$virt" = "oracle" ] || [ "$virt" = "virtualbox" ]; then
+  check "VirtualBox Guest Utils" systemctl is-active --quiet virtualbox-guest-utils.service
+  check "VBoxService binary" command -v VBoxService
+  check "VBox guest modules" sh -c 'lsmod | grep -Eq "^vbox(guest|sf|video)[[:space:]]"'
 fi
 
 if [ -r "$HOME/.config/theme-state/current" ]; then
