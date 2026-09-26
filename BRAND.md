@@ -1,23 +1,27 @@
 # ⚡ xlfr4n // Project Signature
 
-> 🐉 **Own the terminal. Keep the system reproducible.**
+> 🐉 **Own the terminal. Own the desktop. Keep the system reproducible.**
 
 ## 🇪🇸 Español
 
-**Kali BSPWM 2026** es el proyecto de escritorio Linux más visual de **xlfr4n**: oscuro, rápido, modular y pensado para una VM VMware real.
+**Kali BSPWM 2026** es el entorno Linux personal de **xlfr4n**: oscuro, rápido, modular y construido para convertir un Kali normal en un escritorio reconocible como parte del mismo laboratorio.
 
-La personalidad es cyber/HTB, pero la regla técnica es simple: primero compatibilidad y reversibilidad; después, estética.
+La identidad visual combina **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Kitty, Zsh, Dunst, BSPWM y wallpapers. La personalización alcanza desde el selector de sesión hasta el prompt del terminal, las pestañas de Kitty, la barra superior, los menús de energía y los indicadores del escritorio.
 
-**Identidad:** <code>xlfr4n</code> · Kali · BSPWM · VMware · cybersecurity
+La regla técnica sigue siendo simple: compatibilidad, legibilidad y reversibilidad primero; estética agresiva después.
+
+**Identidad:** xlfr4n · Kali · BSPWM · X11 · cybersecurity
 
 ## 🇬🇧 English
 
-**Kali BSPWM 2026** is the most visual Linux desktop project in the **xlfr4n** lab: dark, fast, modular and built around a real VMware guest.
+**Kali BSPWM 2026** is **xlfr4n's** personal Linux desktop layer: dark, fast, modular and built to turn a standard Kali installation into a recognizable part of the same lab.
 
-The personality is cyber/HTB, but the engineering rule stays simple: compatibility and reversibility first, aesthetics second.
+The visual identity combines **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Kitty, Zsh, Dunst, BSPWM and wallpapers. Personalization reaches from the session selector to the terminal prompt, Kitty tabs, top bar, power menus and desktop status indicators.
 
-**Identity:** <code>xlfr4n</code> · Kali · BSPWM · VMware · cybersecurity
+The engineering rule stays simple: compatibility, readability and reversibility first; aggressive aesthetics second.
+
+**Identity:** xlfr4n · Kali · BSPWM · X11 · cybersecurity
 
 ---
 
-<p align="center"><strong>⚡ xlfr4n</strong> · Terminal first · Reproducible always</p>
+<p align="center"><strong>⚡ xlfr4n</strong> · Terminal first · Desktop owned · Reproducible always</p>
