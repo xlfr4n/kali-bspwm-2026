@@ -13,55 +13,32 @@ for proc in sxhkd polybar dunst nm-applet picom; do
   pkill -x "$proc" 2>/dev/null || true
 done
 
-latest_backup="$(find "$HOME/.kali-bspwm-backups" \
-  -mindepth 1 -maxdepth 1 -type d \
-  -printf '%T@ %p\n' 2>/dev/null |
+latest_backup="$(find "$HOME/.kali-bspwm-backups"   -mindepth 1 -maxdepth 1 -type d   -printf '%T@ %p
+' 2>/dev/null |
   sort -nr |
   sed 's/^[^ ]* //' |
   head -1 || true)"
 
+restore=0
 if [ -n "$latest_backup" ]; then
   echo "Latest backup: $latest_backup"
-  read -r -p "Restore this backup before removing the environment? [y/N] " ans
-  if [[ "$ans" =~ ^[Yy]$ ]]; then
-    cp -a "$latest_backup/." "$HOME/"
-    echo "Backup restored."
-  fi
+  read -r -p "Restore this backup after removing the xlfr4n layer? [y/N] " ans
+  [[ "$ans" =~ ^[Yy]$ ]] && restore=1
 fi
 
-rm -rf \
-  "$HOME/.config/bspwm" \
-  "$HOME/.config/sxhkd" \
-  "$HOME/.config/polybar" \
-  "$HOME/.config/rofi" \
-  "$HOME/.config/picom" \
-  "$HOME/.config/kitty" \
-  "$HOME/.config/dunst" \
-  "$HOME/.config/theme-state" \
-  "$HOME/.config/wallpaper-state"
+rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/dunst"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
 
-rm -f \
-  "$HOME/.config/zshrc" \
-  "$HOME/.local/bin/settarget" \
-  "$HOME/.local/bin/cleartarget" \
-  "$HOME/.local/bin/st" \
-  "$HOME/.local/bin/ct" \
-  "$HOME/.local/bin/monitor-refresh" \
-  "$HOME/.local/bin/theme-switch" \
-  "$HOME/.local/bin/power-menu" \
-  "$HOME/.local/bin/screenshot-menu" \
-  "$HOME/.local/bin/keyboard" \
-  "$HOME/.local/bin/start-picom" \
-  "$HOME/.local/bin/doctor.sh" \
-  "$HOME/.local/bin/wallpaper" \
-  "$HOME/.local/bin/lab" \
-  "$HOME/.local/bin/lock-screen" \
-  "$HOME/.local/bin/session-reload" \
-  "$HOME/.local/bin/autostart" \
-  "$HOME/.local/bin/kali-menu" \
-  "$HOME/.local/bin/vmware-tools"
+rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.local/bin/st"   "$HOME/.local/bin/ct"   "$HOME/.local/bin/monitor-refresh"   "$HOME/.local/bin/theme-switch"   "$HOME/.local/bin/power-menu"   "$HOME/.local/bin/screenshot-menu"   "$HOME/.local/bin/keyboard"   "$HOME/.local/bin/start-picom"   "$HOME/.local/bin/doctor.sh"   "$HOME/.local/bin/wallpaper"   "$HOME/.local/bin/lab"   "$HOME/.local/bin/lock-screen"   "$HOME/.local/bin/session-reload"   "$HOME/.local/bin/autostart"   "$HOME/.local/bin/kali-menu"   "$HOME/.local/bin/vmware-tools"
 
 sudo rm -f /usr/share/xsessions/bspwm.desktop
+
+# The installer owns this deployed file; restore the user's previous copy below when requested.
+rm -f "$HOME/.zshrc"
+
+if [ "$restore" -eq 1 ]; then
+  cp -a "$latest_backup/." "$HOME/"
+  echo "Backup restored."
+fi
 
 printf 'Kali BSPWM user configuration removed. Packages were intentionally left installed.\n'
 printf 'Your timestamped backups remain under ~/.kali-bspwm-backups/.\n'
