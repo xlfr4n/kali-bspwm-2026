@@ -516,6 +516,46 @@ El script ofrece restaurar el backup más reciente. Los paquetes instalados por 
 
 ---
 
+
+# 🎨 xlfr4n Personal Desktop Layer
+
+El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistema propio de xlfr4n**.
+
+### Identidad visible
+
+- Barra superior iniciando con **⚡ xlfr4n // KALI**
+- §MENU§, §TARGET§, §VPN§, virtualización y sesión visibles en la barra
+- §PWR§ con fondo/acento y texto de alto contraste
+- Sesión de login identificada como **⚡ xlfr4n // Kali BSPWM**
+- Kitty con pestañas personalizadas y colores coordinados
+- Zsh con prompt dinámico, target, virtualización, Git y theme
+- Banner de terminal **PERSONAL SECURITY LAB**
+- Rofi con búsqueda y selección de alto contraste
+- Dunst y bordes BSPWM sincronizados con el theme
+- Cuatro themes coordinados: Cyber Red, HTB Green, Nord y Purple
+
+### Filosofía
+
+**No es un tema encima de Kali. Es una capa de escritorio completa.**
+
+El proyecto centraliza identidad, navegación, atajos, terminal, launcher, notificaciones, ventanas, wallpapers, virtualización y diagnóstico, manteniendo todos los cambios reproducibles desde Git.
+
+### After pull / Después de actualizar el repo
+
+~~~bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+chmod +x install.sh uninstall.sh
+./install.sh
+~~~
+
+Después de reiniciar y entrar en BSPWM:
+
+~~~bash
+doctor.sh
+rofi-xlfr4n -show drun -show-icons
+~~~
+
 # ✅ Runtime validation
 
 ### Live VM check — 26 Sep 2026
