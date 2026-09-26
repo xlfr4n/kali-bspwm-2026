@@ -68,7 +68,7 @@ Abre Kitty y ejecuta:
 doctor.sh
 systemd-detect-virt
 systemctl is-active open-vm-tools
-systemctl is-active open-vm-tools-desktop
+test -x /usr/bin/vmware-user
 xrandr --query
 ```
 
