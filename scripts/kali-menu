@@ -3,10 +3,8 @@
 
 set -Eeuo pipefail
 
-ROFI_THEME="$HOME/.config/rofi/launcher.rasi"
-
-command -v rofi >/dev/null 2>&1 || {
-  echo "rofi is not installed." >&2
+command -v rofi-xlfr4n >/dev/null 2>&1 || {
+  echo "rofi-xlfr4n is not installed." >&2
   exit 1
 }
 
@@ -24,7 +22,7 @@ choice="$(
     'LOCK      Lock session' \
     'POWER     Power menu' \
     'EXIT      Close menu' |
-    rofi -dmenu -p 'xlfr4n // Kali' -theme "$ROFI_THEME" || true
+    rofi-xlfr4n -dmenu -p 'xlfr4n // Kali' || true
 )"
 
 case "$choice" in
