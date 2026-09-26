@@ -1,10 +1,37 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+
 set -Eeuo pipefail
-choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nPoweroff\n' | rofi -dmenu -p 'System' -theme "$HOME/.config/rofi/launcher.rasi" || true)
+
+ROFI_THEME="$HOME/.config/rofi/launcher.rasi"
+
+confirm() {
+  local prompt="$1"
+  [ "$(printf 'No\nYes\n' | rofi -dmenu -p "$prompt" -theme "$ROFI_THEME" || true)" = "Yes" ]
+}
+
+choice="$(printf '%s\n' \
+  'LOCK      Lock session' \
+  'LOGOUT    Exit BSPWM' \
+  'SUSPEND   Suspend' \
+  'REBOOT    Reboot' \
+  'POWEROFF  Power off' |
+  rofi -dmenu -p 'System' -theme "$ROFI_THEME" || true)"
+
 case "$choice" in
-  Lock) loginctl lock-session;;
-  Logout) bspc quit;;
-  Suspend) systemctl suspend;;
-  Reboot) systemctl reboot;;
-  Poweroff) systemctl poweroff;;
+  LOCK*)
+    lock-screen
+    ;;
+  LOGOUT*)
+    confirm "Logout?" && bspc quit
+    ;;
+  SUSPEND*)
+    systemctl suspend
+    ;;
+  REBOOT*)
+    confirm "Reboot?" && systemctl reboot
+    ;;
+  POWEROFF*)
+    confirm "Power off?" && systemctl poweroff
+    ;;
 esac
