@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# VMware diagnostics/recovery helper; never changes VM settings automatically.
+
+set -Eeuo pipefail
+
+virt="$(systemd-detect-virt 2>/dev/null || true)"
+[ "$virt" = "vmware" ] || {
+  echo "VMware guest not detected (systemd-detect-virt: \${virt:-unknown})." >&2
+  exit 2
+}
+
+show_status() {
+  printf 'VMWARE GUEST\n'
+  printf '%-28s %s\n' 'open-vm-tools' "$(systemctl is-active open-vm-tools 2>/dev/null || true)"
+  printf '%-28s %s\n' 'open-vm-tools-desktop' "$(systemctl is-active open-vm-tools-desktop 2>/dev/null || true)"
+  printf '%-28s %s\n' 'shared folder mountpoint' "$([ -d /mnt/hgfs ] && echo present || echo missing)"
+  if command -v vmware-toolbox-cmd >/dev/null 2>&1; then
+    printf '%-28s %s\n' 'toolbox command' 'available'
+  else
+    printf '%-28s %s\n' 'toolbox command' 'not installed'
+  fi
+}
+
+case "\${1:-status}" in
+  status)
+    show_status
+    ;;
+  restart)
+    sudo systemctl restart open-vm-tools.service
+    sudo systemctl restart open-vm-tools-desktop.service
+    show_status
+    ;;
+  shared-folders)
+    if command -v mount-shared-folders >/dev/null 2>&1; then
+      echo "VMware shared-folder helper is available."
+      echo "Run: sudo mount-shared-folders"
+      exit 0
+    fi
+    echo "Shared-folder helper is not installed."
+    echo "Kali Tweaks -> Virtualization -> VMware can install the extra helper."
+    exit 1
+    ;;
+  *)
+    echo "Usage: vmware-tools [status|restart|shared-folders]" >&2
+    exit 2
+    ;;
+esac
