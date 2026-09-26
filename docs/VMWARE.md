@@ -36,7 +36,7 @@ La presencia de `/mnt/hgfs` se informa como diagnóstico. El montaje automático
 systemd-detect-virt
 vmware-tools status
 systemctl is-active open-vm-tools
-systemctl is-active open-vm-tools-desktop
+test -x /usr/bin/vmware-user
 xrandr --query
 ```
 
@@ -46,7 +46,7 @@ This project targets a Kali Linux X11 guest running under VMware.
 
 ### 🧩 Guest integration
 
-When `systemd-detect-virt` reports VMware, the installer uses `open-vm-tools` and `open-vm-tools-desktop`.
+When `systemd-detect-virt` reports VMware, the installer uses `open-vm-tools` plus the desktop integration supplied by `open-vm-tools-desktop`.
 
 The `vmware-tools` helper can inspect status and restart the services without changing VM settings automatically.
 
