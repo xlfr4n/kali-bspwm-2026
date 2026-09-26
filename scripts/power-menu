@@ -3,11 +3,9 @@
 
 set -Eeuo pipefail
 
-ROFI_THEME="$HOME/.config/rofi/launcher.rasi"
-
 confirm() {
   local prompt="$1"
-  [ "$(printf 'No\nYes\n' | rofi -dmenu -p "$prompt" -theme "$ROFI_THEME" || true)" = "Yes" ]
+  [ "$(printf 'No\nYes\n' | rofi-xlfr4n -dmenu -p "$prompt" || true)" = "Yes" ]
 }
 
 choice="$(printf '%s\n' \
@@ -16,22 +14,12 @@ choice="$(printf '%s\n' \
   'SUSPEND   Suspend' \
   'REBOOT    Reboot' \
   'POWEROFF  Power off' |
-  rofi -dmenu -p 'System' -theme "$ROFI_THEME" || true)"
+  rofi-xlfr4n -dmenu -p 'System' || true)"
 
 case "$choice" in
-  LOCK*)
-    lock-screen
-    ;;
-  LOGOUT*)
-    confirm "Logout?" && bspc quit
-    ;;
-  SUSPEND*)
-    systemctl suspend
-    ;;
-  REBOOT*)
-    confirm "Reboot?" && systemctl reboot
-    ;;
-  POWEROFF*)
-    confirm "Power off?" && systemctl poweroff
-    ;;
+  LOCK*) lock-screen ;;
+  LOGOUT*) confirm "Logout?" && bspc quit ;;
+  SUSPEND*) systemctl suspend ;;
+  REBOOT*) confirm "Reboot?" && systemctl reboot ;;
+  POWEROFF*) confirm "Power off?" && systemctl poweroff ;;
 esac
