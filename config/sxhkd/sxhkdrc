@@ -1,0 +1,104 @@
+super + Return
+    kitty
+
+super + d
+    rofi -show drun -theme "$HOME/.config/rofi/launcher.rasi"
+
+super + shift + d
+    rofi -show run -theme "$HOME/.config/rofi/launcher.rasi"
+
+super + {q,w}
+    bspc node -{c,k}
+
+super + f
+    bspc node -t fullscreen
+
+super + s
+    bspc node -t floating
+
+super + t
+    bspc node -t tiled
+
+super + shift + t
+    bspc node -t pseudo_tiled
+
+super + m
+    bspc desktop -l next
+
+super + g
+    bspc node -s biggest.window
+
+super + {Left,Down,Up,Right}
+    bspc node -f {west,south,north,east}
+
+super + shift + {Left,Down,Up,Right}
+    bspc node -s {west,south,north,east}
+
+super + alt + {Left,Down,Up,Right}
+    bspc node -z {left -30 0,bottom 0 30,top 0 -30,right 30 0}
+
+super + ctrl + {Left,Down,Up,Right}
+    bspc node -v {-30 0,0 30,0 -30,30 0}
+
+super + {1,2,3,4,5,6,7,8,9,0}
+    bspc desktop -f {1,2,3,4,5,6,7,8,9,10}
+
+super + shift + {1,2,3,4,5,6,7,8,9,0}
+    bspc node -d {1,2,3,4,5,6,7,8,9,10}
+
+super + Tab
+    bspc desktop -f last
+
+super + alt + r
+    bspc wm -r
+
+super + alt + q
+    bspc quit
+
+super + alt + t
+    theme-switch
+
+super + ctrl + t
+    theme-switch
+
+super + shift + p
+    power-menu
+
+super + shift + s
+    screenshot-menu
+
+super + shift + m
+    monitor-refresh
+
+super + ctrl + r
+    doctor.sh
+
+super + ctrl + x
+    settarget
+
+super + shift + f
+    firefox
+
+super + shift + b
+    burpsuite
+
+super + shift + c
+    code
+
+super + shift + n
+    kitty --class floating_nvim -e nvim
+
+XF86AudioRaiseVolume
+    pamixer -i 5
+
+XF86AudioLowerVolume
+    pamixer -d 5
+
+XF86AudioMute
+    pamixer -t
+
+Print
+    flameshot full -p "$HOME/Pictures/Screenshots"
+
+shift + Print
+    flameshot gui

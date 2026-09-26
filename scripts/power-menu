@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nPoweroff\n' | rofi -dmenu -p 'System' -theme "$HOME/.config/rofi/launcher.rasi" || true)
+case "$choice" in
+  Lock) loginctl lock-session;;
+  Logout) bspc quit;;
+  Suspend) systemctl suspend;;
+  Reboot) systemctl reboot;;
+  Poweroff) systemctl poweroff;;
+esac

@@ -1,0 +1,23 @@
+configuration {
+  show-icons: true;
+  drun-display-format: "{name}";
+}
+* {
+  bg: #101216;
+  bg-alt: #171a20;
+  fg: #f0f3f7;
+  accent: #ff3344;
+}
+window {
+  width: 42%;
+  background-color: @bg;
+  border: 2px;
+  border-color: @accent;
+  border-radius: 10px;
+}
+mainbox { padding: 18px; }
+inputbar { padding: 8px; background-color: @bg-alt; border-radius: 6px; }
+listview { lines: 8; columns: 1; fixed-height: false; spacing: 5px; padding: 8px 0px 0px; }
+element { padding: 8px; border-radius: 5px; }
+element selected { background-color: @accent; text-color: @fg; }
+entry { text-color: @fg; }

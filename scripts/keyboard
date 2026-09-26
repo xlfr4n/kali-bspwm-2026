@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -u
+if command -v setxkbmap >/dev/null 2>&1; then
+  setxkbmap -layout es -variant '' >/dev/null 2>&1 || true
+fi

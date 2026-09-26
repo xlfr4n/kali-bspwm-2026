@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -u
+pkill -x picom 2>/dev/null || true
+sleep 0.2
+picom --config "$HOME/.config/picom/picom.conf" >/tmp/kali-bspwm-picom.log 2>&1 &
+sleep 0.8
+if ! pgrep -x picom >/dev/null 2>&1; then
+  picom --backend xrender --config "$HOME/.config/picom/picom.conf" >/tmp/kali-bspwm-picom.log 2>&1 &
+fi

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+: > "$HOME/.config/polybar/target"
+echo "Target cleared."

@@ -1,0 +1,26 @@
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
+export VISUAL=nvim
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="$HOME/.zsh_history"
+
+[[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias ll='lsd -lah --group-dirs first 2>/dev/null || ls -lah'
+alias la='lsd -la 2>/dev/null || ls -la'
+alias cls='clear'
+
+cat(){ if command -v batcat >/dev/null 2>&1; then batcat "$@"; elif command -v bat >/dev/null 2>&1; then bat "$@"; else command cat "$@"; fi; }
+
+settarget(){ "$HOME/.local/bin/settarget" "$@"; }
+cleartarget(){ "$HOME/.local/bin/cleartarget"; }
+mkhtb(){ [[ -n "\${1:-}" ]] || { echo "Usage: mkhtb NAME"; return 2; }; mkdir -p "$1"/{nmap,loot,notes,web,exploits}; echo "Workspace: $1"; }
+mkcase(){ [[ -n "\${1:-}" ]] || { echo "Usage: mkcase NAME"; return 2; }; mkdir -p "$1"/{recon,loot,notes,evidence,report}; echo "Case: $1"; }
+
+alias st='settarget'
+alias ct='cleartarget'
+alias ctarget='cleartarget'
+
+PROMPT='%F{red}%n%f@%F{white}%m%f:%F{red}%~%f %# '
