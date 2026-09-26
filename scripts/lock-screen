@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+
 set -Eeuo pipefail
 
+[ -n "\${DISPLAY:-}" ] || {
+  echo "No X11 DISPLAY is available." >&2
+  exit 1
+}
+
 if command -v i3lock >/dev/null 2>&1; then
-  exec i3lock --color 101216 --ignore-empty-password --show-failed-attempts
+  i3lock \
+    --color 101216 \
+    --ignore-empty-password \
+    --show-failed-attempts \
+    --indicator \
+    --clock \
+    --time-str="%H:%M" \
+    --date-str="%A %d/%m"
+  exit 0
 fi
 
 if command -v loginctl >/dev/null 2>&1; then
