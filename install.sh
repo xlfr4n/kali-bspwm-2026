@@ -19,7 +19,7 @@ die(){ printf '[-] %s\n' "$*" >&2; exit 1; }
 [ -f /etc/os-release ] || die "Cannot identify the operating system."
 # shellcheck disable=SC1091
 . /etc/os-release
-[ "$ID" = "kali" ] || die "This project targets Kali Linux. Detected: \${PRETTY_NAME:-unknown}"
+[ "$ID" = "kali" ] || die "This project targets Kali Linux. Detected: ${PRETTY_NAME:-unknown}"
 
 command -v sudo >/dev/null 2>&1 || die "sudo is required."
 command -v apt-get >/dev/null 2>&1 || die "apt-get is required."
@@ -68,7 +68,7 @@ elif [ "$HYPER" = "virtualbox" ]; then
 fi
 
 log "Installing packages"
-sudo apt-get install -y "\${PACKAGES[@]}"
+sudo apt-get install -y "${PACKAGES[@]}"
 
 log "Creating backup: $BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
