@@ -150,3 +150,12 @@ The first runtime test inside the real VMware Kali guest is still pending. Stati
 🖥️ **Windows 11 host → VMware → Kali guest**  
 🎨 **Cyber / HTB / minimalist dark UI**  
 🌍 **Documentation / Documentación:** ES + EN
+
+---
+
+## ⚡ xlfr4n // Signature
+
+<p align="center">
+  <a href="./BRAND.md">🧩 Project identity / Identidad del proyecto</a> · <a href="https://github.com/xlfr4n">⚡ xlfr4n</a>
+  <br><sub>Build it. Understand it. Automate it. Document it. · Hazlo. Entiéndelo. Automatízalo. Documéntalo.</sub>
+</p>
