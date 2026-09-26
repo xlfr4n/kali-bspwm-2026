@@ -1,7 +1,9 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 [Desktop Entry]
-Name=bspwm
-Comment=Binary space partitioning window manager
+Name=⚡ xlfr4n // Kali BSPWM
+GenericName=xlfr4n Kali Desktop
+Comment=Personal Kali Linux desktop by xlfr4n
 Exec=bspwm
 TryExec=bspwm
 Type=Application
+DesktopNames=xlfr4n,BSPWM
