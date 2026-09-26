@@ -8,25 +8,26 @@ check() {
   local label="$1"
   shift
   if "$@" >/dev/null 2>&1; then
-    printf '[OK] %s
-' "$label"
+    printf '[OK] %s\n' "$label"
     ok=$((ok + 1))
   else
-    printf '[FAIL] %s
-' "$label"
+    printf '[FAIL] %s\n' "$label"
     fail=$((fail + 1))
   fi
 }
 
+# shellcheck disable=SC2317
 x11_check() {
   [ "${XDG_SESSION_TYPE:-}" = "x11" ] || [ -n "${DISPLAY:-}" ]
 }
 
+# shellcheck disable=SC2317
 bspwm_config_check() {
   [ -f "$HOME/.config/bspwm/bspwmrc" ] &&
     [ -f "$HOME/.config/sxhkd/sxhkdrc" ]
 }
 
+# shellcheck disable=SC2317
 polybar_config_check() {
   [ -f "$HOME/.config/polybar/config.ini" ]
 }
@@ -52,15 +53,12 @@ check "Wallpaper helper" command -v wallpaper
 check "Lab helper" command -v lab
 check "Lock helper" command -v lock-screen
 
-printf '[INFO] virtualization: %s
-' "$virt"
+printf '[INFO] virtualization: %s\n' "$virt"
 
 if [ "$virt" = "vmware" ]; then
   check "VMware tools service" systemctl is-active --quiet open-vm-tools
   check "VMware desktop service" systemctl is-active --quiet open-vm-tools-desktop
 fi
 
-printf '
-Summary: %d OK, %d FAIL
-' "$ok" "$fail"
+printf '\nSummary: %d OK, %d FAIL\n' "$ok" "$fail"
 exit $((fail > 0 ? 1 : 0))
