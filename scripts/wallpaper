@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
 set -Eeuo pipefail
 
 STATE_DIR="$HOME/.config/wallpaper-state"
