@@ -21,7 +21,7 @@ current_theme() {
 
 apply() {
   local t="$1"
-  local silent="\${2:-0}"
+  local silent="${2:-0}"
   local accent good warn
 
   case "$silent" in
@@ -62,12 +62,12 @@ apply() {
   fi
 }
 
-case "\${1:-}" in
+case "${1:-}" in
   --apply-default)
     apply cyber-red
     ;;
   --apply-current)
-    apply "$(current_theme)" "\${2:-0}"
+    apply "$(current_theme)" "${2:-0}"
     ;;
   --current)
     printf '%s\n' "$(current_theme)"
