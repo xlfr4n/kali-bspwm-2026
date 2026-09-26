@@ -4,6 +4,8 @@
 
 set -u
 
+export PATH="$HOME/.local/bin:$PATH"
+
 bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width 2
