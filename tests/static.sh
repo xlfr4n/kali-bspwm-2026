@@ -15,7 +15,7 @@ files=(
 )
 while IFS= read -r -d '' file; do
   files+=("$file")
-done < <(find scripts -maxdepth 1 -type f -print0 | sort -z)
+done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
 for file in "${files[@]}"; do
   bash -n "$file"
