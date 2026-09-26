@@ -103,6 +103,10 @@ mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 for dir in bspwm sxhkd polybar rofi picom kitty dunst; do
   if [ -L "$CONFIG_DIR/$dir" ]; then
     unlink "$CONFIG_DIR/$dir"
+  elif [ -d "$CONFIG_DIR/$dir" ]; then
+    # Older installers may have created user config as root. Normalize ownership
+    # after the backup so future re-installs remain user-writable and reversible.
+    sudo chown -R "$USER:$USER" "$CONFIG_DIR/$dir"
   fi
   mkdir -p "$CONFIG_DIR/$dir"
   cp -a "$ROOT_DIR/config/$dir/." "$CONFIG_DIR/$dir/"
@@ -125,10 +129,19 @@ sudo install -Dm644 "$ROOT_DIR/config/bspwm.desktop" /usr/share/xsessions/bspwm.
 
 log "Configuring guest integration"
 if [ "$HYPER" = "vmware" ]; then
-  sudo systemctl enable --now open-vm-tools.service || warn "open-vm-tools.service could not be started."
-  # open-vm-tools-desktop installs its desktop integration as a drop-in for open-vm-tools.service.
+  if sudo systemctl list-unit-files --type=service --no-legend 2>/dev/null | awk '{print $1}' | grep -qx 'open-vm-tools.service'; then
+    sudo systemctl enable --now open-vm-tools.service || warn "open-vm-tools.service could not be started."
+  else
+    warn "VMware detected but open-vm-tools.service is not available."
+  fi
 elif [ "$HYPER" = "virtualbox" ]; then
-  sudo systemctl enable --now vboxservice.service || warn "vboxservice.service could not be started."
+  if sudo systemctl list-unit-files --type=service --no-legend 2>/dev/null | awk '{print $1}' | grep -qx 'virtualbox-guest-utils.service'; then
+    sudo systemctl enable --now virtualbox-guest-utils.service || warn "virtualbox-guest-utils.service could not be started."
+  elif sudo systemctl list-unit-files --type=service --no-legend 2>/dev/null | awk '{print $1}' | grep -qx 'vboxservice.service'; then
+    sudo systemctl enable --now vboxservice.service || warn "vboxservice.service could not be started."
+  else
+    warn "VirtualBox detected but no supported Guest Utils service was found."
+  fi
 fi
 
 fc-cache -f >/dev/null 2>&1 || true
