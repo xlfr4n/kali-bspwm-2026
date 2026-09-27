@@ -608,3 +608,22 @@ Those latest changes should be re-tested in the live guest before calling the ru
   <br>
   <sub>Build it. Understand it. Automate it. Document it. · Hazlo. Entiéndelo. Automatízalo. Documéntalo.</sub>
 </p>
+
+## 🧭 xLFr4n repository standard
+
+**Display signature:** ⚡ xLFr4n · **GitHub handle:** `xlfr4n`
+
+Documentation entry points:
+- `BRAND.md` — visual identity and writing rules.
+- `CHANGELOG.md` — release history.
+- `CONTRIBUTING.md` — contribution and verification workflow.
+- `SECURITY.md` — safe configuration and reporting.
+- `CODE_OF_CONDUCT.md` — collaboration baseline.
+- `LICENSE` — project license.
+
+### Configuration boundary
+
+The repository configures the **Kali guest environment**. Host configuration, secrets and unrelated machine state stay outside the repository unless explicitly represented as safe, reproducible configuration.
+
+> **🐉 xLFr4n · Linux · automation · reproducible setup**
+
