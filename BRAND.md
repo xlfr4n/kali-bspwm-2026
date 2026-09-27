@@ -1,4 +1,4 @@
-# ⚡ xlfr4n // Project Signature
+# ⚡ xLFr4n // Project Signature
 
 > 🐉 **Own the terminal. Own the desktop. Keep the system reproducible.**
 
@@ -10,7 +10,7 @@ La identidad visual combina **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, P
 
 La regla técnica sigue siendo simple: compatibilidad, legibilidad y reversibilidad primero; estética agresiva después.
 
-**Identidad:** xlfr4n · Kali · BSPWM · X11 · cybersecurity
+**Identidad mostrada:** **xLFr4n** · **GitHub handle:** <code>xlfr4n</code> · Kali · BSPWM · X11 · cybersecurity
 
 ## 🇬🇧 English
 
@@ -20,8 +20,8 @@ The visual identity combines **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, 
 
 The engineering rule stays simple: compatibility, readability and reversibility first; aggressive aesthetics second.
 
-**Identity:** xlfr4n · Kali · BSPWM · X11 · cybersecurity
+**Display identity:** **xLFr4n** · **GitHub handle:** <code>xlfr4n</code> · Kali · BSPWM · X11 · cybersecurity
 
 ---
 
-<p align="center"><strong>⚡ xlfr4n</strong> · Terminal first · Desktop owned · Reproducible always</p>
+<p align="center"><strong>⚡ xLFr4n</strong> · Terminal first · Desktop owned · Reproducible always</p>
