@@ -122,3 +122,9 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
+
+check "Fast autostart core phase" grep -Fq "phase=core ready" scripts/autostart
+check "Autostart dispatches background polish" grep -Fq "phase=background dispatched" scripts/autostart
+check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
+check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
+check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
