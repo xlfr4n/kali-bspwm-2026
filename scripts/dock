@@ -31,8 +31,8 @@ install_theme(){
 }
 
 install_launcher(){
-  local id="$1" name="$2" exec_cmd="$3" icon="$4" wmclass="\${5:-}"
-  local desktop="$HOME/.local/share/applications/xLFr4n-\${id}.desktop"
+  local id="$1" name="$2" exec_cmd="$3" icon="$4" wmclass="${5:-}"
+  local desktop="$HOME/.local/share/applications/xLFr4n-${id}.desktop"
   mkdir -p "$(dirname "$desktop")"
   cat > "$desktop" <<EOF
 [Desktop Entry]
@@ -69,7 +69,7 @@ start_plank(){
   disown || true
 }
 
-case "\${1:---start}" in
+case "${1:---start}" in
   --start|"") install_theme; build_launchers; apply_settings; pgrep -x plank >/dev/null 2>&1 || start_plank ;;
   --restart) install_theme; build_launchers; start_plank ;;
   --stop) pkill -x plank 2>/dev/null || true ;;
