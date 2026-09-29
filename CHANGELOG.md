@@ -3,6 +3,9 @@
 ## 2026-09-29
 
 - Reworked the desktop into a transparent bottom HUD: workspaces 1→9 at left, date/time at right, and icon-only floating launchers in the center.
+- Optimized BSPWM session startup into a two-phase boot so the usable desktop renders before background polish.
+- Stabilized the xLFr4n terminal banner with fixed-width ASCII geometry and a short interactive boot animation.
+- Hardened launcher/fullscreen/target helpers against ShellCheck control-flow warnings.
 - Hardened Rofi with an explicit dark configuration and high-contrast white text.
 - Added compact VPN, uptime, disk and virtualization indicators to the top status surface.
 - Added the xLFr4n Floating Workspace presentation layer.
