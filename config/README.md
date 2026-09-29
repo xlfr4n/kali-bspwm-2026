@@ -21,6 +21,8 @@ Configuration is part of the reproducible installation system. Do not introduce 
 
 The desktop layer now combines a floating rounded Polybar, a real-icon Tint2 launcher dock with Plank/Polybar fallback, Spotlight-like application search, Mission Control, Brave-first launch and Papirus-Dark icon selection when available. All of it remains under the existing BSPWM/SXHKD architecture.
 
+The bottom HUD is deliberately separated from the dock: workspaces **1→9** stay on the left, the date/time stays on the right, and the icon dock remains centered below them. This avoids overlapping lower panels.
+
 
 ### 🧭 Workspace layout
 
