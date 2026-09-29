@@ -23,7 +23,7 @@ choice="$(
     'MONITOR   Refresh displays' \
     'DOCTOR    Run diagnostics' \
     'SYSTEM    Terminal system snapshot' \
-    'VMWARE    VMware tools' \
+    'VIRT      Virtualization tools' \
     'SCREEN    Screenshot menu' \
     'LOCK      Lock session' \
     'POWER     Power menu' \
