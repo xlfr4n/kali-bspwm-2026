@@ -1,0 +1,81 @@
+# ⚡ xLFr4n // Floating application dock
+# Tint2 launcher-only panel. Real .desktop icons, tooltips, dark glass surface.
+
+#-------------------------------------
+# Backgrounds
+#-------------------------------------
+rounded = 18
+border_width = 1
+border_sides = TBLR
+background_color = #0b0d10 94
+border_color = #ff3344 42
+
+rounded = 12
+border_width = 1
+border_sides = TBLR
+background_color = #161b22 98
+border_color = #ff3344 70
+
+#-------------------------------------
+# Panel
+#-------------------------------------
+panel_monitor = primary
+panel_position = bottom center horizontal
+panel_items = L
+panel_size = 680 58
+panel_margin = 0 8
+panel_padding = 6 5 6
+panel_background_id = 1
+panel_layer = top
+panel_dock = 0
+wm_menu = 0
+strut_policy = follow_size
+
+#-------------------------------------
+# Launcher
+#-------------------------------------
+launcher_padding = 8 0 5
+launcher_background_id = 1
+launcher_icon_background_id = 0
+launcher_icon_size = 40
+launcher_icon_asb = 100 0 0
+launcher_icon_theme = Papirus-Dark
+launcher_icon_theme_override = 1
+launcher_tooltip = 1
+startup_notifications = 1
+
+launcher_item_app = ~/.local/share/applications/xLFr4n-kali-menu.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-brave.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-terminal.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-files.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-editor.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-burp.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-lab.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-target.desktop
+
+#-------------------------------------
+# Tooltips
+#-------------------------------------
+tooltip = 1
+tooltip_padding = 7 8
+tooltip_show_timeout = 0.15
+tooltip_hide_timeout = 0.05
+tooltip_background_id = 2
+tooltip_font_color = #ffffff 100
+tooltip_font = Noto Sans normal 9
+
+#-------------------------------------
+# Mouse
+#-------------------------------------
+mouse_left = none
+mouse_middle = none
+mouse_right = toggle
+mouse_scroll_up = none
+mouse_scroll_down = none
+
+#-------------------------------------
+# Everything else intentionally disabled
+#-------------------------------------
+taskbar_mode = single_desktop
+systray = 0
+battery = 0
