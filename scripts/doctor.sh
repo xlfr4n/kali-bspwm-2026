@@ -77,6 +77,11 @@ check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
 check "Picom" command -v picom
 check "Dunst" command -v dunst
+check "Plank" command -v plank
+check "Papirus icons" test -d /usr/share/icons/Papirus-Dark
+check "Desktop style helper" command -v desktop-style
+check "Dock helper" command -v dock
+check "Mission Control helper" command -v mission-control
 check "Feh" command -v feh
 check "xrandr" command -v xrandr
 check "Flameshot" command -v flameshot
@@ -96,6 +101,7 @@ check "Lock helper" command -v lock-screen
 check "Virtualization helper" command -v vmware-tools
 check "Theme state" theme_check
 check "Target state" target_check
+check "Plank theme source" test -s "$HOME/.config/plank/xLFr4n/dock.theme"
 check "10 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
