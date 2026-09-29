@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-30 — Terminal, HUD & clock refinement
+
+- Upgraded the xLFr4n Kitty banner with a five-stage progress animation, spinner and deterministic fixed-width output.
+- Added a locale-aware long date helper so the lower-right rail can render the day/month in the system's preferred `LC_TIME` language.
+- Refined the lower-right date/time rail with clearer typography, spacing and a slightly taller baseline.
+- Smoothed the top-left xLFr4n heartbeat into an eight-frame signal sweep while increasing its refresh interval to reduce needless redraws.
+- Added a two-frame workspace transition feedback sequence using the existing Dunst stack tag.
+- Refined Kitty tabs, borders, URL presentation and added practical live reload, shell, reset and opacity shortcuts.
+- Kept all changes additive and preserved the existing backup/reversible deployment model.
+
 ## 2026-09-30 — xLFr4n UX & polish pass
 
 - Added a lightweight workspace transition HUD driven by BSPWM desktop-focus events.
