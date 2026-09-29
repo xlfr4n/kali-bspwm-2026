@@ -173,6 +173,9 @@ printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
 
 check "Install guide" test -s docs/INSTALL.md
+check "CI workflow least privilege" grep -Fq "contents: read" .github/workflows/shellcheck.yml
+check "CI stale run cancellation" grep -Fq "cancel-in-progress: true" .github/workflows/shellcheck.yml
+check "CI manual trigger" grep -Fq "workflow_dispatch:" .github/workflows/shellcheck.yml
 check "Fast autostart core phase" grep -Fq "phase=core ready" scripts/autostart
 check "Autostart dispatches background polish" grep -Fq "phase=background staged" scripts/autostart
 check "Autostart stages wallpaper" grep -Fq "nice -n 10" scripts/autostart
