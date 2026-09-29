@@ -85,21 +85,23 @@ check "VirtualBox service detection" grep -Fq "virtualbox-guest-utils.service" i
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
 check "Polybar restack" grep -Fq "wm-restack = bspwm" config/polybar/config.ini
 check "Polybar IPC" grep -Fq "enable-ipc = true" config/polybar/config.ini
-check "Polybar glass" grep -Fq "glass = #E50B0E12" config/polybar/config.ini
-check "Polybar border" grep -Fq "border = #55ff3344" config/polybar/config.ini
+check "Polybar transparent top rail" grep -Fq "background = #00000000" config/polybar/config.ini
+check "Polybar borderless top rail" grep -Fq "border-size = 0pt" config/polybar/config.ini
 check "Polybar width" grep -Fq "width = 96%" config/polybar/config.ini
-check "Polybar radius" grep -Fq "radius = 14" config/polybar/config.ini
+check "Polybar flat top rail" grep -Fq "radius = 0" config/polybar/config.ini
 check "Plank fallback reference" grep -Fq "plank" install.sh
 check "Tint2 reference" grep -Fq "tint2" install.sh
 check "Rofi fallback reference" grep -Fq "fallback.rasi" scripts/rofi-xlfr4n
 check "Workspace bar" grep -Fq "[bar/workspace]" config/polybar/config.ini
 check "Workspace modules" grep -Fq "modules-left = bspwm" config/polybar/config.ini
-check "Clock module" grep -Fq "modules-right = date" config/polybar/config.ini
+check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/polybar/config.ini
+check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
+check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace HUD offset" grep -Fq "offset-y = 78pt" config/polybar/config.ini
+check "Workspace rail offset" grep -Fq "offset-y = 25pt" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
-check "Date right module" grep -Fq "modules-right = date" config/polybar/config.ini
+check "Date and time right modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
@@ -122,7 +124,7 @@ check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
 check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
 check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
 check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
-check "xLFr4n identity in scripts" grep -Fq "xlfr4n" scripts/*.sh scripts/*
+check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
 check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
 check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
@@ -136,8 +138,11 @@ check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
 
+check "Install guide" test -s docs/INSTALL.md
 check "Fast autostart core phase" grep -Fq "phase=core ready" scripts/autostart
-check "Autostart dispatches background polish" grep -Fq "phase=background dispatched" scripts/autostart
+check "Autostart dispatches background polish" grep -Fq "phase=background staged" scripts/autostart
+check "Autostart stages wallpaper" grep -Fq "nice -n 10" scripts/autostart
+check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any files" scripts/autostart
 check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
 check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
 check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
