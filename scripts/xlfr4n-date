@@ -5,17 +5,28 @@ set -u
 
 locale_name="${LC_ALL:-${LC_TIME:-${LANG:-C}}}"
 render_date() {
-  local value
-  value="$(LC_TIME="$locale_name" date '+%A, %-d de %B de %Y' 2>/dev/null)" && {
+  local value raw weekday month day year
+  if value="$(LC_TIME="$locale_name" date '+%A, %-d de %B de %Y' 2>/dev/null)"; then
     printf '%s\n' "$value"
     return 0
-  }
+  fi
 
+  raw="$(LC_TIME=C date '+%A|%B|%-d|%Y' 2>/dev/null || true)"
+  IFS='|' read -r weekday month day year <<< "$raw"
   case "$locale_name" in
-    es*) LC_TIME=C date '+Sunday, %-d de month de %Y' | sed \
-      -e 's/Sunday/domingo/;s/Monday/lunes/;s/Tuesday/martes/;s/Wednesday/miércoles/;s/Thursday/jueves/;s/Friday/viernes/;s/Saturday/sábado/'
+    es*)
+      case "$weekday" in
+        Sunday) weekday='domingo' ;; Monday) weekday='lunes' ;; Tuesday) weekday='martes' ;;
+        Wednesday) weekday='miércoles' ;; Thursday) weekday='jueves' ;; Friday) weekday='viernes' ;; Saturday) weekday='sábado' ;;
+      esac
+      case "$month" in
+        January) month='enero' ;; February) month='febrero' ;; March) month='marzo' ;; April) month='abril' ;;
+        May) month='mayo' ;; June) month='junio' ;; July) month='julio' ;; August) month='agosto' ;;
+        September) month='septiembre' ;; October) month='octubre' ;; November) month='noviembre' ;; December) month='diciembre' ;;
+      esac
+      printf '%s, %s de %s de %s\n' "$weekday" "$day" "$month" "$year"
       ;;
-    *) LC_TIME=C date '+%A, %-d %B %Y' ;;
+    *) printf '%s, %s %s %s\n' "$weekday" "$day" "$month" "$year" ;;
   esac
 }
 
