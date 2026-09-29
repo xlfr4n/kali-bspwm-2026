@@ -5,6 +5,8 @@
   accent: #ff3344;
   muted: #8b949e;
   font: "JetBrains Mono 10";
+  background-color: @bg;
+  text-color: @fg;
 }
 window { width: 48%; location: center; anchor: center; background-color: @bg; border: 1px; border-color: @accent; border-radius: 16px; padding: 18px; }
 mainbox { padding: 4px; }
