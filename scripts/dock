@@ -32,7 +32,7 @@ install_theme(){
 }
 
 install_launcher(){
-  local id="$1" name="$2" icon="$4" wmclass="${5:-}"
+  local id="$1" name="$2" icon="$3" wmclass="${4:-}"
   local desktop="$HOME/.local/share/applications/xLFr4n-${id}.desktop"
   mkdir -p "$(dirname "$desktop")"
   cat > "$desktop" <<EOF
@@ -52,15 +52,19 @@ EOF
 
 build_launchers(){
   rm -f "$LAUNCHERS"/*.dockitem 2>/dev/null || true
-  command -v brave-browser >/dev/null 2>&1 && install_launcher brave "Brave Browser" "brave-browser --new-window" "brave-browser" "brave-browser"
-  command -v kitty >/dev/null 2>&1 && install_launcher kitty "Kitty" "kitty" "kitty" "kitty"
-  command -v thunar >/dev/null 2>&1 && install_launcher files "Files" "thunar" "system-file-manager" "Thunar"
-  command -v code >/dev/null 2>&1 && install_launcher code "Visual Studio Code" "code" "code" "Code"
-  command -v burpsuite >/dev/null 2>&1 && install_launcher burp "Burp Suite" "burpsuite" "burpsuite" "BurpSuite"
-  install_launcher editor "Neovim" "sh -c \"kitty --class floating_nvim -e nvim\"" "text-editor" "floating_nvim"
-  install_launcher kali "xLFr4n Menu" "sh -c \"$HOME/.local/bin/kali-menu\"" "xlfr4n-menu"
-  install_launcher target "Target Console" "sh -c \"$HOME/.local/bin/settarget\"" "xlfr4n-target"
-  install_launcher lab "Kali Lab" "sh -c \"kitty --title Kali-Lab -e lab\"" "xlfr4n-lab"
+  command -v brave-browser >/dev/null 2>&1 && install_launcher brave "Brave Browser" "brave-browser" "brave-browser"
+  command -v kitty >/dev/null 2>&1 && install_launcher kitty "Kitty" "kitty" "kitty"
+  command -v thunar >/dev/null 2>&1 && install_launcher files "Files" "system-file-manager" "Thunar"
+  command -v code >/dev/null 2>&1 && install_launcher code "Visual Studio Code" "code" "Code"
+  command -v burpsuite >/dev/null 2>&1 && install_launcher burp "Burp Suite" "burpsuite" "BurpSuite"
+  install_launcher editor "Neovim" "text-editor" "floating_nvim"
+  install_launcher kali "xLFr4n Menu" "xlfr4n-menu"
+  install_launcher target "Target Console" "xlfr4n-target" "kali-target"
+  install_launcher lab "Kali Lab" "xlfr4n-lab" "kali-lab"
+  command -v btop >/dev/null 2>&1 && install_launcher btop "System Monitor" "utilities-system-monitor"
+  command -v lxappearance >/dev/null 2>&1 && install_launcher settings "Appearance" "preferences-desktop-theme" "Lxappearance"
+  command -v nm-connection-editor >/dev/null 2>&1 && install_launcher network "Network" "network-wired" "Nm-connection-editor"
+  command -v flameshot >/dev/null 2>&1 && install_launcher screenshot "Screenshot" "camera-photo"
 }
 
 start_tint2(){
