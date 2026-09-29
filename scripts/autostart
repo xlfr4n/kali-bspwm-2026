@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
 # ⚡ xlfr4n // Kali BSPWM 2026
-# Fast session bootstrap: expose a usable desktop first, then stage visual polish.
+# Fast session bootstrap: expose a usable BSPWM session first, then stage visual polish.
 set -Eeuo pipefail
 
 log(){
   mkdir -p "$HOME/.cache"
-  printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$*" >> "$HOME/.cache/xlfr4n-session.log"
+  printf '[%s] %s\n' "$(date '+%H:%M:%S.%3N')" "$*" >> "$HOME/.cache/xlfr4n-session.log"
 }
 
-# Clear leftovers from older sessions. Kept best-effort and intentionally short.
-pkill -x nm-applet 2>/dev/null || true
+# Clear only visual/session leftovers from older BSPWM runs.
 for proc in sxhkd polybar dunst picom plank tint2; do
-  pkill -x "$proc" 2>/dev/null || true
+  if pgrep -x "$proc" >/dev/null 2>&1; then
+    pkill -x "$proc" 2>/dev/null || true
+  fi
 done
 
 mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1"
 
 # ═══════════════════════════════════════════════════════════
-# PHASE 1 — input + visible chrome
+# PHASE 1 — minimum viable session
+# Keep this phase deliberately tiny so the display manager can
+# hand over to BSPWM without waiting on cosmetic work.
 # ═══════════════════════════════════════════════════════════
 log "phase=core start"
 
@@ -25,12 +28,8 @@ if command -v sxhkd >/dev/null 2>&1; then
   sxhkd >/dev/null 2>&1 &
 fi
 
-if command -v dunst >/dev/null 2>&1; then
-  dunst >/dev/null 2>&1 &
-fi
-
-if [ -x "$HOME/.config/polybar/launch.sh" ]; then
-  "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+if [ -x "$HOME/.local/bin/keyboard" ]; then
+  "$HOME/.local/bin/keyboard" >/dev/null 2>&1 &
 fi
 
 # Apply the runtime accent without rewriting any files.
@@ -51,10 +50,26 @@ log "phase=core ready"
 
 # ═══════════════════════════════════════════════════════════
 # PHASE 2 — staged visual polish
-# The first screen is intentionally lightweight; heavier jobs arrive
-# in sequence so wallpaper conversion, dock generation and compositing
-# do not all compete for CPU/I/O at the same moment.
+# Each task starts independently after a small delay. This avoids
+# converting wallpapers, probing monitors and launching compositors
+# at the exact same instant on a virtual machine.
 # ═══════════════════════════════════════════════════════════
+(
+  sleep 0.05
+  if command -v dunst >/dev/null 2>&1; then
+    dunst >/dev/null 2>&1 &
+  fi
+  log "dunst dispatched"
+) &
+
+(
+  sleep 0.10
+  if [ -x "$HOME/.config/polybar/launch.sh" ]; then
+    "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+  fi
+  log "polybar dispatched"
+) &
+
 (
   sleep 0.15
   "$HOME/.local/bin/monitor-refresh" --startup >/dev/null 2>&1 || true
@@ -68,19 +83,19 @@ log "phase=core ready"
 ) &
 
 (
-  sleep 0.35
+  sleep 0.45
   nice -n 10 "$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 || true
   log "wallpaper ready"
 ) &
 
 (
-  sleep 0.50
+  sleep 0.65
   "$HOME/.local/bin/dock" --start >/dev/null 2>&1 || true
   log "dock ready"
 ) &
 
 (
-  sleep 0.75
+  sleep 0.85
   "$HOME/.local/bin/start-picom" >/dev/null 2>&1 || true
   log "picom ready"
 ) &
