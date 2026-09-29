@@ -7,8 +7,8 @@
       "right": 5
     },
     "color": {
-      "1": "light_red",
-      "2": "white"
+      "1": "blue",
+      "2": "light_black"
     }
   },
   "display": {
@@ -26,7 +26,7 @@
   "modules": [
     {
       "type": "title",
-      "format": "⚡ xLFr4n  //  {user-name}@{host-name}",
+      "format": "KALI // {user-name}@{host-name}",
       "outputColor": "light_red"
     },
     {
@@ -95,6 +95,28 @@
       "type": "locale",
       "key": "LOCALE",
       "keyColor": "red"
+    },
+    {
+      "type": "command",
+      "key": "TARGET",
+      "keyColor": "red",
+      "text": "target_file=\"$HOME/.config/polybar/target\"; target=$(cat \"$target_file\" 2>/dev/null || true); if [ -n \"$target\" ]; then printf \"%s\" \"$target\"; else printf \"not set\"; fi"
+    },
+    {
+      "type": "localip",
+      "key": "IP",
+      "keyColor": "red",
+      "showIpv4": true,
+      "showIpv6": false,
+      "showMac": false,
+      "showLoop": false,
+      "defaultRouteOnly": true
+    },
+    {
+      "type": "datetime",
+      "key": "DATE",
+      "keyColor": "red",
+      "format": "{day-pretty}/{month-pretty}/{year}  {hour-pretty}:{minute-pretty}"
     }
   ]
 }
