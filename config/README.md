@@ -26,7 +26,7 @@ TOP
   Polybar transparente · estado del sistema · target · red · CPU/RAM/disco/audio
 
 BOTTOM
-  1 2 3 4 5 6 7 8 9                         fecha · hora
+  1 2 3 4 5 6 7 8 9                         📅 fecha larga ·  hora
                          iconos del dock
 ```
 
@@ -51,6 +51,6 @@ This directory contains the reproducible workspace configuration:
 
 The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces on the lower-left, date/time on the lower-right and a centered icon launcher dock.
 
-Configuration is reproducible and should not contain personal secrets or host-only paths.
+Configuration is reproducible and should not contain personal secrets or host-only paths. The lower date follows `LC_TIME`; status modules expose useful actions instead of being purely decorative.
 
 **⚡ xLFr4n · Configuration as documentation**
