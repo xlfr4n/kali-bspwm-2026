@@ -30,6 +30,11 @@ panel_layer = top
 panel_dock = 0
 wm_menu = 0
 strut_policy = follow_size
+panel_window_name = xLFr4n Dock
+mouse_effects = 1
+font_shadow = 0
+mouse_hover_icon_asb = 100 0 12
+mouse_pressed_icon_asb = 100 0 -4
 
 #-------------------------------------
 # Launcher
