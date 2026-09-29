@@ -43,9 +43,9 @@ case "$choice" in
   WALLPAPER*) wallpaper --random ;;
   LAB*) dock-launch lab ;;
   MONITOR*) monitor-refresh ;;
-  DOCTOR*) kitty --title Kali-Doctor -e doctor.sh ;;
-  SYSTEM*) kitty --title xLFr4n-System -e xlfr4n-banner --static ;;
-  VMWARE*) kitty --title VMware-Tools -e vmware-tools ;;
+  DOCTOR*) xlfr4n-launch "Doctor" --class xLFr4n-Doctor -- kitty --class xLFr4n-Doctor --title Kali-Doctor -e doctor.sh ;;
+  SYSTEM*) xlfr4n-launch "System Snapshot" --class xLFr4n-System -- kitty --class xLFr4n-System --title xLFr4n-System -e xlfr4n-banner --static ;;
+  VMWARE*) xlfr4n-launch "Virtualization Tools" --class VMware-Tools -- kitty --class VMware-Tools --title VMware-Tools -e vmware-tools ;;
   SCREEN*) screenshot-menu ;;
   LOCK*) lock-screen ;;
   POWER*) power-menu ;;
