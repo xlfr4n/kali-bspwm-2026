@@ -15,3 +15,22 @@ All active scripts carry the **xlfr4n** signature.
 ---
 
 <p align="center"><strong>⚡ xlfr4n</strong> · Terminal first · Reproducible always</p>
+
+
+## ⏱️ Session profiling / Perfil de sesión
+
+### 🇪🇸 Español
+
+`session-profile` lee `~/.cache/xlfr4n-session.log` sin modificar el sistema y muestra el orden temporal del arranque.
+
+```bash
+session-profile
+```
+
+### 🇬🇧 English
+
+`session-profile` reads `~/.cache/xlfr4n-session.log` without modifying the system and shows the timing order of the startup phases.
+
+```bash
+session-profile
+```
