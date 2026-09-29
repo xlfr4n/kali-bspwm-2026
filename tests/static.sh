@@ -113,7 +113,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset" grep -Fq "offset-y = 25pt" config/polybar/config.ini
+check "Workspace rail offset above dock" grep -Fq "offset-y = 76pt" config/polybar/config.ini
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
