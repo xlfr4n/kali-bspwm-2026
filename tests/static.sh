@@ -12,6 +12,7 @@ bash -n uninstall.sh
 bash -n config/bspwm/bspwmrc
 bash -n config/polybar/launch.sh
 bash -n scripts/dock
+bash -n scripts/dock-launch
 bash -n scripts/mission-control
 bash -n scripts/desktop-style
 
@@ -19,7 +20,7 @@ while IFS= read -r -d '' file; do
   bash -n "$file"
 done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
-required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
+required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md config/tint2/tint2rc config/tint2/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
 
 for file in $required_files; do
   test -s "$file"
@@ -37,9 +38,13 @@ grep -Fq 'border = #55ff3344' config/polybar/config.ini
 grep -Fq 'width = 96%' config/polybar/config.ini
 grep -Fq 'radius = 12' config/polybar/config.ini
 grep -Fq 'plank' install.sh
+grep -Fq 'tint2' install.sh
 grep -Fq '[bar/dock]' config/polybar/config.ini
 grep -Fq 'Polybar dock' scripts/dock
 grep -Fq 'polybar-fallback' scripts/dock
+grep -Fq 'tint2' scripts/dock
+grep -Fq 'panel_items = L' config/tint2/tint2rc
+grep -Fq 'dock-launch' scripts/dock
 grep -Fq 'SPOTLIGHT Launch apps' scripts/kali-menu
 grep -Fq 'MISSION   Window overview' scripts/kali-menu
 grep -Fq 'DOCK      Toggle floating dock' scripts/kali-menu
