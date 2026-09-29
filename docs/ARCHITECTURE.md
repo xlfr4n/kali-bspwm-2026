@@ -1,78 +1,82 @@
-# ⚡ xlfr4n // Architecture
+# ⚡ xLFr4n // Architecture
 
-> 🧩 **One desktop, separate layers, predictable behaviour.**  
-> 🧩 **Un escritorio, capas separadas y comportamiento predecible.**
+> 🧩 **One desktop, separate layers, predictable behaviour.**
 
 ## 🇪🇸 Español
 
-Kali BSPWM 2026 está organizado por responsabilidades para que la estética no tenga que invadir la instalación ni la lógica de sesión.
+Kali BSPWM 2026 está separado por responsabilidades: el window manager gestiona ventanas, SXHKD atajos, Polybar información, Tint2 el dock y los helpers las tareas auxiliares.
 
 ### 🚀 Flujo de sesión
-
-El arranque está dividido en dos fases para que la sesión usable aparezca antes que la decoración pesada:
 
 ```text
 Display Manager
       ↓
-     bspwm
+     BSPWM
       ↓
-   autostart
-   ├─ FASE 1 → sxhkd + dunst + Polybar + bordes BSPWM
-   └─ FASE 2 → monitor-refresh + wallpaper + desktop-style + dock + picom
+  autostart
+      │
+      ├─ PHASE 1 · sxhkd + dunst + Polybar + BSPWM borders
+      │
+      └─ PHASE 2 · staged background work
+                  ├─ monitor-refresh
+                  ├─ desktop-style
+                  ├─ wallpaper
+                  ├─ dock
+                  └─ Picom
 ```
 
-La segunda fase se ejecuta en segundo plano y no vuelve a ejecutar `theme-switch` durante cada login. Los cambios de tema se hacen bajo demanda.
+La Fase 2 no bloquea la creación de la sesión. Las tareas que pueden consumir CPU/I/O se escalonan para reducir el trabajo simultáneo durante el login.
+
+### 🧱 Capas
 
 | Capa | Responsabilidad |
 |---|---|
-| `install.sh` | Detecta Kali/VMware/VirtualBox, instala paquetes, crea backups y despliega el entorno. |
-| `config/` | Configuración declarativa de BSPWM, SXHKD, Polybar, Kitty, Rofi, Dunst, Picom y Zsh. |
-| `scripts/` | Herramientas de sesión y utilidades: menú, target, monitores, temas, VMware, diagnóstico, screenshots, etc. |
-| `themes/` | Identidad visual y temas estáticos. |
-| `docs/` | Guías operativas y criterios de validación. |
+| `install.sh` | Comprueba Kali, detecta virtualización, instala paquetes, crea backups y despliega. |
+| `config/` | Configuración reproducible de BSPWM, SXHKD, Polybar, Kitty, Rofi, Picom, Dunst, Tint2/Plank y Zsh. |
+| `scripts/` | Menú, dock, target, wallpapers, monitores, themes, diagnóstico y VM helpers. |
+| `docs/` | Procedimientos operativos y validación. |
+| `tests/` | Bash syntax, static guards y ShellCheck/CI. |
+
+### 🖥️ Workspace
+
+- 9 escritorios BSPWM: `1 → 9`.
+- Workspace activo: acento rojo/línea fina, sin caja.
+- Barra superior: transparente y sin borde.
+- Barra inferior: transparente y sin borde.
+- Fecha + hora: abajo a la derecha.
+- Dock: centrado y launcher-only.
+
+### 🎨 Themes
+
+Los themes sincronizan Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM. `pywal16` es opcional.
 
 ### 🔐 Principios
 
-- 💾 **Backup first:** los cambios sobre la configuración del usuario se respaldan antes de desplegar.
-- 🔄 **Reversible:** `uninstall.sh` elimina la capa del proyecto y conserva los backups.
-- 🧱 **Separated concerns:** BSPWM no necesita encargarse de arrancar cada servicio directamente.
-- 🖥️ **X11 first:** BSPWM es un window manager X11; el proyecto trabaja con esa sesión.
-- ☁️ **VM-aware:** VMware/VirtualBox se detectan antes de activar integración específica.
-- 🎨 **Static core:** el escritorio funciona con temas estáticos incluso si pywal16 no está disponible.
-- 🩺 **Read-only doctor:** el diagnóstico informa; no intenta “arreglar” el sistema a escondidas.
-
-### 🧭 Identidad
-
-Todos los helpers activos de este proyecto llevan la firma `⚡ xlfr4n`, mientras que la documentación conserva español + inglés.
+- Backup antes de reemplazar configuración.
+- Cambios reversibles.
+- Guest-first: el host queda fuera del instalador.
+- X11 como base de BSPWM.
+- Diagnóstico read-only.
+- Sin dependencias Python obligatorias.
+- Sin repositorios Debian de terceros para el núcleo.
 
 ## 🇬🇧 English
 
-Kali BSPWM 2026 is split by responsibility so the visual layer does not have to leak into installation logic or session orchestration.
+Kali BSPWM 2026 is split by responsibility. BSPWM manages windows, SXHKD handles shortcuts, Polybar displays state, Tint2 provides the launcher dock, and helper scripts handle session tasks.
 
-| Layer | Responsibility |
-|---|---|
-| `install.sh` | Detects Kali/VMware/VirtualBox, installs packages, backs up user config and deploys the environment. |
-| `config/` | Declarative BSPWM, SXHKD, Polybar, Kitty, Rofi, Dunst, Picom and Zsh configuration. |
-| `scripts/` | Session utilities: menu, target, monitors, themes, VMware, diagnostics, screenshots and more. |
-| `themes/` | Visual identity and static themes. |
-| `docs/` | Operational guides and validation criteria. |
+Startup is intentionally staged so the usable desktop appears before heavier visual work.
+
+### 🖥️ Workspace
+
+- 9 BSPWM desktops: `1 → 9`.
+- Focused desktop: accent/underline, no box.
+- Top rail: transparent and borderless.
+- Bottom rail: transparent and borderless.
+- Date + time: bottom-right.
+- Dock: centered launcher-only layer.
 
 ### 🔐 Design principles
 
-Backups before overwrite, reversible removal, separated responsibilities, X11-native BSPWM behaviour, virtualization-aware setup, static themes as the reliable baseline and read-only diagnostics.
+Backups before overwrite, reversible changes, guest-only configuration, X11-native BSPWM behaviour, read-only diagnostics and a reliable static-theme core.
 
-### 🧭 Session flow
-
-Startup is split into two phases so the usable desktop is rendered before cosmetic work:
-
-```text
-Display Manager → bspwm → autostart
-                         ├─ PHASE 1: sxhkd + dunst + Polybar + BSPWM borders
-                         └─ PHASE 2: monitor-refresh + wallpaper + desktop-style + dock + picom
-```
-
-The second phase is dispatched in the background and does not re-run `theme-switch` during every login. Theme changes remain on-demand.
-
-### ⚡ Project signature
-
-Active helper scripts carry the `xlfr4n` signature while all user-facing documentation is maintained in ES + EN.
+**⚡ xLFr4n · One system, clear layers.**
