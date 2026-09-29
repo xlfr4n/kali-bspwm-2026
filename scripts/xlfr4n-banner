@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Fixed-width terminal identity. The frame is ASCII-only so JetBrains Mono
-# and fallback fonts cannot change its geometry.
+# Fixed-width terminal identity. The frame stays ASCII-only so font fallback
+# cannot change its geometry; the information columns are padded explicitly.
 set -u
 
 THEME_FILE="$HOME/.config/theme-state/current"
@@ -16,6 +16,21 @@ uptime="$(uptime -p 2>/dev/null | sed 's/^up //' || printf 'unknown')"
 resolution="$(xrandr 2>/dev/null | awk '/ connected primary | connected / {for (i=1;i<=NF;i++) if ($i ~ /^[0-9]+x[0-9]+\+/) {sub(/\+.*/, "", $i); print $i; exit}}')"
 resolution="${resolution:-unknown}"
 
+case "$virt" in
+  oracle) virt='VirtualBox' ;;
+  vmware) virt='VMware' ;;
+  qemu) virt='QEMU/KVM' ;;
+  kvm) virt='KVM' ;;
+  none|'') virt='Host' ;;
+esac
+
+case "$theme" in
+  htb-green) accent=32 ;;
+  nord) accent=36 ;;
+  purple) accent=35 ;;
+  *) accent=31 ;;
+esac
+
 if command -v free >/dev/null 2>&1; then
   memory="$(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
 else
@@ -23,30 +38,54 @@ else
 fi
 
 cpu="$(nproc 2>/dev/null || printf '?') cores"
+host="$(hostname 2>/dev/null || printf 'unknown')"
+arch="$(uname -m 2>/dev/null || printf 'unknown')"
+shell_name="${SHELL##*/}"
+shell_name="${shell_name:-sh}"
 
 clip_field() {
   local value="${1:-}"
-  LC_ALL=C printf '%s' "$value" | cut -c1-64
-}
-
-top_bottom() {
-  printf '\033[31m+------------------------------------------------------------------+\033[0m\n'
+  local max="${2:-64}"
+  LC_ALL=C printf '%s' "$value" | cut -c1-"$max"
 }
 
 frame_line() {
   local value
-  value="$(clip_field "${1:-}")"
-  printf '\033[31m|\033[0m %-64s \033[31m|\033[0m\n' "$value"
+  value="$(clip_field "${1:-}" 64)"
+  printf '\033[%sm|\033[0m %-64s \033[%sm|\033[0m\n' "$accent" "$value" "$accent"
 }
 
 frame_center() {
   local value="${1:-}"
   local length left right
-  value="$(clip_field "$value")"
+  value="$(clip_field "$value" 64)"
   length=${#value}
   left=$(( (64 - length) / 2 ))
   right=$(( 64 - length - left ))
-  printf '\033[31m|\033[0m%*s%s%*s\033[31m|\033[0m\n' "$left" '' "$value" "$right" ''
+  printf '\033[%sm|\033[0m%*s%s%*s\033[%sm|\033[0m\n'     "$accent" "$left" '' "$value" "$right" '' "$accent"
+}
+
+frame_section() {
+  frame_line "  ${1:-}"
+}
+
+pair_line() {
+  local a="${1:-}" b="${2:-}" c="${3:-}" d="${4:-}" e="${5:-}" f="${6:-}"
+  local content
+  a="$(clip_field "$a" 8)"
+  b="$(clip_field "$b" 12)"
+  c="$(clip_field "$c" 6)"
+  d="$(clip_field "$d" 12)"
+  e="$(clip_field "$e" 6)"
+  f="$(clip_field "$f" 13)"
+  printf -v content '%-8s %-12s  %-6s %-12s  %-6s %-13s' "$a" "$b" "$c" "$d" "$e" "$f"
+  frame_line "$content"
+}
+
+target_line() {
+  local value="${1:-not set}"
+  value="$(clip_field "$value" 51)"
+  frame_line "$(printf '%-8s %-51s' 'TARGET' "$value")"
 }
 
 animate_boot() {
@@ -54,26 +93,27 @@ animate_boot() {
   [ -t 1 ] || return 0
 
   local phase
-  for phase in "BOOT" "LINK" "SYNC" "DRAW" "READY"; do
-    printf '\r\033[2K\033[31m[xLFr4n]\033[0m  %-5s  KALI WORKSPACE' "$phase"
-    sleep 0.07
+  for phase in "BOOT" "LINK" "SYNC" "READY"; do
+    printf '\r\033[2K\033[%sm[ xLFr4n ]\033[0m  %-5s  INITIALIZING WORKSPACE' "$accent" "$phase"
+    sleep 0.06
   done
   printf '\r\033[2K'
 }
 
 printf '\n'
 animate_boot "${1:-}"
+top_bottom() {
+  printf '\033[%sm+------------------------------------------------------------------+\033[0m\n' "$accent"
+}
 top_bottom
-frame_center 'xLFr4n'
-frame_center 'KALI / PERSONAL SECURITY LAB'
+frame_center 'xLFr4n // KALI'
+frame_center 'PERSONAL SECURITY WORKSPACE'
 top_bottom
-frame_line "SESSION  $session    VIRT  $virt    THEME  $theme"
-frame_line "KERNEL   $kernel    CPU   $cpu    MEMORY  $memory"
-frame_line "SCREEN   $resolution    UPTIME  $uptime"
-if [ -n "$target" ]; then
-  frame_line "TARGET   $target"
-else
-  frame_line "TARGET   not set"
-fi
+frame_section 'SYSTEM SNAPSHOT // LIVE'
+pair_line 'SESSION' "$session" 'VIRT' "$virt" 'THEME' "$theme"
+pair_line 'KERNEL' "$kernel" 'CPU' "$cpu" 'MEMORY' "$memory"
+pair_line 'DISPLAY' "$resolution" 'HOST' "$host" 'ARCH' "$arch"
+pair_line 'SHELL' "$shell_name" 'UPTIME' "$uptime" '' ''
+target_line "${target:-not set}"
 top_bottom
 printf '\n'
