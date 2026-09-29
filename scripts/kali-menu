@@ -22,6 +22,7 @@ choice="$(
     'LAB       Open Kali Lab' \
     'MONITOR   Refresh displays' \
     'DOCTOR    Run diagnostics' \
+    'SYSTEM    Terminal system snapshot' \
     'VMWARE    VMware tools' \
     'SCREEN    Screenshot menu' \
     'LOCK      Lock session' \
@@ -43,6 +44,7 @@ case "$choice" in
   LAB*) dock-launch lab ;;
   MONITOR*) monitor-refresh ;;
   DOCTOR*) kitty --title Kali-Doctor -e doctor.sh ;;
+  SYSTEM*) kitty --title xLFr4n-System -e xlfr4n-banner --static ;;
   VMWARE*) kitty --title VMware-Tools -e vmware-tools ;;
   SCREEN*) screenshot-menu ;;
   LOCK*) lock-screen ;;
