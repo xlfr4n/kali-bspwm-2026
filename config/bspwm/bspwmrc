@@ -34,6 +34,16 @@ bspc rule -a Nm-connection-editor state=floating center=true
 bspc rule -a Lxappearance state=floating center=true
 bspc rule -a floating_nvim state=floating center=true follow=true
 
+# Paint an immediate dark root background so the X11 hand-off never looks blank.
+if command -v xsetroot >/dev/null 2>&1; then
+  xsetroot -solid '#101216'
+fi
+
+# Detach session helpers from BSPWM startup; visual polish must never hold the login path.
 if [ -x "$HOME/.local/bin/autostart" ]; then
-  "$HOME/.local/bin/autostart" >/dev/null 2>&1 &
+  if command -v setsid >/dev/null 2>&1; then
+    setsid "$HOME/.local/bin/autostart" >/dev/null 2>&1 </dev/null &
+  else
+    "$HOME/.local/bin/autostart" >/dev/null 2>&1 </dev/null &
+  fi
 fi
