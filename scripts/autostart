@@ -3,15 +3,22 @@
 # Fast session bootstrap: expose a usable BSPWM session first, then stage visual polish.
 set -Eeuo pipefail
 
+LOCK_FILE="$HOME/.cache/xlfr4n-autostart.lock"
+mkdir -p "$HOME/.cache"
+exec 9>"$LOCK_FILE"
+if command -v flock >/dev/null 2>&1; then
+  flock -n 9 || exit 0
+fi
+
 log(){
   mkdir -p "$HOME/.cache"
   printf '[%s] %s\n' "$(date '+%H:%M:%S.%3N')" "$*" >> "$HOME/.cache/xlfr4n-session.log"
 }
 
-# Clear only visual/session leftovers from older BSPWM runs.
+# Clear only visual/session leftovers owned by the current user.
 for proc in sxhkd polybar dunst picom plank tint2; do
   if pgrep -x "$proc" >/dev/null 2>&1; then
-    pkill -x "$proc" 2>/dev/null || true
+    pkill -u "$UID" -x "$proc" 2>/dev/null || true
   fi
 done
 
