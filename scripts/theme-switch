@@ -10,6 +10,7 @@ ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
 ROFI_FALLBACK="$HOME/.config/rofi/fallback.rasi"
 TINT2="$HOME/.config/tint2/tint2rc"
+PLANK_THEME="$HOME/.local/share/plank/themes/xLFr4n/dock.theme"
 STATE="$HOME/.config/theme-state"
 mkdir -p "$STATE"
 
@@ -24,7 +25,7 @@ current_theme() {
 apply() {
   local t="$1"
   local silent="${2:-0}"
-  local accent good warn border
+  local accent good warn border plank_rgb
 
   case "$silent" in
     0|1) ;;
@@ -33,10 +34,10 @@ apply() {
   esac
 
   case "$t" in
-    cyber-red) accent='#ff3344'; good='#5ee881'; warn='#ffc857' ;;
-    htb-green) accent='#9fef00'; good='#5ee881'; warn='#ffc857' ;;
-    nord) accent='#88c0d0'; good='#a3be8c'; warn='#ebcb8b' ;;
-    purple) accent='#bd93f9'; good='#50fa7b'; warn='#f1fa8c' ;;
+    cyber-red) accent='#ff3344'; good='#5ee881'; warn='#ffc857'; plank_rgb='255;;51;;68' ;;
+    htb-green) accent='#9fef00'; good='#5ee881'; warn='#ffc857'; plank_rgb='159;;239;;0' ;;
+    nord) accent='#88c0d0'; good='#a3be8c'; warn='#ebcb8b'; plank_rgb='136;;192;;208' ;;
+    purple) accent='#bd93f9'; good='#50fa7b'; warn='#f1fa8c'; plank_rgb='189;;147;;249' ;;
     *)
       echo "Unknown theme: $t" >&2
       return 2
@@ -67,6 +68,10 @@ apply() {
     sed -i -E "s/^border_color = .*/border_color = $accent 60/" "$TINT2"
   fi
 
+  if [ -f "$PLANK_THEME" ]; then
+    sed -i -E "s/^OuterStrokeColor=.*/OuterStrokeColor=$plank_rgb;;45/" "$PLANK_THEME"
+  fi
+
   if command -v bspc >/dev/null 2>&1; then
     bspc config active_border_color "$accent"
     bspc config focused_border_color "$accent"
@@ -88,7 +93,7 @@ apply() {
   fi
 
   if [ "$silent" -eq 0 ] && command -v notify-send >/dev/null 2>&1; then
-    notify-send "Kali BSPWM" "Theme: $t" || true
+    notify-send "xLFr4n // THEME" "Theme: $t · Kitty: Ctrl+Shift+F5 to reload existing windows." || true
   fi
 }
 
