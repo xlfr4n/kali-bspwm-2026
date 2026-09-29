@@ -40,8 +40,9 @@ session-profile
 
 ### 🇪🇸 Español
 
-- `xlfr4n-banner` imprime el snapshot de terminal y su animación de arranque en formato fijo.
-- `xlfr4n-pulse` mantiene el pulso visual ligero de la identidad superior de Polybar.
+- `xlfr4n-banner` imprime el snapshot de terminal como herramienta manual de diagnóstico.
+- `xlfr4n-pulse` ejecuta la microanimación typewriter/dissolve de la identidad superior de Polybar.
+- `xlfr4n-launch` centraliza el feedback Dunst de los lanzamientos iniciados desde atajos y menús propios.
 - `xlfr4n-date` genera la fecha larga según `LC_TIME`, con fallback legible cuando la locale no está instalada.
 - `workspace-hud` escucha los cambios de escritorio de BSPWM y muestra un feedback breve, apilado y animado mediante Dunst/Picom.
 - `audio-control` mantiene las teclas multimedia con feedback visual y usa `pamixer` o `wpctl`.
@@ -50,8 +51,9 @@ session-profile
 
 ### 🇬🇧 English
 
-- `xlfr4n-banner` prints the terminal system snapshot with a fixed-width boot animation.
-- `xlfr4n-pulse` provides the lightweight animated identity signal used by Polybar.
+- `xlfr4n-banner` prints the terminal system snapshot as a manual diagnostic tool.
+- `xlfr4n-pulse` provides the typewriter/dissolve micro-animation used by Polybar.
+- `xlfr4n-launch` centralizes Dunst launch feedback for apps started from the workspace's own shortcuts and menus.
 - `xlfr4n-date` renders the long date using `LC_TIME`, with a readable fallback when the locale is unavailable.
 - `workspace-hud` listens for BSPWM desktop changes and provides a brief stacked visual transition cue through Dunst/Picom.
 - `audio-control` keeps media keys with visual feedback and uses `pamixer` or `wpctl`.
