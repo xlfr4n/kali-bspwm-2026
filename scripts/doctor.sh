@@ -108,7 +108,12 @@ check "Lock helper" command -v lock-screen
 check "Virtualization helper" command -v vmware-tools
 check "Theme state" theme_check
 check "Target state" target_check
-check "Floating dock configuration" sh -c 'test -s "$HOME/.config/tint2/tint2rc" || test -s "$HOME/.config/plank/xLFr4n/dock.theme"'
+floating_dock_check() {
+  [ -s "$HOME/.config/tint2/tint2rc" ] ||
+  [ -s "$HOME/.config/plank/xLFr4n/dock.theme" ]
+}
+
+check "Floating dock configuration" floating_dock_check
 check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
