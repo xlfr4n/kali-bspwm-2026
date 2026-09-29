@@ -8,3 +8,6 @@ Icon=brave-browser
 Terminal=false
 NoDisplay=true
 StartupWMClass=brave-browser
+MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;text/xml;
+Categories=Network;WebBrowser;
+StartupNotify=true
