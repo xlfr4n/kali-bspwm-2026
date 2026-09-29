@@ -77,8 +77,6 @@ check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
 check "Picom" command -v picom
 check "Dunst" command -v dunst
-check "Plank" command -v plank
-check "Papirus icons" test -d /usr/share/icons/Papirus-Dark
 check "Desktop style helper" command -v desktop-style
 check "Dock helper" command -v dock
 check "Mission Control helper" command -v mission-control
@@ -101,10 +99,14 @@ check "Lock helper" command -v lock-screen
 check "Virtualization helper" command -v vmware-tools
 check "Theme state" theme_check
 check "Target state" target_check
-check "Plank theme source" test -s "$HOME/.config/plank/xLFr4n/dock.theme"
+check "Floating dock configuration" test -s "$HOME/.config/plank/xLFr4n/dock.theme"
 check "10 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
+
+if command -v dock >/dev/null 2>&1; then
+  info "floating dock backend: $(dock --backend 2>/dev/null || printf "unknown")"
+fi
 
 info "virtualization: ${virt:-unknown}"
 info "session: ${XDG_SESSION_TYPE:-unknown} DISPLAY=${DISPLAY:-unset}"
