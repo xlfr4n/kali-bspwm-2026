@@ -10,6 +10,7 @@
 - Added notification stacking/history refinements for cleaner transient feedback.
 - Extended the read-only doctor and static guardrails for the new UX helpers.
 - Updated the visual and script documentation to make the new feedback layer explicit.
+- Refined the xLFr4n terminal banner into a fixed-column live system snapshot with theme-aware accents and deterministic geometry.
 
 ## 2026-09-29 — Final workspace pass
 
