@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Volume shortcuts with instant visual feedback.
+set -Eeuo pipefail
+
+action="${1:-}"
+case "$action" in
+  up|down|mute) ;;
+  *) printf 'Usage: audio-control {up|down|mute}\n' >&2; exit 2 ;;
+esac
+
+read_state() {
+  volume=''
+  muted='no'
+  if command -v pamixer >/dev/null 2>&1; then
+    volume="$(pamixer --get-volume 2>/dev/null || true)"
+    [ "$(pamixer --get-mute 2>/dev/null || true)" = "true" ] && muted="yes"
+  elif command -v wpctl >/dev/null 2>&1; then
+    local line raw
+    line="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null || true)"
+    raw="$(awk '{print $2}' <<< "$line")"
+    [ -n "$raw" ] && volume="$(awk -v v="$raw" 'BEGIN { printf "%d", v * 100 + 0.5 }')"
+    grep -q "\[MUTED\]" <<< "$line" && muted="yes"
+  fi
+  [ -n "$volume" ] || volume=0
+}
+
+case "$action" in
+  up)
+    if command -v pamixer >/dev/null 2>&1; then pamixer --increase 5
+    elif command -v wpctl >/dev/null 2>&1; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+    else exit 127; fi
+    ;;
+  down)
+    if command -v pamixer >/dev/null 2>&1; then pamixer --decrease 5
+    elif command -v wpctl >/dev/null 2>&1; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    else exit 127; fi
+    ;;
+  mute)
+    if command -v pamixer >/dev/null 2>&1; then pamixer --toggle-mute
+    elif command -v wpctl >/dev/null 2>&1; then wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    else exit 127; fi
+    ;;
+esac
+
+read_state
+if command -v notify-send >/dev/null 2>&1; then
+  if [ "$muted" = "yes" ]; then text="MUTED"; else text="${volume}%"; fi
+  notify-send -u low -t 850 -h int:value:"$volume" "xLFr4n // AUDIO" "$text" >/dev/null 2>&1 || true
+fi
