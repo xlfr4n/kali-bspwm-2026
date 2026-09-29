@@ -110,7 +110,7 @@ check_not_present "No nm-applet startup" grep -Fq "command -v nm-applet" scripts
 check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
 check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
 check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
-check "Desktop docs" grep -Fq "Super" docs/DESKTOP-STYLE.md
+check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
 check "xLFr4n identity in scripts" grep -Fq "xlfr4n" scripts/*.sh scripts/*
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
 check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
