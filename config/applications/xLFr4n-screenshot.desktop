@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Screenshot
+Comment=Capture the screen or a region
+Exec=sh -c "dock-launch screenshot"
+Icon=camera-photo
+Terminal=false
+NoDisplay=true
+StartupNotify=true
+Categories=Graphics;Utility;
