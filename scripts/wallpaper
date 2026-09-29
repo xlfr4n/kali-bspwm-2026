@@ -103,6 +103,9 @@ set_wallpaper() {
 case "${1:-}" in
   --random|"")
     index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
+    if [ "${#wallpapers[@]}" -gt 1 ] && [ "${wallpapers[$index]}" = "$current" ]; then
+      index=$(( (index + 1) % ${#wallpapers[@]} ))
+    fi
     set_wallpaper "${wallpapers[$index]}"
     ;;
   --next)
