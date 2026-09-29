@@ -103,7 +103,7 @@ log "phase=core ready"
 
 (
   sleep 0.45
-  nice -n 10 "$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 || true
+  nice -n 10 "$HOME/.local/bin/wallpaper" --default >/dev/null 2>&1 || true
   log "wallpaper ready"
 ) &
 
