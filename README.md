@@ -38,6 +38,10 @@ La idea no es instalar un escritorio completo encima de Kali. La idea es mantene
 - 🖼️ wallpapers con caché;
 - 🎯 target helper;
 - 🩺 doctor read-only;
+- 🎞️ workspace HUD con feedback de transición;
+- 🔊 feedback visual de volumen/mute;
+- 🌐 indicador de red adaptativo según la ruta por defecto;
+- 🔋 batería opcional que aparece solo cuando existe;
 - 🖥️ detección de VirtualBox/VMware;
 - 💾 backups antes del despliegue.
 
@@ -282,7 +286,7 @@ La zona inferior también es transparente:
                            [ iconos del dock ]
 ```
 
-Los escritorios están deliberadamente **pequeños y compactos**. El escritorio activo se distingue mediante un acento/línea fina, no mediante una caja.
+Los escritorios están deliberadamente **pequeños y compactos**. El escritorio activo se distingue mediante un acento/línea fina, no mediante una caja. Al cambiar de escritorio, `workspace-hud` añade una señal breve y animada para confirmar el foco sin llenar la pantalla.
 
 Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro.
 
@@ -355,6 +359,14 @@ No son porcentajes de “rendimiento general”: cada uno representa una métric
 Lista completa: [docs/README.md](./docs/README.md) y [config/README.md](./config/README.md).
 
 ---
+
+## 🎞️ UX feedback layer
+
+The workspace now treats feedback as part of the desktop language: desktop changes use `workspace-hud`, media keys use `audio-control`, and transient Dunst notifications fade with Picom. These helpers are deliberately optional, short-lived and low overhead so the visual layer stays clean in a VM.
+
+### 🇪🇸
+
+La capa de feedback no añade paneles permanentes. Solo responde cuando ocurre algo: cambio de escritorio, volumen/mute, lanzamiento de aplicaciones, cambio de tema o copia del target.
 
 # 🎨 Themes
 
