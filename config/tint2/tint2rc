@@ -57,6 +57,10 @@ launcher_item_app = ~/.local/share/applications/xLFr4n-editor.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-burp.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-lab.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-target.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-btop.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-settings.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-network.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-screenshot.desktop
 
 #-------------------------------------
 # Tooltips
