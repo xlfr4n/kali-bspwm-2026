@@ -4,18 +4,26 @@
 
 ## 🇪🇸 Español
 
-- `ARCHITECTURE.md` — estructura del sistema y sus capas.
-- `FIRST-VM-TEST.md` — primera validación dentro de una máquina virtual.
-- `VMWARE.md` — notas específicas para VMware.
+| Documento | Para qué sirve |
+|---|---|
+| `INSTALL.md` | Instalación nueva, actualización, VM y troubleshooting |
+| `ARCHITECTURE.md` | Capas del sistema y orden de arranque |
+| `FIRST-VM-TEST.md` | Primera validación dentro de un guest Kali |
+| `VMWARE.md` | Integración específica de VMware |
+| `DESKTOP-STYLE.md` | Filosofía visual y componentes del workspace |
 
-La documentación describe el **guest Kali**. Las decisiones de host y cambios destructivos quedan fuera del instalador salvo que estén documentados explícitamente.
+La documentación describe el **guest Kali**. El host Windows, VirtualBox o VMware no se modifica automáticamente.
 
 ## 🇬🇧 English
 
-- `ARCHITECTURE.md` — system structure and layers.
-- `FIRST-VM-TEST.md` — first validation inside a virtual machine.
-- `VMWARE.md` — VMware-specific notes.
+| Document | Purpose |
+|---|---|
+| `INSTALL.md` | Fresh install, updates, VM setup and troubleshooting |
+| `ARCHITECTURE.md` | System layers and startup order |
+| `FIRST-VM-TEST.md` | First validation inside a Kali guest |
+| `VMWARE.md` | VMware-specific integration |
+| `DESKTOP-STYLE.md` | Visual layer and workspace philosophy |
 
-Documentation describes the **Kali guest environment**. Host-side decisions and destructive changes remain outside the installer unless explicitly documented.
+Documentation describes the **Kali guest**. Windows, VirtualBox and VMware host settings are not changed automatically.
 
-**⚡ xLFr4n · Reproducible setup, explicit boundaries**
+**⚡ xLFr4n · Reproducible setup · explicit boundaries · ES + EN**
