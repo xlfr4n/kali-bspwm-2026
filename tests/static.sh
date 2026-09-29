@@ -175,5 +175,5 @@ check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any f
 check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
 check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
 check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
-check "Autostart starts workspace HUD" grep -Fq "workspace-hud --daemon" scripts/autostart
+check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
