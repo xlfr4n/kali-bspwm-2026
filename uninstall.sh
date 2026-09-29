@@ -12,6 +12,7 @@ set -Eeuo pipefail
 for proc in sxhkd polybar dunst nm-applet picom plank; do
   pkill -x "$proc" 2>/dev/null || true
 done
+pkill -f '[p]olybar dock' 2>/dev/null || true
 
 latest_backup="$(find "$HOME/.kali-bspwm-backups"   -mindepth 1 -maxdepth 1 -type d   -printf '%T@ %p
 ' 2>/dev/null |
