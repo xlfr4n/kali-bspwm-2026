@@ -2,14 +2,38 @@
 
 ## 🇪🇸 Español
 
-La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en macOS: Polybar flotante, dock Plank con zoom, Spotlight, Mission Control, Brave-first, Papirus-Dark y botones GTK a la izquierda cuando son respetados por la aplicación.
+La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en interfaces de escritorio modernas sin introducir un escritorio completo.
 
-El banner de terminal usa un marco ASCII de ancho fijo para evitar descuadres con fuentes alternativas. La animación de arranque es corta, solo aparece en una terminal interactiva y puede omitirse con `xlfr4n-banner --static`.
+### 🎨 Lenguaje visual
+
+- Barra superior transparente y sin borde.
+- Barra inferior transparente y sin borde.
+- Escritorios 1→9 compactos abajo a la izquierda.
+- Fecha y hora abajo a la derecha.
+- Dock centrado con iconos reales.
+- Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
+- Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
+- Banner de terminal con marco de ancho fijo para evitar descuadres.
+
+### ⚡ Animación
+
+La animación se reserva para lugares donde aporta feedback: cursor/banners, fades de ventana y hover del dock. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
 
 ## 🇬🇧 English
 
-The visual layer keeps Kali + BSPWM lightweight and adds macOS-inspired ergonomics: floating Polybar, zooming Plank dock with a native Polybar icon-dock fallback, Spotlight, Mission Control, Brave-first launch, Papirus-Dark and left-side GTK window controls where supported.
+The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergonomics without introducing a full desktop environment.
 
-The terminal banner uses a fixed-width ASCII frame to avoid geometry drift with fallback fonts. Its short boot animation runs only in an interactive terminal and can be skipped with `xlfr4n-banner --static`.
+### 🎨 Visual language
+
+- Transparent, borderless top rail.
+- Transparent, borderless bottom rail.
+- Compact 1→9 workspaces on the lower-left.
+- Date and time on the lower-right.
+- Centered real-icon launcher dock.
+- Synchronized xLFr4n accents across Polybar, Kitty, Rofi, Dunst and BSPWM.
+- Picom with soft fades/shadows and no blur for VM compatibility.
+- Fixed-width terminal banner to avoid geometry drift.
+
+Animation is used where it provides feedback rather than visual noise: cursor/banner effects, window fades and dock hover.
 
 **⚡ xLFr4n · Kali · BSPWM · floating workspace**
