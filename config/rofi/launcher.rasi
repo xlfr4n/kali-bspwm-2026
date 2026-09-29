@@ -20,14 +20,14 @@ configuration {
 }
 
 window {
-  width: 48%;
+  width: 46%;
   location: center;
   anchor: center;
   background-color: @bg;
   border: 1px;
   border-color: @border;
-  border-radius: 18px;
-  padding: 18px;
+  border-radius: 16px;
+  padding: 16px;
 }
 
 mainbox {
@@ -35,7 +35,7 @@ mainbox {
 }
 
 inputbar {
-  padding: 9px;
+  padding: 8px;
   background-color: @bg-alt;
   border: 1px;
   border-color: @accent;
@@ -57,7 +57,7 @@ listview {
   lines: 9;
   columns: 1;
   fixed-height: false;
-  spacing: 7px;
+  spacing: 6px;
   padding: 8px 0px 0px 0px;
 }
 
