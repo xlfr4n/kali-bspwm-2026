@@ -53,12 +53,12 @@ apply() {
     "$KITTY"
 
   sed -i -E \
-    "s/^  accent: .*/  accent: $accent/; s/^  border: .*/  border: $border/" \
+    "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: $border;/" \
     "$ROFI"
 
   if [ -f "$ROFI_FALLBACK" ]; then
     sed -i -E \
-      "s/^  accent: .*/  accent: $accent/; s/^  border: .*/  border: $border/" \
+      "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: $border;/" \
       "$ROFI_FALLBACK"
   fi
 
