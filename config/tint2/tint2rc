@@ -5,16 +5,16 @@
 # Backgrounds
 #-------------------------------------
 rounded = 18
-border_width = 1
+border_width = 0
 border_sides = TBLR
-background_color = #0b0d10 94
-border_color = #ff3344 42
+background_color = #00000000 0
+border_color = #00000000 0
 
 rounded = 12
-border_width = 1
+border_width = 0
 border_sides = TBLR
-background_color = #161b22 98
-border_color = #ff3344 70
+background_color = #00000000 0
+border_color = #00000000 0
 
 #-------------------------------------
 # Panel
@@ -22,9 +22,9 @@ border_color = #ff3344 70
 panel_monitor = primary
 panel_position = bottom center horizontal
 panel_items = L
-panel_size = 680 58
-panel_margin = 0 8
-panel_padding = 6 5 6
+panel_size = 680 64
+panel_margin = 0 5
+panel_padding = 0 0 0
 panel_background_id = 1
 panel_layer = top
 panel_dock = 0
@@ -33,8 +33,8 @@ strut_policy = follow_size
 panel_window_name = xLFr4n Dock
 mouse_effects = 1
 font_shadow = 0
-mouse_hover_icon_asb = 100 0 12
-mouse_pressed_icon_asb = 100 0 -4
+mouse_hover_icon_asb = 100 0 18
+mouse_pressed_icon_asb = 100 0 -6
 
 #-------------------------------------
 # Launcher
@@ -42,7 +42,7 @@ mouse_pressed_icon_asb = 100 0 -4
 launcher_padding = 8 0 5
 launcher_background_id = 1
 launcher_icon_background_id = 0
-launcher_icon_size = 40
+launcher_icon_size = 46
 launcher_icon_asb = 100 0 0
 launcher_icon_theme = Papirus-Dark
 launcher_icon_theme_override = 1
