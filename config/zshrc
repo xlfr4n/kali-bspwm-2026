@@ -103,7 +103,7 @@ _kali_prompt() {
 
 add-zsh-hook precmd _kali_prompt
 
-if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" ]]; then
+if [[ -o interactive && -z "${XLFR4N_BANNER_DONE:-}" ]]; then
   export KALI_BSPWM_FASTFETCH_DONE=1
   command -v xlfr4n-banner >/dev/null 2>&1 && xlfr4n-banner
   :
