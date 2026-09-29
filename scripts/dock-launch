@@ -13,13 +13,13 @@ notify() {
 
 wait_for_window() {
   local want="$1"
-  local deadline=$((SECONDS + 15))
+  local deadline=$((SECONDS + 8))
   command -v wmctrl >/dev/null 2>&1 || return 1
   while (( SECONDS < deadline )); do
     if wmctrl -lx 2>/dev/null | awk -v want="${want,,}" 'BEGIN { IGNORECASE=1 } { class=tolower($3); if (index(class, want) > 0) { found=1; exit } } END { exit(found ? 0 : 1) }'; then
       return 0
     fi
-    sleep 0.5
+    sleep 0.25
   done
   return 1
 }
@@ -35,7 +35,7 @@ case "$app" in
   kali) wmclass=""; cmd=(kali-menu); app_label="xLFr4n Menu" ;;
   target) wmclass="kali-target"; cmd=(kitty --class kali-target --title Kali-Target -e settarget); app_label="Target Console" ;;
   lab) wmclass="kali-lab"; cmd=(kitty --class kali-lab --title Kali-Lab -e lab); app_label="Kali Lab" ;;
-  btop) wmclass=""; cmd=(kitty --title xLFr4n-Monitor -e btop); app_label="System Monitor" ;;
+  btop) wmclass="xLFr4n-btop"; cmd=(kitty --class xLFr4n-btop --title xLFr4n-Monitor -e btop); app_label="System Monitor" ;;
   settings) wmclass="lxappearance"; cmd=(lxappearance); app_label="Appearance" ;;
   network) wmclass="nm-connection-editor"; cmd=(nm-connection-editor); app_label="Network" ;;
   screenshot) wmclass=""; cmd=(flameshot gui); app_label="Screenshot" ;;
