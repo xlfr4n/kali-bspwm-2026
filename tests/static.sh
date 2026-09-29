@@ -143,7 +143,7 @@ check "Fastfetch xLFr4n title" grep -Fq '⚡ xLFr4n' config/fastfetch/config.jso
 check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
 check "Unified launch feedback helper" grep -Fq "xLFr4n // LAUNCH" scripts/xlfr4n-launch
-check "Launch helper accepts WM class" grep -Fq '--class' scripts/xlfr4n-launch
+check "Launch helper accepts WM class" grep -Fq -- '--class' scripts/xlfr4n-launch
 check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
 check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
 check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
