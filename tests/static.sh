@@ -20,7 +20,7 @@ while IFS= read -r -d '' file; do
   bash -n "$file"
 done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
-required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md config/tint2/tint2rc config/tint2/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
+required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/rofi/fallback.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md config/tint2/tint2rc config/tint2/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
 
 for file in $required_files; do
   test -s "$file"
@@ -39,6 +39,8 @@ grep -Fq 'width = 96%' config/polybar/config.ini
 grep -Fq 'radius = 14' config/polybar/config.ini
 grep -Fq 'plank' install.sh
 grep -Fq 'tint2' install.sh
+grep -Fq 'fallback.rasi' scripts/rofi-xlfr4n
+
 grep -Fq '[bar/workspace]' config/polybar/config.ini
 grep -Fq 'modules-left = bspwm' config/polybar/config.ini
 grep -Fq 'modules-right = date' config/polybar/config.ini
