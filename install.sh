@@ -187,7 +187,7 @@ if command -v desktop-style >/dev/null 2>&1; then
 fi
 
 if command -v dock >/dev/null 2>&1; then
-  dock --start || warn "Plank dock could not be started during installation."
+  dock --start || warn "Floating dock could not be started during installation."
 fi
 
 if systemctl is-enabled display-manager.service >/dev/null 2>&1 || systemctl is-active display-manager.service >/dev/null 2>&1; then
