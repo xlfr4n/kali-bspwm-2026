@@ -67,7 +67,8 @@ apply() {
   if [ -x "$HOME/.config/polybar/launch.sh" ]; then
     "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
   fi
-  if command -v dock >/dev/null 2>&1 && pgrep -x plank >/dev/null 2>&1; then
+  if command -v dock >/dev/null 2>&1 &&
+     (pgrep -x tint2 >/dev/null 2>&1 || pgrep -x plank >/dev/null 2>&1 || pgrep -af '[p]olybar dock' >/dev/null 2>&1); then
     dock --restart >/dev/null 2>&1 &
   fi
 
