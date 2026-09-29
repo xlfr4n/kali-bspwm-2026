@@ -6,6 +6,6 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en mac
 
 ## 🇬🇧 English
 
-The visual layer keeps Kali + BSPWM lightweight and adds macOS-inspired ergonomics: floating Polybar, zooming Plank dock, Spotlight, Mission Control, Brave-first launch, Papirus-Dark and left-side GTK window controls where supported.
+The visual layer keeps Kali + BSPWM lightweight and adds macOS-inspired ergonomics: floating Polybar, zooming Plank dock with a native Polybar icon-dock fallback, Spotlight, Mission Control, Brave-first launch, Papirus-Dark and left-side GTK window controls where supported.
 
 **⚡ xLFr4n · Kali · BSPWM · floating workspace**
