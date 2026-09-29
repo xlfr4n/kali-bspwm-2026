@@ -4,12 +4,19 @@
 set -u
 
 locale_name="${LC_ALL:-${LC_TIME:-${LANG:-C}}}"
+render_date() {
+  local value
+  value="$(LC_TIME="$locale_name" date '+%A, %-d de %B de %Y' 2>/dev/null)" && {
+    printf '%s\n' "$value"
+    return 0
+  }
 
-case "$locale_name" in
-  es*)
-    LC_TIME="$locale_name" date '+%A, %-d de %B de %Y'
-    ;;
-  *)
-    LC_TIME="$locale_name" date '+%A, %-d %B %Y'
-    ;;
-esac
+  case "$locale_name" in
+    es*) LC_TIME=C date '+Sunday, %-d de month de %Y' | sed \
+      -e 's/Sunday/domingo/;s/Monday/lunes/;s/Tuesday/martes/;s/Wednesday/miércoles/;s/Thursday/jueves/;s/Friday/viernes/;s/Saturday/sábado/'
+      ;;
+    *) LC_TIME=C date '+%A, %-d %B %Y' ;;
+  esac
+}
+
+render_date
