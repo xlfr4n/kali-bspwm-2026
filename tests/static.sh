@@ -11,12 +11,15 @@ bash -n install.sh
 bash -n uninstall.sh
 bash -n config/bspwm/bspwmrc
 bash -n config/polybar/launch.sh
+bash -n scripts/dock
+bash -n scripts/mission-control
+bash -n scripts/desktop-style
 
 while IFS= read -r -d '' file; do
   bash -n "$file"
 done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
-required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner"
+required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
 
 for file in $required_files; do
   test -s "$file"
@@ -29,6 +32,10 @@ grep -Fq 'virtualbox-guest-utils.service' install.sh
 grep -Fq 'virtualbox-guest-utils.service' scripts/doctor.sh
 grep -Fq 'wm-restack = bspwm' config/polybar/config.ini
 grep -Fq 'enable-ipc = true' config/polybar/config.ini
+grep -Fq 'width = 96%' config/polybar/config.ini
+grep -Fq 'radius = 12' config/polybar/config.ini
+grep -Fq 'plank' install.sh
+grep -Fq 'Super' docs/DESKTOP-STYLE.md 2>/dev/null || true
 grep -Fq 'xlfr4n' scripts/*.sh scripts/* 2>/dev/null || true
 
 echo 'Static checks: OK'
