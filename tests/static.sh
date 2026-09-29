@@ -37,6 +37,9 @@ grep -Fq 'border = #55ff3344' config/polybar/config.ini
 grep -Fq 'width = 96%' config/polybar/config.ini
 grep -Fq 'radius = 12' config/polybar/config.ini
 grep -Fq 'plank' install.sh
+grep -Fq '[bar/dock]' config/polybar/config.ini
+grep -Fq 'Polybar dock' scripts/dock
+grep -Fq 'polybar-fallback' scripts/dock
 grep -Fq 'SPOTLIGHT Launch apps' scripts/kali-menu
 grep -Fq 'MISSION   Window overview' scripts/kali-menu
 grep -Fq 'DOCK      Toggle floating dock' scripts/kali-menu
