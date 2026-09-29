@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Keeps the bottom workspace/date rail alive independently from the application dock.
+set -u
+
+CONFIG="$HOME/.config/polybar/config.ini"
+LOG="$HOME/.cache/xlfr4n-workspace-rail.log"
+
+log() {
+  mkdir -p "$(dirname "$LOG")"
+  printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$*" >> "$LOG"
+}
+
+command -v polybar >/dev/null 2>&1 || exit 0
+[ -r "$CONFIG" ] || exit 0
+
+case "${1:-}" in
+  --start|--restart|"") ;;
+  --status)
+    if pgrep -u "$UID" -af '[p]olybar workspace' >/dev/null 2>&1; then
+      printf 'Workspace rail: running\n'
+      exit 0
+    fi
+    printf 'Workspace rail: stopped\n'
+    exit 1
+    ;;
+  *)
+    printf 'Usage: workspace-rail [--start|--restart|--status]\n' >&2
+    exit 2
+    ;;
+esac
+
+pkill -u "$UID" -f '[p]olybar workspace' 2>/dev/null || true
+sleep 0.10
+
+monitor=""
+if command -v xrandr >/dev/null 2>&1; then
+  monitor="$(xrandr --query 2>/dev/null | awk '/ connected primary/ {print $1; exit} / connected/ {print $1; exit}')"
+fi
+
+if [ -n "$monitor" ]; then
+  MONITOR="$monitor" nohup polybar workspace -c "$CONFIG" >>"$LOG" 2>&1 &
+else
+  nohup polybar workspace -c "$CONFIG" >>"$LOG" 2>&1 &
+fi
+disown 2>/dev/null || true
+
+sleep 0.20
+if pgrep -u "$UID" -af '[p]olybar workspace' >/dev/null 2>&1; then
+  log "workspace rail started"
+else
+  log "workspace rail failed to start"
+fi
