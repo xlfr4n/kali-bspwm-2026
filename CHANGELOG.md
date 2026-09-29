@@ -2,6 +2,9 @@
 
 ## 2026-09-29
 
+- Reworked the desktop into a transparent bottom HUD: workspaces 1→9 at left, date/time at right, and icon-only floating launchers in the center.
+- Hardened Rofi with an explicit dark configuration and high-contrast white text.
+- Added compact VPN, uptime, disk and virtualization indicators to the top status surface.
 - Added the xLFr4n Floating Workspace presentation layer.
 - Added Plank dock integration with hover zoom and intelligent hide.
 - Added a rounded floating Polybar with compact workspace pills.
