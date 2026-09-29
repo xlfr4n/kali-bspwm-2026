@@ -117,7 +117,7 @@ Super+Ctrl+R
 
 ### 9️⃣ Perfil del login
 
-Después de entrar en BSPWM, una shell interactiva mostrará Fastfetch con el logo custom `xLFr4n`. El snapshot ASCII `xlfr4n-banner --static` queda disponible para diagnóstico manual.
+Después de entrar en BSPWM, una shell interactiva mostrará Fastfetch con el logo oficial de Kali, la firma `⚡ xLFr4n` y los datos TARGET/IP/fecha. El snapshot ASCII `xlfr4n-banner --static` queda disponible para diagnóstico manual.
 
 ```bash
 session-profile
