@@ -8,6 +8,7 @@ POLYBAR="$HOME/.config/polybar/config.ini"
 KITTY="$HOME/.config/kitty/kitty.conf"
 ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
+ROFI_FALLBACK="$HOME/.config/rofi/fallback.rasi"
 TINT2="$HOME/.config/tint2/tint2rc"
 STATE="$HOME/.config/theme-state"
 mkdir -p "$STATE"
@@ -48,12 +49,18 @@ apply() {
     "$POLYBAR"
 
   sed -i -E \
-    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/" \
+    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/; s/^active_border_color .*/active_border_color $accent/" \
     "$KITTY"
 
   sed -i -E \
-    "s/^  accent: .*/  accent: $accent;/" \
+    "s/^  accent: .*/  accent: $accent/; s/^  border: .*/  border: $border/" \
     "$ROFI"
+
+  if [ -f "$ROFI_FALLBACK" ]; then
+    sed -i -E \
+      "s/^  accent: .*/  accent: $accent/; s/^  border: .*/  border: $border/" \
+      "$ROFI_FALLBACK"
+  fi
 
   sed -i -E "s/^frame_color = .*/frame_color = \"$accent\"/" "$DUNST"
   if [ -f "$TINT2" ]; then
