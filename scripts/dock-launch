@@ -5,6 +5,7 @@
 set -Eeuo pipefail
 
 app=${1:-}
+shift || true
 
 notify() {
   command -v notify-send >/dev/null 2>&1 || return 0
@@ -26,7 +27,7 @@ wait_for_window() {
 
 app_label=""
 case "$app" in
-  brave) wmclass="brave-browser"; cmd=(brave-browser --new-window); app_label="Brave Browser" ;;
+  brave) wmclass="brave-browser"; cmd=(brave-browser --new-window); [ "$#" -gt 0 ] && cmd+=( "$@" ); app_label="Brave Browser" ;;
   kitty) wmclass="kitty"; cmd=(kitty); app_label="Kitty" ;;
   files) wmclass="thunar"; cmd=(thunar); app_label="Thunar" ;;
   code) wmclass="code"; cmd=(code); app_label="Visual Studio Code" ;;
