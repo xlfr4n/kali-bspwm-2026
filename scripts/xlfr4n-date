@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Locale-aware long date for the lower-right metadata rail.
+set -u
+
+locale_name="${LC_ALL:-${LC_TIME:-${LANG:-C}}}"
+
+case "$locale_name" in
+  es*)
+    LC_TIME="$locale_name" date '+%A, %-d de %B de %Y'
+    ;;
+  *)
+    LC_TIME="$locale_name" date '+%A, %-d %B %Y'
+    ;;
+esac
