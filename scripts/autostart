@@ -114,7 +114,13 @@ log "phase=core ready"
 ) &
 
 (
-  sleep 0.85
+  sleep 0.95
+  "$HOME/.local/bin/workspace-rail" --restart >/dev/null 2>&1 || true
+  log "workspace rail ready"
+) &
+
+(
+  sleep 1.10
   "$HOME/.local/bin/start-picom" >/dev/null 2>&1 || true
   log "picom ready"
 ) &
