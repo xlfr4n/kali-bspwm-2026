@@ -109,7 +109,8 @@ _kali_prompt() {
 
 add-zsh-hook precmd _kali_prompt
 
-if [[ -o interactive && -z "${XLFR4N_BANNER_DONE:-}" ]]; then
-  export XLFR4N_BANNER_DONE=1
+if [[ -o interactive && -z "${XLFR4N_BANNER_DONE:-}" && -t 1 ]]; then
+  # Keep the guard shell-local so every new interactive Kitty gets its banner.
+  typeset -g XLFR4N_BANNER_DONE=1
   command -v xlfr4n-banner >/dev/null 2>&1 && xlfr4n-banner --animate
 fi
