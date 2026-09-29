@@ -22,7 +22,7 @@ current_theme() {
 apply() {
   local t="$1"
   local silent="${2:-0}"
-  local accent good warn
+  local accent good warn border
 
   case "$silent" in
     0|1) ;;
@@ -65,6 +65,9 @@ apply() {
 
   if [ -x "$HOME/.config/polybar/launch.sh" ]; then
     "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+  fi
+  if command -v dock >/dev/null 2>&1 && pgrep -x plank >/dev/null 2>&1; then
+    dock --restart >/dev/null 2>&1 &
   fi
 
   if command -v dunstctl >/dev/null 2>&1; then
