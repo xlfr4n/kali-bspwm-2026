@@ -9,13 +9,16 @@ export PATH="$HOME/.local/bin:$PATH"
 bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width 2
-bspc config window_gap 8
-bspc config top_padding 2
-bspc config split_ratio 0.55
+bspc config window_gap 11
+bspc config top_padding 44
+bspc config bottom_padding 22
+bspc config split_ratio 0.52
 bspc config borderless_monocle true
 bspc config gapless_monocle true
-bspc config focus_follows_pointer true
+bspc config focus_follows_pointer false
 bspc config pointer_follows_monitor true
+bspc config remove_disabled_monitors true
+bspc config merge_overlapping_monitors true
 bspc config normal_border_color '#262a31'
 bspc config active_border_color '#ff3344'
 bspc config focused_border_color '#ff3344'
@@ -26,6 +29,7 @@ bspc rule -a Pavucontrol state=floating center=true
 bspc rule -a Arandr state=floating center=true
 bspc rule -a Gpick state=floating center=true
 bspc rule -a Nm-connection-editor state=floating center=true
+bspc rule -a Lxappearance state=floating center=true
 bspc rule -a floating_nvim state=floating center=true follow=true
 
 if [ -x "$HOME/.local/bin/autostart" ]; then
