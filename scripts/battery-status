@@ -40,7 +40,7 @@ else
 fi
 
 if [ "$status" = "Charging" ] || [ "$capacity" -gt 35 ]; then
-  printf "%%{F%s}%s %s%%%%{F-}\n" "$good" "$icon" "$capacity"
+  printf "%%{F%s}%s %s%%{F-}\n" "$good" "$icon" "$capacity"
 else
-  printf "%%{F%s}%s %s%%%%{F-}\n" "$warn" "$icon" "$capacity"
+  printf "%%{F%s}%s %s%%{F-}\n" "$warn" "$icon" "$capacity"
 fi
