@@ -16,6 +16,6 @@ choice="$(printf '%s\n' \
   rofi-xlfr4n -dmenu -p 'Screenshot' || true)"
 
 case "$choice" in
-  REGION*) flameshot gui ;;
-  FULLSCREEN*) flameshot full -p "$HOME/Pictures/Screenshots" ;;
+  REGION*) xlfr4n-launch "Screenshot" -- flameshot gui ;;
+  FULLSCREEN*) xlfr4n-launch "Screenshot" -- flameshot full -p "$HOME/Pictures/Screenshots" ;;
 esac
