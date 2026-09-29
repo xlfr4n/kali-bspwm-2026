@@ -73,7 +73,7 @@ sudo apt-get install -y "${PACKAGES[@]}"
 
 # Optional visual packages. Kali Rolling can remove individual desktop
 # packages over time, so their absence must never abort the base installer.
-OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme)
+OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme imagemagick)
 for optional in "${OPTIONAL_PACKAGES[@]}"; do
   if apt-cache show "$optional" >/dev/null 2>&1; then
     log "Installing optional package: $optional"
