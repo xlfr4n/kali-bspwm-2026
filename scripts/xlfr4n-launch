@@ -32,11 +32,6 @@ pid=$!
 
 sleep 0.30
 
-if ! kill -0 "$pid" 2>/dev/null; then
-  notify "xLFr4n // READY" "$label  ·  process started." 1200
-  exit 0
-fi
-
 if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
   deadline=$((SECONDS + 5))
   while (( SECONDS < deadline )); do
@@ -44,8 +39,15 @@ if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
       notify "xLFr4n // READY" "$label  ·  window ready." 1200
       exit 0
     fi
+    if ! kill -0 "$pid" 2>/dev/null; then
+      break
+    fi
     sleep 0.20
   done
 fi
 
-notify "xLFr4n // OPEN" "$label  ·  launch requested." 1200
+if kill -0 "$pid" 2>/dev/null; then
+  notify "xLFr4n // OPEN" "$label  ·  launch requested." 1200
+else
+  notify "xLFr4n // READY" "$label  ·  launch process accepted." 1200
+fi
