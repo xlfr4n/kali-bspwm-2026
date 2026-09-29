@@ -73,7 +73,7 @@ sudo apt-get install -y "${PACKAGES[@]}"
 
 # Optional visual packages. Kali Rolling can remove individual desktop
 # packages over time, so their absence must never abort the base installer.
-OPTIONAL_PACKAGES=(plank papirus-icon-theme)
+OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme)
 for optional in "${OPTIONAL_PACKAGES[@]}"; do
   if apt-cache show "$optional" >/dev/null 2>&1; then
     log "Installing optional package: $optional"
@@ -104,6 +104,7 @@ for p in \
   "$CONFIG_DIR/kitty" \
   "$CONFIG_DIR/dunst" \
   "$CONFIG_DIR/plank" \
+  "$CONFIG_DIR/tint2" \
   "$CONFIG_DIR/theme-state" \
   "$CONFIG_DIR/wallpaper-state" \
   "$HOME/.zshrc"
@@ -119,7 +120,7 @@ done
 log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 
-for dir in bspwm sxhkd polybar rofi picom kitty dunst plank; do
+for dir in bspwm sxhkd polybar rofi picom kitty dunst plank tint2; do
   if [ -L "$CONFIG_DIR/$dir" ]; then
     unlink "$CONFIG_DIR/$dir"
   elif [ -d "$CONFIG_DIR/$dir" ]; then
@@ -174,6 +175,12 @@ elif [ "$HYPER" = "virtualbox" ]; then
 fi
 
 fc-cache -f >/dev/null 2>&1 || true
+
+if command -v brave-browser >/dev/null 2>&1 &&
+   command -v xdg-settings >/dev/null 2>&1 &&
+   [ -f "$HOME/.local/share/applications/xLFr4n-brave.desktop" ]; then
+  xdg-settings set default-web-browser xLFr4n-brave.desktop >/dev/null 2>&1 || true
+fi
 
 if command -v desktop-style >/dev/null 2>&1; then
   desktop-style --apply --silent || warn "Desktop visual style could not be fully applied."
