@@ -57,8 +57,9 @@ build_launchers(){
   command -v code >/dev/null 2>&1 && install_launcher code "Visual Studio Code" "code" "code" "Code"
   command -v burpsuite >/dev/null 2>&1 && install_launcher burp "Burp Suite" "burpsuite" "burpsuite" "BurpSuite"
   install_launcher editor "Neovim" "sh -c \"kitty --class floating_nvim -e nvim\"" "text-editor" "floating_nvim"
-  install_launcher kali "xLFr4n Menu" "sh -c \"$HOME/.local/bin/kali-menu\"" "kali-menu"
-  install_launcher target "Target Console" "sh -c \"$HOME/.local/bin/settarget\"" "network-server"
+  install_launcher kali "xLFr4n Menu" "sh -c \"$HOME/.local/bin/kali-menu\"" "xlfr4n-menu"
+  install_launcher target "Target Console" "sh -c \"$HOME/.local/bin/settarget\"" "xlfr4n-target"
+  install_launcher lab "Kali Lab" "sh -c \"kitty --title Kali-Lab -e lab\"" "xlfr4n-lab"
 }
 
 start_plank(){
