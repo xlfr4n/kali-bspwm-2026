@@ -39,6 +39,8 @@ check "syntax install.sh" bash -n install.sh
 check "syntax uninstall.sh" bash -n uninstall.sh
 check "Uninstall workspace HUD cleanup" grep -Fq 'workspace-hud" --stop' uninstall.sh
 check "Uninstall new UX helpers" grep -Fq "audio-control" uninstall.sh
+check "Uninstall Fastfetch config" grep -Fq '"$HOME/.config/fastfetch"' uninstall.sh
+check "Uninstall launch helper" grep -Fq '"$HOME/.local/bin/xlfr4n-launch"' uninstall.sh
 check "syntax bspwmrc" bash -n config/bspwm/bspwmrc
 check "syntax polybar launch" bash -n config/polybar/launch.sh
 
@@ -136,10 +138,12 @@ check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
 check "Fastfetch custom logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
 check "Fastfetch custom logo file" grep -Fq "xLFr4n" config/fastfetch/xLFr4n.logo
+check "Fastfetch light-red palette" grep -Fq '"1": "light_red"' config/fastfetch/config.jsonc
 check "Fastfetch xLFr4n title" grep -Fq '⚡ xLFr4n' config/fastfetch/config.jsonc
 check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
 check "Unified launch feedback helper" grep -Fq "xLFr4n // LAUNCH" scripts/xlfr4n-launch
+check "Launch helper accepts WM class" grep -Fq '--class' scripts/xlfr4n-launch
 check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
 check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
 check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
