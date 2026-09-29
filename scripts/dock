@@ -63,7 +63,7 @@ build_launchers(){
 }
 
 start_plank(){
-  command -v plank >/dev/null 2>&1 || { log "Plank is not installed."; return 1; }
+  command -v plank >/dev/null 2>&1 || return 1
   pkill -x plank 2>/dev/null || true
   nohup plank >> "$LOG" 2>&1 &
   disown || true
@@ -71,19 +71,75 @@ start_plank(){
   apply_settings
 }
 
+start_polybar(){
+  command -v polybar >/dev/null 2>&1 || { log "Polybar is not installed."; return 1; }
+  pkill -f '[p]olybar dock' 2>/dev/null || true
+  nohup polybar dock -c "$HOME/.config/polybar/config.ini" >> "$LOG" 2>&1 &
+  disown || true
+}
+
+start_backend(){
+  if command -v plank >/dev/null 2>&1; then
+    start_plank
+  else
+    start_polybar
+  fi
+}
+
+stop_backend(){
+  pkill -x plank 2>/dev/null || true
+  pkill -f '[p]olybar dock' 2>/dev/null || true
+}
+
+status_backend(){
+  if pgrep -x plank >/dev/null 2>&1; then
+    echo "Plank dock: running"
+    return 0
+  fi
+  if pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
+    echo "Polybar dock: running"
+    return 0
+  fi
+  echo "Floating dock: stopped"
+  return 1
+}
+
 case "${1:---start}" in
-  --start|"") install_theme; build_launchers; apply_settings; pgrep -x plank >/dev/null 2>&1 || start_plank ;;
-  --restart) install_theme; build_launchers; start_plank ;;
-  --stop) pkill -x plank 2>/dev/null || true ;;
+  --start|"")
+    install_theme
+    build_launchers
+    start_backend
+    ;;
+  --restart)
+    install_theme
+    build_launchers
+    stop_backend
+    start_backend
+    ;;
+  --stop)
+    stop_backend
+    ;;
   --toggle)
-    if pgrep -x plank >/dev/null 2>&1; then pkill -x plank
-    else install_theme; build_launchers; start_plank
+    if pgrep -x plank >/dev/null 2>&1 || pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
+      stop_backend
+    else
+      install_theme
+      build_launchers
+      start_backend
     fi
     ;;
   --status)
-    if pgrep -x plank >/dev/null 2>&1; then echo "Plank dock: running"
-    else echo "Plank dock: stopped"; exit 1
+    status_backend
+    ;;
+  --backend)
+    if command -v plank >/dev/null 2>&1; then
+      echo "plank"
+    else
+      echo "polybar-fallback"
     fi
     ;;
-  *) echo "Usage: dock [--start|--restart|--stop|--toggle|--status]" >&2; exit 2 ;;
+  *)
+    echo "Usage: dock [--start|--restart|--stop|--toggle|--status|--backend]" >&2
+    exit 2
+    ;;
 esac
