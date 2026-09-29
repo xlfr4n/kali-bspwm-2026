@@ -185,9 +185,12 @@ check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
 check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
 check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
+check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
+check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
 check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
 check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
 check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
 check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
+check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
 check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
