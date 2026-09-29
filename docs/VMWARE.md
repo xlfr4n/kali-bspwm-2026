@@ -13,7 +13,7 @@ Cuando `systemd-detect-virt` devuelve VMware, el instalador usa:
 - `open-vm-tools`
 - `open-vm-tools-desktop`
 
-Además, el helper `vmware-tools` permite consultar el estado y reiniciar los servicios sin cambiar automáticamente la configuración de la máquina virtual.
+Además, el helper histórico `vmware-tools` detecta VMware y VirtualBox para consultar el estado y reiniciar sus servicios sin cambiar automáticamente la configuración de la máquina virtual.
 
 ### 🖥️ Pantallas
 
@@ -48,7 +48,7 @@ This project targets a Kali Linux X11 guest running under VMware.
 
 When `systemd-detect-virt` reports VMware, the installer uses `open-vm-tools` plus the desktop integration supplied by `open-vm-tools-desktop`.
 
-The `vmware-tools` helper can inspect status and restart the services without changing VM settings automatically.
+The historical `vmware-tools` helper detects VMware and VirtualBox so it can inspect status and restart provider guest services without changing VM settings automatically.
 
 ### 🖥️ Displays
 
