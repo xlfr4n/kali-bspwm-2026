@@ -32,7 +32,7 @@ install_theme(){
 }
 
 install_launcher(){
-  local id="$1" name="$2" exec_cmd="$3" icon="$4" wmclass="${5:-}"
+  local id="$1" name="$2" icon="$4" wmclass="${5:-}"
   local desktop="$HOME/.local/share/applications/xLFr4n-${id}.desktop"
   mkdir -p "$(dirname "$desktop")"
   cat > "$desktop" <<EOF
