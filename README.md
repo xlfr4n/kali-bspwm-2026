@@ -24,7 +24,7 @@ El proyecto modifica el **guest Kali**. El host Windows/VirtualBox/VMware no se 
 
 ### 🇪🇸 Español
 
-La edición actual añade una capa de escritorio inspirada en la ergonomía de macOS sin abandonar **BSPWM + SXHKD**: **Polybar flotante**, **dock Plank con zoom**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), acceso directo a **Brave** (`+Super + Ctrl + B`), iconos propios de xLFr4n y controles GTK hacia la izquierda cuando la aplicación los respeta.
+La edición actual añade una capa de escritorio inspirada en la ergonomía de macOS sin abandonar **BSPWM + SXHKD**: **Polybar flotante**, **dock Tint2 con iconos reales**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), acceso directo a **Brave** (`+Super + Ctrl + B`), iconos propios de xLFr4n y controles GTK hacia la izquierda cuando la aplicación los respeta.
 
 El objetivo es que la VM no parezca una instalación genérica: debe sentirse como un **workspace personal de xLFr4n**, manteniendo la ligereza, los backups y la capacidad de diagnóstico.
 
@@ -45,7 +45,7 @@ La barra superior queda deliberadamente limpia. Los escritorios **1→9** y la h
 |---|---|
 | `+Super + Space` | Spotlight / applications |
 | `+Super + Shift + Space` | Mission Control |
-| `+Super + Shift + A` | Toggle floating dock |
+| `+Super + Shift + A` | Toggle floating icon dock |
 | `+Super + Shift + O` | Mission Control |
 | `+Super + Ctrl + B` | Open Brave |
 
@@ -60,7 +60,7 @@ La barra superior queda deliberadamente limpia. Los escritorios **1→9** y la h
 - Picom
 - Dunst
 - Feh + wallpapers
-- NetworkManager + VPN visibility
+- NetworkManager + integrated network status
 - Fastfetch, FZF, ripgrep, fd, bat, eza, btop, htop, glances
 - Flameshot
 - Thunar, Arandr, Gpick
@@ -550,9 +550,8 @@ El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistem
 
 ### Identidad visible
 
-- Barra superior iniciando con **⚡ xlfr4n // KALI**
+- Barra superior iniciando con **⚡ xLFr4n // KALI**
 - §MENU§ y §TARGET§ integrados en la barra; red, CPU, RAM y audio en un bloque compacto
-- §PWR§ con fondo/acento y texto de alto contraste
 - Sesión de login identificada como **⚡ xlfr4n // Kali BSPWM**
 - Kitty con pestañas personalizadas y colores coordinados
 - Zsh con prompt dinámico, target, virtualización, Git y theme
@@ -560,6 +559,8 @@ El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistem
 - Rofi con búsqueda y selección de alto contraste
 - Dunst y bordes BSPWM sincronizados con el theme
 - Cuatro themes coordinados: Cyber Red, HTB Green, Nord y Purple
+- Workspaces 1→9 + reloj en cápsula inferior derecha
+- Dock inferior con iconos reales, tooltips y hover
 
 ### Filosofía
 
