@@ -5,6 +5,7 @@
 set -Eeuo pipefail
 
 THEME="$HOME/.config/rofi/launcher.rasi"
+FALLBACK="$HOME/.config/rofi/fallback.rasi"
 LOG="$HOME/.cache/xlfr4n-rofi.log"
 
 mkdir -p "$(dirname "$LOG")"
@@ -14,7 +15,11 @@ if command -v rofi >/dev/null 2>&1 && [ -f "$THEME" ]; then
     exec rofi -no-config -theme "$THEME" "$@"
   fi
 
-  printf '[%s] Invalid Rofi theme; using default theme.\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+  printf '[%s] Invalid Rofi theme; using dark fallback.\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
 fi
 
-exec rofi "$@"
+if [ -f "$FALLBACK" ] && rofi -no-config -theme "$FALLBACK" -dump-theme >/dev/null 2>&1; then
+  exec rofi -no-config -theme "$FALLBACK" "$@"
+fi
+
+exec rofi -no-config "$@"
