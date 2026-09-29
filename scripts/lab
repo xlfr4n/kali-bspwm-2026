@@ -20,7 +20,7 @@ tmux new-session -d -s "$name" -c "$dir"
 tmux rename-window -t "$name:0" main
 tmux split-window -h -t "$name:0" -c "$dir"
 tmux split-window -v -t "$name:0.1" -c "$dir"
-tmux send-keys -t "$name:0.1" 'fastfetch' C-m
+tmux send-keys -t "$name:0.1" 'xlfr4n-banner --static' C-m
 tmux send-keys -t "$name:0.2" 'btop' C-m
 tmux select-pane -t "$name:0.0"
 
