@@ -13,11 +13,12 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Dock centrado con iconos reales.
 - Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
-- Banner de terminal con marco de ancho fijo para evitar descuadres.
+- Fastfetch de entrada con logo `xLFr4n` propio.
+- Banner de terminal con marco de ancho fijo, reservado para diagnósticos manuales.
 
 ### ⚡ Animación
 
-La animación se reserva para lugares donde aporta feedback: cursor/banners, pulso de identidad, fades de ventana, transición de workspace mediante el HUD, feedback de audio y hover del dock. El banner de Kitty usa fases cortas y un progreso visual para sentirse vivo sin mantener procesos en segundo plano. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
+La identidad superior usa una microanimación de typewriter/dissolve: `xLFr4n` aparece y desaparece carácter a carácter con un cursor discreto. El resto de la animación se reserva para lugares donde aporta feedback: cursor, fades de ventana, transición de workspace mediante el HUD, feedback de audio y hover del dock. El banner de Kitty usa fases cortas y un progreso visual para sentirse vivo sin mantener procesos en segundo plano. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
 
 ## 🇬🇧 English
 
@@ -32,9 +33,10 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Centered real-icon launcher dock.
 - Synchronized xLFr4n accents across Polybar, Kitty, Rofi, Dunst and BSPWM.
 - Picom with soft fades/shadows and no blur for VM compatibility.
-- Fixed-width terminal banner to avoid geometry drift.
+- Fastfetch login view with a custom `xLFr4n` logo.
+- Fixed-width terminal banner, reserved for manual diagnostics.
 
-Animation is used where it provides feedback rather than visual noise: cursor/banner effects, window fades, workspace HUD transitions, audio feedback and dock hover.
+The top identity uses a small typewriter/dissolve micro-animation: `xLFr4n` appears and disappears character by character with a discreet cursor. Other animation is used where it provides feedback rather than visual noise: cursor effects, window fades, workspace HUD transitions, audio feedback and dock hover.
 
 **⚡ xLFr4n · Kali · BSPWM · floating workspace**
 
@@ -58,5 +60,9 @@ The desktop uses a shared feedback layer so important actions have a visible res
 `workspace-hud` → desktop change → compact two-frame notification → Picom fade.
 
 `audio-control` → volume/mute → visible percentage → short fade.
+
+`xlfr4n-launch` → application request → “LAUNCH” → “READY/OPEN”. Workspace launch paths share the same notification language.
+
+`wallpaper --default` → uses `/usr/share/backgrounds/kali/kali-hack-16x9.jpg` as the session wallpaper.
 
 Dunst keeps history and stacks these notifications to avoid a cascade of windows.
