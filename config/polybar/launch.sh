@@ -10,9 +10,9 @@ command -v polybar >/dev/null 2>&1 || exit 1
 [ -r "$CONFIG" ] || exit 1
 
 if pgrep -x polybar >/dev/null 2>&1; then
-  pkill -x polybar 2>/dev/null || true
+  pkill -u "$UID" -x polybar 2>/dev/null || true
   for _ in $(seq 1 10); do
-    pgrep -x polybar >/dev/null 2>&1 || break
+    pgrep -u "$UID" -x polybar >/dev/null 2>&1 || break
     sleep 0.1
   done
 fi
