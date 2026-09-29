@@ -37,7 +37,7 @@ check_not_present() {
 
 check "syntax install.sh" bash -n install.sh
 check "syntax uninstall.sh" bash -n uninstall.sh
-check "Uninstall workspace HUD cleanup" grep -Fq "workspace-hud --stop" uninstall.sh
+check "Uninstall workspace HUD cleanup" grep -Fq 'workspace-hud" --stop' uninstall.sh
 check "Uninstall new UX helpers" grep -Fq "audio-control" uninstall.sh
 check "syntax bspwmrc" bash -n config/bspwm/bspwmrc
 check "syntax polybar launch" bash -n config/polybar/launch.sh
