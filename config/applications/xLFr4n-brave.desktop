@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=⚡ xLFr4n — Brave
+Comment=Brave Browser for the xLFr4n workspace
+Exec=brave-browser --new-window
+Icon=brave-browser
+Terminal=false
+NoDisplay=true
+StartupWMClass=brave-browser

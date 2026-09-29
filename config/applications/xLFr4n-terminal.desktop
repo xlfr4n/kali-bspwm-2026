@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Kitty
+Comment=Primary terminal
+Exec=kitty
+Icon=kitty
+Terminal=false
+NoDisplay=true
+StartupWMClass=kitty

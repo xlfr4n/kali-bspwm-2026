@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Window overview inspired by Mission Control, implemented with the existing Rofi layer.
+set -Eeuo pipefail
+exec rofi-xlfr4n -show window -show-icons -p 'Mission Control'

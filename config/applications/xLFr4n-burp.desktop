@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Burp Suite
+Comment=Web security toolkit
+Exec=burpsuite
+Icon=burpsuite
+Terminal=false
+NoDisplay=true
+StartupWMClass=BurpSuite

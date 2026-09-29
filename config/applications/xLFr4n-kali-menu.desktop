@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=⚡ xLFr4n Menu
+Comment=Workspace control center
+Exec=sh -c "$HOME/.local/bin/kali-menu"
+Icon=kali-menu
+Terminal=false
+NoDisplay=true

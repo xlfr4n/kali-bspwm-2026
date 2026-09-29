@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Floating application dock. Uses Plank when available; no desktop environment required.
+set -Eeuo pipefail
+
+CONFIG="$HOME/.config/plank"
+DOCK="$CONFIG/dock1"
+LAUNCHERS="$DOCK/launchers"
+SOURCE_THEME="$CONFIG/xLFr4n/dock.theme"
+THEME_DIR="$HOME/.local/share/plank/themes/xLFr4n"
+LOG="$HOME/.cache/xlfr4n-dock.log"
+mkdir -p "$LAUNCHERS" "$THEME_DIR" "$(dirname "$LOG")"
+log(){ printf '[dock] %s\n' "$*" >> "$LOG"; }
+
+apply_settings(){
+  command -v gsettings >/dev/null 2>&1 || return 0
+  local schema="net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/"
+  gsettings set "$schema" theme "'xLFr4n'" 2>/dev/null || true
+  gsettings set "$schema" position "'bottom'" 2>/dev/null || true
+  gsettings set "$schema" hide-mode "'intelligent'" 2>/dev/null || true
+  gsettings set "$schema" icon-size 42 2>/dev/null || true
+  gsettings set "$schema" zoom-enabled true 2>/dev/null || true
+  gsettings set "$schema" zoom-percent 135 2>/dev/null || true
+  gsettings set "$schema" items-alignment "'center'" 2>/dev/null || true
+  gsettings set "$schema" alignment "'center'" 2>/dev/null || true
+}
+
+install_theme(){
+  [ -s "$SOURCE_THEME" ] || return 0
+  install -Dm644 "$SOURCE_THEME" "$THEME_DIR/dock.theme"
+}
+
+install_launcher(){
+  local id="$1" name="$2" exec_cmd="$3" icon="$4" wmclass="\${5:-}"
+  local desktop="$HOME/.local/share/applications/xLFr4n-\${id}.desktop"
+  mkdir -p "$(dirname "$desktop")"
+  cat > "$desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=$name
+Comment=⚡ xLFr4n workspace launcher
+Exec=$exec_cmd
+Icon=$icon
+Terminal=false
+NoDisplay=true
+EOF
+  [ -n "$wmclass" ] && printf 'StartupWMClass=%s\n' "$wmclass" >> "$desktop"
+  printf '[PlankDockItemPreferences]\nLauncher=file://%s\n' "$desktop" > "$LAUNCHERS/$id.dockitem"
+}
+
+build_launchers(){
+  rm -f "$LAUNCHERS"/*.dockitem 2>/dev/null || true
+  command -v brave-browser >/dev/null 2>&1 && install_launcher brave "Brave Browser" "brave-browser --new-window" "brave-browser" "brave-browser"
+  command -v kitty >/dev/null 2>&1 && install_launcher kitty "Kitty" "kitty" "kitty" "kitty"
+  command -v thunar >/dev/null 2>&1 && install_launcher files "Files" "thunar" "system-file-manager" "Thunar"
+  command -v code >/dev/null 2>&1 && install_launcher code "Visual Studio Code" "code" "code" "Code"
+  command -v burpsuite >/dev/null 2>&1 && install_launcher burp "Burp Suite" "burpsuite" "burpsuite" "BurpSuite"
+  install_launcher editor "Neovim" "sh -c \"kitty --class floating_nvim -e nvim\"" "text-editor" "floating_nvim"
+  install_launcher kali "xLFr4n Menu" "sh -c \"$HOME/.local/bin/kali-menu\"" "kali-menu"
+  install_launcher target "Target Console" "sh -c \"$HOME/.local/bin/settarget\"" "network-server"
+}
+
+start_plank(){
+  command -v plank >/dev/null 2>&1 || { log "Plank is not installed."; return 1; }
+  pkill -x plank 2>/dev/null || true
+  apply_settings
+  nohup plank >> "$LOG" 2>&1 &
+  disown || true
+}
+
+case "\${1:---start}" in
+  --start|"") install_theme; build_launchers; apply_settings; pgrep -x plank >/dev/null 2>&1 || start_plank ;;
+  --restart) install_theme; build_launchers; start_plank ;;
+  --stop) pkill -x plank 2>/dev/null || true ;;
+  --toggle)
+    if pgrep -x plank >/dev/null 2>&1; then pkill -x plank
+    else install_theme; build_launchers; start_plank
+    fi
+    ;;
+  --status)
+    if pgrep -x plank >/dev/null 2>&1; then echo "Plank dock: running"
+    else echo "Plank dock: stopped"; exit 1
+    fi
+    ;;
+  *) echo "Usage: dock [--start|--restart|--stop|--toggle|--status]" >&2; exit 2 ;;
+esac

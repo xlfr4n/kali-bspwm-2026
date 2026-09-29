@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Lightweight macOS-inspired GTK presentation layer. Safe and best-effort.
+set -Eeuo pipefail
+
+silent=0
+[ "\${1:-}" = "--silent" ] || [ "\${2:-}" = "--silent" ] && silent=1
+
+run(){
+  if [ "$silent" -eq 1 ]; then "$@" >/dev/null 2>&1 || true
+  else "$@"
+  fi
+}
+
+has_gsettings(){
+  command -v gsettings >/dev/null 2>&1 &&
+  gsettings list-keys org.gnome.desktop.interface >/dev/null 2>&1
+}
+
+if has_gsettings; then
+  [ ! -d /usr/share/icons/Papirus-Dark ] || run gsettings set org.gnome.desktop.interface icon-theme "'Papirus-Dark'"
+  if [ -d /usr/share/themes/Kali-Dark ]; then
+    run gsettings set org.gnome.desktop.interface gtk-theme "'Kali-Dark'"
+  elif [ -d /usr/share/themes/Adwaita-dark ]; then
+    run gsettings set org.gnome.desktop.interface gtk-theme "'Adwaita-dark'"
+  fi
+  if command -v fc-match >/dev/null 2>&1 && fc-match "Noto Sans 10" >/dev/null 2>&1; then
+    run gsettings set org.gnome.desktop.interface font-name "'Noto Sans 10'"
+  fi
+fi
+
+if command -v gsettings >/dev/null 2>&1 &&
+   gsettings list-keys org.gnome.desktop.wm.preferences >/dev/null 2>&1; then
+  run gsettings set org.gnome.desktop.wm.preferences button-layout "'close,minimize,maximize:'"
+fi

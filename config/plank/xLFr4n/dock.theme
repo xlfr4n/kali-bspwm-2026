@@ -1,0 +1,34 @@
+# ⚡ xLFr4n // Plank floating dock
+# Dark glass inspired by macOS, tuned for a cyber-red Kali workspace.
+[PlankTheme]
+TopRoundness=12
+BottomRoundness=12
+LineWidth=1
+OuterStrokeColor=255;;255;;255;;45
+FillStartColor=14;;17;;22;;235
+FillEndColor=14;;17;;22;;235
+InnerStrokeColor=255;;255;;255;;12
+
+[PlankDockTheme]
+HorizPadding=4
+TopPadding=4
+BottomPadding=4
+ItemPadding=4
+IndicatorSize=5
+IconShadowSize=1.25
+UrgentBounceHeight=1.5
+LaunchBounceHeight=0.5
+FadeOpacity=1
+ClickTime=180
+UrgentBounceTime=500
+LaunchBounceTime=500
+ActiveTime=250
+SlideTime=220
+FadeTime=220
+HideTime=220
+GlowSize=30
+GlowTime=10000
+GlowPulseTime=2000
+UrgentHueShift=0
+ItemMoveTime=350
+CascadeHide=true
