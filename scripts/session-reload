@@ -3,3 +3,8 @@
 set -Eeuo pipefail
 bspc wm -r
 pkill -USR1 -x sxhkd 2>/dev/null || true
+
+# Keep the bottom workspace/date rail synchronized after a live BSPWM reload.
+if [ -x "$HOME/.local/bin/workspace-rail" ]; then
+  "$HOME/.local/bin/workspace-rail" --restart >/dev/null 2>&1 || true
+fi
