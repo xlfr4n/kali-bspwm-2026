@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Floating application dock. Uses Plank when available; no desktop environment required.
+# Floating application dock. Prefers Tint2 real-icon launchers, then Plank, then Polybar.
 set -Eeuo pipefail
 
 CONFIG="$HOME/.config/plank"
 DOCK="$CONFIG/dock1"
 LAUNCHERS="$DOCK/launchers"
 SOURCE_THEME="$CONFIG/xLFr4n/dock.theme"
+TINT2_CONFIG="$HOME/.config/tint2/tint2rc"
 THEME_DIR="$HOME/.local/share/plank/themes/xLFr4n"
 LOG="$HOME/.cache/xlfr4n-dock.log"
 mkdir -p "$LAUNCHERS" "$THEME_DIR" "$(dirname "$LOG")"
@@ -39,8 +40,8 @@ install_launcher(){
 Type=Application
 Version=1.0
 Name=$name
-Comment=⚡ xLFr4n workspace launcher
-Exec=$exec_cmd
+Comment=xLFr4n workspace launcher
+Exec=sh -c "\$HOME/.local/bin/dock-launch $id"
 Icon=$icon
 Terminal=false
 NoDisplay=true
@@ -62,6 +63,14 @@ build_launchers(){
   install_launcher lab "Kali Lab" "sh -c \"kitty --title Kali-Lab -e lab\"" "xlfr4n-lab"
 }
 
+start_tint2(){
+  command -v tint2 >/dev/null 2>&1 || return 1
+  [ -r "$TINT2_CONFIG" ] || return 1
+  pkill -x tint2 2>/dev/null || true
+  nohup tint2 -c "$TINT2_CONFIG" >> "$LOG" 2>&1 &
+  disown || true
+}
+
 start_plank(){
   command -v plank >/dev/null 2>&1 || return 1
   pkill -x plank 2>/dev/null || true
@@ -79,7 +88,9 @@ start_polybar(){
 }
 
 start_backend(){
-  if command -v plank >/dev/null 2>&1; then
+  if command -v tint2 >/dev/null 2>&1 && [ -r "$TINT2_CONFIG" ]; then
+    start_tint2
+  elif command -v plank >/dev/null 2>&1; then
     start_plank
   else
     start_polybar
@@ -87,11 +98,16 @@ start_backend(){
 }
 
 stop_backend(){
+  pkill -x tint2 2>/dev/null || true
   pkill -x plank 2>/dev/null || true
   pkill -f '[p]olybar dock' 2>/dev/null || true
 }
 
 status_backend(){
+  if pgrep -x tint2 >/dev/null 2>&1; then
+    echo "Tint2 dock: running"
+    return 0
+  fi
   if pgrep -x plank >/dev/null 2>&1; then
     echo "Plank dock: running"
     return 0
@@ -132,7 +148,9 @@ case "${1:---start}" in
     status_backend
     ;;
   --backend)
-    if command -v plank >/dev/null 2>&1; then
+    if command -v tint2 >/dev/null 2>&1 && [ -r "$TINT2_CONFIG" ]; then
+      echo "tint2"
+    elif command -v plank >/dev/null 2>&1; then
       echo "plank"
     else
       echo "polybar-fallback"
