@@ -50,7 +50,7 @@ grep -Fq 'panel_items = L' config/tint2/tint2rc
 grep -Fq 'dock-launch' scripts/dock
 grep -Fq 'bspc monitor -d 1 2 3 4 5 6 7 8 9' config/bspwm/bspwmrc
 grep -Fq 'super + {1,2,3,4,5,6,7,8,9}' config/sxhkd/sxhkdrc
-grep -Fvq 'nm-applet >/dev/null' scripts/autostart
+if grep -Fq 'command -v nm-applet' scripts/autostart; then exit 1; fi
 grep -Fq 'SPOTLIGHT Launch apps' scripts/kali-menu
 grep -Fq 'MISSION   Window overview' scripts/kali-menu
 grep -Fq 'DOCK      Toggle floating dock' scripts/kali-menu
