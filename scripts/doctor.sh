@@ -56,7 +56,15 @@ dock_single_backend_check() {
   [ "$active" -le 1 ]
 }
 
-rofi_theme_check() {
+rofi_launcher_files_check() {
+  local app
+  for app in     xLFr4n-kali-menu.desktop     xLFr4n-brave.desktop     xLFr4n-terminal.desktop     xLFr4n-files.desktop     xLFr4n-editor.desktop     xLFr4n-code.desktop     xLFr4n-burp.desktop     xLFr4n-lab.desktop     xLFr4n-target.desktop     xLFr4n-btop.desktop     xLFr4n-settings.desktop     xLFr4n-network.desktop     xLFr4n-screenshot.desktop
+  do
+    [ -s "$HOME/.local/share/applications/$app" ] || return 1
+  done
+}
+
+theme_check() {
   rofi -no-config -theme "$HOME/.config/rofi/launcher.rasi" -dump-theme
 }
 
@@ -139,6 +147,8 @@ floating_dock_check() {
 }
 
 check "Floating dock configuration" floating_dock_check
+check "Dock launchers" launcher_files_check
+check "Notification sender" command -v notify-send
 check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
