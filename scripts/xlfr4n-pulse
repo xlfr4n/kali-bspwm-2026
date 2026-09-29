@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Minimal Polybar identity animation: typewriter reveal + dissolve.
+# Stable Polybar identity with a visible signal sweep.
+# The full identity always remains readable; only the signal changes.
 set -u
 
 frames=(
-  '%{F#ff3344}⚡ xLFr4n%{F-}'
-  '%{F#ff3344}⚡ xLFr4%{F#7d8590}▍%{F-}'
-  '%{F#ff3344}⚡ xLFr%{F#7d8590}▍ %{F-}'
-  '%{F#ff3344}⚡ xLF%{F#7d8590}▍  %{F-}'
-  '%{F#ff3344}⚡ xL%{F#7d8590}▍   %{F-}'
-  '%{F#ff3344}⚡ x%{F#7d8590}▍    %{F-}'
-  '%{F#ff3344}⚡%{F#7d8590}▍     %{F-}'
-  '%{F#ff3344}⚡ x%{F#7d8590}▍    %{F-}'
-  '%{F#ff3344}⚡ xL%{F#7d8590}▍   %{F-}'
-  '%{F#ff3344}⚡ xLF%{F#7d8590}▍  %{F-}'
-  '%{F#ff3344}⚡ xLFr%{F#7d8590}▍ %{F-}'
-  '%{F#ff3344}⚡ xLFr4%{F#7d8590}▍%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}▍%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  //  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  ▸/  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  ▸>  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  >>  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#ff3344}  ||  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  <<  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  <◂  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  /◂  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  //  KALI%{F-}'
 )
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
