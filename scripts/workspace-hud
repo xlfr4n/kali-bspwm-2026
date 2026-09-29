@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Lightweight workspace transition HUD.
+set -u
+
+PID_FILE="$HOME/.cache/xlfr4n-workspace-hud.pid"
+
+workspace_title() {
+  case "${1:-}" in
+    1) printf '01 // MAIN' ;;
+    2) printf '02 // WEB' ;;
+    3) printf '03 // CODE' ;;
+    4) printf '04 // LAB' ;;
+    5) printf '05 // TOOLS' ;;
+    6) printf '06 // OSINT' ;;
+    7) printf '07 // NOTES' ;;
+    8) printf '08 // VM' ;;
+    9) printf '09 // MISC' ;;
+    *) printf '%s // WORKSPACE' "${1:-?}" ;;
+  esac
+}
+
+notify_workspace() {
+  local desktop title
+  desktop="$(bspc query -D -d focused --names 2>/dev/null || true)"
+  [ -n "$desktop" ] || return 0
+  title="$(workspace_title "$desktop")"
+  command -v notify-send >/dev/null 2>&1 || return 0
+
+  notify-send \
+    -u low \
+    -t 780 \
+    -h string:x-dunst-stack-tag:xLFr4n-workspace-hud \
+    "$title" \
+    'xLFr4n // workspace focus' >/dev/null 2>&1 || true
+}
+
+stop_previous() {
+  local old_pid old_cmd
+  old_pid="$(cat "$PID_FILE" 2>/dev/null || true)"
+  if [[ "$old_pid" =~ ^[0-9]+$ ]] && kill -0 "$old_pid" 2>/dev/null; then
+    old_cmd="$(ps -p "$old_pid" -o args= 2>/dev/null || true)"
+    if [[ "$old_cmd" == *"workspace-hud --daemon"* ]]; then
+      kill "$old_pid" 2>/dev/null || true
+      sleep 0.05
+    fi
+  fi
+  rm -f "$PID_FILE"
+}
+
+daemon() {
+  command -v bspc >/dev/null 2>&1 || exit 1
+  stop_previous
+  mkdir -p "$(dirname "$PID_FILE")"
+  printf "%s\n" "$BASHPID" > "$PID_FILE"
+
+  cleanup() { rm -f "$PID_FILE"; }
+  trap cleanup EXIT INT TERM HUP
+
+  bspc subscribe desktop_focus 2>/dev/null |
+    while IFS= read -r _event; do
+      sleep 0.02
+      notify_workspace
+    done
+}
+
+case "${1:-}" in
+  --daemon) daemon ;;
+  --stop) stop_previous ;;
+  --once) notify_workspace ;;
+  *) printf 'Usage: workspace-hud [--daemon|--stop|--once]\n' >&2; exit 2 ;;
+esac
