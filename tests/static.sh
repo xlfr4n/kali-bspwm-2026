@@ -133,6 +133,8 @@ check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/
 check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
 check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
 check "Battery is optional" grep -Fq "BAT*" scripts/battery-status
+check "Network state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/network-status
+check "Battery state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/battery-status
 check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
 check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
 check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
@@ -183,5 +185,6 @@ check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
 check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
 check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
 check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
+check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
 check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
