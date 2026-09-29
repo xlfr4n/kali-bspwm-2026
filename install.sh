@@ -15,6 +15,19 @@ ok(){ printf '[+] %s\n' "$*"; }
 warn(){ printf '[!] %s\n' "$*" >&2; }
 die(){ printf '[-] %s\n' "$*" >&2; exit 1; }
 
+MODE="${1:-full}"
+case "$MODE" in
+  full|--full) MODE="full" ;;
+  --deploy) MODE="deploy" ;;
+  --help|-h)
+    printf 'Usage: ./install.sh [--full|--deploy]\n\n'
+    printf '  --full    install/update packages, then deploy (default)\n'
+    printf '  --deploy  deploy current config/scripts without running APT\n'
+    exit 0
+    ;;
+  *) die "Unknown option: $MODE (use --help)" ;;
+esac
+
 [ "$(id -u)" -ne 0 ] || die "Run this installer as your normal user, not root."
 [ -f /etc/os-release ] || die "Cannot identify the operating system."
 # shellcheck disable=SC1091
@@ -36,8 +49,10 @@ while true; do
 done 2>/dev/null &
 KEEPER_PID=$!
 
-log "Updating Kali package metadata"
-sudo apt-get update
+if [ "$MODE" = "full" ]; then
+  log "Updating Kali package metadata"
+  sudo apt-get update
+fi
 
 HYPER="$(systemd-detect-virt 2>/dev/null || true)"
 case "$HYPER" in
@@ -68,9 +83,12 @@ elif [ "$HYPER" = "virtualbox" ]; then
   PACKAGES+=(virtualbox-guest-utils virtualbox-guest-x11)
 fi
 
-log "Installing packages"
-sudo apt-get install -y "${PACKAGES[@]}"
+if [ "$MODE" = "full" ]; then
+  log "Installing packages"
+  sudo apt-get install -y "${PACKAGES[@]}"
+fi
 
+if [ "$MODE" = "full" ]; then
 # Optional visual packages. Kali Rolling can remove individual desktop
 # packages over time, so their absence must never abort the base installer.
 OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme imagemagick)
@@ -82,6 +100,7 @@ for optional in "${OPTIONAL_PACKAGES[@]}"; do
     warn "Optional package not available in this Kali snapshot: $optional"
   fi
 done
+fi
 
 log "Creating backup: $BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
@@ -187,12 +206,14 @@ if command -v brave-browser >/dev/null 2>&1 &&
   }
 fi
 
-if command -v desktop-style >/dev/null 2>&1; then
-  desktop-style --apply --silent || warn "Desktop visual style could not be fully applied."
-fi
+if [ "$MODE" = "full" ]; then
+  if command -v desktop-style >/dev/null 2>&1; then
+    desktop-style --apply --silent || warn "Desktop visual style could not be fully applied."
+  fi
 
-if command -v dock >/dev/null 2>&1; then
-  dock --start || warn "Floating dock could not be started during installation."
+  if command -v dock >/dev/null 2>&1; then
+    dock --start || warn "Floating dock could not be started during installation."
+  fi
 fi
 
 if systemctl is-enabled display-manager.service >/dev/null 2>&1 || systemctl is-active display-manager.service >/dev/null 2>&1; then
@@ -208,6 +229,7 @@ fi
 
 python3 -m pipx ensurepath >/dev/null 2>&1 || true
 
+if [ "$MODE" = "full" ]; then
 if command -v wal >/dev/null 2>&1; then
   ok "pywal16 already available."
 elif python3 -m pipx install pywal16 >/dev/null 2>&1; then
@@ -215,12 +237,14 @@ elif python3 -m pipx install pywal16 >/dev/null 2>&1; then
 else
   warn "pywal16 unavailable; static themes remain available."
 fi
+fi
 
 for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr dock; do
   command -v "$cmd" >/dev/null 2>&1 || warn "Missing command after install: $cmd"
 done
 
-ok "Installation complete."
+ok "Deployment complete (mode=$MODE)."
 ok "Backup: $BACKUP_DIR"
-ok "Reboot and select 'bspwm'."
+ok "Reboot and select 'bspwm' when ready."
 ok "After login run: doctor.sh"
+ok "Fast updates: ./install.sh --deploy"
