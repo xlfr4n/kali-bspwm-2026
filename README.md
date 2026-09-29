@@ -20,7 +20,33 @@
 
 El proyecto modifica el **guest Kali**. El host Windows/VirtualBox/VMware no se configura automáticamente.
 
-### 🧩 Stack
+### 🍎 xLFr4n Floating Workspace
+
+### 🇪🇸 Español
+
+La edición actual añade una capa de escritorio inspirada en la ergonomía de macOS sin abandonar **BSPWM + SXHKD**: **Polybar flotante**, **dock Plank con zoom**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), acceso directo a **Brave** (`+Super + Ctrl + B`), iconos propios de xLFr4n y controles GTK hacia la izquierda cuando la aplicación los respeta.
+
+El objetivo es que la VM no parezca una instalación genérica: debe sentirse como un **workspace personal de xLFr4n**, manteniendo la ligereza, los backups y la capacidad de diagnóstico.
+
+### 🇬🇧 English
+
+The current edition adds a macOS-inspired ergonomics layer without leaving **BSPWM + SXHKD**: a **floating Polybar**, **zooming Plank dock**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), **Brave** quick launch (`+Super + Ctrl + B`), custom xLFr4n icons and left-side GTK controls where supported.
+
+The goal is to make the VM feel like a **personal xLFr4n workspace**, while keeping the environment lightweight, backed up and diagnosable.
+
+### ⚡ New visual controls
+
+| Shortcut | Action |
+|---|---|
+| `+Super + Space` | Spotlight / applications |
+| `+Super + Shift + Space` | Mission Control |
+| `+Super + Shift + A` | Toggle floating dock |
+| `+Super + Shift + O` | Mission Control |
+| `+Super + Ctrl + B` | Open Brave |
+
+---
+
+## 🧩 Stack
 
 - BSPWM + SXHKD
 - Polybar
