@@ -1,25 +1,56 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
-# Rofi entrypoint with theme validation and a clean default fallback.
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Rofi entrypoint: always dark, always high-contrast, never falls back to the white system theme.
 
 set -Eeuo pipefail
 
 THEME="$HOME/.config/rofi/launcher.rasi"
-FALLBACK="$HOME/.config/rofi/fallback.rasi"
 LOG="$HOME/.cache/xlfr4n-rofi.log"
 
 mkdir -p "$(dirname "$LOG")"
 
-if command -v rofi >/dev/null 2>&1 && [ -f "$THEME" ]; then
-  if rofi -no-config -theme "$THEME" -dump-theme >/dev/null 2>&1; then
+DARK_FALLBACK='
+* {
+  background: #0b0d10;
+  background-alt: #161b22;
+  foreground: #ffffff;
+  selected: #ff3344;
+  border: #ff3344;
+  active: #5ee881;
+}
+window {
+  background-color: #0b0d10;
+  border: 1px;
+  border-color: #ff3344;
+  border-radius: 18px;
+  padding: 18px;
+}
+mainbox { padding: 6px; }
+inputbar {
+  background-color: #161b22;
+  border: 1px;
+  border-color: #ff3344;
+  border-radius: 8px;
+  padding: 9px;
+}
+prompt { text-color: #ff3344; }
+entry { text-color: #ffffff; placeholder-color: #8b949e; }
+listview { spacing: 6px; padding: 8px 0 0; }
+element { background-color: transparent; border-radius: 8px; padding: 9px; }
+element selected { background-color: #ff3344; }
+element-text { text-color: #ffffff; }
+element-text selected { text-color: #ffffff; }
+element-icon { size: 1.05em; padding: 0 8px 0 0; }
+'
+
+if command -v rofi >/dev/null 2>&1; then
+  if [ -s "$THEME" ] && rofi -no-config -theme "$THEME" -dump-theme >/dev/null 2>&1; then
     exec rofi -no-config -theme "$THEME" "$@"
   fi
 
-  printf '[%s] Invalid Rofi theme; using dark fallback.\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+  printf '[%s] xLFr4n theme validation failed; using inline dark fallback.\n'     "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+  exec rofi -no-config -theme-str "$DARK_FALLBACK" "$@"
 fi
 
-if [ -f "$FALLBACK" ] && rofi -no-config -theme "$FALLBACK" -dump-theme >/dev/null 2>&1; then
-  exec rofi -no-config -theme "$FALLBACK" "$@"
-fi
-
-exec rofi -no-config "$@"
+printf 'Rofi is not installed.\n' >&2
+exit 127
