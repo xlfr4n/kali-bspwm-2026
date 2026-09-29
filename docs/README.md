@@ -11,6 +11,7 @@
 | `FIRST-VM-TEST.md` | Primera validación dentro de un guest Kali |
 | `VMWARE.md` | Integración específica de VMware |
 | `DESKTOP-STYLE.md` | Filosofía visual y componentes del workspace |
+| `FINAL-AUDIT.md` | Auditoría final de capas, funciones y validación |
 
 La documentación describe el **guest Kali**. El host Windows, VirtualBox o VMware no se modifica automáticamente.
 
@@ -23,6 +24,7 @@ La documentación describe el **guest Kali**. El host Windows, VirtualBox o VMwa
 | `FIRST-VM-TEST.md` | First validation inside a Kali guest |
 | `VMWARE.md` | VMware-specific integration |
 | `DESKTOP-STYLE.md` | Visual layer and workspace philosophy |
+| `FINAL-AUDIT.md` | Final audit of layers, functions and validation |
 
 Documentation describes the **Kali guest**. Windows, VirtualBox and VMware host settings are not changed automatically.
 
