@@ -7,8 +7,8 @@ iface="$(ip route show default 2>/dev/null | awk 'NR==1 {print $5}')"
 [ -n "$iface" ] || { printf ' offline\n'; exit 0; }
 
 case "$iface" in
-  wl*|wlan*) icon='' ;;
-  en*|eth*|eno*|ens*) icon='' ;;
+  wl*) icon='' ;;
+  en*|eth*) icon='' ;;
   tun*|wg*) icon='' ;;
   *) icon='' ;;
 esac
