@@ -95,6 +95,10 @@ check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
 check "Picom" command -v picom
 check "Dunst" command -v dunst
+check "Workspace HUD" command -v workspace-hud
+check "Audio feedback" command -v audio-control
+check "Network status helper" command -v network-status
+check "Battery status helper" command -v battery-status
 check "Desktop style helper" command -v desktop-style
 check "Dock helper" command -v dock
 check "Dock launcher" command -v dock-launch
