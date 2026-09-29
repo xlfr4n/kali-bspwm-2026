@@ -64,9 +64,10 @@ build_launchers(){
 start_plank(){
   command -v plank >/dev/null 2>&1 || { log "Plank is not installed."; return 1; }
   pkill -x plank 2>/dev/null || true
-  apply_settings
   nohup plank >> "$LOG" 2>&1 &
   disown || true
+  sleep 0.5
+  apply_settings
 }
 
 case "${1:---start}" in
