@@ -103,7 +103,7 @@ animate_boot() {
   local phase index progress spinner bar fill
   local -a phases=("BOOT" "LINK" "SYNC" "DRAW" "READY")
   local -a progress_values=(8 26 52 76 100)
-  local -a spinners=('|' '/' '-' '\\')
+  local -a spinners=('|' '/' '-' '\')
 
   for index in "${!phases[@]}"; do
     phase="${phases[$index]}"
