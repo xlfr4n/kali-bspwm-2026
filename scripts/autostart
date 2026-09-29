@@ -4,6 +4,9 @@
 
 set -Eeuo pipefail
 
+# Remove any tray applet left by an older session; network status now lives inside Polybar.
+pkill -x nm-applet 2>/dev/null || true
+
 for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
 done
