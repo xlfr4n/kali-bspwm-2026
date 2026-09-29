@@ -119,6 +119,8 @@ check "Banner guard" grep -Fq "XLFR4N_BANNER_DONE" config/zshrc
 check "Launch feedback" grep -Fq "xLFr4n • Launching" scripts/dock-launch
 check "Lab uses xLFr4n banner" grep -Fq "xlfr4n-banner --static" scripts/lab
 check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
+check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
+check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
