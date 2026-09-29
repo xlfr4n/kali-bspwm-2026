@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Network
+Comment=Network connections
+Exec=sh -c "dock-launch network"
+Icon=network-manager
+Terminal=false
+NoDisplay=true
+StartupWMClass=nm-connection-editor
+StartupNotify=true
+Categories=Network;Settings;
