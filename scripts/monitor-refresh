@@ -19,7 +19,12 @@ while read -r candidate; do
   break
 done < <(xrandr --query | awk '/ connected primary/ {print $1}')
 
-xrandr --output "$primary" --auto --primary >/dev/null 2>&1 || true
+# A single, already-primary display needs no geometry rewrite during startup.
+if [ "${1:-}" = "--startup" ] && [ "${#outputs[@]}" -eq 1 ] && xrandr --query | grep -Fq "${primary} connected primary"; then
+  :
+else
+  xrandr --output "$primary" --auto --primary >/dev/null 2>&1 || true
+fi
 
 prev="$primary"
 for out in "${outputs[@]}"; do
