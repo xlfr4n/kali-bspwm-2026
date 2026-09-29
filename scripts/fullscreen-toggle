@@ -11,7 +11,7 @@ is_fullscreen() {
 }
 
 hide_chrome() {
-  pkill -x polybar 2>/dev/null || true
+  pkill -u "$UID" -x polybar 2>/dev/null || true
   if command -v dock >/dev/null 2>&1; then
     dock --stop >/dev/null 2>&1 || true
   fi
