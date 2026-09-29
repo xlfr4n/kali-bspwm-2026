@@ -48,6 +48,7 @@ La barra superior queda deliberadamente limpia. Los escritorios **1→9** y la h
 | `+Super + Shift + A` | Toggle floating icon dock |
 | `+Super + Shift + O` | Mission Control |
 | `+Super + Ctrl + B` | Open Brave |
+| `+Super + F` | Reliable fullscreen toggle; hides desktop chrome |
 
 ---
 
@@ -61,7 +62,7 @@ La barra superior queda deliberadamente limpia. Los escritorios **1→9** y la h
 - Dunst
 - Feh + wallpapers
 - NetworkManager + integrated network status
-- Fastfetch, FZF, ripgrep, fd, bat, eza, btop, htop, glances
+- xLFr4n animated terminal banner, FZF, ripgrep, fd, bat, eza, btop, htop, glances
 - Flameshot
 - Thunar, Arandr, Gpick
 - Neovim + tmux
@@ -173,7 +174,7 @@ El helper `vmware-tools` es solo de diagnóstico/recovery; no cambia la configur
 |---|---|
 | `Super + Q` | Cerrar ventana normalmente |
 | `Super + W` | Forzar kill de la ventana |
-| `Super + F` | Fullscreen |
+| `Super + F` | Fullscreen toggle; hides/reveals Polybar + dock |
 | `Super + S` | Floating |
 | `Super + T` | Tiled |
 | `Super + Shift + T` | Pseudo-tiled |
@@ -278,7 +279,7 @@ Los themes modifican Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM
 |---|---|
 | `Super + Shift + L` | Abrir `Kali-Lab` |
 
-El workspace de laboratorio utiliza Kitty + tmux + fastfetch + btop.
+El workspace de laboratorio utiliza Kitty + tmux + btop, con la identidad de terminal unificada de xLFr4n.
 
 ### 🎯 Target
 
@@ -288,6 +289,9 @@ El workspace de laboratorio utiliza Kitty + tmux + fastfetch + btop.
 | `settarget` | Establecer/mostrar target |
 | `settarget --status` | Estado para Polybar |
 | `cleartarget` | Limpiar target |
+| Click izquierdo en `TARGET` | Copiar target al clipboard |
+| Click derecho en `TARGET` | Editar/establecer target |
+| Click central en `TARGET` | Limpiar target |
 
 ### 🖥️ Monitores
 
@@ -561,6 +565,9 @@ El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistem
 - Cuatro themes coordinados: Cyber Red, HTB Green, Nord y Purple
 - Workspaces 1→9 + reloj en cápsula inferior derecha
 - Dock inferior con iconos reales, tooltips y hover
+- Feedback de lanzamiento mediante Dunst + detección de ventana lista
+- Banner ASCII animado de xLFr4n al abrir Kitty
+- Target clicable con copia directa al clipboard X11
 
 ### Filosofía
 
