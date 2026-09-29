@@ -11,12 +11,9 @@ mkdir -p "$(dirname "$LOG")"
 
 DARK_FALLBACK='
 * {
-  background: #0b0d10;
-  background-alt: #161b22;
-  foreground: #ffffff;
-  selected: #ff3344;
-  border: #ff3344;
-  active: #5ee881;
+  background-color: #0b0d10;
+  text-color: #ffffff;
+  border-color: #ff3344;
 }
 window {
   background-color: #0b0d10;
@@ -35,12 +32,12 @@ inputbar {
 }
 prompt { text-color: #ff3344; }
 entry { text-color: #ffffff; placeholder-color: #8b949e; }
-listview { spacing: 6px; padding: 8px 0 0; }
+listview { spacing: 6px; padding: 8px 0px 0px 0px; }
 element { background-color: transparent; border-radius: 8px; padding: 9px; }
 element selected { background-color: #ff3344; }
 element-text { text-color: #ffffff; }
 element-text selected { text-color: #ffffff; }
-element-icon { size: 1.05em; padding: 0 8px 0 0; }
+element-icon { size: 1.05em; padding: 0px 8px 0px 0px; }
 '
 
 if command -v rofi >/dev/null 2>&1; then
