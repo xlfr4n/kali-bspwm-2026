@@ -54,7 +54,7 @@ PACKAGES=(
   network-manager network-manager-gnome
   fastfetch fzf ripgrep fd-find bat eza btop htop glances
   flameshot playerctl pamixer pavucontrol jq rsync unzip
-  thunar arandr gpick neovim tmux i3lock plank papirus-icon-theme
+  thunar arandr gpick neovim tmux i3lock
   x11-xserver-utils xserver-xorg lxappearance
   fonts-font-awesome fonts-jetbrains-mono
   xdg-utils
@@ -70,6 +70,18 @@ fi
 
 log "Installing packages"
 sudo apt-get install -y "${PACKAGES[@]}"
+
+# Optional visual packages. Kali Rolling can remove individual desktop
+# packages over time, so their absence must never abort the base installer.
+OPTIONAL_PACKAGES=(plank papirus-icon-theme)
+for optional in "${OPTIONAL_PACKAGES[@]}"; do
+  if apt-cache show "$optional" >/dev/null 2>&1; then
+    log "Installing optional package: $optional"
+    sudo apt-get install -y "$optional" || warn "Optional package unavailable: $optional"
+  else
+    warn "Optional package not available in this Kali snapshot: $optional"
+  fi
+done
 
 log "Creating backup: $BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
