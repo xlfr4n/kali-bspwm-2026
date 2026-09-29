@@ -130,7 +130,8 @@ check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl 
 check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
-check "Workspace rail spacing" grep -Fq "offset-y = 76pt" "$HOME/.config/polybar/config.ini"
+check "Workspace rail spacing" grep -Fq "offset-y = 82pt" "$HOME/.config/polybar/config.ini"
+check "Workspace rail process" workspace-rail --status
 check "Polybar interactive status" grep -Fq "click-left = kitty --class xLFr4n-btop" "$HOME/.config/polybar/config.ini"
 check "Date helper locale support" grep -Fq "LC_TIME" "$HOME/.local/bin/xlfr4n-date"
 check "Single dock backend" dock_single_backend_check
