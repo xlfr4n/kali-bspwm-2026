@@ -11,7 +11,7 @@ mkdir -p "$(dirname "$LOG")"
 
 if command -v rofi >/dev/null 2>&1 && [ -f "$THEME" ]; then
   if rofi -no-config -theme "$THEME" -dump-theme >/dev/null 2>&1; then
-    exec rofi -theme "$THEME" "$@"
+    exec rofi -no-config -theme "$THEME" "$@"
   fi
 
   printf '[%s] Invalid Rofi theme; using default theme.\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
