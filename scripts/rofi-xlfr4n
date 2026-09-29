@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Rofi entrypoint: always dark, always high-contrast, never falls back to the white system theme.
+# Rofi entrypoint: force the xLFr4n dark layer and keep an emergency fallback.
 
 set -Eeuo pipefail
 
 THEME="$HOME/.config/rofi/launcher.rasi"
+FALLBACK="$HOME/.config/rofi/fallback.rasi"
 LOG="$HOME/.cache/xlfr4n-rofi.log"
 
 mkdir -p "$(dirname "$LOG")"
@@ -22,7 +23,9 @@ window {
   border-radius: 18px;
   padding: 18px;
 }
-mainbox { padding: 6px; }
+mainbox {
+  padding: 6px;
+}
 inputbar {
   background-color: #161b22;
   border: 1px;
@@ -30,14 +33,33 @@ inputbar {
   border-radius: 8px;
   padding: 9px;
 }
-prompt { text-color: #ff3344; }
-entry { text-color: #ffffff; placeholder-color: #8b949e; }
-listview { spacing: 6px; padding: 8px 0px 0px 0px; }
-element { background-color: transparent; border-radius: 8px; padding: 9px; }
-element selected { background-color: #ff3344; }
-element-text { text-color: #ffffff; }
-element-text selected { text-color: #ffffff; }
-element-icon { size: 1.05em; padding: 0px 8px 0px 0px; }
+prompt {
+  text-color: #ff3344;
+  padding: 0px 10px 0px 0px;
+}
+entry {
+  text-color: #ffffff;
+  placeholder-color: #8b949e;
+}
+listview {
+  spacing: 6px;
+  padding: 8px 0px 0px 0px;
+}
+element {
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 9px;
+}
+element selected {
+  background-color: #ff3344;
+}
+element-text {
+  text-color: #ffffff;
+}
+element-icon {
+  size: 1.05em;
+  padding: 0px 8px 0px 0px;
+}
 '
 
 if command -v rofi >/dev/null 2>&1; then
@@ -45,7 +67,14 @@ if command -v rofi >/dev/null 2>&1; then
     exec rofi -no-config -theme "$THEME" "$@"
   fi
 
-  printf '[%s] xLFr4n theme validation failed; using inline dark fallback.\n'     "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+  if [ -s "$FALLBACK" ] && rofi -no-config -theme "$FALLBACK" -dump-theme >/dev/null 2>&1; then
+    printf '[%s] xLFr4n primary theme unavailable; using fallback.rasi.\n' \
+      "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
+    exec rofi -no-config -theme "$FALLBACK" "$@"
+  fi
+
+  printf '[%s] xLFr4n theme files unavailable; using inline dark fallback.\n' \
+    "$(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG"
   exec rofi -no-config -theme-str "$DARK_FALLBACK" "$@"
 fi
 
