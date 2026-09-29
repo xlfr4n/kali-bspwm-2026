@@ -50,9 +50,9 @@ visual_layout_check() {
 
 dock_single_backend_check() {
   local active=0
-  pgrep -x tint2 >/dev/null 2>&1 && active=$((active + 1))
-  pgrep -x plank >/dev/null 2>&1 && active=$((active + 1))
-  pgrep -af '[p]olybar dock' >/dev/null 2>&1 && active=$((active + 1))
+  pgrep -u "$UID" -x tint2 >/dev/null 2>&1 && active=$((active + 1))
+  pgrep -u "$UID" -x plank >/dev/null 2>&1 && active=$((active + 1))
+  pgrep -u "$UID" -af '[p]olybar dock' >/dev/null 2>&1 && active=$((active + 1))
   [ "$active" -le 1 ]
 }
 
@@ -122,7 +122,6 @@ check "Fullscreen toggle helper" command -v fullscreen-toggle
 check "Target copy helper" command -v target-copy
 check "xLFr4n pulse helper" command -v xlfr4n-pulse
 check "xLFr4n terminal banner" command -v xlfr4n-banner
-check "xLFr4n date helper" command -v xlfr4n-date
 check "xLFr4n date helper" command -v xlfr4n-date
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" "$HOME/.config/sxhkd/sxhkdrc"
 check "Target clipboard binding" grep -Fq "click-left = target-copy" "$HOME/.config/polybar/config.ini"
