@@ -8,17 +8,18 @@
   accent: #ff3344;
   dark-accent: #101216;
   font: "JetBrains Mono 10";
+  border: #55ff3344;
 }
 
 window {
-  width: 44%;
+  width: 48%;
   location: center;
   anchor: center;
-  background-color: @bg;
-  border: 2px;
-  border-color: @accent;
-  border-radius: 12px;
-  padding: 14px;
+  background-color: #E50B0E12;
+  border: 1px;
+  border-color: @border;
+  border-radius: 16px;
+  padding: 16px;
 }
 
 mainbox {
@@ -48,7 +49,7 @@ listview {
   lines: 9;
   columns: 1;
   fixed-height: false;
-  spacing: 5px;
+  spacing: 7px;
   padding: 8px 0px 0px;
 }
 
