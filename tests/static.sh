@@ -62,6 +62,7 @@ required_files=(
   config/plank/README.md
   config/tint2/tint2rc
   config/tint2/README.md
+  docs/FINAL-AUDIT.md
   scripts/autostart
   scripts/kali-menu
   scripts/rofi-xlfr4n
