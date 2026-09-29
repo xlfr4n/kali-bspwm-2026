@@ -59,7 +59,7 @@ target_check() {
 desktop_count_check() {
   local count
   count="$(bspc query -D 2>/dev/null | wc -l)"
-  [ "$count" -ge 10 ]
+  [ "$count" -eq 9 ]
 }
 
 virt="$(systemd-detect-virt 2>/dev/null || true)"
@@ -99,8 +99,8 @@ check "Lock helper" command -v lock-screen
 check "Virtualization helper" command -v vmware-tools
 check "Theme state" theme_check
 check "Target state" target_check
-check "Floating dock configuration" test -s "$HOME/.config/plank/xLFr4n/dock.theme"
-check "10 BSPWM desktops" desktop_count_check
+check "Floating dock configuration" sh -c 'test -s "$HOME/.config/tint2/tint2rc" || test -s "$HOME/.config/plank/xLFr4n/dock.theme"'
+check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
 
