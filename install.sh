@@ -54,9 +54,10 @@ PACKAGES=(
   network-manager network-manager-gnome
   fastfetch fzf ripgrep fd-find bat eza btop htop glances
   flameshot playerctl pamixer pavucontrol jq rsync unzip
-  thunar arandr gpick neovim tmux i3lock
+  thunar arandr gpick neovim tmux i3lock plank papirus-icon-theme
   x11-xserver-utils xserver-xorg lxappearance
   fonts-font-awesome fonts-jetbrains-mono
+  xdg-utils
   libnotify-bin pipx python3-venv
   kali-tweaks kali-wallpapers-2026
 )
@@ -90,6 +91,7 @@ for p in \
   "$CONFIG_DIR/picom" \
   "$CONFIG_DIR/kitty" \
   "$CONFIG_DIR/dunst" \
+  "$CONFIG_DIR/plank" \
   "$CONFIG_DIR/theme-state" \
   "$CONFIG_DIR/wallpaper-state" \
   "$HOME/.zshrc"
@@ -97,10 +99,15 @@ do
   backup_path "$p"
 done
 
+for p in "$HOME/.local/share/applications"/xLFr4n-*.desktop; do
+  [ -e "$p" ] || continue
+  backup_path "$p"
+done
+
 log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 
-for dir in bspwm sxhkd polybar rofi picom kitty dunst; do
+for dir in bspwm sxhkd polybar rofi picom kitty dunst plank; do
   if [ -L "$CONFIG_DIR/$dir" ]; then
     unlink "$CONFIG_DIR/$dir"
   elif [ -d "$CONFIG_DIR/$dir" ]; then
@@ -118,6 +125,11 @@ fi
 install -Dm644 "$ROOT_DIR/config/zshrc" "$HOME/.zshrc"
 cp -a "$ROOT_DIR/scripts/." "$BIN_DIR/"
 chmod +x "$BIN_DIR"/* 2>/dev/null || true
+
+mkdir -p "$HOME/.local/share/applications"
+for desktop in "$ROOT_DIR"/config/applications/*.desktop; do
+  install -Dm644 "$desktop" "$HOME/.local/share/applications/$(basename "$desktop")"
+done
 
 ln -sfn "$BIN_DIR/settarget" "$BIN_DIR/st"
 ln -sfn "$BIN_DIR/cleartarget" "$BIN_DIR/ct"
@@ -146,6 +158,14 @@ fi
 
 fc-cache -f >/dev/null 2>&1 || true
 
+if command -v desktop-style >/dev/null 2>&1; then
+  desktop-style --apply --silent || warn "Desktop visual style could not be fully applied."
+fi
+
+if command -v dock >/dev/null 2>&1; then
+  dock --start || warn "Plank dock could not be started during installation."
+fi
+
 if systemctl is-enabled display-manager.service >/dev/null 2>&1 || systemctl is-active display-manager.service >/dev/null 2>&1; then
   ok "Existing display manager preserved."
 else
@@ -167,7 +187,7 @@ else
   warn "pywal16 unavailable; static themes remain available."
 fi
 
-for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr; do
+for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr plank; do
   command -v "$cmd" >/dev/null 2>&1 || warn "Missing command after install: $cmd"
 done
 
