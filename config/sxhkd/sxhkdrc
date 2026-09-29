@@ -127,13 +127,13 @@ super + shift + k
     lock-screen
 
 XF86AudioRaiseVolume
-    pamixer -i 5
+    audio-control up
 
 XF86AudioLowerVolume
-    pamixer -d 5
+    audio-control down
 
 XF86AudioMute
-    pamixer -t
+    audio-control mute
 
 Print
     flameshot full -p "$HOME/Pictures/Screenshots"
