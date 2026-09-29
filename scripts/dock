@@ -54,12 +54,12 @@ EOF
 build_launchers(){
   rm -f "$LAUNCHERS"/*.dockitem 2>/dev/null || true
   command -v brave-browser >/dev/null 2>&1 && install_launcher brave "Brave Browser" "brave-browser" "brave-browser"
-  command -v kitty >/dev/null 2>&1 && install_launcher kitty "Kitty" "kitty" "kitty"
+  command -v kitty >/dev/null 2>&1 && install_launcher terminal "xLFr4n — Kitty" "kitty" "kitty"
   command -v thunar >/dev/null 2>&1 && install_launcher files "Files" "system-file-manager" "Thunar"
   command -v code >/dev/null 2>&1 && install_launcher code "Visual Studio Code" "code" "Code"
   command -v burpsuite >/dev/null 2>&1 && install_launcher burp "Burp Suite" "burpsuite" "BurpSuite"
   install_launcher editor "Neovim" "text-editor" "floating_nvim"
-  install_launcher kali "xLFr4n Menu" "xlfr4n-menu"
+  install_launcher kali-menu "⚡ xLFr4n Menu" "xlfr4n-menu"
   install_launcher target "Target Console" "xlfr4n-target" "kali-target"
   install_launcher lab "Kali Lab" "xlfr4n-lab" "kali-lab"
   command -v btop >/dev/null 2>&1 && install_launcher btop "System Monitor" "utilities-system-monitor"
