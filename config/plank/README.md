@@ -15,3 +15,6 @@ The installer backs up previous configuration before deployment. The \`dock\` he
 ---
 
 **⚡ xLFr4n · Float the workspace, keep the system lean.**
+
+
+> **Kali Rolling:** Plank is optional. When the package is unavailable, `dock` automatically uses the native floating Polybar icon dock, so the visual workspace still works without third-party repositories.
