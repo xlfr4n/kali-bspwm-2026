@@ -71,14 +71,14 @@ build_launchers(){
 start_tint2(){
   command -v tint2 >/dev/null 2>&1 || return 1
   [ -r "$TINT2_CONFIG" ] || return 1
-  pkill -x tint2 2>/dev/null || true
+  pkill -u "$UID" -x tint2 2>/dev/null || true
   nohup tint2 -c "$TINT2_CONFIG" >> "$LOG" 2>&1 &
   disown || true
 }
 
 start_plank(){
   command -v plank >/dev/null 2>&1 || return 1
-  pkill -x plank 2>/dev/null || true
+  pkill -u "$UID" -x plank 2>/dev/null || true
   nohup plank >> "$LOG" 2>&1 &
   disown || true
   sleep 0.5
@@ -87,7 +87,7 @@ start_plank(){
 
 start_polybar(){
   command -v polybar >/dev/null 2>&1 || { log "Polybar is not installed."; return 1; }
-  pkill -f '[p]olybar dock' 2>/dev/null || true
+  pkill -u "$UID" -f '[p]olybar dock' 2>/dev/null || true
   nohup polybar dock -c "$HOME/.config/polybar/config.ini" >> "$LOG" 2>&1 &
   disown || true
 }
@@ -110,15 +110,15 @@ stop_backend(){
 }
 
 status_backend(){
-  if pgrep -x tint2 >/dev/null 2>&1; then
+  if pgrep -u "$UID" -x tint2 >/dev/null 2>&1; then
     echo "Tint2 dock: running"
     return 0
   fi
-  if pgrep -x plank >/dev/null 2>&1; then
+  if pgrep -u "$UID" -x plank >/dev/null 2>&1; then
     echo "Plank dock: running"
     return 0
   fi
-  if pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
+  if pgrep -u "$UID" -af '[p]olybar dock' >/dev/null 2>&1; then
     echo "Polybar dock: running"
     return 0
   fi
@@ -142,7 +142,7 @@ case "${1:---start}" in
     stop_backend
     ;;
   --toggle)
-    if pgrep -x tint2 >/dev/null 2>&1 || pgrep -x plank >/dev/null 2>&1 || pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
+    if pgrep -u "$UID" -x tint2 >/dev/null 2>&1 || pgrep -u "$UID" -x plank >/dev/null 2>&1 || pgrep -u "$UID" -af '[p]olybar dock' >/dev/null 2>&1; then
       stop_backend
     else
       install_theme
