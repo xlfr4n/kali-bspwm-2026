@@ -45,6 +45,7 @@ Exec=sh -c "\$HOME/.local/bin/dock-launch $id"
 Icon=$icon
 Terminal=false
 NoDisplay=true
+StartupNotify=true
 EOF
   [ -n "$wmclass" ] && printf 'StartupWMClass=%s\n' "$wmclass" >> "$desktop"
   printf '[PlankDockItemPreferences]\nLauncher=file://%s\n' "$desktop" > "$LAUNCHERS/$id.dockitem"
