@@ -102,6 +102,9 @@ super + shift + m
 super + ctrl + r
     kitty --title Kali-Doctor -e doctor.sh
 
+super + shift + i
+    kitty --title xLFr4n-System -e xlfr4n-banner --static
+
 super + ctrl + x
     settarget
 
