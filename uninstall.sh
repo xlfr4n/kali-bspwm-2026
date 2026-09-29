@@ -9,6 +9,10 @@ set -Eeuo pipefail
   exit 1
 }
 
+if [ -x "$HOME/.local/bin/workspace-hud" ]; then
+  "$HOME/.local/bin/workspace-hud" --stop >/dev/null 2>&1 || true
+fi
+
 for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
 done
@@ -29,10 +33,11 @@ fi
 
 rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/dunst"   "$HOME/.config/plank"   "$HOME/.config/tint2"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
 
-rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.local/bin/st"   "$HOME/.local/bin/ct"   "$HOME/.local/bin/monitor-refresh"   "$HOME/.local/bin/theme-switch"   "$HOME/.local/bin/power-menu"   "$HOME/.local/bin/screenshot-menu"   "$HOME/.local/bin/keyboard"   "$HOME/.local/bin/start-picom"   "$HOME/.local/bin/doctor.sh"   "$HOME/.local/bin/wallpaper"   "$HOME/.local/bin/lab"   "$HOME/.local/bin/lock-screen"   "$HOME/.local/bin/session-reload"   "$HOME/.local/bin/autostart"   "$HOME/.local/bin/kali-menu"   "$HOME/.local/bin/vmware-tools"   "$HOME/.local/bin/dock"   "$HOME/.local/bin/dock-launch"   "$HOME/.local/bin/mission-control"   "$HOME/.local/bin/desktop-style"
+rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.local/bin/st"   "$HOME/.local/bin/ct"   "$HOME/.local/bin/monitor-refresh"   "$HOME/.local/bin/theme-switch"   "$HOME/.local/bin/power-menu"   "$HOME/.local/bin/screenshot-menu"   "$HOME/.local/bin/keyboard"   "$HOME/.local/bin/start-picom"   "$HOME/.local/bin/doctor.sh"   "$HOME/.local/bin/wallpaper"   "$HOME/.local/bin/lab"   "$HOME/.local/bin/lock-screen"   "$HOME/.local/bin/session-reload"   "$HOME/.local/bin/autostart"   "$HOME/.local/bin/kali-menu"   "$HOME/.local/bin/vmware-tools"   "$HOME/.local/bin/dock"   "$HOME/.local/bin/dock-launch"   "$HOME/.local/bin/mission-control"   "$HOME/.local/bin/desktop-style"   "$HOME/.local/bin/workspace-hud"   "$HOME/.local/bin/audio-control"   "$HOME/.local/bin/network-status"   "$HOME/.local/bin/battery-status"
 
 sudo rm -f /usr/share/xsessions/bspwm.desktop
 
+rm -f "$HOME/.cache/xlfr4n-workspace-hud.pid"
 rm -f "$HOME/.local/share/applications"/xLFr4n-*.desktop
 rm -f "$HOME/.local/share/icons/hicolor/scalable/apps"/xlfr4n-*.svg
 
