@@ -7,5 +7,6 @@ Exec=sh -c "dock-launch btop"
 Icon=utilities-system-monitor
 Terminal=false
 NoDisplay=true
+StartupWMClass=xLFr4n-btop
 StartupNotify=true
 Categories=System;Monitor;
