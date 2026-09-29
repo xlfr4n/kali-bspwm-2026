@@ -6,9 +6,15 @@
   fg: #ffffff;
   muted: #8b949e;
   accent: #ff3344;
-  dark-accent: #101216;
+  dark-accent: #ffffff;
   font: "JetBrains Mono 10";
   border: #66ff3344;
+}
+
+configuration {
+  show-icons: true;
+  icon-theme: "Papirus-Dark";
+  drun-display-format: "{name}";
 }
 
 window {
@@ -31,7 +37,7 @@ inputbar {
   background-color: @bg-alt;
   border: 1px;
   border-color: @accent;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 prompt {
@@ -69,7 +75,7 @@ element selected {
 }
 
 element-text selected {
-  text-color: @dark-accent;
+  text-color: #ffffff;
   font: "JetBrains Mono 10";
 }
 
