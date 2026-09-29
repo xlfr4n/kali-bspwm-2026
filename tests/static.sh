@@ -148,10 +148,12 @@ check "Nine workspace bindings" grep -Fq "super + {1,2,3,4,5,6,7,8,9}" config/sx
 check_not_present "No nm-applet startup" grep -Fq "command -v nm-applet" scripts/autostart
 check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
 check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
+check "Menu system snapshot" grep -Fq "SYSTEM    Terminal system snapshot" scripts/kali-menu
 check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
 check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
 check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
+check "System snapshot hotkey" grep -Fq "xlfr4n-banner --static" config/sxhkd/sxhkdrc
 check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
 check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
 check "Banner guard" grep -Fq "XLFR4N_BANNER_DONE" config/zshrc
