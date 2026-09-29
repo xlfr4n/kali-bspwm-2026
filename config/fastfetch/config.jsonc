@@ -1,10 +1,14 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "builtin",
-    "source": "Kali",
+    "type": "file",
+    "source": "~/.config/fastfetch/xLFr4n.logo",
     "padding": {
-      "right": 4
+      "right": 5
+    },
+    "color": {
+      "1": "light_red",
+      "2": "white"
     }
   },
   "display": {
