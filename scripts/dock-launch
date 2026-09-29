@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Focus an existing application window when possible; otherwise launch it.
+set -Eeuo pipefail
+
+app=${1:-}
+
+case "$app" in
+  brave) wmclass='brave-browser'; cmd=(brave-browser --new-window) ;;
+  kitty) wmclass='kitty'; cmd=(kitty) ;;
+  files) wmclass='thunar'; cmd=(thunar) ;;
+  code) wmclass='code'; cmd=(code) ;;
+  burp) wmclass='burpsuite'; cmd=(burpsuite) ;;
+  nvim) wmclass='floating_nvim'; cmd=(kitty --class floating_nvim -e nvim) ;;
+  kali) wmclass=''; cmd=(kali-menu) ;;
+  target) wmclass='kali-target'; cmd=(kitty --title Kali-Target -e settarget) ;;
+  lab) wmclass='kali-lab'; cmd=(kitty --title Kali-Lab -e lab) ;;
+  *) echo 'Usage: dock-launch {brave|kitty|files|code|burp|nvim|kali|target|lab}' >&2; exit 2 ;;
+esac
+
+if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
+  window_id="$(wmctrl -lx 2>/dev/null | awk -v want="${wmclass,,}" 'BEGIN { IGNORECASE=1 } { class=tolower($3); if (index(class, want) > 0) { print $1; exit } }')"
+  if [ -n "$window_id" ]; then
+    wmctrl -ia "$window_id" >/dev/null 2>&1 || true
+    exit 0
+  fi
+fi
+
+"${cmd[@]}" >/dev/null 2>&1 &
+disown || true
