@@ -23,9 +23,9 @@ panel_monitor = primary
 panel_position = bottom center horizontal
 panel_items = L
 panel_size = 680 64
-panel_margin = 0 5
+panel_margin = 0 6
 panel_padding = 0 0 0
-panel_background_id = 1
+panel_background_id = 0
 panel_layer = top
 panel_dock = 0
 wm_menu = 0
@@ -33,16 +33,16 @@ strut_policy = follow_size
 panel_window_name = xLFr4n Dock
 mouse_effects = 1
 font_shadow = 0
-mouse_hover_icon_asb = 100 0 18
-mouse_pressed_icon_asb = 100 0 -6
+mouse_hover_icon_asb = 100 0 28
+mouse_pressed_icon_asb = 100 0 -10
 
 #-------------------------------------
 # Launcher
 #-------------------------------------
-launcher_padding = 8 0 5
-launcher_background_id = 1
+launcher_padding = 7 0 4
+launcher_background_id = 0
 launcher_icon_background_id = 0
-launcher_icon_size = 46
+launcher_icon_size = 42
 launcher_icon_asb = 100 0 0
 launcher_icon_theme = Papirus-Dark
 launcher_icon_theme_override = 1
