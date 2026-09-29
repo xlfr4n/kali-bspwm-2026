@@ -22,7 +22,7 @@ Además, el helper `vmware-tools` permite consultar el estado y reiniciar los se
 1. descubre las salidas conectadas mediante `xrandr`;
 2. conserva la salida marcada como primaria cuando existe;
 3. coloca las adicionales a la derecha;
-4. reparte los diez escritorios de BSPWM entre los monitores detectados.
+4. reparte los nueve escritorios de BSPWM entre los monitores detectados.
 
 Con una sola pantalla no se necesita ninguna configuración especial.
 
@@ -52,7 +52,7 @@ The `vmware-tools` helper can inspect status and restart the services without ch
 
 ### 🖥️ Displays
 
-`monitor-refresh` discovers connected X11 outputs with `xrandr`, keeps the primary output when available, places additional outputs to the right and distributes the ten BSPWM desktops across detected monitors.
+`monitor-refresh` discovers connected X11 outputs with `xrandr`, keeps the primary output when available, places additional outputs to the right and distributes the nine BSPWM desktops across detected monitors.
 
 ### 📁 Shared folders
 
