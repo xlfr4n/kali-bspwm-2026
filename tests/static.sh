@@ -72,6 +72,7 @@ required_files=(
   scripts/dock
   scripts/mission-control
   scripts/desktop-style
+  scripts/session-profile
 )
 
 for file in "${required_files[@]}"; do
@@ -99,6 +100,8 @@ check "Workspace transparent background" grep -Fq "background = #00000000" confi
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
 check "Workspace rail offset" grep -Fq "offset-y = 25pt" config/polybar/config.ini
+check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
+check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
 check "Date and time right modules" grep -Fq "modules-right = date time" config/polybar/config.ini
