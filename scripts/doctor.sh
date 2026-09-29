@@ -86,6 +86,14 @@ check "xrandr" command -v xrandr
 check "Flameshot" command -v flameshot
 check "tmux" command -v tmux
 check "Neovim" command -v nvim
+check "xclip" command -v xclip
+check "jq" command -v jq
+check "Fullscreen toggle helper" command -v fullscreen-toggle
+check "Target copy helper" command -v target-copy
+check "xLFr4n pulse helper" command -v xlfr4n-pulse
+check "xLFr4n terminal banner" command -v xlfr4n-banner
+check "Fullscreen binding" grep -Fq "fullscreen-toggle" "$HOME/.config/sxhkd/sxhkdrc"
+check "Target clipboard binding" grep -Fq "click-left = target-copy" "$HOME/.config/polybar/config.ini"
 check "Eza or ls" sh -c 'command -v eza >/dev/null 2>&1 || command -v ls >/dev/null 2>&1'
 check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl >/dev/null 2>&1'
 check "BSPWM config" bspwm_config_check
