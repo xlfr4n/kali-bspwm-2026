@@ -28,7 +28,7 @@ super + {q,w}
     bspc node -{c,k}
 
 super + f
-    bspc node -t fullscreen
+    fullscreen-toggle
 
 super + s
     bspc node -t floating
