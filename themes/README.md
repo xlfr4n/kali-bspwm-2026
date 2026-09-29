@@ -51,3 +51,8 @@ theme-switch cyber-red
 ---
 
 <p align="center"><strong>⚡ xlfr4n</strong> · Theme the desktop. Keep the system boring.</p>
+
+
+## 🍎 Desktop skin
+
+Every theme keeps the unified xLFr4n workspace shell: floating top bar, floating dock, application launcher and window overview. Switching themes refreshes Polybar and the dock together when possible.
