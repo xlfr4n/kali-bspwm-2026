@@ -30,7 +30,7 @@ El objetivo es que la VM no parezca una instalación genérica: debe sentirse co
 
 ### 🇬🇧 English
 
-The current edition adds a macOS-inspired ergonomics layer without leaving **BSPWM + SXHKD**: a **floating Polybar**, **zooming Plank dock**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), **Brave** quick launch (`+Super + Ctrl + B`), custom xLFr4n icons and left-side GTK controls where supported.
+The current edition adds a macOS-inspired ergonomics layer without leaving **BSPWM + SXHKD**: a **floating Polybar**, **real-icon Tint2 dock (with Plank/Polybar fallback)**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), **Brave** quick launch (`+Super + Ctrl + B`), custom xLFr4n icons and left-side GTK controls where supported.
 
 The goal is to make the VM feel like a **personal xLFr4n workspace**, while keeping the environment lightweight, backed up and diagnosable.
 
@@ -220,14 +220,12 @@ El helper `vmware-tools` es solo de diagnóstico/recovery; no cambia la configur
 | `Super + 7` | Escritorio 7 |
 | `Super + 8` | Escritorio 8 |
 | `Super + 9` | Escritorio 9 |
-| `Super + 0` | Escritorio 10 |
 
 Mover la ventana actual:
 
 | Shortcut | Acción |
 |---|---|
 | `Super + Shift + 1..9` | Mover ventana a desktop 1..9 |
-| `Super + Shift + 0` | Mover ventana a desktop 10 |
 
 ### 🧠 Control BSPWM
 
@@ -408,14 +406,12 @@ Super+Ctrl+Arrow
 
 ~~~text
 Super+1 ... Super+9
-Super+0
 ~~~
 
 Mover una ventana:
 
 ~~~text
 Super+Shift+1 ... Super+Shift+9
-Super+Shift+0
 ~~~
 
 ### 7. Themes
@@ -550,7 +546,7 @@ El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistem
 ### Identidad visible
 
 - Barra superior iniciando con **⚡ xlfr4n // KALI**
-- §MENU§, §TARGET§, §VPN§, virtualización y sesión visibles en la barra
+- §MENU§ y §TARGET§ integrados en la barra; red, CPU, RAM y audio en un bloque compacto
 - §PWR§ con fondo/acento y texto de alto contraste
 - Sesión de login identificada como **⚡ xlfr4n // Kali BSPWM**
 - Kitty con pestañas personalizadas y colores coordinados
