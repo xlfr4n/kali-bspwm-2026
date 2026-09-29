@@ -6,11 +6,23 @@ super + Return
 super + d
     rofi-xlfr4n -show drun -show-icons
 
+super + space
+    rofi-xlfr4n -show drun -show-icons -p 'Spotlight'
+
 super + shift + d
     rofi-xlfr4n -show run
 
+super + shift + space
+    mission-control
+
 super + shift + h
     kali-menu
+
+super + shift + a
+    dock --toggle
+
+super + shift + o
+    mission-control
 
 super + {q,w}
     bspc node -{c,k}
@@ -98,6 +110,9 @@ super + ctrl + v
 
 super + shift + f
     firefox
+
+super + ctrl + b
+    brave-browser --new-window
 
 super + shift + b
     burpsuite
