@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Lightweight Polybar heartbeat. Uses shell-only timing to avoid spawning date repeatedly.
+# Lightweight Polybar heartbeat with a smooth signal sweep.
 set -u
 
 frames=(
-  '⚡ xLFr4n // KALI'
-  '⚡ xLFr4n > KALI'
-  '⚡ xLFr4n >> KALI'
-  '⚡ xLFr4n >>> KALI'
-  '⚡ xLFr4n >> KALI'
-  '⚡ xLFr4n > KALI'
+  '⚡ xLFr4n // KALI  [●··]'
+  '⚡ xLFr4n // KALI  [●●·]'
+  '⚡ xLFr4n // KALI  [●●●]'
+  '⚡ xLFr4n // KALI  [·●●]'
+  '⚡ xLFr4n // KALI  [··●]'
+  '⚡ xLFr4n // KALI  [···]'
+  '⚡ xLFr4n // KALI  [··●]'
+  '⚡ xLFr4n // KALI  [·●●]'
 )
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
-printf '%s\n' "${frames[$((tick % ${#frames[@]}))]}"
+index=$((tick % ${#frames[@]}))
+printf '%s\n' "${frames[$index]}"
