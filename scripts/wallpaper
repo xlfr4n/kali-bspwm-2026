@@ -95,6 +95,9 @@ set_wallpaper() {
   feh --no-fehbg --bg-fill "$rendered"
   printf '%s\n' "$image" > "$STATE_FILE"
   printf 'Wallpaper: %s\n' "$image"
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send -u low -t 1000 "xLFr4n // WALLPAPER" "$(basename "$image")" >/dev/null 2>&1 || true
+  fi
 }
 
 case "${1:-}" in
