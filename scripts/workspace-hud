@@ -29,10 +29,19 @@ notify_workspace() {
 
   notify-send \
     -u low \
-    -t 780 \
+    -t 520 \
     -h string:x-dunst-stack-tag:xLFr4n-workspace-hud \
     "$title" \
-    'xLFr4n // workspace focus' >/dev/null 2>&1 || true
+    'xLFr4n // focus syncing' >/dev/null 2>&1 || true
+
+  # Re-use Dunst's stack tag for a tiny two-frame transition.
+  sleep 0.06
+  notify-send \
+    -u low \
+    -t 720 \
+    -h string:x-dunst-stack-tag:xLFr4n-workspace-hud \
+    "$title" \
+    'xLFr4n // focus ready' >/dev/null 2>&1 || true
 }
 
 stop_previous() {
