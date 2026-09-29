@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Kali Lab
+Comment=Security laboratory workspace
+Exec=sh -c "kitty --title Kali-Lab -e lab"
+Icon=xlfr4n-lab
+Terminal=false
+NoDisplay=true
