@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Appearance
+Comment=GTK appearance settings
+Exec=sh -c "dock-launch settings"
+Icon=preferences-desktop
+Terminal=false
+NoDisplay=true
+StartupWMClass=lxappearance
+StartupNotify=true
+Categories=Settings;
