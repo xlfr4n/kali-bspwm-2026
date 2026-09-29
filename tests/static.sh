@@ -96,7 +96,7 @@ check "Polybar restack" grep -Fq "wm-restack = bspwm" config/polybar/config.ini
 check "Polybar IPC" grep -Fq "enable-ipc = true" config/polybar/config.ini
 check "Polybar transparent top rail" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Polybar borderless top rail" grep -Fq "border-size = 0pt" config/polybar/config.ini
-check "Polybar width" grep -Fq "width = 96%" config/polybar/config.ini
+check "Polybar width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Polybar flat top rail" grep -Fq "radius = 0" config/polybar/config.ini
 check "Plank fallback reference" grep -Fq "plank" install.sh
 check "Tint2 reference" grep -Fq "tint2" install.sh
