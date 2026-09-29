@@ -41,6 +41,7 @@ check "Uninstall workspace HUD cleanup" grep -Fq 'workspace-hud" --stop' uninsta
 check "Uninstall new UX helpers" grep -Fq "audio-control" uninstall.sh
 check "Uninstall Fastfetch config" grep -Fq '"$HOME/.config/fastfetch"' uninstall.sh
 check "Uninstall launch helper" grep -Fq '"$HOME/.local/bin/xlfr4n-launch"' uninstall.sh
+check "Uninstall workspace rail" grep -Fq '"$HOME/.local/bin/workspace-rail"' uninstall.sh
 check "syntax bspwmrc" bash -n config/bspwm/bspwmrc
 check "syntax polybar launch" bash -n config/polybar/launch.sh
 
@@ -121,7 +122,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset above dock" grep -Fq "offset-y = 76pt" config/polybar/config.ini
+check "Workspace rail offset above dock" grep -Fq "offset-y = 82pt" config/polybar/config.ini
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -216,6 +217,8 @@ check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any f
 check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
 check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
 check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
+check "Launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/xlfr4n-launch
+check "Dock launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/dock-launch
 check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
 check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
