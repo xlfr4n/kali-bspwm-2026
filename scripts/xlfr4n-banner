@@ -140,7 +140,7 @@ pair_line 'SHELL' "$shell_name" 'UPTIME' "$uptime" '' ''
 target_line "${target:-not set}"
 frame_line "$(printf '%-8s %-56s' 'LOCAL' "$now")"
 top_bottom
-frame_line '  KITTY  CTRL+SHIFT+T TAB  ·  CTRL+SHIFT+N WINDOW  ·  CTRL+SHIFT+F5 RELOAD'
-frame_line '  READY  xLFr4n // focused, readable, VM-friendly'
+frame_line '  KITTY  CTRL+SHIFT+T TAB · CTRL+SHIFT+N WINDOW'
+frame_line '  RELOAD CTRL+SHIFT+F5 · xLFr4n // focused, VM-friendly'
 top_bottom
 printf '\n'
