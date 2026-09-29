@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
 # Fixed-width terminal identity. The frame stays ASCII-only so font fallback
-# cannot change its geometry; the information columns are padded explicitly.
+# cannot change its geometry; information columns are padded explicitly.
+# v3: richer boot animation, localized date/time and a clean operator footer.
 set -u
 
 THEME_FILE="$HOME/.config/theme-state/current"
@@ -17,7 +18,7 @@ resolution="$(xrandr 2>/dev/null | awk '/ connected primary | connected / {for (
 resolution="${resolution:-unknown}"
 
 case "$virt" in
-  oracle) virt='VirtualBox' ;;
+  oracle|virtualbox) virt='VirtualBox' ;;
   vmware) virt='VMware' ;;
   qemu) virt='QEMU/KVM' ;;
   kvm) virt='KVM' ;;
@@ -25,10 +26,10 @@ case "$virt" in
 esac
 
 case "$theme" in
-  htb-green) accent=32 ;;
-  nord) accent=36 ;;
-  purple) accent=35 ;;
-  *) accent=31 ;;
+  htb-green) accent=32; bright=92 ;;
+  nord) accent=36; bright=96 ;;
+  purple) accent=35; bright=95 ;;
+  *) accent=31; bright=91 ;;
 esac
 
 if command -v free >/dev/null 2>&1; then
@@ -42,6 +43,13 @@ host="$(hostname 2>/dev/null || printf 'unknown')"
 arch="$(uname -m 2>/dev/null || printf 'unknown')"
 shell_name="${SHELL##*/}"
 shell_name="${shell_name:-sh}"
+
+# GNU date localizes %A/%B through LC_TIME. Keep normal system precedence.
+language="${LC_ALL:-${LC_TIME:-${LANG:-C}}}"
+case "$language" in
+  es*) now="$(LC_TIME="$language" date '+%A, %-d de %B de %Y · %H:%M')" ;;
+  *) now="$(LC_TIME="$language" date '+%A, %-d %B %Y · %H:%M')" ;;
+esac
 
 clip_field() {
   local value="${1:-}"
@@ -62,7 +70,8 @@ frame_center() {
   length=${#value}
   left=$(( (64 - length) / 2 ))
   right=$(( 64 - length - left ))
-  printf '\033[%sm|\033[0m%*s%s%*s\033[%sm|\033[0m\n'     "$accent" "$left" '' "$value" "$right" '' "$accent"
+  printf '\033[%sm|\033[0m%*s%s%*s\033[%sm|\033[0m\n' \
+    "$accent" "$left" '' "$value" "$right" '' "$accent"
 }
 
 frame_section() {
@@ -91,20 +100,34 @@ target_line() {
 animate_boot() {
   [ "${1:-}" = "--static" ] && return 0
   [ -t 1 ] || return 0
+  local phase index progress spinner bar fill
+  local -a phases=("BOOT" "LINK" "SYNC" "DRAW" "READY")
+  local -a progress_values=(8 26 52 76 100)
+  local -a spinners=('|' '/' '-' '\\')
 
-  local phase
-  for phase in "BOOT" "LINK" "SYNC" "DRAW" "READY"; do
-    printf '\r\033[2K\033[%sm[ xLFr4n ]\033[0m  %-5s  INITIALIZING WORKSPACE' "$accent" "$phase"
-    sleep 0.05
+  for index in "${!phases[@]}"; do
+    phase="${phases[$index]}"
+    progress="${progress_values[$index]}"
+    spinner="${spinners[$((index % ${#spinners[@]}))]}"
+    printf -v bar '%*s' 20 ''
+    bar="${bar// /#}"
+    printf -v fill '%*s' "$((progress * 20 / 100))" ''
+    fill="${fill// /#}"
+    bar="${fill}${bar:${#fill}}"
+    printf '\r\033[2K\033[%sm[ xLFr4n ]\033[0m  %s  %-5s  [%s]  %3d%%' \
+      "$bright" "$spinner" "$phase" "$bar" "$progress"
+    sleep 0.07
   done
   printf '\r\033[2K'
 }
 
 printf '\n'
 animate_boot "${1:-}"
+
 top_bottom() {
   printf '\033[%sm+------------------------------------------------------------------+\033[0m\n' "$accent"
 }
+
 top_bottom
 frame_center 'xLFr4n // KALI'
 frame_center 'PERSONAL SECURITY WORKSPACE'
@@ -115,5 +138,9 @@ pair_line 'KERNEL' "$kernel" 'CPU' "$cpu" 'MEMORY' "$memory"
 pair_line 'DISPLAY' "$resolution" 'HOST' "$host" 'ARCH' "$arch"
 pair_line 'SHELL' "$shell_name" 'UPTIME' "$uptime" '' ''
 target_line "${target:-not set}"
+frame_line "$(printf '%-8s %-56s' 'LOCAL' "$now")"
+top_bottom
+frame_line '  KITTY  CTRL+SHIFT+T TAB  ·  CTRL+SHIFT+N WINDOW  ·  CTRL+SHIFT+F5 RELOAD'
+frame_line '  READY  xLFr4n // focused, readable, VM-friendly'
 top_bottom
 printf '\n'
