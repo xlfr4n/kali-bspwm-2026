@@ -136,10 +136,13 @@ check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
-check "Fastfetch custom logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
-check "Fastfetch custom logo file" grep -Fq "xLFr4n" config/fastfetch/xLFr4n.logo
-check "Fastfetch light-red palette" grep -Fq '"1": "light_red"' config/fastfetch/config.jsonc
-check "Fastfetch xLFr4n title" grep -Fq '⚡ xLFr4n' config/fastfetch/config.jsonc
+check "Fastfetch Kali logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
+check "Fastfetch Kali logo shape" grep -Fq ".............." config/fastfetch/xLFr4n.logo
+check "Fastfetch xLFr4n signature" grep -Fq '⚡ xLFr4n' config/fastfetch/xLFr4n.logo
+check "Fastfetch Kali blue palette" grep -Fq '"1": "blue"' config/fastfetch/config.jsonc
+check "Fastfetch target module" grep -Fq '"key": "TARGET"' config/fastfetch/config.jsonc
+check "Fastfetch local IP module" grep -Fq '"type": "localip"' config/fastfetch/config.jsonc
+check "Fastfetch date module" grep -Fq '"type": "datetime"' config/fastfetch/config.jsonc
 check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
 check "Unified launch feedback helper" grep -Fq "xLFr4n // LAUNCH" scripts/xlfr4n-launch
