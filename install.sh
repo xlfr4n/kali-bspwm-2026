@@ -89,17 +89,17 @@ if [ "$MODE" = "full" ]; then
 fi
 
 if [ "$MODE" = "full" ]; then
-# Optional visual packages. Kali Rolling can remove individual desktop
-# packages over time, so their absence must never abort the base installer.
-OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme imagemagick)
-for optional in "${OPTIONAL_PACKAGES[@]}"; do
-  if apt-cache show "$optional" >/dev/null 2>&1; then
-    log "Installing optional package: $optional"
-    sudo apt-get install -y "$optional" || warn "Optional package unavailable: $optional"
-  else
-    warn "Optional package not available in this Kali snapshot: $optional"
-  fi
-done
+  # Optional visual packages. Kali Rolling can remove individual desktop
+  # packages over time, so their absence must never abort the base installer.
+  OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme imagemagick)
+  for optional in "${OPTIONAL_PACKAGES[@]}"; do
+    if apt-cache show "$optional" >/dev/null 2>&1; then
+      log "Installing optional package: $optional"
+      sudo apt-get install -y "$optional" || warn "Optional package unavailable: $optional"
+    else
+      warn "Optional package not available in this Kali snapshot: $optional"
+    fi
+  done
 fi
 
 log "Creating backup: $BACKUP_DIR"
@@ -230,13 +230,13 @@ fi
 python3 -m pipx ensurepath >/dev/null 2>&1 || true
 
 if [ "$MODE" = "full" ]; then
-if command -v wal >/dev/null 2>&1; then
-  ok "pywal16 already available."
-elif python3 -m pipx install pywal16 >/dev/null 2>&1; then
-  ok "Optional pywal16 installed in isolated pipx."
-else
-  warn "pywal16 unavailable; static themes remain available."
-fi
+  if command -v wal >/dev/null 2>&1; then
+    ok "pywal16 already available."
+  elif python3 -m pipx install pywal16 >/dev/null 2>&1; then
+    ok "Optional pywal16 installed in isolated pipx."
+  else
+    warn "pywal16 unavailable; static themes remain available."
+  fi
 fi
 
 for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr dock; do
