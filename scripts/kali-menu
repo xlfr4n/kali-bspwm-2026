@@ -31,16 +31,16 @@ choice="$(
 )"
 
 case "$choice" in
-  TERMINAL*) kitty ;;
+  TERMINAL*) dock-launch kitty ;;
   SPOTLIGHT*) rofi-xlfr4n -show drun -show-icons -p 'Spotlight' ;;
   MISSION*) mission-control ;;
-  BRAVE*) brave-browser --new-window ;;
+  BRAVE*) dock-launch brave ;;
   DOCK*) dock --toggle ;;
   DESKTOP*) desktop-style --apply ;;
   TARGET*) settarget ;;
   THEME*) theme-switch ;;
   WALLPAPER*) wallpaper --random ;;
-  LAB*) kitty --title Kali-Lab -e lab ;;
+  LAB*) dock-launch lab ;;
   MONITOR*) monitor-refresh ;;
   DOCTOR*) kitty --title Kali-Doctor -e doctor.sh ;;
   VMWARE*) kitty --title VMware-Tools -e vmware-tools ;;
