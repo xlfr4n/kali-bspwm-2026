@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ⚡ xlfr4n // Kali BSPWM 2026
-# Fast session bootstrap: visible desktop first, cosmetic/background work second.
+# Fast session bootstrap: expose a usable desktop first, then stage visual polish.
 set -Eeuo pipefail
 
 log(){
@@ -8,7 +8,7 @@ log(){
   printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$*" >> "$HOME/.cache/xlfr4n-session.log"
 }
 
-# Prevent leftovers from an older BSPWM session. These are best-effort and do not block login.
+# Clear leftovers from older sessions. Kept best-effort and intentionally short.
 pkill -x nm-applet 2>/dev/null || true
 for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
@@ -17,7 +17,7 @@ done
 mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1"
 
 # ═══════════════════════════════════════════════════════════
-# PHASE 1 — usable desktop immediately
+# PHASE 1 — input + visible chrome
 # ═══════════════════════════════════════════════════════════
 log "phase=core start"
 
@@ -33,7 +33,7 @@ if [ -x "$HOME/.config/polybar/launch.sh" ]; then
   "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
 fi
 
-# Apply only the runtime border accent here; do not rewrite configs or restart the desktop.
+# Apply the runtime accent without rewriting any files.
 if command -v bspc >/dev/null 2>&1; then
   theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf "cyber-red")"
   case "$theme" in
@@ -50,32 +50,39 @@ fi
 log "phase=core ready"
 
 # ═══════════════════════════════════════════════════════════
-# PHASE 2 — background polish; none of this blocks login
+# PHASE 2 — staged visual polish
+# The first screen is intentionally lightweight; heavier jobs arrive
+# in sequence so wallpaper conversion, dock generation and compositing
+# do not all compete for CPU/I/O at the same moment.
 # ═══════════════════════════════════════════════════════════
 (
+  sleep 0.15
   "$HOME/.local/bin/monitor-refresh" --startup >/dev/null 2>&1 || true
   log "monitor refresh done"
 ) &
 
 (
-  "$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 || true
-  log "wallpaper ready"
-) &
-
-(
+  sleep 0.25
   "$HOME/.local/bin/desktop-style" --apply --silent >/dev/null 2>&1 || true
   log "desktop style ready"
 ) &
 
 (
+  sleep 0.35
+  nice -n 10 "$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 || true
+  log "wallpaper ready"
+) &
+
+(
+  sleep 0.50
   "$HOME/.local/bin/dock" --start >/dev/null 2>&1 || true
   log "dock ready"
 ) &
 
 (
-  sleep 0.8
+  sleep 0.75
   "$HOME/.local/bin/start-picom" >/dev/null 2>&1 || true
   log "picom ready"
 ) &
 
-log "phase=background dispatched"
+log "phase=background staged"
