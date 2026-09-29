@@ -9,12 +9,13 @@ LOG="/tmp/kali-bspwm-polybar.log"
 command -v polybar >/dev/null 2>&1 || exit 1
 [ -r "$CONFIG" ] || exit 1
 
-pkill -x polybar 2>/dev/null || true
-
-for _ in $(seq 1 25); do
-  pgrep -x polybar >/dev/null 2>&1 || break
-  sleep 0.2
-done
+if pgrep -x polybar >/dev/null 2>&1; then
+  pkill -x polybar 2>/dev/null || true
+  for _ in $(seq 1 10); do
+    pgrep -x polybar >/dev/null 2>&1 || break
+    sleep 0.1
+  done
+fi
 
 mapfile -t monitors < <(
   polybar -m 2>/dev/null |
@@ -32,5 +33,5 @@ for monitor in "${monitors[@]}"; do
   MONITOR="$monitor" polybar main -c "$CONFIG" >>"$LOG" 2>&1 &
 done
 
-# Keep the workspace/clock capsule single-instance on the first discovered display.
+# Keep the bottom metadata rail single-instance on the first discovered display.
 MONITOR="${monitors[0]}" polybar workspace -c "$CONFIG" >>"$LOG" 2>&1 &
