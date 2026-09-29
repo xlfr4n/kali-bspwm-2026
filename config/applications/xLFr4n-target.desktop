@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Target
+Comment=Current target control
+Exec=sh -c "$HOME/.local/bin/settarget"
+Icon=xlfr4n-target
+Terminal=false
+NoDisplay=true
