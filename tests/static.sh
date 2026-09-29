@@ -196,5 +196,7 @@ check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.s
 check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
 check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
 check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
+check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
+check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
 check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
