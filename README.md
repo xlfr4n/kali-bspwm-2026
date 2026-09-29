@@ -279,7 +279,7 @@ Los themes modifican Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM
 |---|---|
 | `Super + Shift + L` | Abrir `Kali-Lab` |
 
-El workspace de laboratorio utiliza Kitty + tmux + btop, con la identidad de terminal unificada de xLFr4n.
+El workspace de laboratorio utiliza Kitty + tmux + btop y reutiliza el banner unificado de xLFr4n; no depende del artwork heredado de Neofetch/Fastfetch.
 
 ### 🎯 Target
 
