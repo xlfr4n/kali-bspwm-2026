@@ -38,6 +38,24 @@ polybar_config_check() {
   [ -x "$HOME/.config/polybar/launch.sh" ]
 }
 
+visual_layout_check() {
+  local cfg="$HOME/.config/polybar/config.ini"
+  grep -Fq "[bar/main]" "$cfg" &&
+  grep -Fq "background = #00000000" "$cfg" &&
+  grep -Fq "border-size = 0pt" "$cfg" &&
+  grep -Fq "[bar/workspace]" "$cfg" &&
+  grep -Fq "label-focused-margin = 1" "$cfg" &&
+  grep -Fq "modules-right = date time" "$cfg"
+}
+
+dock_single_backend_check() {
+  local active=0
+  pgrep -x tint2 >/dev/null 2>&1 && active=$((active + 1))
+  pgrep -x plank >/dev/null 2>&1 && active=$((active + 1))
+  pgrep -af '[p]olybar dock' >/dev/null 2>&1 && active=$((active + 1))
+  [ "$active" -le 1 ]
+}
+
 rofi_theme_check() {
   rofi -no-config -theme "$HOME/.config/rofi/launcher.rasi" -dump-theme
 }
@@ -98,6 +116,8 @@ check "Eza or ls" sh -c 'command -v eza >/dev/null 2>&1 || command -v ls >/dev/n
 check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl >/dev/null 2>&1'
 check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
+check "Final visual layout" visual_layout_check
+check "Single dock backend" dock_single_backend_check
 check "Target helper" command -v settarget
 check "Monitor helper" command -v monitor-refresh
 check "Theme helper" command -v theme-switch
@@ -106,6 +126,7 @@ check "Kali menu" command -v kali-menu
 check "Lab helper" command -v lab
 check "Lock helper" command -v lock-screen
 check "Virtualization helper" command -v vmware-tools
+check "Session profiler" command -v session-profile
 check "Theme state" theme_check
 check "Target state" target_check
 floating_dock_check() {
@@ -126,6 +147,9 @@ if command -v dock >/dev/null 2>&1; then
   info "floating dock backend: $(dock --backend 2>/dev/null || printf "unknown")"
 fi
 
+if [ -s "$HOME/.cache/xlfr4n-session.log" ]; then
+  info "session log: $HOME/.cache/xlfr4n-session.log"
+fi
 info "virtualization: ${virt:-unknown}"
 info "session: ${XDG_SESSION_TYPE:-unknown} DISPLAY=${DISPLAY:-unset}"
 
