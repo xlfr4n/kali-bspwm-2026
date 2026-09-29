@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — System Monitor
+Comment=Terminal system monitor
+Exec=sh -c "dock-launch btop"
+Icon=utilities-system-monitor
+Terminal=false
+NoDisplay=true
+StartupNotify=true
+Categories=System;Monitor;
