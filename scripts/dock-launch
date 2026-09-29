@@ -1,34 +1,64 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
 # Focus an existing application window when possible; otherwise launch it.
+# The user always gets immediate launch feedback through Dunst.
 set -Eeuo pipefail
 
 app=${1:-}
 
+notify() {
+  command -v notify-send >/dev/null 2>&1 || return 0
+  notify-send -u low -t "${3:-1400}" "$1" "$2" >/dev/null 2>&1 || true
+}
+
+wait_for_window() {
+  local want="$1"
+  local i
+  command -v wmctrl >/dev/null 2>&1 || return 1
+  for i in $(seq 1 30); do
+    if wmctrl -lx 2>/dev/null | awk -v want="${want,,}" 'BEGIN { IGNORECASE=1 } { class=tolower($3); if (index(class, want) > 0) { found=1; exit } } END { exit(found ? 0 : 1) }'; then
+      return 0
+    fi
+    sleep 0.5
+  done
+  return 1
+}
+
+app_label=""
 case "$app" in
-  brave) wmclass='brave-browser'; cmd=(brave-browser --new-window) ;;
-  kitty) wmclass='kitty'; cmd=(kitty) ;;
-  files) wmclass='thunar'; cmd=(thunar) ;;
-  code) wmclass='code'; cmd=(code) ;;
-  burp) wmclass='burpsuite'; cmd=(burpsuite) ;;
-  editor|nvim) wmclass='floating_nvim'; cmd=(kitty --class floating_nvim -e nvim) ;;
-  kali) wmclass=''; cmd=(kali-menu) ;;
-  target) wmclass='kali-target'; cmd=(kitty --class kali-target --title Kali-Target -e settarget) ;;
-  lab) wmclass='kali-lab'; cmd=(kitty --class kali-lab --title Kali-Lab -e lab) ;;
-  btop) wmclass=''; cmd=(kitty --title xLFr4n-Monitor -e btop) ;;
-  settings) wmclass='lxappearance'; cmd=(lxappearance) ;;
-  network) wmclass='nm-connection-editor'; cmd=(nm-connection-editor) ;;
-  screenshot) wmclass=''; cmd=(flameshot gui) ;;
-  *) echo 'Usage: dock-launch {brave|kitty|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot}' >&2; exit 2 ;;
+  brave) wmclass="brave-browser"; cmd=(brave-browser --new-window); app_label="Brave Browser" ;;
+  kitty) wmclass="kitty"; cmd=(kitty); app_label="Kitty" ;;
+  files) wmclass="thunar"; cmd=(thunar); app_label="Thunar" ;;
+  code) wmclass="code"; cmd=(code); app_label="Visual Studio Code" ;;
+  burp) wmclass="burpsuite"; cmd=(burpsuite); app_label="Burp Suite" ;;
+  editor|nvim) wmclass="floating_nvim"; cmd=(kitty --class floating_nvim -e nvim); app_label="Neovim" ;;
+  kali) wmclass=""; cmd=(kali-menu); app_label="xLFr4n Menu" ;;
+  target) wmclass="kali-target"; cmd=(kitty --class kali-target --title Kali-Target -e settarget); app_label="Target Console" ;;
+  lab) wmclass="kali-lab"; cmd=(kitty --class kali-lab --title Kali-Lab -e lab); app_label="Kali Lab" ;;
+  btop) wmclass=""; cmd=(kitty --title xLFr4n-Monitor -e btop); app_label="System Monitor" ;;
+  settings) wmclass="lxappearance"; cmd=(lxappearance); app_label="Appearance" ;;
+  network) wmclass="nm-connection-editor"; cmd=(nm-connection-editor); app_label="Network" ;;
+  screenshot) wmclass=""; cmd=(flameshot gui); app_label="Screenshot" ;;
+  *) echo "Usage: dock-launch {brave|kitty|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot}" >&2; exit 2 ;;
 esac
 
 if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
   window_id="$(wmctrl -lx 2>/dev/null | awk -v want="${wmclass,,}" 'BEGIN { IGNORECASE=1 } { class=tolower($3); if (index(class, want) > 0) { print $1; exit } }')"
   if [ -n "$window_id" ]; then
     wmctrl -ia "$window_id" >/dev/null 2>&1 || true
+    notify "xLFr4n • Focused" "$app_label is already open."
     exit 0
   fi
 fi
 
+notify "xLFr4n • Launching" "$app_label  ·  starting..." 1200
 "${cmd[@]}" >/dev/null 2>&1 &
-disown || true
+
+if [ -n "$wmclass" ] && wait_for_window "$wmclass"; then
+  notify "xLFr4n • Ready" "$app_label  ·  window ready." 1200
+elif [ -n "$wmclass" ]; then
+  notify "xLFr4n • Still starting" "$app_label is taking longer than usual. Check it in Mission Control." 2400
+else
+  sleep 0.2
+  notify "xLFr4n • Started" "$app_label launch requested." 1200
+fi
