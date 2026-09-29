@@ -36,15 +36,21 @@ grep -Fq 'enable-ipc = true' config/polybar/config.ini
 grep -Fq 'glass = #E50B0E12' config/polybar/config.ini
 grep -Fq 'border = #55ff3344' config/polybar/config.ini
 grep -Fq 'width = 96%' config/polybar/config.ini
-grep -Fq 'radius = 12' config/polybar/config.ini
+grep -Fq 'radius = 14' config/polybar/config.ini
 grep -Fq 'plank' install.sh
 grep -Fq 'tint2' install.sh
+grep -Fq '[bar/workspace]' config/polybar/config.ini
+grep -Fq 'modules-left = bspwm' config/polybar/config.ini
+grep -Fq 'modules-right = date' config/polybar/config.ini
 grep -Fq '[bar/dock]' config/polybar/config.ini
 grep -Fq 'Polybar dock' scripts/dock
 grep -Fq 'polybar-fallback' scripts/dock
 grep -Fq 'tint2' scripts/dock
 grep -Fq 'panel_items = L' config/tint2/tint2rc
 grep -Fq 'dock-launch' scripts/dock
+grep -Fq 'bspc monitor -d 1 2 3 4 5 6 7 8 9' config/bspwm/bspwmrc
+grep -Fq 'super + {1,2,3,4,5,6,7,8,9}' config/sxhkd/sxhkdrc
+grep -Fvq 'nm-applet >/dev/null' scripts/autostart
 grep -Fq 'SPOTLIGHT Launch apps' scripts/kali-menu
 grep -Fq 'MISSION   Window overview' scripts/kali-menu
 grep -Fq 'DOCK      Toggle floating dock' scripts/kali-menu
