@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Tiny one-line identity pulse for Polybar.
+set -u
+
+frames=(
+  "⚡ xLFr4n // KALI"
+  "⚡ xLFr4n ◈ KALI"
+  "⚡ xLFr4n ◆ KALI"
+  "⚡ xLFr4n ◇ KALI"
+  "⚡ xLFr4n ◆ KALI"
+  "⚡ xLFr4n ◈ KALI"
+)
+second="$(date +%s 2>/dev/null || printf 0)"
+printf "%s\n" "${frames[$((second % ${#frames[@]}))]}"
