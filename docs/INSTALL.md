@@ -117,7 +117,7 @@ Super+Ctrl+R
 
 ### 9️⃣ Perfil del login
 
-Después de entrar en BSPWM:
+Después de entrar en BSPWM, una shell interactiva mostrará Fastfetch con el logo custom `xLFr4n`. El snapshot ASCII `xlfr4n-banner --static` queda disponible para diagnóstico manual.
 
 ```bash
 session-profile
@@ -166,7 +166,7 @@ echo "DISPLAY=$DISPLAY"
 xrandr --query 2>/dev/null || true
 ```
 
-Use a compatible Kali guest with an available X11 session.
+Use a compatible Kali guest with an available X11 session. The startup wallpaper defaults to `/usr/share/backgrounds/kali/kali-hack-16x9.jpg`.
 
 ### 2️⃣ Fresh install
 
