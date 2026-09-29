@@ -739,6 +739,8 @@ Then select **BSPWM** in the display manager.
 
 ### Updating an existing checkout
 
+For a full system/package refresh:
+
 ```bash
 cd ~/Downloads/kali-bspwm-2026
 git pull --ff-only
@@ -747,7 +749,16 @@ chmod +x install.sh uninstall.sh
 reboot
 ```
 
-> **Important:** `git pull` updates the repository checkout. `./install.sh` is what deploys the updated files to `~/.config` and `~/.local/bin`.
+For a fast workspace-only update after a Git change:
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+./install.sh --deploy
+bspc wm -r
+```
+
+> **Important:** `git pull` updates the repository checkout. `./install.sh` deploys the updated files to `~/.config` and `~/.local/bin`. `--deploy` skips APT and is intended for iterative workspace updates.
 
 ---
 
@@ -794,9 +805,19 @@ The main dock uses Tint2 launcher-only mode and falls back to Plank or native Po
 
 ---
 
+## 🧪 Login profiling
+
+After logging into BSPWM:
+
+```bash
+session-profile
+```
+
+This is read-only and summarizes the xLFr4n bootstrap timestamps. It is useful for distinguishing the BSPWM hand-off from later wallpaper, dock, monitor and compositor work.
+
 ## ⚡ Startup performance
 
-The session starts the usable desktop first and stages heavier visual work afterward:
+The session starts the minimum usable desktop first and stages heavier visual work afterward:
 
 ```text
 BSPWM / SXHKD / Dunst / Polybar
