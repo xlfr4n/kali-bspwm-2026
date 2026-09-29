@@ -14,7 +14,7 @@ if [ -x "$HOME/.local/bin/workspace-hud" ]; then
 fi
 
 for proc in sxhkd polybar dunst picom plank tint2; do
-  pkill -x "$proc" 2>/dev/null || true
+  pkill -u "$UID" -x "$proc" 2>/dev/null || true
 done
 pkill -f '[p]olybar dock' 2>/dev/null || true
 
