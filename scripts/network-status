@@ -3,8 +3,16 @@
 # Follow the active default route instead of assuming wired networking.
 set -u
 
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+case "$theme" in
+  htb-green) good='#5ee881'; warn='#ffc857' ;;
+  nord) good='#a3be8c'; warn='#ebcb8b' ;;
+  purple) good='#50fa7b'; warn='#f1fa8c' ;;
+  *) good='#5ee881'; warn='#ffc857' ;;
+esac
+
 iface="$(ip route show default 2>/dev/null | awk 'NR==1 {print $5}')"
-[ -n "$iface" ] || { printf ' offline\n'; exit 0; }
+[ -n "$iface" ] || { printf '%%{F%s} offline%%{F-}\n' "$warn"; exit 0; }
 
 case "$iface" in
   wl*) icon='' ;;
@@ -14,7 +22,7 @@ case "$iface" in
 esac
 
 state="$(cat "/sys/class/net/$iface/operstate" 2>/dev/null || printf "unknown")"
-[ "$state" = "up" ] || { printf "%s offline\n" "$icon"; exit 0; }
+[ "$state" = "up" ] || { printf "%%{F%s}%s offline%%{F-}\n" "$warn" "$icon"; exit 0; }
 
 ip4="$(ip -4 addr show dev "$iface" 2>/dev/null | awk '/inet / {sub(/\/.*/, "", $2); print $2; exit}')"
-printf "%s %s\n" "$icon" "${ip4:-connected}"
+printf "%%{F%s}%s %s%%{F-}\n" "$good" "$icon" "${ip4:-connected}"
