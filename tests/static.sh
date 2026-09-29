@@ -49,6 +49,8 @@ grep -Fq 'polybar-fallback' scripts/dock
 grep -Fq 'tint2' scripts/dock
 grep -Fq 'panel_items = L' config/tint2/tint2rc
 grep -Fq 'dock-launch' scripts/dock
+grep -Fq 'System Monitor' scripts/dock
+grep -Fq 'screenshot' scripts/dock-launch
 grep -Fq 'bspc monitor -d 1 2 3 4 5 6 7 8 9' config/bspwm/bspwmrc
 grep -Fq 'super + {1,2,3,4,5,6,7,8,9}' config/sxhkd/sxhkdrc
 if grep -Fq 'command -v nm-applet' scripts/autostart; then exit 1; fi
