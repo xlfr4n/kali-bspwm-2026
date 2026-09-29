@@ -59,19 +59,19 @@ fi
 
 log "phase=core ready"
 
+# Keep Dunst ready before any user-visible launcher feedback.
+if command -v dunst >/dev/null 2>&1 && ! pgrep -u "$UID" -x dunst >/dev/null 2>&1; then
+  dunst >/dev/null 2>&1 &
+  sleep 0.08
+fi
+
 # ═══════════════════════════════════════════════════════════
 # PHASE 2 — staged visual polish
 # Each task starts independently after a small delay. This avoids
 # converting wallpapers, probing monitors and launching compositors
 # at the exact same instant on a virtual machine.
 # ═══════════════════════════════════════════════════════════
-(
-  sleep 0.05
-  if command -v dunst >/dev/null 2>&1; then
-    dunst >/dev/null 2>&1 &
-  fi
-  log "dunst dispatched"
-) &
+log "dunst ready"
 
 (
   sleep 0.16
