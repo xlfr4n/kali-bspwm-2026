@@ -4,34 +4,53 @@
 
 ## 🇪🇸 Español
 
-Esta carpeta contiene configuración declarativa para BSPWM, SXHKD, Polybar, Kitty, Picom, Rofi, Dunst y otros componentes del entorno.
+Esta carpeta contiene la configuración reproducible del workspace:
 
-Los archivos de configuración forman parte del sistema instalable y deben mantenerse reproducibles. No se deben introducir secretos personales ni rutas de máquina que solo funcionen en un único host.
+- BSPWM + SXHKD;
+- Polybar;
+- Kitty;
+- Rofi;
+- Picom;
+- Dunst;
+- Tint2;
+- Plank fallback;
+- Zsh;
+- iconos y lanzadores.
+
+### 🧭 Presentación actual
+
+La interfaz utiliza una composición deliberadamente limpia:
+
+```text
+TOP
+  Polybar transparente · estado del sistema · target · red · CPU/RAM/disco/audio
+
+BOTTOM
+  1 2 3 4 5 6 7 8 9                         fecha · hora
+                         iconos del dock
+```
+
+Las barras no dibujan un panel sólido detrás del contenido. El dock es launcher-only y no pretende ser una taskbar tradicional.
 
 ## 🇬🇧 English
 
-This directory contains declarative configuration for BSPWM, SXHKD, Polybar, Kitty, Picom, Rofi, Dunst and other desktop components.
+This directory contains the reproducible workspace configuration:
 
-Configuration is part of the reproducible installation system. Do not introduce personal secrets or machine-specific paths that only work on one host.
+- BSPWM + SXHKD;
+- Polybar;
+- Kitty;
+- Rofi;
+- Picom;
+- Dunst;
+- Tint2;
+- Plank fallback;
+- Zsh;
+- icons and desktop launchers.
+
+### 🧭 Current presentation
+
+The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces on the lower-left, date/time on the lower-right and a centered icon launcher dock.
+
+Configuration is reproducible and should not contain personal secrets or host-only paths.
 
 **⚡ xLFr4n · Configuration as documentation**
-
-
-## 🪟 Desktop presentation / Presentación del escritorio
-
-The desktop layer now combines a floating rounded Polybar, a real-icon Tint2 launcher dock with Plank/Polybar fallback, Spotlight-like application search, Mission Control, Brave-first launch and Papirus-Dark icon selection when available. All of it remains under the existing BSPWM/SXHKD architecture.
-
-The bottom HUD is deliberately separated from the dock: workspaces **1→9** stay on the left, the date/time stays on the right, and the icon dock remains centered below them. This avoids overlapping lower panels.
-
-
-### 🧭 Workspace layout
-
-The desktop intentionally uses **nine workspaces (1→9)**. The clock and workspace selector live in a compact bar at the bottom-right so the top status bar stays readable.
-
-El escritorio utiliza deliberadamente **nueve escritorios (1→9)**. La hora y el selector de escritorios viven en una barra compacta abajo a la derecha para mantener limpia la barra superior.
-
-### 🎯 Floating application dock
-
-Tint2 is the preferred dock backend because its launcher entries use real `.desktop` files and icon themes. Plank and the native Polybar dock remain compatible fallbacks.
-
-Tint2 es el backend preferido porque sus lanzadores utilizan archivos `.desktop` e iconos reales. Plank y el dock nativo de Polybar siguen como respaldos compatibles.
