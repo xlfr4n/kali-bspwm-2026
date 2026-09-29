@@ -4,7 +4,7 @@
 
 set -Eeuo pipefail
 
-for proc in sxhkd polybar dunst nm-applet picom plank; do
+for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
 done
 
