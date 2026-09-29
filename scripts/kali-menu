@@ -11,6 +11,11 @@ command -v rofi-xlfr4n >/dev/null 2>&1 || {
 choice="$(
   printf '%s\n' \
     'TERMINAL  Open Kitty' \
+    'SPOTLIGHT Launch apps' \
+    'MISSION   Window overview' \
+    'BRAVE     Open Brave' \
+    'DOCK      Toggle floating dock' \
+    'DESKTOP   Apply desktop style' \
     'TARGET    Set / clear target' \
     'THEME     Change theme' \
     'WALLPAPER Change wallpaper' \
