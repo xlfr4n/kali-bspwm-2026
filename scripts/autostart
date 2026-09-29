@@ -23,7 +23,6 @@ sleep 0.5
 "$HOME/.local/bin/desktop-style" --apply --silent >/dev/null 2>&1 &
 "$HOME/.local/bin/dock" --start >/dev/null 2>&1 &
 
-command -v dunst >/dev/null 2>&1 && dunst >/dev/null 2>&1 &
 "$HOME/.local/bin/theme-switch" --apply-current --silent >/dev/null 2>&1 &
 
 (sleep 1; "$HOME/.local/bin/start-picom" >/dev/null 2>&1) &
