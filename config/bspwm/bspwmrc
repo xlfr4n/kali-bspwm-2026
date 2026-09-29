@@ -9,12 +9,14 @@ export PATH="$HOME/.local/bin:$PATH"
 bspc monitor -d 1 2 3 4 5 6 7 8 9
 
 bspc config border_width 2
-bspc config window_gap 11
+bspc config window_gap 10
 bspc config top_padding 44
 bspc config bottom_padding 70
-bspc config split_ratio 0.52
+bspc config split_ratio 0.50
 bspc config borderless_monocle true
 bspc config gapless_monocle true
+bspc config honor_size_hints false
+bspc config pointer_follows_focus false
 bspc config focus_follows_pointer false
 bspc config pointer_follows_monitor true
 bspc config remove_disabled_monitors true
