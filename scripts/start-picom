@@ -1,10 +1,29 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Start Picom with a VM-aware backend choice and a deterministic fallback.
 set -u
-pkill -x picom 2>/dev/null || true
-sleep 0.1
-picom --config "$HOME/.config/picom/picom.conf" >/tmp/kali-bspwm-picom.log 2>&1 &
-sleep 0.35
-if ! pgrep -x picom >/dev/null 2>&1; then
-  picom --backend xrender --config "$HOME/.config/picom/picom.conf" >/tmp/kali-bspwm-picom.log 2>&1 &
+
+LOG=/tmp/kali-bspwm-picom.log
+virt="$(systemd-detect-virt 2>/dev/null || true)"
+backend="${XLFR4N_PICOM_BACKEND:-}"
+
+if [ -z "$backend" ]; then
+  case "$virt" in
+    oracle|virtualbox|vmware|qemu|kvm) backend=xrender ;;
+    *) backend= ;;
+  esac
+fi
+
+pkill -u "$UID" -x picom 2>/dev/null || true
+sleep 0.08
+
+if [ -n "$backend" ]; then
+  picom --backend "$backend" --config "$HOME/.config/picom/picom.conf" >>"$LOG" 2>&1 &
+else
+  picom --config "$HOME/.config/picom/picom.conf" >>"$LOG" 2>&1 &
+fi
+
+sleep 0.25
+if ! pgrep -u "$UID" -x picom >/dev/null 2>&1; then
+  picom --backend xrender --config "$HOME/.config/picom/picom.conf" >>"$LOG" 2>&1 &
 fi
