@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=xLFr4n — Code
+Comment=Visual Studio Code for the xLFr4n workspace
+Exec=sh -c "dock-launch code"
+Icon=code
+Terminal=false
+NoDisplay=true
+StartupWMClass=code
+StartupNotify=true
+Categories=Development;IDE;
