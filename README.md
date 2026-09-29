@@ -1,664 +1,861 @@
+# ⚡ xLFr4n // Kali BSPWM 2026
 
-# 🐉 Kali BSPWM 2026
-
-> 🖥️ **Modern BSPWM environment for Kali Linux, tuned for VirtualBox and VMware.**  
-> 🖥️ **Entorno BSPWM moderno para Kali Linux, preparado para VirtualBox y VMware.**
+> 🖥️ **A reproducible Kali Linux X11 + BSPWM workspace by xLFr4n.**  
+> 🖥️ **Un workspace Kali Linux X11 + BSPWM reproducible, personal y mantenible por xLFr4n.**
 
 [![ShellCheck](https://img.shields.io/github/actions/workflow/status/xlfr4n/kali-bspwm-2026/shellcheck.yml?label=ShellCheck&logo=github)](https://github.com/xlfr4n/kali-bspwm-2026/actions)
-![Kali](https://img.shields.io/badge/Kali-Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white)
-![BSPWM](https://img.shields.io/badge/BSPWM-0.9.x-111827?style=for-the-badge)
-![X11](https://img.shields.io/badge/X11-session-111827?style=for-the-badge)
-![xlfr4n](https://img.shields.io/badge/identity-xlfr4n-ff3344?style=for-the-badge)
+![Kali Linux](https://img.shields.io/badge/Kali-Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white)
+![BSPWM](https://img.shields.io/badge/BSPWM-X11-111827?style=for-the-badge)
+![VirtualBox](https://img.shields.io/badge/VirtualBox-supported-183A61?style=for-the-badge)
+![VMware](https://img.shields.io/badge/VMware-supported-607078?style=for-the-badge)
+![xLFr4n](https://img.shields.io/badge/identity-xLFr4n-ff3344?style=for-the-badge)
+
+<p align="center">
+  <sub>⚡ Build it. Understand it. Automate it. Document it. · Hazlo. Entiéndelo. Automatízalo. Documéntalo.</sub>
+</p>
 
 ---
 
-## 🇪🇸 Español
+# 🇪🇸 Español
 
-### 🎯 Objetivo
+## 🎯 Qué es
 
-**Kali BSPWM 2026** es la configuración de escritorio `Kali + BSPWM + SXHKD` de **⚡ xlfr4n**, diseñada para una VM Linux de laboratorio con una interfaz cyber oscura, atajos rápidos y herramientas prácticas.
+**Kali BSPWM 2026** es mi capa de escritorio personal para Kali Linux:
 
-El proyecto modifica el **guest Kali**. El host Windows/VirtualBox/VMware no se configura automáticamente.
+**Kali Linux → X11 → BSPWM → SXHKD → Polybar + Tint2 + Rofi + Kitty + Picom + Dunst**
 
-### 🍎 xLFr4n Floating Workspace
+La idea no es instalar un escritorio completo encima de Kali. La idea es mantener un sistema ligero y convertirlo en un workspace personal de **⚡ xLFr4n**, con:
 
-### 🇪🇸 Español
+- 🪟 gestión de ventanas con BSPWM;
+- ⌨️ atajos rápidos con SXHKD;
+- 📊 estado del sistema con Polybar;
+- 🚀 launcher tipo Spotlight con Rofi;
+- 🧊 dock inferior launcher-only con iconos reales mediante Tint2;
+- 🐱 Kitty como terminal principal;
+- 🌫️ Picom para sombras/fades suaves;
+- 🔔 Dunst para notificaciones;
+- 🎨 themes coordinados;
+- 🖼️ wallpapers con caché;
+- 🎯 target helper;
+- 🩺 doctor read-only;
+- 🖥️ detección de VirtualBox/VMware;
+- 💾 backups antes del despliegue.
 
-La edición actual añade una capa de escritorio inspirada en la ergonomía de macOS sin abandonar **BSPWM + SXHKD**: **Polybar flotante**, **dock Tint2 con iconos reales**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), acceso directo a **Brave** (`+Super + Ctrl + B`), iconos propios de xLFr4n y controles GTK hacia la izquierda cuando la aplicación los respeta.
-
-El objetivo es que la VM no parezca una instalación genérica: debe sentirse como un **workspace personal de xLFr4n**, manteniendo la ligereza, los backups y la capacidad de diagnóstico.
-
-### 🇬🇧 English
-
-The current edition adds a macOS-inspired ergonomics layer without leaving **BSPWM + SXHKD**: a **floating Polybar**, **real-icon Tint2 dock (with Plank/Polybar fallback)**, **Spotlight** (`+Super + Space`), **Mission Control** (`+Super + Shift + Space`), **Brave** quick launch (`+Super + Ctrl + B`), custom xLFr4n icons and left-side GTK controls where supported.
-
-The goal is to make the VM feel like a **personal xLFr4n workspace**, while keeping the environment lightweight, backed up and diagnosable.
-
-### ⚡ New visual controls
-
-The top bar is intentionally compact. A dedicated glass HUD sits directly above the dock: workspaces **1→9** are anchored left and the date/time is anchored right. The bottom-center dock uses real application icons through Tint2 when available, with Plank/Polybar fallback. Network state is integrated into the top-right Polybar module instead of a separate `nm-applet` tray icon.
-
-La barra superior queda deliberadamente limpia. Una cápsula HUD de cristal queda justo encima del dock: los escritorios **1→9** ocupan la izquierda y la fecha/hora la derecha. El dock inferior central utiliza iconos reales mediante Tint2 cuando está disponible, con respaldo Plank/Polybar. El estado de red queda integrado arriba a la derecha en Polybar, sin un icono `nm-applet` separado.
-
-
-| Shortcut | Action |
-|---|---|
-| `+Super + Space` | Spotlight / applications |
-| `+Super + Shift + Space` | Mission Control |
-| `+Super + Shift + A` | Toggle floating icon dock |
-| `+Super + Shift + O` | Mission Control |
-| `+Super + Ctrl + B` | Open Brave |
-| `+Super + F` | Reliable fullscreen toggle; hides desktop chrome |
+> **Límite importante:** el proyecto configura el **guest Kali**. No modifica automáticamente la configuración del host Windows, VirtualBox o VMware.
 
 ---
 
-## 🧩 Stack
+## 🖥️ Entorno de referencia
 
-- BSPWM + SXHKD
-- Polybar
-- Kitty + JetBrains Mono
-- Rofi
-- Picom
-- Dunst
-- Feh + wallpapers
-- NetworkManager + integrated network status
-- xLFr4n animated terminal banner, FZF, ripgrep, fd, bat, eza, btop, htop, glances
-- Flameshot
-- Thunar, Arandr, Gpick
-- Neovim + tmux
-- Pavucontrol + pamixer
-- i3lock / xss-lock
-- VirtualBox Guest Utils o VMware Tools según virtualización detectada
-- pywal16 opcional y aislado mediante pipx
+El proyecto se ha trabajado y validado tomando como referencia un guest con:
 
-### 🎨 Identidad xlfr4n
-
-La interfaz utiliza una identidad común:
-
-`⚡ xlfr4n // Kali`
-
-Incluye:
-
-- cyber-red
-- HTB green
-- Nord
-- Purple
-- indicadores de target, VPN y virtualización
-- menú central `xlfr4n // Kali`
-- backups timestamped
-- rollback reversible
-- diagnóstico de solo lectura
-
-### 🚀 Instalación
-
-~~~bash
-git clone https://github.com/xlfr4n/kali-bspwm-2026.git
-cd kali-bspwm-2026
-chmod +x install.sh uninstall.sh
-./install.sh
-~~~
-
-Después reinicia y selecciona **BSPWM** en el gestor de sesiones.
-
-Diagnóstico:
-
-~~~bash
-doctor.sh
-~~~
-
-### 🔄 Actualizar Kali
-
-Para actualizar todo el sistema:
-
-~~~bash
-sudo apt update && sudo apt full-upgrade -y
-~~~
-
-Comprobar si se necesita reinicio:
-
-~~~bash
-[ -f /var/run/reboot-required ] && echo "REBOOT REQUIRED"
-~~~
-
-No se recomienda ejecutar `apt autoremove` automáticamente como parte de la actualización.
-
-### 🖥️ VirtualBox
-
-En Kali actual, la integración se valida mediante:
-
-~~~bash
-systemd-detect-virt
-systemctl is-active virtualbox-guest-utils.service
-pgrep -a VBoxService
-~~~
-
-El instalador detecta `oracle` / `virtualbox` y utiliza:
-
-- `virtualbox-guest-utils`
-- `virtualbox-guest-x11`
-- `virtualbox-guest-utils.service`
-
-### ☁️ VMware
-
-Cuando detecta VMware:
-
-- `open-vm-tools`
-- `open-vm-tools-desktop`
-- `open-vm-tools.service`
-
-El helper `vmware-tools` es solo de diagnóstico/recovery; no cambia la configuración de la VM automáticamente.
-
----
-
-# ⌨️ Lista completa de shortcuts
-
-> **Nota:** `Super` = tecla Windows/Meta.
-
-### 🚀 Lanzamiento
-
-| Shortcut | Acción |
+| Componente | Referencia |
 |---|---|
-| `Super + Enter` | Abrir Kitty |
-| `Super + D` | Rofi → aplicaciones (drun) |
-| `Super + Shift + D` | Rofi → comandos (run) |
-| `Super + Shift + H` | Menú central `xlfr4n // Kali` |
-| `Super + Shift + E` | Abrir Thunar |
-| `Super + Shift + F` | Abrir Firefox |
-| `Super + Shift + B` | Abrir Burp Suite |
-| `Super + Shift + C` | Abrir VS Code |
-| `Super + Shift + N` | Abrir Neovim en floating |
+| Host | Windows 11 |
+| Virtualización | VirtualBox |
+| Guest | Kali Linux Rolling |
+| Versión de Kali del guest | 2026.3 |
+| Arquitectura | x86_64 |
+| Sesión | X11 |
+| Window manager | BSPWM |
+| Pantalla de referencia | 1920×1080 cuando está disponible |
+| Identidad | ⚡ xLFr4n |
 
-### 🪟 Gestión de ventanas
+La detección real se hace dentro del guest con:
 
-| Shortcut | Acción |
-|---|---|
-| `Super + Q` | Cerrar ventana normalmente |
-| `Super + W` | Forzar kill de la ventana |
-| `Super + F` | Fullscreen toggle; hides/reveals Polybar + dock |
-| `Super + S` | Floating |
-| `Super + T` | Tiled |
-| `Super + Shift + T` | Pseudo-tiled |
-| `Super + M` | Cambiar layout |
-| `Super + G` | Intercambiar con la ventana más grande |
-| `Super + Tab` | Volver al escritorio anterior |
-
-### 🎯 Focus
-
-| Shortcut | Acción |
-|---|---|
-| `Super + ←` | Focus izquierda |
-| `Super + ↓` | Focus abajo |
-| `Super + ↑` | Focus arriba |
-| `Super + →` | Focus derecha |
-
-### 🔀 Swap
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Shift + ←` | Swap izquierda |
-| `Super + Shift + ↓` | Swap abajo |
-| `Super + Shift + ↑` | Swap arriba |
-| `Super + Shift + →` | Swap derecha |
-
-### 📐 Resize / move
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Alt + ←` | Resize izquierda |
-| `Super + Alt + ↓` | Resize abajo |
-| `Super + Alt + ↑` | Resize arriba |
-| `Super + Alt + →` | Resize derecha |
-| `Super + Ctrl + ←` | Mover nodo izquierda |
-| `Super + Ctrl + ↓` | Mover nodo abajo |
-| `Super + Ctrl + ↑` | Mover nodo arriba |
-| `Super + Ctrl + →` | Mover nodo derecha |
-
-### 🔢 Escritorios
-
-| Shortcut | Acción |
-|---|---|
-| `Super + 1` | Escritorio 1 |
-| `Super + 2` | Escritorio 2 |
-| `Super + 3` | Escritorio 3 |
-| `Super + 4` | Escritorio 4 |
-| `Super + 5` | Escritorio 5 |
-| `Super + 6` | Escritorio 6 |
-| `Super + 7` | Escritorio 7 |
-| `Super + 8` | Escritorio 8 |
-| `Super + 9` | Escritorio 9 |
-
-Mover la ventana actual:
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Shift + 1..9` | Mover ventana a desktop 1..9 |
-
-### 🧠 Control BSPWM
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Alt + R` | Recargar/reiniciar BSPWM |
-| `Super + Alt + Q` | Salir de BSPWM |
-
-> ⚠️ `Super + Alt + Q` termina la sesión de BSPWM. Pruébalo al final.
-
----
-
-# ⚡ Funciones xlfr4n
-
-### 🎨 Themes
-
-| Shortcut / comando | Acción |
-|---|---|
-| `Super + Alt + T` | Selector de theme |
-| `Super + Ctrl + T` | Selector de theme |
-| `theme-switch --list` | Lista de themes |
-| `theme-switch --current` | Theme actual |
-| `theme-switch cyber-red` | Aplicar Cyber Red |
-| `theme-switch htb-green` | Aplicar HTB Green |
-| `theme-switch nord` | Aplicar Nord |
-| `theme-switch purple` | Aplicar Purple |
-| `theme-switch --random` | Theme aleatorio |
-
-Los themes modifican Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM.
-
-### 🖼️ Wallpapers
-
-| Shortcut / comando | Acción |
-|---|---|
-| `Super + Shift + W` | Wallpaper aleatorio |
-| `Super + Ctrl + W` | Siguiente wallpaper |
-| `wallpaper --current` | Wallpaper actual |
-| `wallpaper --random` | Aleatorio |
-| `wallpaper --next` | Siguiente |
-| `wallpaper --set FILE` | Seleccionar archivo concreto |
-
-### 🧪 Kali Lab
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Shift + L` | Abrir `Kali-Lab` |
-
-El workspace de laboratorio utiliza Kitty + tmux + btop y reutiliza el banner unificado de xLFr4n; no depende del artwork heredado de Neofetch/Fastfetch.
-
-### 🎯 Target
-
-| Shortcut / comando | Acción |
-|---|---|
-| `Super + Ctrl + X` | Abrir flujo de target |
-| `settarget` | Establecer/mostrar target |
-| `settarget --status` | Estado para Polybar |
-| `cleartarget` | Limpiar target |
-| Click izquierdo en `TARGET` | Copiar target al clipboard |
-| Click derecho en `TARGET` | Editar/establecer target |
-| Click central en `TARGET` | Limpiar target |
-
-### 🖥️ Monitores
-
-| Shortcut / comando | Acción |
-|---|---|
-| `Super + Shift + M` | Refresh de monitores |
-| `monitor-refresh` | Detectar displays |
-| `monitor-refresh --startup` | Inicialización de sesión |
-
-La distribución de escritorios se adapta al número de monitores detectados.
-
-### 🩺 Diagnóstico
-
-| Shortcut / comando | Acción |
-|---|---|
-| `Super + Ctrl + R` | Abrir Kali Doctor |
-| `doctor.sh` | Diagnóstico completo |
-| `vmware-tools` | Diagnóstico VMware |
-| `vmware-tools status` | Estado VMware |
-| `vmware-tools restart` | Reiniciar VMware Tools |
-| `vmware-tools shared-folders` | Diagnóstico de shared folders |
-
-`doctor.sh` es **read-only**: diagnostica y no intenta reparar silenciosamente el sistema.
-
-### 📸 Screenshots
-
-| Shortcut | Acción |
-|---|---|
-| `Print` | Captura completa |
-| `Shift + Print` | Captura por región |
-| `Super + Shift + S` | Menú de screenshots |
-
-Las capturas se guardan en:
-
-~~~text
-~/Pictures/Screenshots
-~~~
-
-### 🔐 Seguridad / sesión
-
-| Shortcut | Acción |
-|---|---|
-| `Super + Shift + K` | Bloquear pantalla |
-| `Super + Shift + P` | Menú de energía |
-
-El menú de energía incluye Lock, Logout, Suspend, Reboot y Power off.
-
-### 🔊 Audio
-
-| Tecla | Acción |
-|---|---|
-| `XF86AudioRaiseVolume` | +5% |
-| `XF86AudioLowerVolume` | -5% |
-| `XF86AudioMute` | Mute/unmute |
-
-También:
-
-~~~bash
-pamixer -i 5
-pamixer -d 5
-pamixer -t
-~~~
-
----
-
-# 🧪 Checklist completa de pruebas
-
-### 1. Sesión
-
-~~~bash
+```bash
+cat /etc/os-release
+uname -m
 systemd-detect-virt
 echo "$XDG_SESSION_TYPE"
 echo "$DISPLAY"
-pgrep -a bspwm
-pgrep -a sxhkd
-pgrep -a polybar
-pgrep -a picom
-pgrep -a dunst
-~~~
+xrandr --query
+```
 
-### 2. Salud del entorno
+En el guest de referencia, `systemd-detect-virt` identifica VirtualBox como `oracle`.
 
-~~~bash
-doctor.sh
-~~~
+**Nada del README debe interpretarse como una configuración automática del host.**
 
-Debe terminar sin `FAIL`.
+---
 
-### 3. Lanzadores
+## 🧱 Arquitectura
 
-~~~text
-Super+Enter
-Super+D
-Super+Shift+D
-Super+Shift+H
-~~~
+```text
+                         ┌───────────────────────┐
+                         │ Display Manager / X11 │
+                         └───────────┬───────────┘
+                                     │
+                                     ▼
+                              ┌─────────────┐
+                              │    BSPWM    │
+                              └──────┬──────┘
+                                     │
+                                     ▼
+                              ┌─────────────┐
+                              │  autostart  │
+                              └──────┬──────┘
+                       ┌─────────────┴─────────────┐
+                       │                           │
+                 PHASE 1                       PHASE 2
+                 usable UI                     visual polish
+                       │                           │
+            sxhkd + Dunst + Polybar      monitor + wallpaper
+            + BSPWM borders              + desktop-style + dock
+                                                     + Picom
+```
 
-### 4. Ventanas
+La segunda fase se ejecuta en segundo plano y se escalona para evitar que wallpaper, dock, monitor-refresh y compositor compitan todos a la vez durante el login.
 
-~~~text
-Super+Q
-Super+W
-Super+F
-Super+S
-Super+T
-Super+Shift+T
-Super+M
-Super+Tab
-~~~
+Consulta más detalle en [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
-### 5. Focus / swap / resize
+---
 
-~~~text
-Super+Arrow
-Super+Shift+Arrow
-Super+Alt+Arrow
-Super+Ctrl+Arrow
-~~~
+# 🚀 Instalación completa
 
-### 6. Escritorios
+## 1️⃣ Requisitos
 
-~~~text
-Super+1 ... Super+9
-~~~
+Antes de empezar:
 
-Mover una ventana:
+- Kali Linux funcionando con **X11**.
+- Usuario normal con `sudo`.
+- Conectividad para `apt`.
+- Una sesión gráfica X11 disponible para BSPWM.
+- En una VM, instala primero las **Guest Additions / guest tools** soportadas por el hipervisor o deja que el instalador las detecte e instale cuando estén disponibles en Kali.
 
-~~~text
-Super+Shift+1 ... Super+Shift+9
-~~~
+No ejecutes el instalador como `root`.
 
-### 7. Themes
+---
 
-~~~bash
+## 2️⃣ Clonar el repositorio
+
+### Instalación nueva
+
+```bash
+cd ~/Downloads
+git clone https://github.com/xlfr4n/kali-bspwm-2026.git
+cd kali-bspwm-2026
+```
+
+### Si ya tienes el repositorio
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+```
+
+### ⚠️ Importante: `git pull` NO instala los cambios
+
+El repositorio contiene los archivos fuente. El escritorio utiliza copias desplegadas bajo `~/.config` y `~/.local/bin`.
+
+Por eso, después de actualizar Git:
+
+```bash
+chmod +x install.sh uninstall.sh
+./install.sh
+```
+
+Este paso vuelve a desplegar las configuraciones y los scripts.
+
+---
+
+## 3️⃣ Instalar todo
+
+```bash
+chmod +x install.sh uninstall.sh
+./install.sh
+```
+
+El instalador:
+
+1. comprueba que estás en Kali;
+2. comprueba que no eres `root`;
+3. obtiene acceso `sudo`;
+4. actualiza metadata de APT;
+5. detecta la virtualización;
+6. instala dependencias base;
+7. intenta instalar componentes visuales opcionales disponibles;
+8. crea un backup con timestamp;
+9. despliega `config/`;
+10. despliega `scripts/`;
+11. instala iconos y lanzadores `.desktop`;
+12. registra la sesión X11 de BSPWM;
+13. configura la integración de VirtualBox o VMware cuando corresponde;
+14. prepara fuentes;
+15. aplica el estilo GTK;
+16. prepara el dock;
+17. deja un resumen final.
+
+Backups:
+
+```text
+~/.kali-bspwm-backups/YYYYMMDD-HHMMSS/
+```
+
+---
+
+# 🖥️ Máquina virtual
+
+## 🟦 VirtualBox
+
+El instalador detecta:
+
+```bash
+systemd-detect-virt
+```
+
+Cuando devuelve `oracle` / `virtualbox`, intenta instalar:
+
+- `virtualbox-guest-utils`
+- `virtualbox-guest-x11`
+
+Comprobación:
+
+```bash
+systemd-detect-virt
+systemctl is-active virtualbox-guest-utils.service 2>/dev/null || true
+systemctl is-active vboxservice.service 2>/dev/null || true
+pgrep -a VBoxService || true
+xrandr --query
+```
+
+No asumas el nombre del servicio: dependiendo de la versión de Kali/paquetes, puede cambiar. El proyecto prueba las variantes soportadas.
+
+---
+
+## 🟧 VMware
+
+Cuando se detecta VMware, el instalador intenta instalar:
+
+- `open-vm-tools`
+- `open-vm-tools-desktop`
+
+Comprobación:
+
+```bash
+systemd-detect-virt
+systemctl is-active open-vm-tools.service 2>/dev/null || true
+command -v vmware-user || true
+xrandr --query
+```
+
+También existe:
+
+```bash
+vmware-tools status
+```
+
+El helper es principalmente de diagnóstico/recovery y no cambia automáticamente las opciones del hipervisor.
+
+Más información: [docs/VMWARE.md](./docs/VMWARE.md).
+
+---
+
+# 🎨 Workspace final
+
+## Barra superior
+
+La barra superior es **transparente y sin borde**.
+
+Muestra de forma compacta:
+
+- ⚡ identidad xLFr4n;
+- launcher;
+- target;
+- ventana activa;
+- VPN/red;
+- CPU;
+- RAM;
+- disco;
+- audio;
+- virtualización;
+- uptime.
+
+No hay fondo negro sólido: la intención es que el contenido flote directamente sobre el wallpaper.
+
+## Parte inferior
+
+La zona inferior también es transparente:
+
+```text
+1 2 3 4 5 6 7 8 9                         🗓 29/09/2026    17:xx
+
+                           [ iconos del dock ]
+```
+
+Los escritorios están deliberadamente **pequeños y compactos**. El escritorio activo se distingue mediante un acento/línea fina, no mediante una caja.
+
+Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro.
+
+## Dock
+
+Tint2 es el backend principal cuando está disponible:
+
+- solo lanzadores;
+- sin taskbar;
+- sin bandeja;
+- sin batería;
+- iconos reales;
+- tooltips;
+- hover;
+- lanzamiento con detección de ventanas existentes.
+
+Fallback:
+
+```text
+Tint2 → Plank → Polybar native dock
+```
+
+---
+
+# 📊 Qué significan los porcentajes
+
+En Polybar:
+
+| Indicador | Significado |
+|---|---|
+| ` 35%` | CPU usada aproximadamente |
+| ` 48%` | RAM utilizada |
+| ` 31%` | espacio ocupado en `/` |
+| ` 67%` | volumen actual |
+
+No son porcentajes de “rendimiento general”: cada uno representa una métrica distinta.
+
+---
+
+# ⌨️ Atajos principales
+
+> **Super = tecla Windows / Meta**
+
+| Atajo | Acción |
+|---|---|
+| `Super + Enter` | Kitty |
+| `Super + D` | Rofi → aplicaciones |
+| `Super + Shift + D` | Rofi → comandos |
+| `Super + Space` | Spotlight |
+| `Super + Shift + Space` | Mission Control |
+| `Super + Shift + H` | Menú xLFr4n |
+| `Super + Shift + A` | Mostrar/ocultar dock |
+| `Super + F` | Fullscreen |
+| `Super + S` | Floating |
+| `Super + T` | Tiled |
+| `Super + Tab` | Escritorio anterior |
+| `Super + 1..9` | Cambiar de escritorio |
+| `Super + Shift + 1..9` | Mover ventana a escritorio |
+| `Super + Shift + W` | Wallpaper aleatorio |
+| `Super + Ctrl + W` | Siguiente wallpaper |
+| `Super + Alt + T` | Selector de theme |
+| `Super + Shift + L` | Kali Lab |
+| `Super + Ctrl + X` | Target |
+| `Super + Shift + M` | Refrescar monitores |
+| `Super + Ctrl + R` | Doctor |
+| `Super + Shift + S` | Screenshots |
+| `Super + Shift + K` | Bloquear |
+| `Super + Shift + P` | Energía |
+
+Lista completa: [docs/README.md](./docs/README.md) y [config/README.md](./config/README.md).
+
+---
+
+# 🎨 Themes
+
+Disponibles:
+
+```bash
 theme-switch --list
 theme-switch cyber-red
 theme-switch htb-green
 theme-switch nord
 theme-switch purple
-~~~
+theme-switch --random
+theme-switch --current
+```
 
-Comprobar Polybar + Kitty + Rofi + Dunst + bordes BSPWM.
+El theme sincroniza:
 
-### 8. Wallpapers
+```text
+Polybar
+  ↕
+Kitty
+  ↕
+Rofi
+  ↕
+Dunst
+  ↕
+BSPWM border accents
+```
 
-~~~text
-Super+Shift+W
-Super+Ctrl+W
-~~~
-
-### 9. Lab / herramientas
-
-~~~text
-Super+Shift+L
-Super+Shift+E
-Super+Shift+F
-Super+Shift+B
-Super+Shift+C
-Super+Shift+N
-~~~
-
-### 10. Target / monitor / doctor
-
-~~~text
-Super+Ctrl+X
-Super+Shift+M
-Super+Ctrl+R
-~~~
-
-### 11. Capturas / audio
-
-~~~text
-Print
-Shift+Print
-XF86AudioRaiseVolume
-XF86AudioLowerVolume
-XF86AudioMute
-~~~
-
-### 12. Seguridad / cierre
-
-Probar al final:
-
-~~~text
-Super+Shift+K
-Super+Shift+P
-Super+Alt+R
-Super+Alt+Q
-~~~
+`pywal16` es opcional; el escritorio no depende de él.
 
 ---
 
-# 🛠️ Troubleshooting
+# 🖼️ Wallpapers
 
-### Rofi
+```bash
+wallpaper --random
+wallpaper --next
+wallpaper --current
+wallpaper --set /ruta/al/wallpaper.png
+```
 
-El launcher `rofi-xlfr4n` valida primero el theme personalizado. Si detecta un problema de sintaxis, utiliza automáticamente el theme por defecto y registra el problema en:
+El index de wallpapers se cachea para que un login posterior no tenga que volver a recorrer todas las carpetas cada vez.
 
-~~~text
+---
+
+# 🎯 Target workflow
+
+```bash
+settarget 10.10.10.10 Web01
+settarget --status
+target-copy
+cleartarget
+```
+
+El target puede aparecer en Polybar y copiarse al clipboard X11.
+
+---
+
+# 🩺 Diagnóstico
+
+El doctor es deliberadamente **read-only**.
+
+```bash
+doctor.sh
+```
+
+También:
+
+```bash
+systemd-detect-virt
+systemctl --failed
+xrandr --query
+pgrep -a bspwm
+pgrep -a sxhkd
+pgrep -a polybar
+pgrep -a picom
+pgrep -a dunst
+```
+
+Archivos de diagnóstico especialmente útiles:
+
+```text
+~/.cache/xlfr4n-session.log
+~/.cache/xlfr4n-dock.log
 ~/.cache/xlfr4n-rofi.log
-~~~
-
-Pruebas manuales:
-
-~~~bash
-rofi -no-config -theme ~/.config/rofi/launcher.rasi -dump-theme
-rofi-xlfr4n -show drun -show-icons
-~~~
-
-### Permisos
-
-El instalador hace backup antes de desplegar y normaliza la propiedad de las carpetas de configuración propias para evitar configuraciones antiguas creadas por `root`.
-
-Backups:
-
-~~~text
-~/.kali-bspwm-backups/
-~~~
-
-### Rollback
-
-~~~bash
-./uninstall.sh
-~~~
-
-El script ofrece restaurar el backup más reciente. Los paquetes instalados por el proyecto se dejan instalados deliberadamente.
+/tmp/kali-bspwm-polybar.log
+/tmp/kali-bspwm-picom.log
+```
 
 ---
 
-# 🛡️ Design principles / Principios
+# ⚡ Arranque y rendimiento
 
-### 🇪🇸
+El login está diseñado para que las tareas pesadas no sean un único bloque:
 
-- No `curl | sh`
-- No repositorios Debian de terceros
-- Paquetes Kali primero
-- Backup antes de reemplazar configuración
-- Rollback reversible
-- Diagnóstico read-only
-- Dependencias Python aisladas con `pipx`
-- Integración VM detectada automáticamente
+```text
+1. BSPWM
+2. SXHKD / Dunst / Polybar
+3. monitor-refresh
+4. desktop-style
+5. wallpaper
+6. dock
+7. Picom
+```
 
-### 🇬🇧
+Las tareas visuales arrancan escalonadas y en segundo plano.
 
-- No remote shell installers
-- No third-party Debian repositories
-- Kali packages first
-- Backup before configuration replacement
-- Reversible rollback
-- Read-only diagnostics
-- Isolated Python tooling through `pipx`
-- Automatic VM detection
+Esto no promete un tiempo fijo de login: el tiempo real depende también del display manager, X11, disco, CPU, RAM y la configuración de la VM.
+
+Para investigar lentitud:
+
+```bash
+sed -n '1,220p' ~/.cache/xlfr4n-session.log
+systemd-analyze --user blame 2>/dev/null | head -30 || true
+journalctl --user -b --no-pager | tail -200
+```
+
+Si el escritorio ya aparece pero algo visual llega después, eso puede ser intencional por el arranque escalonado.
 
 ---
 
+# 🔄 Actualizar correctamente
 
-# 🎨 xlfr4n Personal Desktop Layer
+## Desde Git
 
-El objetivo no es simplemente usar BSPWM: es que **Kali se sienta como un sistema propio de xlfr4n**.
-
-### Identidad visible
-
-- Barra superior iniciando con **⚡ xLFr4n // KALI**
-- §MENU§ y §TARGET§ integrados en la barra; red, CPU, RAM y audio en un bloque compacto
-- Sesión de login identificada como **⚡ xlfr4n // Kali BSPWM**
-- Kitty con pestañas personalizadas y colores coordinados
-- Zsh con prompt dinámico, target, virtualización, Git y theme
-- Banner de terminal **PERSONAL SECURITY LAB**
-- Rofi con búsqueda y selección de alto contraste
-- Dunst y bordes BSPWM sincronizados con el theme
-- Cuatro themes coordinados: Cyber Red, HTB Green, Nord y Purple
-- Workspaces 1→9 + reloj en cápsula inferior derecha
-- Dock inferior con iconos reales, tooltips y hover
-- Feedback de lanzamiento mediante Dunst + detección de ventana lista
-- Banner ASCII animado de xLFr4n al abrir Kitty
-- Target clicable con copia directa al clipboard X11
-
-### Filosofía
-
-**No es un tema encima de Kali. Es una capa de escritorio completa.**
-
-El proyecto centraliza identidad, navegación, atajos, terminal, launcher, notificaciones, ventanas, wallpapers, virtualización y diagnóstico, manteniendo todos los cambios reproducibles desde Git.
-
-### After pull / Después de actualizar el repo
-
-~~~bash
+```bash
 cd ~/Downloads/kali-bspwm-2026
 git pull --ff-only
 chmod +x install.sh uninstall.sh
 ./install.sh
-~~~
+reboot
+```
 
-Después de reiniciar y entrar en BSPWM:
+## Actualizar Kali
 
-~~~bash
+```bash
+sudo apt update
+sudo apt full-upgrade -y
+```
+
+Después del upgrade, comprueba:
+
+```bash
 doctor.sh
-rofi-xlfr4n -show drun -show-icons
-~~~
+systemd-detect-virt
+```
 
-# ✅ Runtime validation
-
-### Live VM check — 26 Sep 2026
-
-Kali 2026.3 x86_64 running under VirtualBox was tested after installation.
-
-Observed:
-
-~~~text
-DESKTOP_SESSION=bspwm
-XDG_SESSION_TYPE=x11
-Virtualization=oracle
-Resolution=1920x1080
-VBoxService=running
-~~~
-
-The first live diagnostic returned:
-
-~~~text
-Summary: 33 OK, 0 FAIL
-~~~
-
-The repository has since received additional hardening for:
-
-- VirtualBox service detection
-- root-owned legacy configuration directories
-- Rofi theme validation/fallback
-- explicit VirtualBox diagnostics
-- BSPWM theme border synchronization
-
-Those latest changes should be re-tested in the live guest before calling the runtime matrix fully closed.
+No se ejecuta `apt autoremove` automáticamente como parte de este proyecto.
 
 ---
 
-# 📌 Project identity
+# 🧪 Validación antes de darlo por terminado
 
-🐉 **Kali BSPWM 2026**  
-⚡ **xlfr4n**  
-🖥️ **Kali guest → X11 → BSPWM**  
-🎨 **Cyber / HTB / minimalist dark UI**  
-🌍 **Documentation / Documentación: ES + EN**
+## Tests del repositorio
+
+```bash
+bash tests/static.sh
+bash tests/shellcheck.sh
+```
+
+## Validación de Rofi
+
+```bash
+rofi -no-config -theme ~/.config/rofi/launcher.rasi -dump-theme >/dev/null
+```
+
+## Validación del entorno
+
+```bash
+cat /etc/os-release
+uname -m
+systemd-detect-virt
+echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE"
+echo "DISPLAY=$DISPLAY"
+xrandr --query
+doctor.sh
+```
 
 ---
 
-## ⚡ xlfr4n // Signature
+# 🧯 Si algo se ve mal después de un pull
+
+Recuerda la diferencia:
+
+```text
+git pull
+   ↓
+actualiza ~/Downloads/kali-bspwm-2026
+   ↓
+./install.sh
+   ↓
+despliega ~/.config + ~/.local/bin
+   ↓
+reboot / nueva sesión BSPWM
+```
+
+Un `git pull` por sí solo **no reemplaza** la configuración que ya está instalada en tu HOME.
+
+Para una prueba limpia:
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+./install.sh
+reboot
+```
+
+Si persiste un problema visual, captura primero:
+
+```bash
+doctor.sh
+xrandr --query
+pgrep -a polybar
+pgrep -a tint2
+pgrep -a plank
+pgrep -a picom
+```
+
+Y guarda una captura del escritorio completo antes de modificar cosas manualmente.
+
+---
+
+# 💾 Backup y rollback
+
+El instalador crea backups antes de desplegar.
+
+Ubicación:
+
+```text
+~/.kali-bspwm-backups/
+```
+
+Para retirar la capa del proyecto:
+
+```bash
+./uninstall.sh
+```
+
+Los paquetes instalados se dejan deliberadamente en el sistema y los backups permanecen.
+
+---
+
+# 📁 Estructura del proyecto
+
+```text
+kali-bspwm-2026/
+├── .github/                 # CI, templates y automation metadata
+├── config/                  # configuración desplegable
+│   ├── bspwm/
+│   ├── dunst/
+│   ├── kitty/
+│   ├── picom/
+│   ├── plank/
+│   ├── polybar/
+│   ├── rofi/
+│   ├── sxhkd/
+│   ├── tint2/
+│   └── zshrc
+├── docs/                   # documentación operativa
+├── scripts/                # helpers y utilidades
+├── tests/                  # guardrails y ShellCheck
+├── themes/                 # identidad de themes
+├── BRAND.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── install.sh
+└── uninstall.sh
+```
+
+---
+
+# 🛡️ Principios
+
+### 🇪🇸
+
+- 📦 Kali primero.
+- 💾 Backup antes de reemplazar configuración.
+- 🔄 Cambios reversibles.
+- 🧪 Tests estáticos y ShellCheck.
+- 🩺 Diagnóstico read-only.
+- 🔐 Nada de secretos en Git.
+- 🐍 Python opcional y aislado con `pipx`.
+- 🖥️ VirtualBox/VMware detectados desde el guest.
+- 🎨 La estética no debe romper la compatibilidad de la VM.
+- 🧩 Un componente debe tener una responsabilidad clara.
+- 🚫 No `curl | sh`.
+- 🚫 No repositorios Debian de terceros para el núcleo del proyecto.
+
+### 🇬🇧
+
+- 📦 Kali packages first.
+- 💾 Backup before configuration replacement.
+- 🔄 Reversible changes.
+- 🧪 Static tests and ShellCheck.
+- 🩺 Read-only diagnostics.
+- 🔐 No secrets in Git.
+- 🐍 Optional Python tooling isolated through `pipx`.
+- 🖥️ VirtualBox/VMware detection from inside the guest.
+- 🎨 Visual polish must not compromise VM compatibility.
+- 🧩 One component, one clear responsibility.
+- 🚫 No `curl | sh`.
+- 🚫 No third-party Debian repositories for the core setup.
+
+---
+
+# 📚 Documentation
+
+| Documento | Contenido |
+|---|---|
+| [docs/INSTALL.md](./docs/INSTALL.md) | instalación paso a paso |
+| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | arquitectura y arranque |
+| [docs/FIRST-VM-TEST.md](./docs/FIRST-VM-TEST.md) | primera validación de VM |
+| [docs/VMWARE.md](./docs/VMWARE.md) | integración VMware |
+| [docs/DESKTOP-STYLE.md](./docs/DESKTOP-STYLE.md) | capa visual |
+| [config/README.md](./config/README.md) | mapa de configuración |
+| [scripts/README.md](./scripts/README.md) | mapa de helpers |
+| [themes/README.md](./themes/README.md) | themes |
+| [tests/README.md](./tests/README.md) | validación |
+| [BRAND.md](./BRAND.md) | identidad xLFr4n |
+
+---
+
+# 🇬🇧 English
+
+## 🎯 What is it?
+
+**Kali BSPWM 2026** is my personal Kali Linux desktop layer:
+
+**Kali Linux → X11 → BSPWM → SXHKD → Polybar + Tint2 + Rofi + Kitty + Picom + Dunst**
+
+It deliberately avoids adding a full desktop environment. Instead, it builds a lightweight and reproducible **⚡ xLFr4n** workspace with window management, keyboard control, status information, launcher, dock, terminal, notifications, themes, wallpapers, target tracking, diagnostics and VM integration.
+
+> **Boundary:** the project configures the **Kali guest**. It does not automatically change the Windows, VirtualBox or VMware host configuration.
+
+---
+
+## 🖥️ Reference environment
+
+The current project reference is:
+
+| Component | Reference |
+|---|---|
+| Host | Windows 11 |
+| Hypervisor | VirtualBox |
+| Guest | Kali Linux Rolling |
+| Kali guest version | 2026.3 |
+| Architecture | x86_64 |
+| Session | X11 |
+| Window manager | BSPWM |
+| Reference display | 1920×1080 when available |
+| Identity | ⚡ xLFr4n |
+
+Detect the real guest environment with:
+
+```bash
+cat /etc/os-release
+uname -m
+systemd-detect-virt
+echo "$XDG_SESSION_TYPE"
+echo "$DISPLAY"
+xrandr --query
+```
+
+The reference guest reports VirtualBox as `oracle`.
+
+---
+
+## 🚀 Installation
+
+```bash
+cd ~/Downloads
+git clone https://github.com/xlfr4n/kali-bspwm-2026.git
+cd kali-bspwm-2026
+chmod +x install.sh uninstall.sh
+./install.sh
+reboot
+```
+
+Then select **BSPWM** in the display manager.
+
+### Updating an existing checkout
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+chmod +x install.sh uninstall.sh
+./install.sh
+reboot
+```
+
+> **Important:** `git pull` updates the repository checkout. `./install.sh` is what deploys the updated files to `~/.config` and `~/.local/bin`.
+
+---
+
+## 🖥️ VirtualBox / VMware
+
+Virtualization is detected inside the guest with `systemd-detect-virt`.
+
+VirtualBox uses Kali's guest packages when available:
+
+```bash
+systemd-detect-virt
+systemctl is-active virtualbox-guest-utils.service 2>/dev/null || true
+systemctl is-active vboxservice.service 2>/dev/null || true
+```
+
+VMware uses:
+
+```text
+open-vm-tools
+open-vm-tools-desktop
+```
+
+Check:
+
+```bash
+systemd-detect-virt
+systemctl is-active open-vm-tools.service 2>/dev/null || true
+command -v vmware-user || true
+```
+
+---
+
+## 🎨 Workspace
+
+Both the upper and lower UI rails are intentionally **transparent and borderless**.
+
+- Compact workspaces 1→9 on the lower-left.
+- Date and time on the lower-right.
+- Icon dock centered below.
+- System status in the upper rail.
+- Accent colors come from the active xLFr4n theme.
+
+The main dock uses Tint2 launcher-only mode and falls back to Plank or native Polybar when needed.
+
+---
+
+## ⚡ Startup performance
+
+The session starts the usable desktop first and stages heavier visual work afterward:
+
+```text
+BSPWM / SXHKD / Dunst / Polybar
+        ↓
+monitor refresh
+        ↓
+desktop style
+        ↓
+wallpaper
+        ↓
+dock
+        ↓
+Picom
+```
+
+There is no fixed promise for login time because the display manager, X11 startup, VM storage, CPU/RAM allocation and host load are external variables.
+
+Useful diagnostics:
+
+```bash
+sed -n '1,220p' ~/.cache/xlfr4n-session.log
+systemd-analyze --user blame 2>/dev/null | head -30 || true
+journalctl --user -b --no-pager | tail -200
+```
+
+---
+
+## 🧪 Validation
+
+```bash
+bash tests/static.sh
+bash tests/shellcheck.sh
+doctor.sh
+rofi -no-config -theme ~/.config/rofi/launcher.rasi -dump-theme >/dev/null
+```
+
+CI validates Bash syntax/static guards, Rofi theme parsing and ShellCheck.
+
+---
+
+## 📚 Documentation
+
+See:
+
+- [docs/INSTALL.md](./docs/INSTALL.md)
+- [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+- [docs/FIRST-VM-TEST.md](./docs/FIRST-VM-TEST.md)
+- [docs/VMWARE.md](./docs/VMWARE.md)
+- [docs/DESKTOP-STYLE.md](./docs/DESKTOP-STYLE.md)
+- [config/README.md](./config/README.md)
+- [scripts/README.md](./scripts/README.md)
+- [tests/README.md](./tests/README.md)
+- [BRAND.md](./BRAND.md)
+
+---
+
+# ⚡ xLFr4n
 
 <p align="center">
-  <a href="./BRAND.md">🧩 Project identity / Identidad del proyecto</a> ·
-  <a href="https://github.com/xlfr4n">⚡ xlfr4n</a>
-  <br>
-  <sub>Build it. Understand it. Automate it. Document it. · Hazlo. Entiéndelo. Automatízalo. Documéntalo.</sub>
+  <strong>⚡ xLFr4n // Kali BSPWM 2026</strong><br>
+  <sub>Linux · automation · reproducibility · dark workspace · VM aware</sub>
 </p>
-
-## 🧭 xLFr4n repository standard
-
-**Display signature:** ⚡ xLFr4n · **GitHub handle:** `xlfr4n`
-
-Documentation entry points:
-- `BRAND.md` — visual identity and writing rules.
-- `CHANGELOG.md` — release history.
-- `CONTRIBUTING.md` — contribution and verification workflow.
-- `SECURITY.md` — safe configuration and reporting.
-- `CODE_OF_CONDUCT.md` — collaboration baseline.
-- `LICENSE` — project license.
-
-### Configuration boundary
-
-The repository configures the **Kali guest environment**. Host configuration, secrets and unrelated machine state stay outside the repository unless explicitly represented as safe, reproducible configuration.
-
-> **🐉 xLFr4n · Linux · automation · reproducible setup**
-
