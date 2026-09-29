@@ -1,5 +1,8 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 # Interactive shell layer for the xlfr4n desktop.
+# Pasting commented command blocks works normally in interactive Zsh.
+
+setopt interactivecomments
 
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim
@@ -66,7 +69,10 @@ alias st='settarget'
 alias ct='cleartarget'
 alias ctarget='cleartarget'
 alias llab='lab'
-alias xlbrief='xlfr4n-banner'
+alias xlbrief='xlfr4n-banner --static'
+alias cliptarget='target-copy'
+alias xlreload='session-reload'
+alias sysinfo='xlfr4n-banner --static'
 
 _kali_prompt() {
   local accent='red'
@@ -104,7 +110,6 @@ _kali_prompt() {
 add-zsh-hook precmd _kali_prompt
 
 if [[ -o interactive && -z "${XLFR4N_BANNER_DONE:-}" ]]; then
-  export KALI_BSPWM_FASTFETCH_DONE=1
-  command -v xlfr4n-banner >/dev/null 2>&1 && xlfr4n-banner
-  :
+  export XLFR4N_BANNER_DONE=1
+  command -v xlfr4n-banner >/dev/null 2>&1 && xlfr4n-banner --animate
 fi
