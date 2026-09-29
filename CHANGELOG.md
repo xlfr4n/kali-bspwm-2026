@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-09-29 — Final workspace pass
+
+- Finalized the workspace as a transparent, borderless visual system: top and bottom rails no longer draw solid panels.
+- Compact workspaces 1→9 remain on the lower-left; date and time are separated on the lower-right.
+- Kept the icon dock centered and launcher-only, with Tint2 preferred and Plank/Polybar fallbacks.
+- Staged session startup so BSPWM/SXHKD/Polybar appear before heavier wallpaper, dock, monitor and compositor work.
+- Reduced unnecessary startup waits in Polybar, monitor refresh and Picom.
+- Fixed multi-monitor refresh to distribute only the nine configured BSPWM desktops.
+- Completed the bilingual README and added a dedicated installation/update/VM guide.
+- Updated static guardrails and documentation to match the final runtime configuration.
+- CI validation for the final repository state passes: Bash/static guards, Rofi theme validation and ShellCheck.
+
 ## 2026-09-29
 
 - Reworked the desktop into a transparent bottom HUD: workspaces 1→9 at left, date/time at right, and icon-only floating launchers in the center.
