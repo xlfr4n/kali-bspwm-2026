@@ -24,9 +24,13 @@ mapfile -t monitors < <(
 
 if [ "${#monitors[@]}" -eq 0 ]; then
   polybar main -c "$CONFIG" >>"$LOG" 2>&1 &
+  polybar workspace -c "$CONFIG" >>"$LOG" 2>&1 &
   exit 0
 fi
 
 for monitor in "${monitors[@]}"; do
   MONITOR="$monitor" polybar main -c "$CONFIG" >>"$LOG" 2>&1 &
 done
+
+# Keep the workspace/clock capsule single-instance on the first discovered display.
+MONITOR="${monitors[0]}" polybar workspace -c "$CONFIG" >>"$LOG" 2>&1 &
