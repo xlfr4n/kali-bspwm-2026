@@ -36,9 +36,9 @@ The goal is to make the VM feel like a **personal xLFr4n workspace**, while keep
 
 ### ⚡ New visual controls
 
-The top bar is intentionally compact. Workspaces **1→9** and the clock live in a dedicated bottom-right glass bar. The bottom-center dock uses real application icons through Tint2 when available, with Plank/Polybar fallback. Network state is integrated into the top-right Polybar module instead of a separate `nm-applet` tray icon.
+The top bar is intentionally compact. A dedicated glass HUD sits directly above the dock: workspaces **1→9** are anchored left and the date/time is anchored right. The bottom-center dock uses real application icons through Tint2 when available, with Plank/Polybar fallback. Network state is integrated into the top-right Polybar module instead of a separate `nm-applet` tray icon.
 
-La barra superior queda deliberadamente limpia. Los escritorios **1→9** y la hora viven en una barra de cristal abajo a la derecha. El dock inferior central utiliza iconos reales mediante Tint2 cuando está disponible, con respaldo Plank/Polybar. El estado de red queda integrado arriba a la derecha en Polybar, sin un icono `nm-applet` separado.
+La barra superior queda deliberadamente limpia. Una cápsula HUD de cristal queda justo encima del dock: los escritorios **1→9** ocupan la izquierda y la fecha/hora la derecha. El dock inferior central utiliza iconos reales mediante Tint2 cuando está disponible, con respaldo Plank/Polybar. El estado de red queda integrado arriba a la derecha en Polybar, sin un icono `nm-applet` separado.
 
 
 | Shortcut | Action |
