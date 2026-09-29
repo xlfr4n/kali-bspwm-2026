@@ -19,7 +19,7 @@ choice="$(printf '%s\n' \
 case "$choice" in
   LOCK*) lock-screen ;;
   LOGOUT*) confirm "Logout?" && bspc quit ;;
-  SUSPEND*) systemctl suspend ;;
+  SUSPEND*) confirm "Suspend?" && systemctl suspend ;;
   REBOOT*) confirm "Reboot?" && systemctl reboot ;;
   POWEROFF*) confirm "Power off?" && systemctl poweroff ;;
 esac
