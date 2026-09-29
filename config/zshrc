@@ -106,5 +106,5 @@ add-zsh-hook precmd _kali_prompt
 if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" ]]; then
   export KALI_BSPWM_FASTFETCH_DONE=1
   command -v xlfr4n-banner >/dev/null 2>&1 && xlfr4n-banner
-  command -v fastfetch >/dev/null 2>&1 && fastfetch --logo none
+  :
 fi
