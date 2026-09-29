@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Optional laptop battery indicator; silent on desktops and VMs.
+set -u
+
+battery=''
+for candidate in /sys/class/power_supply/BAT*; do
+  [ -d "$candidate" ] || continue
+  battery="$candidate"
+  break
+done
+
+[ -n "$battery" ] || exit 0
+capacity="$(cat "$battery/capacity" 2>/dev/null || true)"
+status="$(cat "$battery/status" 2>/dev/null || true)"
+[[ "$capacity" =~ ^[0-9]+$ ]] || exit 0
+
+case "$status:$capacity" in
+  Charging:*) icon='' ;;
+  Full:*) icon='' ;;
+  Discharging:0-15) icon='' ;;
+  Discharging:16-35) icon='' ;;
+  Discharging:36-65) icon='' ;;
+  Discharging:66-85) icon='' ;;
+  Discharging:*) icon='' ;;
+  *) icon='' ;;
+esac
+
+printf "%s %s%%\n" "$icon" "$capacity"
