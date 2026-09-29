@@ -1,7 +1,7 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 
 super + Return
-    kitty
+    xlfr4n-launch "Kitty" --class kitty -- kitty
 
 super + d
     rofi-xlfr4n -show drun -show-icons
@@ -88,7 +88,7 @@ super + shift + l
     kitty --title Kali-Lab -e lab
 
 super + shift + e
-    thunar
+    xlfr4n-launch "Files" --class Thunar -- thunar
 
 super + shift + p
     power-menu
@@ -112,19 +112,19 @@ super + ctrl + v
     kitty --title VMware-Tools -e vmware-tools
 
 super + shift + f
-    firefox
+    xlfr4n-launch "Firefox" --class firefox -- firefox
 
 super + ctrl + b
-    brave-browser --new-window
+    xlfr4n-launch "Brave Browser" --class brave-browser -- brave-browser --new-window
 
 super + shift + b
-    burpsuite
+    xlfr4n-launch "Burp Suite" --class BurpSuite -- burpsuite
 
 super + shift + c
-    code
+    xlfr4n-launch "Visual Studio Code" --class Code -- code
 
 super + shift + n
-    kitty --class floating_nvim -e nvim
+    xlfr4n-launch "Neovim" --class floating_nvim -- kitty --class floating_nvim -e nvim
 
 super + shift + k
     lock-screen
@@ -139,7 +139,7 @@ XF86AudioMute
     audio-control mute
 
 Print
-    flameshot full -p "$HOME/Pictures/Screenshots"
+    xlfr4n-launch "Screenshot" -- flameshot full -p "$HOME/Pictures/Screenshots"
 
 shift + Print
-    flameshot gui
+    xlfr4n-launch "Screenshot" -- flameshot gui
