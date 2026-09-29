@@ -105,6 +105,7 @@ En el guest de referencia, `systemd-detect-virt` identifica VirtualBox como `ora
                        │                           │
             sxhkd + Dunst + Polybar      monitor + wallpaper
             + BSPWM borders              + desktop-style + dock
+            + workspace HUD               + Picom fades
                                                      + Picom
 ```
 
@@ -699,7 +700,7 @@ kali-bspwm-2026/
 
 **Kali Linux → X11 → BSPWM → SXHKD → Polybar + Tint2 + Rofi + Kitty + Picom + Dunst**
 
-It deliberately avoids adding a full desktop environment. Instead, it builds a lightweight and reproducible **⚡ xLFr4n** workspace with window management, keyboard control, status information, launcher, dock, terminal, notifications, themes, wallpapers, target tracking, diagnostics and VM integration.
+It deliberately avoids adding a full desktop environment. Instead, it builds a lightweight and reproducible **⚡ xLFr4n** workspace with window management, keyboard control, status information, launcher, intelligent dock focus, terminal, notifications, workspace transition feedback, audio feedback, adaptive network/battery status, themes, wallpapers, target tracking, diagnostics and VM integration.
 
 > **Boundary:** the project configures the **Kali guest**. It does not automatically change the Windows, VirtualBox or VMware host configuration.
 
