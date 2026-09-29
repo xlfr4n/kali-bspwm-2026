@@ -4,6 +4,8 @@ set -Eeuo pipefail
 
 STATE_DIR="$HOME/.config/wallpaper-state"
 STATE_FILE="$STATE_DIR/current"
+INDEX_FILE="$HOME/.cache/xlfr4n/wallpapers.index"
+INDEX_TTL_MINUTES=360
 mkdir -p "$STATE_DIR"
 
 declare -a ROOTS=(
@@ -16,13 +18,33 @@ declare -a ROOTS=(
 
 collect() {
   local root
+  local tmp_index
+
+  mkdir -p "$(dirname "$INDEX_FILE")"
+
+  if [ "${XLFR4N_WALLPAPER_REINDEX:-0}" != "1" ] &&
+     [ -s "$INDEX_FILE" ] &&
+     find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null | grep -Fqx "$INDEX_FILE"; then
+    cat "$INDEX_FILE"
+    return 0
+  fi
+
+  tmp_index="$INDEX_FILE.tmp.$"
   for root in "${ROOTS[@]}"; do
     [ -d "$root" ] || continue
     find "$root" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print
-  done | sort -u
+  done | sort -u > "$tmp_index"
+
+  mv -f "$tmp_index" "$INDEX_FILE"
+  cat "$INDEX_FILE"
 }
 
-mapfile -t wallpapers < <(collect)
+mapfile -t wallpapers < <(
+  collect |
+    while IFS= read -r image; do
+      [ -f "$image" ] && printf '%s\n' "$image"
+    done
+)
 if [ "${#wallpapers[@]}" -eq 0 ]; then
   command -v xsetroot >/dev/null 2>&1 && xsetroot -solid '#101216'
   echo "No wallpapers found." >&2
