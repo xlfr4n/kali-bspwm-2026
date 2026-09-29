@@ -8,6 +8,7 @@ POLYBAR="$HOME/.config/polybar/config.ini"
 KITTY="$HOME/.config/kitty/kitty.conf"
 ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
+TINT2="$HOME/.config/tint2/tint2rc"
 STATE="$HOME/.config/theme-state"
 mkdir -p "$STATE"
 
@@ -55,6 +56,9 @@ apply() {
     "$ROFI"
 
   sed -i -E "s/^frame_color = .*/frame_color = \"$accent\"/" "$DUNST"
+  if [ -f "$TINT2" ]; then
+    sed -i -E "s/^border_color = .*/border_color = $accent 60/" "$TINT2"
+  fi
 
   if command -v bspc >/dev/null 2>&1; then
     bspc config active_border_color "$accent"
