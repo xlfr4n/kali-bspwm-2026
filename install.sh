@@ -180,6 +180,11 @@ if command -v brave-browser >/dev/null 2>&1 &&
    command -v xdg-settings >/dev/null 2>&1 &&
    [ -f "$HOME/.local/share/applications/xLFr4n-brave.desktop" ]; then
   xdg-settings set default-web-browser xLFr4n-brave.desktop >/dev/null 2>&1 || true
+  command -v xdg-mime >/dev/null 2>&1 && {
+    xdg-mime default xLFr4n-brave.desktop x-scheme-handler/http >/dev/null 2>&1 || true
+    xdg-mime default xLFr4n-brave.desktop x-scheme-handler/https >/dev/null 2>&1 || true
+    xdg-mime default xLFr4n-brave.desktop text/html >/dev/null 2>&1 || true
+  }
 fi
 
 if command -v desktop-style >/dev/null 2>&1; then
