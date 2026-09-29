@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Lightweight Polybar heartbeat with a smooth signal sweep.
+# Minimal Polybar identity animation: typewriter reveal + dissolve.
 set -u
 
 frames=(
-  '⚡ xLFr4n // KALI  [●··]'
-  '⚡ xLFr4n // KALI  [●●·]'
-  '⚡ xLFr4n // KALI  [●●●]'
-  '⚡ xLFr4n // KALI  [·●●]'
-  '⚡ xLFr4n // KALI  [··●]'
-  '⚡ xLFr4n // KALI  [···]'
-  '⚡ xLFr4n // KALI  [··●]'
-  '⚡ xLFr4n // KALI  [·●●]'
+  '%{F#ff3344}⚡ xLFr4n%{F-}'
+  '%{F#ff3344}⚡ xLFr4%{F#7d8590}▍%{F-}'
+  '%{F#ff3344}⚡ xLFr%{F#7d8590}▍ %{F-}'
+  '%{F#ff3344}⚡ xLF%{F#7d8590}▍  %{F-}'
+  '%{F#ff3344}⚡ xL%{F#7d8590}▍   %{F-}'
+  '%{F#ff3344}⚡ x%{F#7d8590}▍    %{F-}'
+  '%{F#ff3344}⚡%{F#7d8590}▍     %{F-}'
+  '%{F#ff3344}⚡ x%{F#7d8590}▍    %{F-}'
+  '%{F#ff3344}⚡ xL%{F#7d8590}▍   %{F-}'
+  '%{F#ff3344}⚡ xLF%{F#7d8590}▍  %{F-}'
+  '%{F#ff3344}⚡ xLFr%{F#7d8590}▍ %{F-}'
+  '%{F#ff3344}⚡ xLFr4%{F#7d8590}▍%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}▍%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F-}'
 )
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
