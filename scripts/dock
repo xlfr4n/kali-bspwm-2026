@@ -88,6 +88,7 @@ start_polybar(){
 }
 
 start_backend(){
+  stop_backend
   if command -v tint2 >/dev/null 2>&1 && [ -r "$TINT2_CONFIG" ]; then
     start_tint2
   elif command -v plank >/dev/null 2>&1; then
@@ -136,7 +137,7 @@ case "${1:---start}" in
     stop_backend
     ;;
   --toggle)
-    if pgrep -x plank >/dev/null 2>&1 || pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
+    if pgrep -x tint2 >/dev/null 2>&1 || pgrep -x plank >/dev/null 2>&1 || pgrep -af '[p]olybar dock' >/dev/null 2>&1; then
       stop_backend
     else
       install_theme
