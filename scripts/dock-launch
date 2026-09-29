@@ -13,9 +13,9 @@ notify() {
 
 wait_for_window() {
   local want="$1"
-  local i
+  local deadline=$((SECONDS + 15))
   command -v wmctrl >/dev/null 2>&1 || return 1
-  for i in $(seq 1 30); do
+  while (( SECONDS < deadline )); do
     if wmctrl -lx 2>/dev/null | awk -v want="${want,,}" 'BEGIN { IGNORECASE=1 } { class=tolower($3); if (index(class, want) > 0) { found=1; exit } } END { exit(found ? 0 : 1) }'; then
       return 0
     fi
