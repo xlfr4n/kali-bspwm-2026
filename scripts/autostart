@@ -15,7 +15,11 @@ for proc in sxhkd polybar dunst picom plank tint2; do
   fi
 done
 
-mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1"
+mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1" "$HOME/.cache"
+
+if [ -x "$HOME/.local/bin/workspace-hud" ]; then
+  "$HOME/.local/bin/workspace-hud" --stop >/dev/null 2>&1 || true
+fi
 
 # ═══════════════════════════════════════════════════════════
 # PHASE 1 — minimum viable session
@@ -60,6 +64,14 @@ log "phase=core ready"
     dunst >/dev/null 2>&1 &
   fi
   log "dunst dispatched"
+) &
+
+(
+  sleep 0.16
+  if [ -x "$HOME/.local/bin/workspace-hud" ]; then
+    "$HOME/.local/bin/workspace-hud" --daemon >/dev/null 2>&1 &
+  fi
+  log "workspace hud dispatched"
 ) &
 
 (
