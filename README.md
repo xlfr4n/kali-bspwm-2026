@@ -353,6 +353,8 @@ No son porcentajes de “rendimiento general”: cada uno representa una métric
 | `Super + Ctrl + X` | Target |
 | `Super + Shift + M` | Refrescar monitores |
 | `Super + Ctrl + R` | Doctor |
+| `Super + Shift + I` | Full system snapshot in Kitty |
+| `Super + Shift + I` | Snapshot completo del sistema en Kitty |
 | `Super + Shift + S` | Screenshots |
 | `Super + Shift + K` | Bloquear |
 | `Super + Shift + P` | Energía |
