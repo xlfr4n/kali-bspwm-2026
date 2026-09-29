@@ -20,7 +20,7 @@ while IFS= read -r -d '' file; do
   bash -n "$file"
 done < <(find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | sort -z)
 
-required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/rofi/fallback.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md config/tint2/tint2rc config/tint2/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/dock scripts/mission-control scripts/desktop-style"
+required_files="config/bspwm/bspwmrc config/sxhkd/sxhkdrc config/polybar/config.ini config/polybar/launch.sh config/kitty/kitty.conf config/rofi/launcher.rasi config/rofi/fallback.rasi config/dunst/dunstrc config/picom/picom.conf config/zshrc config/bspwm.desktop config/plank/xLFr4n/dock.theme config/plank/README.md config/tint2/tint2rc config/tint2/README.md scripts/autostart scripts/kali-menu scripts/rofi-xlfr4n scripts/vmware-tools scripts/doctor.sh scripts/xlfr4n-banner scripts/xlfr4n-pulse scripts/target-copy scripts/fullscreen-toggle scripts/dock scripts/mission-control scripts/desktop-style"
 
 for file in $required_files; do
   test -s "$file"
@@ -63,3 +63,10 @@ grep -Fq 'Super' docs/DESKTOP-STYLE.md 2>/dev/null || true
 grep -Fq 'xlfr4n' scripts/*.sh scripts/* 2>/dev/null || true
 
 echo 'Static checks: OK'
+
+
+grep -Fq 'fullscreen-toggle' config/sxhkd/sxhkdrc
+grep -Fq 'click-left = target-copy' config/polybar/config.ini
+grep -Fq 'setopt interactivecomments' config/zshrc
+grep -Fq 'XLFR4N_BANNER_DONE' config/zshrc
+grep -Fq 'Launching' scripts/dock-launch
