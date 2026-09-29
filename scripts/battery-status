@@ -15,15 +15,20 @@ capacity="$(cat "$battery/capacity" 2>/dev/null || true)"
 status="$(cat "$battery/status" 2>/dev/null || true)"
 [[ "$capacity" =~ ^[0-9]+$ ]] || exit 0
 
-case "$status:$capacity" in
-  Charging:*) icon='' ;;
-  Full:*) icon='' ;;
-  Discharging:0-15) icon='' ;;
-  Discharging:16-35) icon='' ;;
-  Discharging:36-65) icon='' ;;
-  Discharging:66-85) icon='' ;;
-  Discharging:*) icon='' ;;
-  *) icon='' ;;
-esac
+if [ "$status" = "Charging" ]; then
+  icon=''
+elif [ "$status" = "Full" ]; then
+  icon=''
+elif [ "$capacity" -le 15 ]; then
+  icon=''
+elif [ "$capacity" -le 35 ]; then
+  icon=''
+elif [ "$capacity" -le 65 ]; then
+  icon=''
+elif [ "$capacity" -le 85 ]; then
+  icon=''
+else
+  icon=''
+fi
 
 printf "%s %s%%\n" "$icon" "$capacity"
