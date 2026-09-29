@@ -99,7 +99,7 @@ do
   backup_path "$p"
 done
 
-for p in "$HOME/.local/share/applications"/xLFr4n-*.desktop; do
+for p in "$HOME/.local/share/applications"/xLFr4n-*.desktop          "$HOME/.local/share/icons/hicolor/scalable/apps"/xlfr4n-*.svg; do
   [ -e "$p" ] || continue
   backup_path "$p"
 done
@@ -129,6 +129,11 @@ chmod +x "$BIN_DIR"/* 2>/dev/null || true
 mkdir -p "$HOME/.local/share/applications"
 for desktop in "$ROOT_DIR"/config/applications/*.desktop; do
   install -Dm644 "$desktop" "$HOME/.local/share/applications/$(basename "$desktop")"
+done
+
+mkdir -p "$HOME/.local/share/icons/hicolor/scalable/apps"
+for icon in "$ROOT_DIR"/config/icons/*.svg; do
+  install -Dm644 "$icon" "$HOME/.local/share/icons/hicolor/scalable/apps/$(basename "$icon")"
 done
 
 ln -sfn "$BIN_DIR/settarget" "$BIN_DIR/st"
