@@ -11,7 +11,7 @@ case "$app" in
   files) wmclass='thunar'; cmd=(thunar) ;;
   code) wmclass='code'; cmd=(code) ;;
   burp) wmclass='burpsuite'; cmd=(burpsuite) ;;
-  nvim) wmclass='floating_nvim'; cmd=(kitty --class floating_nvim -e nvim) ;;
+  editor|nvim) wmclass='floating_nvim'; cmd=(kitty --class floating_nvim -e nvim) ;;
   kali) wmclass=''; cmd=(kali-menu) ;;
   target) wmclass='kali-target'; cmd=(kitty --class kali-target --title Kali-Target -e settarget) ;;
   lab) wmclass='kali-lab'; cmd=(kitty --class kali-lab --title Kali-Lab -e lab) ;;
