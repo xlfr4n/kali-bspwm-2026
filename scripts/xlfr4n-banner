@@ -93,9 +93,9 @@ animate_boot() {
   [ -t 1 ] || return 0
 
   local phase
-  for phase in "BOOT" "LINK" "SYNC" "READY"; do
+  for phase in "BOOT" "LINK" "SYNC" "DRAW" "READY"; do
     printf '\r\033[2K\033[%sm[ xLFr4n ]\033[0m  %-5s  INITIALIZING WORKSPACE' "$accent" "$phase"
-    sleep 0.06
+    sleep 0.05
   done
   printf '\r\033[2K'
 }
