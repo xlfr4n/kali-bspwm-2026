@@ -20,8 +20,17 @@ fi
   exit 2
 }
 
+ensure_dunst() {
+  command -v dunst >/dev/null 2>&1 || return 0
+  if ! pgrep -u "$UID" -x dunst >/dev/null 2>&1; then
+    dunst >/dev/null 2>&1 &
+    sleep 0.08
+  fi
+}
+
 notify() {
   command -v notify-send >/dev/null 2>&1 || return 0
+  ensure_dunst
   notify-send -u low -t "${3:-1200}" "$1" "$2" >/dev/null 2>&1 || true
 }
 
