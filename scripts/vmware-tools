@@ -1,25 +1,30 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
-# VMware diagnostics/recovery helper; never changes VM settings automatically.
-
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Virtualization guest diagnostics/recovery helper.
 set -Eeuo pipefail
 
 virt="$(systemd-detect-virt 2>/dev/null || true)"
-[ "$virt" = "vmware" ] || {
-  echo "VMware guest not detected (systemd-detect-virt: ${virt:-unknown})." >&2
-  exit 2
-}
-
 show_status() {
-  printf 'VMWARE GUEST\n'
-  printf '%-28s %s\n' 'open-vm-tools' "$(systemctl is-active open-vm-tools 2>/dev/null || true)"
-  printf '%-28s %s\n' 'desktop integration' "$([ -x /usr/bin/vmware-user ] && echo available || echo missing)"
-  printf '%-28s %s\n' 'shared folder mountpoint' "$([ -d /mnt/hgfs ] && echo present || echo missing)"
-  if command -v vmware-toolbox-cmd >/dev/null 2>&1; then
-    printf '%-28s %s\n' 'toolbox command' 'available'
-  else
-    printf '%-28s %s\n' 'toolbox command' 'not installed'
-  fi
+  case "$virt" in
+    vmware)
+      printf 'VMWARE GUEST\n'
+      printf '%-28s %s\n' 'open-vm-tools' "$(systemctl is-active open-vm-tools 2>/dev/null || true)"
+      printf '%-28s %s\n' 'desktop integration' "$([ -x /usr/bin/vmware-user ] && echo available || echo missing)"
+      printf '%-28s %s\n' 'shared folder mountpoint' "$([ -d /mnt/hgfs ] && echo present || echo missing)"
+      if command -v vmware-toolbox-cmd >/dev/null 2>&1; then printf '%-28s %s\n' 'toolbox command' 'available'; else printf '%-28s %s\n' 'toolbox command' 'not installed'; fi
+      ;;
+    oracle|virtualbox)
+      printf 'VIRTUALBOX GUEST\n'
+      printf '%-28s %s\n' 'guest utils' "$(systemctl is-active virtualbox-guest-utils.service 2>/dev/null || systemctl is-active vboxservice.service 2>/dev/null || true)"
+      printf '%-28s %s\n' 'VBoxService' "$(command -v VBoxService >/dev/null 2>&1 && echo available || echo missing)"
+      printf '%-28s %s\n' 'shared-folder mount' "$([ -d /media ] && echo mountpoint-ready || echo unavailable)"
+      ;;
+    *)
+      printf 'VIRTUALIZATION\n'
+      printf '%-28s %s\n' 'detected guest' "${virt:-bare-metal}"
+      printf '%-28s %s\n' 'note' 'No provider-specific guest helper is required.'
+      ;;
+  esac
 }
 
 case "${1:-status}" in
@@ -27,21 +32,38 @@ case "${1:-status}" in
     show_status
     ;;
   restart)
-    sudo systemctl restart open-vm-tools.service
+    case "$virt" in
+      vmware) sudo systemctl restart open-vm-tools.service || sudo systemctl restart open-vm-tools || true ;;
+      oracle|virtualbox)
+        if systemctl list-unit-files --type=service --no-legend 2>/dev/null | awk '{print $1}' | grep -qx 'virtualbox-guest-utils.service'; then
+          sudo systemctl restart virtualbox-guest-utils.service || true
+        elif systemctl list-unit-files --type=service --no-legend 2>/dev/null | awk '{print $1}' | grep -qx 'vboxservice.service'; then
+          sudo systemctl restart vboxservice.service || true
+        else
+          printf 'No VirtualBox guest service found.\n' >&2
+          exit 1
+        fi
+        ;;
+      *) printf 'No provider-specific guest service to restart.\n' ;;
+    esac
     show_status
     ;;
   shared-folders)
-    if command -v mount-shared-folders >/dev/null 2>&1; then
-      echo "VMware shared-folder helper is available."
-      echo "Run: sudo mount-shared-folders"
+    if [ "$virt" != "vmware" ]; then
+      printf 'Shared-folder helper is provider-specific; detected: %s\n' "${virt:-bare-metal}"
       exit 0
     fi
-    echo "Shared-folder helper is not installed."
-    echo "Kali Tweaks -> Virtualization -> VMware can install the extra helper."
+    if command -v mount-shared-folders >/dev/null 2>&1; then
+      echo 'VMware shared-folder helper is available.'
+      echo 'Run: sudo mount-shared-folders'
+      exit 0
+    fi
+    echo 'Shared-folder helper is not installed.'
+    echo 'Kali Tweaks -> Virtualization -> VMware can install the extra helper.'
     exit 1
     ;;
   *)
-    echo "Usage: vmware-tools [status|restart|shared-folders]" >&2
+    echo 'Usage: vmware-tools [status|restart|shared-folders]' >&2
     exit 2
     ;;
 esac
