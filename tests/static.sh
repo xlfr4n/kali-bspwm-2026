@@ -70,3 +70,5 @@ grep -Fq 'click-left = target-copy' config/polybar/config.ini
 grep -Fq 'setopt interactivecomments' config/zshrc
 grep -Fq 'XLFR4N_BANNER_DONE' config/zshrc
 grep -Fq 'Launching' scripts/dock-launch
+grep -Fq 'xlfr4n-banner --static' scripts/lab
+grep -Fq 'StartupNotify=true' scripts/dock
