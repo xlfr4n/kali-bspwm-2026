@@ -31,12 +31,49 @@ fi
 
 current="$(cat "$STATE_FILE" 2>/dev/null || true)"
 
+prepare_wallpaper() {
+  local image="$1"
+  local tool=""
+  local cache_dir="$HOME/.cache/xlfr4n/wallpapers"
+  local key=""
+  local output=""
+
+  [ "${XLFR4N_WALLPAPER_RAW:-0}" = "1" ] && {
+    printf '%s\n' "$image"
+    return 0
+  }
+
+  if command -v magick >/dev/null 2>&1; then
+    tool="magick"
+  elif command -v convert >/dev/null 2>&1; then
+    tool="convert"
+  else
+    printf '%s\n' "$image"
+    return 0
+  fi
+
+  mkdir -p "$cache_dir"
+  key="$(printf '%s' "$image" | sha256sum | cut -d' ' -f1)"
+  output="$cache_dir/${key}-dark.jpg"
+
+  if [ ! -s "$output" ] || [ "$image" -nt "$output" ]; then
+    "$tool" "$image" -modulate 82,92,100 -strip -quality 92 "$output" >/dev/null 2>&1 || {
+      printf '%s\n' "$image"
+      return 0
+    }
+  fi
+
+  printf '%s\n' "$output"
+}
+
 set_wallpaper() {
   local image="$1"
-  feh --no-fehbg --bg-fill "$image"
+  local rendered
+  rendered="$(prepare_wallpaper "$image")"
+  feh --no-fehbg --bg-fill "$rendered"
   printf '%s\n' "$image" > "$STATE_FILE"
   printf 'Wallpaper: %s\n' "$image"
-}
+}}
 
 case "${1:-}" in
   --random|"")
