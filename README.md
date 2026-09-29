@@ -32,10 +32,11 @@ La idea no es instalar un escritorio completo encima de Kali. La idea es mantene
 - 🚀 launcher tipo Spotlight con Rofi;
 - 🧊 dock inferior launcher-only con iconos reales mediante Tint2;
 - 🐱 Kitty como terminal principal;
+- 🚀 Fastfetch como pantalla de entrada con logo custom `xLFr4n`;
 - 🌫️ Picom para sombras/fades suaves;
 - 🔔 Dunst para notificaciones;
 - 🎨 themes coordinados;
-- 🖼️ wallpapers con caché;
+- 🖼️ wallpaper de sesión fijo `kali-hack-16x9.jpg` + controles manuales;
 - 🎯 target helper;
 - 🩺 doctor read-only;
 - 🎞️ workspace HUD con feedback de transición;
@@ -293,6 +294,10 @@ Fecha y hora se mantienen separadas para que sean más legibles y no formen otro
 
 ## Dock
 
+### Identidad de terminal
+
+Fastfetch se ejecuta automáticamente en nuevas shells interactivas y usa el logo custom `xLFr4n`. El snapshot ASCII de `xlfr4n-banner` se mantiene como herramienta manual para diagnósticos.
+
 Tint2 es el backend principal cuando está disponible:
 
 - solo lanzadores;
@@ -406,13 +411,14 @@ BSPWM border accents
 # 🖼️ Wallpapers
 
 ```bash
+wallpaper --default
 wallpaper --random
 wallpaper --next
 wallpaper --current
 wallpaper --set /ruta/al/wallpaper.png
 ```
 
-El index de wallpapers se cachea para que un login posterior no tenga que volver a recorrer todas las carpetas cada vez.
+El login usa por defecto `/usr/share/backgrounds/kali/kali-hack-16x9.jpg`. Los comandos `--random`, `--next`, `--current` y `--set` siguen disponibles para cambios manuales, y el index se cachea para no recorrer todas las carpetas en cada login.
 
 ---
 
