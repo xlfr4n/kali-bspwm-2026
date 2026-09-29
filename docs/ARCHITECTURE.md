@@ -7,6 +7,22 @@
 
 Kali BSPWM 2026 está organizado por responsabilidades para que la estética no tenga que invadir la instalación ni la lógica de sesión.
 
+### 🚀 Flujo de sesión
+
+El arranque está dividido en dos fases para que la sesión usable aparezca antes que la decoración pesada:
+
+```text
+Display Manager
+      ↓
+     bspwm
+      ↓
+   autostart
+   ├─ FASE 1 → sxhkd + dunst + Polybar + bordes BSPWM
+   └─ FASE 2 → monitor-refresh + wallpaper + desktop-style + dock + picom
+```
+
+La segunda fase se ejecuta en segundo plano y no vuelve a ejecutar `theme-switch` durante cada login. Los cambios de tema se hacen bajo demanda.
+
 | Capa | Responsabilidad |
 |---|---|
 | `install.sh` | Detecta Kali/VMware/VirtualBox, instala paquetes, crea backups y despliega el entorno. |
@@ -24,24 +40,6 @@ Kali BSPWM 2026 está organizado por responsabilidades para que la estética no 
 - ☁️ **VM-aware:** VMware/VirtualBox se detectan antes de activar integración específica.
 - 🎨 **Static core:** el escritorio funciona con temas estáticos incluso si pywal16 no está disponible.
 - 🩺 **Read-only doctor:** el diagnóstico informa; no intenta “arreglar” el sistema a escondidas.
-
-### 🚀 Flujo de sesión
-
-```text
-Display Manager
-      ↓
-     bspwm
-      ↓
-   autostart
-   ├─ sxhkd
-   ├─ keyboard
-   ├─ monitor-refresh
-   ├─ wallpaper
-   ├─ dunst
-   ├─ nm-applet
-   ├─ theme-switch
-   └─ start-picom
-```
 
 ### 🧭 Identidad
 
@@ -65,9 +63,15 @@ Backups before overwrite, reversible removal, separated responsibilities, X11-na
 
 ### 🧭 Session flow
 
+Startup is split into two phases so the usable desktop is rendered before cosmetic work:
+
 ```text
-Display Manager → bspwm → autostart → desktop services
+Display Manager → bspwm → autostart
+                         ├─ PHASE 1: sxhkd + dunst + Polybar + BSPWM borders
+                         └─ PHASE 2: monitor-refresh + wallpaper + desktop-style + dock + picom
 ```
+
+The second phase is dispatched in the background and does not re-run `theme-switch` during every login. Theme changes remain on-demand.
 
 ### ⚡ Project signature
 
