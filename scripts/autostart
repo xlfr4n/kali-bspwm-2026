@@ -1,28 +1,81 @@
 #!/usr/bin/env bash
 # ⚡ xlfr4n // Kali BSPWM 2026
-# Session bootstrap: runtime only; project identity lives across the whole desktop.
-
+# Fast session bootstrap: visible desktop first, cosmetic/background work second.
 set -Eeuo pipefail
 
-# Remove any tray applet left by an older session; network status now lives inside Polybar.
-pkill -x nm-applet 2>/dev/null || true
+log(){
+  mkdir -p "$HOME/.cache"
+  printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$*" >> "$HOME/.cache/xlfr4n-session.log"
+}
 
+# Prevent leftovers from an older BSPWM session. These are best-effort and do not block login.
+pkill -x nm-applet 2>/dev/null || true
 for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
 done
 
 mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1"
 
-command -v sxhkd >/dev/null 2>&1 && sxhkd >/dev/null 2>&1 &
-"$HOME/.local/bin/keyboard" >/dev/null 2>&1 &
+# ═══════════════════════════════════════════════════════════
+# PHASE 1 — usable desktop immediately
+# ═══════════════════════════════════════════════════════════
+log "phase=core start"
 
-sleep 0.5
-"$HOME/.local/bin/monitor-refresh" --startup >/dev/null 2>&1 &
-"$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 &
+if command -v sxhkd >/dev/null 2>&1; then
+  sxhkd >/dev/null 2>&1 &
+fi
 
-"$HOME/.local/bin/desktop-style" --apply --silent >/dev/null 2>&1 &
-"$HOME/.local/bin/dock" --start >/dev/null 2>&1 &
+if command -v dunst >/dev/null 2>&1; then
+  dunst >/dev/null 2>&1 &
+fi
 
-"$HOME/.local/bin/theme-switch" --apply-current --silent >/dev/null 2>&1 &
+if [ -x "$HOME/.config/polybar/launch.sh" ]; then
+  "$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+fi
 
-(sleep 1; "$HOME/.local/bin/start-picom" >/dev/null 2>&1) &
+# Apply only the runtime border accent here; do not rewrite configs or restart the desktop.
+if command -v bspc >/dev/null 2>&1; then
+  theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf "cyber-red")"
+  case "$theme" in
+    htb-green) accent="#9fef00" ;;
+    nord) accent="#88c0d0" ;;
+    purple) accent="#bd93f9" ;;
+    *) accent="#ff3344" ;;
+  esac
+  bspc config active_border_color "$accent"
+  bspc config focused_border_color "$accent"
+  bspc config presel_feedback_color "$accent"
+fi
+
+log "phase=core ready"
+
+# ═══════════════════════════════════════════════════════════
+# PHASE 2 — background polish; none of this blocks login
+# ═══════════════════════════════════════════════════════════
+(
+  "$HOME/.local/bin/monitor-refresh" --startup >/dev/null 2>&1 || true
+  log "monitor refresh done"
+) &
+
+(
+  "$HOME/.local/bin/wallpaper" --random >/dev/null 2>&1 || true
+  log "wallpaper ready"
+) &
+
+(
+  "$HOME/.local/bin/desktop-style" --apply --silent >/dev/null 2>&1 || true
+  log "desktop style ready"
+) &
+
+(
+  "$HOME/.local/bin/dock" --start >/dev/null 2>&1 || true
+  log "dock ready"
+) &
+
+(
+  sleep 0.8
+  "$HOME/.local/bin/start-picom" >/dev/null 2>&1 || true
+  log "picom ready"
+) &
+
+log "phase=background dispatched"
