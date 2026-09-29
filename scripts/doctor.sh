@@ -64,7 +64,7 @@ rofi_launcher_files_check() {
   done
 }
 
-theme_check() {
+rofi_theme_check() {
   rofi -no-config -theme "$HOME/.config/rofi/launcher.rasi" -dump-theme
 }
 
@@ -122,6 +122,7 @@ check "Fullscreen toggle helper" command -v fullscreen-toggle
 check "Target copy helper" command -v target-copy
 check "xLFr4n pulse helper" command -v xlfr4n-pulse
 check "xLFr4n terminal banner" command -v xlfr4n-banner
+check "xLFr4n date helper" command -v xlfr4n-date
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" "$HOME/.config/sxhkd/sxhkdrc"
 check "Target clipboard binding" grep -Fq "click-left = target-copy" "$HOME/.config/polybar/config.ini"
 check "Eza or ls" sh -c 'command -v eza >/dev/null 2>&1 || command -v ls >/dev/null 2>&1'
@@ -129,6 +130,7 @@ check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl 
 check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
+check "Date helper locale support" grep -Fq "LC_TIME" "$HOME/.local/bin/xlfr4n-date" 2>/dev/null || true
 check "Single dock backend" dock_single_backend_check
 check "Target helper" command -v settarget
 check "Monitor helper" command -v monitor-refresh
@@ -147,7 +149,7 @@ floating_dock_check() {
 }
 
 check "Floating dock configuration" floating_dock_check
-check "Dock launchers" launcher_files_check
+check "Dock launchers" rofi_launcher_files_check
 check "Notification sender" command -v notify-send
 check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
