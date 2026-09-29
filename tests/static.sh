@@ -73,6 +73,10 @@ required_files=(
   scripts/mission-control
   scripts/desktop-style
   scripts/session-profile
+  scripts/workspace-hud
+  scripts/audio-control
+  scripts/network-status
+  scripts/battery-status
 )
 
 for file in "${required_files[@]}"; do
@@ -82,6 +86,7 @@ done
 check "binding: kali-menu" grep -Fq "kali-menu" config/sxhkd/sxhkdrc
 check "binding: Rofi drun" grep -Fq "rofi-xlfr4n -show drun" config/sxhkd/sxhkdrc
 check "binding: Rofi run" grep -Fq "rofi-xlfr4n -show run" config/sxhkd/sxhkdrc
+check "Audio feedback binding" grep -Fq "audio-control up" config/sxhkd/sxhkdrc
 check "VirtualBox service detection" grep -Fq "virtualbox-guest-utils.service" install.sh
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
 check "Polybar restack" grep -Fq "wm-restack = bspwm" config/polybar/config.ini
@@ -105,6 +110,8 @@ check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/co
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
 check "Date and time right modules" grep -Fq "modules-right = date time" config/polybar/config.ini
+check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" config/polybar/config.ini
+check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
@@ -112,6 +119,10 @@ check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" 
 check "Kitty cursor trail" grep -Fq "cursor_trail 20" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
+check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
+check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
+check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
+check "Battery is optional" grep -Fq "BAT*" scripts/battery-status
 check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
 check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
 check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
@@ -149,3 +160,5 @@ check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any f
 check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
 check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
 check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
+check "Autostart starts workspace HUD" grep -Fq "workspace-hud --daemon" scripts/autostart
+check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
