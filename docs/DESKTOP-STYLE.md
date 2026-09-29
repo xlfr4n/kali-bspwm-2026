@@ -17,7 +17,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 
 ### ⚡ Animación
 
-La animación se reserva para lugares donde aporta feedback: cursor/banners, fades de ventana y hover del dock. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
+La animación se reserva para lugares donde aporta feedback: cursor/banners, fades de ventana, cambio de workspace mediante el HUD, feedback de audio y hover del dock. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
 
 ## 🇬🇧 English
 
@@ -34,6 +34,29 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Picom with soft fades/shadows and no blur for VM compatibility.
 - Fixed-width terminal banner to avoid geometry drift.
 
-Animation is used where it provides feedback rather than visual noise: cursor/banner effects, window fades and dock hover.
+Animation is used where it provides feedback rather than visual noise: cursor/banner effects, window fades, workspace HUD transitions, audio feedback and dock hover.
 
 **⚡ xLFr4n · Kali · BSPWM · floating workspace**
+
+
+## 🎞️ Feedback layer / Capa de feedback
+
+### 🇪🇸 Español
+
+El escritorio tiene una capa de feedback común para que las acciones importantes tengan una respuesta visible sin llenar la pantalla de widgets:
+
+`workspace-hud` → cambio de escritorio → notificación compacta → fade de Picom.
+
+`audio-control` → volumen/mute → porcentaje visible → fade breve.
+
+Dunst mantiene el historial y apila estas notificaciones para evitar una cascada de ventanas.
+
+### 🇬🇧 English
+
+The desktop uses a shared feedback layer so important actions have a visible response without filling the screen with widgets:
+
+`workspace-hud` → desktop change → compact notification → Picom fade.
+
+`audio-control` → volume/mute → visible percentage → short fade.
+
+Dunst keeps history and stacks these notifications to avoid a cascade of windows.
