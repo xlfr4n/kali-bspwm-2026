@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-09-30 — xLFr4n UX & polish pass
+
+- Added a lightweight workspace transition HUD driven by BSPWM desktop-focus events.
+- Added visible audio feedback for media keys with pamixer/wpctl fallback support.
+- Reworked the network indicator to follow the default route instead of assuming wired Ethernet.
+- Added an optional battery indicator that stays silent on VM/desktop systems without a battery.
+- Let Dunst notifications participate in Picom fade animations while keeping dock/status surfaces excluded.
+- Added notification stacking/history refinements for cleaner transient feedback.
+- Extended the read-only doctor and static guardrails for the new UX helpers.
+- Updated the visual and script documentation to make the new feedback layer explicit.
+
 ## 2026-09-29 — Final workspace pass
 
 - Finalized the workspace as a transparent, borderless visual system: top and bottom rails no longer draw solid panels.
