@@ -880,6 +880,7 @@ See:
 - [docs/FIRST-VM-TEST.md](./docs/FIRST-VM-TEST.md)
 - [docs/VMWARE.md](./docs/VMWARE.md)
 - [docs/DESKTOP-STYLE.md](./docs/DESKTOP-STYLE.md)
+- [docs/FINAL-AUDIT.md](./docs/FINAL-AUDIT.md)
 - [config/README.md](./config/README.md)
 - [scripts/README.md](./scripts/README.md)
 - [tests/README.md](./tests/README.md)
