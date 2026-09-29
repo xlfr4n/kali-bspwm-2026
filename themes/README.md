@@ -55,4 +55,4 @@ theme-switch cyber-red
 
 ## 🍎 Desktop skin
 
-Every theme keeps the unified xLFr4n workspace shell: floating top bar, floating dock, application launcher and window overview. Switching themes refreshes Polybar and the dock together when possible.
+Every theme keeps the unified xLFr4n workspace shell: transparent top rail, floating dock, application launcher and window overview. Switching themes refreshes Polybar and the dock together when possible.
