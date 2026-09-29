@@ -42,6 +42,7 @@ grep -Fq 'tint2' install.sh
 grep -Fq '[bar/workspace]' config/polybar/config.ini
 grep -Fq 'modules-left = bspwm' config/polybar/config.ini
 grep -Fq 'modules-right = date' config/polybar/config.ini
+grep -Fq 'polybar workspace -c' config/polybar/launch.sh
 grep -Fq '[bar/dock]' config/polybar/config.ini
 grep -Fq 'Polybar dock' scripts/dock
 grep -Fq 'polybar-fallback' scripts/dock
