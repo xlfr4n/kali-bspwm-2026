@@ -32,7 +32,7 @@ La idea no es instalar un escritorio completo encima de Kali. La idea es mantene
 - 🚀 launcher tipo Spotlight con Rofi;
 - 🧊 dock inferior launcher-only con iconos reales mediante Tint2;
 - 🐱 Kitty como terminal principal;
-- 🚀 Fastfetch como pantalla de entrada con logo custom `xLFr4n`;
+- 🚀 Fastfetch como pantalla de entrada con el logo oficial de Kali + firma `⚡ xLFr4n`;
 - 🌫️ Picom para sombras/fades suaves;
 - 🔔 Dunst para notificaciones;
 - 🎨 themes coordinados;
@@ -296,7 +296,7 @@ Fecha y hora se mantienen separadas para que sean más legibles y no formen otro
 
 ### Identidad de terminal
 
-Fastfetch se ejecuta automáticamente en nuevas shells interactivas y usa el logo custom `xLFr4n`. El snapshot ASCII de `xlfr4n-banner` se mantiene como herramienta manual para diagnósticos.
+Fastfetch se ejecuta automáticamente en nuevas shells interactivas con el logo oficial de Kali, la firma `⚡ xLFr4n` bajo el logo y datos útiles de sesión como TARGET, IP y fecha. El snapshot ASCII de `xlfr4n-banner` se mantiene como herramienta manual para diagnósticos.
 
 Tint2 es el backend principal cuando está disponible:
 
