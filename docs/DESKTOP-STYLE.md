@@ -9,7 +9,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Barra superior transparente y sin borde.
 - Barra inferior transparente y sin borde.
 - Escritorios 1→9 compactos abajo a la izquierda.
-- Fecha y hora abajo a la derecha.
+- Fecha y hora abajo a la derecha; la fecha usa el idioma temporal (`LC_TIME`) del sistema cuando está disponible.
 - Dock centrado con iconos reales.
 - Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
@@ -17,7 +17,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 
 ### ⚡ Animación
 
-La animación se reserva para lugares donde aporta feedback: cursor/banners, fades de ventana, cambio de workspace mediante el HUD, feedback de audio y hover del dock. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
+La animación se reserva para lugares donde aporta feedback: cursor/banners, pulso de identidad, fades de ventana, transición de workspace mediante el HUD, feedback de audio y hover del dock. El banner de Kitty usa fases cortas y un progreso visual para sentirse vivo sin mantener procesos en segundo plano. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
 
 ## 🇬🇧 English
 
@@ -53,9 +53,9 @@ Dunst mantiene el historial y apila estas notificaciones para evitar una cascada
 
 ### 🇬🇧 English
 
-The desktop uses a shared feedback layer so important actions have a visible response without filling the screen with widgets:
+The desktop uses a shared feedback layer so important actions have a visible response without filling the screen with widgets. The lower date rail follows the system `LC_TIME` locale when available:
 
-`workspace-hud` → desktop change → compact notification → Picom fade.
+`workspace-hud` → desktop change → compact two-frame notification → Picom fade.
 
 `audio-control` → volume/mute → visible percentage → short fade.
 
