@@ -85,7 +85,7 @@ super + ctrl + w
     wallpaper --next
 
 super + shift + l
-    kitty --title Kali-Lab -e lab
+    xlfr4n-launch "Kali Lab" --class kali-lab -- kitty --class kali-lab --title Kali-Lab -e lab
 
 super + shift + e
     xlfr4n-launch "Files" --class Thunar -- thunar
