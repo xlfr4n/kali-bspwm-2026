@@ -1,21 +1,35 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
-# Personal shell identity banner.
-
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Unified terminal identity block. No legacy Neofetch/Fastfetch artwork.
 set -u
 
 theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
 virt="$(systemd-detect-virt 2>/dev/null || printf 'host')"
-session="$DESKTOP_SESSION"
+session="${DESKTOP_SESSION:-bspwm}"
 target="$(cat "$HOME/.config/polybar/target" 2>/dev/null || true)"
+kernel="$(uname -sr 2>/dev/null || printf 'unknown')"
+uptime="$(uptime -p 2>/dev/null | sed 's/^up //' || printf 'unknown')"
+resolution="$(xrandr 2>/dev/null | awk '/ connected primary | connected / {for (i=1;i<=NF;i++) if ($i ~ /^[0-9]+x[0-9]+\+/) {sub(/\+.*/, "", $i); print $i; exit}}')"
+resolution="${resolution:-unknown}"
+
+if command -v free >/dev/null 2>&1; then
+  memory="$(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
+else
+  memory="unknown"
+fi
+
+cpu="$(nproc 2>/dev/null || printf '?') core(s)"
 
 printf '\n'
-printf '\033[31m╭──────────────────────────────────────────────────────────╮\033[0m\n'
-printf '\033[31m│\033[0m  ⚡ \033[1;37mxlfr4n // KALI\033[0m  ·  PERSONAL SECURITY LAB       \033[31m│\033[0m\n'
-printf '\033[31m│\033[0m  SESSION  %-11s  VIRT  %-11s  THEME  %-12s \033[31m│\033[0m\n' "$session" "$virt" "$theme"
+printf '\033[31m╭──────────────────────────────────────────────────────────────╮\033[0m\n'
+printf '\033[31m│\033[0m  ⚡ \033[1;37mxLFr4n // KALI\033[0m  ·  PERSONAL SECURITY LAB          \033[31m│\033[0m\n'
+printf '\033[31m│\033[0m  SESSION  %-10s  VIRT %-10s  THEME %-13s \033[31m│\033[0m\n' "$session" "$virt" "$theme"
+printf '\033[31m│\033[0m  KERNEL   %-17s  CPU %-17s \033[31m│\033[0m\n' "$kernel" "$cpu"
+printf '\033[31m│\033[0m  MEMORY   %-17s  SCREEN %-14s \033[31m│\033[0m\n' "$memory" "$resolution"
+printf '\033[31m│\033[0m  UPTIME   %-44s \033[31m│\033[0m\n' "$uptime"
 if [ -n "$target" ]; then
-  printf '\033[31m│\033[0m  TARGET   %-42s \033[31m│\033[0m\n' "$target"
+  printf '\033[31m│\033[0m  TARGET   %-44s \033[31m│\033[0m\n' "$target"
 else
-  printf '\033[31m│\033[0m  TARGET   %-42s \033[31m│\033[0m\n' "not set"
+  printf '\033[31m│\033[0m  TARGET   %-44s \033[31m│\033[0m\n' "not set"
 fi
-printf '\033[31m╰──────────────────────────────────────────────────────────╯\033[0m\n'
+printf '\033[31m╰──────────────────────────────────────────────────────────────╯\033[0m\n'
