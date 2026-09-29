@@ -1,25 +1,25 @@
 /* ⚡ xlfr4n // Kali BSPWM 2026 */
 
 * {
-  bg: #101216;
-  bg-alt: #171a20;
-  fg: #f0f3f7;
-  muted: #7d8590;
+  bg: #0b0d10;
+  bg-alt: #161b22;
+  fg: #ffffff;
+  muted: #8b949e;
   accent: #ff3344;
   dark-accent: #101216;
   font: "JetBrains Mono 10";
-  border: #55ff3344;
+  border: #66ff3344;
 }
 
 window {
   width: 48%;
   location: center;
   anchor: center;
-  background-color: #E50B0E12;
+  background-color: @bg;
   border: 1px;
   border-color: @border;
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 18px;
+  padding: 18px;
 }
 
 mainbox {
