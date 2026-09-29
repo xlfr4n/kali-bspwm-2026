@@ -53,6 +53,7 @@ required_files=(
   config/polybar/launch.sh
   config/kitty/kitty.conf
   config/fastfetch/config.jsonc
+  config/fastfetch/xLFr4n.logo
   config/rofi/launcher.rasi
   config/rofi/fallback.rasi
   config/dunst/dunstrc
@@ -72,6 +73,7 @@ required_files=(
   scripts/xlfr4n-banner
   scripts/xlfr4n-pulse
   scripts/xlfr4n-date
+  scripts/xlfr4n-launch
   scripts/target-copy
   scripts/fullscreen-toggle
   scripts/dock
@@ -132,10 +134,13 @@ check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
-check "Fastfetch Kali logo" grep -Fq '"source": "Kali"' config/fastfetch/config.jsonc
+check "Fastfetch custom logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
+check "Fastfetch custom logo file" grep -Fq "xLFr4n" config/fastfetch/xLFr4n.logo
 check "Fastfetch xLFr4n title" grep -Fq '⚡ xLFr4n' config/fastfetch/config.jsonc
 check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
+check "Unified launch feedback helper" grep -Fq "xLFr4n // LAUNCH" scripts/xlfr4n-launch
+check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
 check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
 check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
 check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
@@ -172,10 +177,13 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
 check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
-check "Pulse animation frames" grep -Fq "[●●●]" scripts/xlfr4n-pulse
+check "Pulse animation typewriter" grep -Fq "xLFr4%{F#7d8590}▍" scripts/xlfr4n-pulse
+check "Pulse animation cadence" grep -Fq "interval = 0.18" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
 check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
+check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
+check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
 
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
