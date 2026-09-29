@@ -13,7 +13,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Dock centrado con iconos reales.
 - Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
-- Fastfetch de entrada con logo `xLFr4n` propio.
+- Fastfetch de entrada con logo oficial de Kali + firma `⚡ xLFr4n` y datos TARGET/IP/fecha.
 - Banner de terminal con marco de ancho fijo, reservado para diagnósticos manuales.
 
 ### ⚡ Animación
@@ -33,7 +33,7 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Centered real-icon launcher dock.
 - Synchronized xLFr4n accents across Polybar, Kitty, Rofi, Dunst and BSPWM.
 - Picom with soft fades/shadows and no blur for VM compatibility.
-- Fastfetch login view with a custom `xLFr4n` logo.
+- Fastfetch login view with the official Kali logo, `⚡ xLFr4n` signature and live TARGET/IP/date data.
 - Fixed-width terminal banner, reserved for manual diagnostics.
 
 The top identity uses a small typewriter/dissolve micro-animation: `xLFr4n` appears and disappears character by character with a discreet cursor. Other animation is used where it provides feedback rather than visual noise: cursor effects, window fades, workspace HUD transitions, audio feedback and dock hover.
