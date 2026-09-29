@@ -2,19 +2,14 @@
 
 ## 🇪🇸 Español
 
-La capa Plank aporta un dock inferior flotante con estética oscura, zoom al pasar el cursor y ocultación inteligente. Se integra con BSPWM sin introducir un escritorio completo.
+Plank es un **fallback** opcional. El backend preferido es Tint2 launcher-only; Plank entra cuando Tint2 no está disponible.
 
-El instalador guarda la configuración anterior antes de desplegar la nueva. El helper \`dock\` reconstruye automáticamente los lanzadores según las aplicaciones instaladas.
+No se usan varios docks simultáneamente: el helper `dock` decide el backend y detiene los anteriores antes de arrancar el elegido.
 
 ## 🇬🇧 English
 
-The Plank layer adds a floating bottom dock with dark glass styling, hover zoom and intelligent hide. It integrates with BSPWM without introducing a full desktop environment.
+Plank is an optional **fallback**. Tint2 launcher-only is the preferred backend; Plank is selected when Tint2 is unavailable.
 
-The installer backs up previous configuration before deployment. The \`dock\` helper rebuilds launchers based on the applications actually installed.
-
----
+Multiple dock backends are not intended to run together: the `dock` helper stops previous backends before starting the selected one.
 
 **⚡ xLFr4n · Float the workspace, keep the system lean.**
-
-
-> **Kali Rolling:** Plank is optional. When the package is unavailable, `dock` automatically uses the native floating Polybar icon dock, so the visual workspace still works without third-party repositories.
