@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Unified terminal identity block. No legacy Neofetch/Fastfetch artwork.
+# Unified animated terminal identity. No legacy Neofetch/Fastfetch artwork.
 set -u
 
 theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
@@ -9,7 +9,7 @@ session="${DESKTOP_SESSION:-bspwm}"
 target="$(cat "$HOME/.config/polybar/target" 2>/dev/null || true)"
 kernel="$(uname -sr 2>/dev/null || printf 'unknown')"
 uptime="$(uptime -p 2>/dev/null | sed 's/^up //' || printf 'unknown')"
-resolution="$(xrandr 2>/dev/null | awk '/ connected primary | connected / {for (i=1;i<=NF;i++) if ($i ~ /^[0-9]+x[0-9]+\+/) {sub(/\+.*/, "", $i); print $i; exit}}')"
+resolution="$(xrandr 2>/dev/null | awk '/ connected primary | connected / {for (i=1;i<=NF;i++) if ($i ~ /^[0-9]+x[0-9]+\+/) {sub(/\+.*/, "", $i); print $i; exit}}' )"
 resolution="${resolution:-unknown}"
 
 if command -v free >/dev/null 2>&1; then
@@ -20,6 +20,25 @@ fi
 
 cpu="$(nproc 2>/dev/null || printf '?') core(s)"
 
+animate() {
+  [ "${1:-}" = "--static" ] && return 0
+  [ -t 1 ] || return 0
+  local frames=( "◌ BOOTING" "◔ LINKING" "◑ LOADING" "◕ SYNCING" "● ONLINE" )
+  local frame
+  for frame in "${frames[@]}"; do
+    printf "\r\033[31m⚡ xLFr4n // %s\033[0m" "$frame"
+    sleep 0.07
+  done
+  printf "\r\033[2K"
+}
+
+printf '\n'
+animate "${1:-}"
+printf '\033[31m        ╱╲\033[0m\n'
+printf '\033[31m   ╔═══╱  ╲═══╗\033[0m\n'
+printf '\033[31m   ║  \033[1;37mxLFr4n\033[0m \033[31m║\033[0m\n'
+printf '\033[31m   ╚═══╲  ╱═══╝\033[0m\n'
+printf '\033[31m        ╲╱\033[0m\n'
 printf '\n'
 printf '\033[31m╭──────────────────────────────────────────────────────────────╮\033[0m\n'
 printf '\033[31m│\033[0m  ⚡ \033[1;37mxLFr4n // KALI\033[0m  ·  PERSONAL SECURITY LAB          \033[31m│\033[0m\n'
