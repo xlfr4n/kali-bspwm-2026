@@ -9,6 +9,8 @@
   dark-accent: #ffffff;
   font: "JetBrains Mono 10";
   border: #66ff3344;
+  background-color: @bg;
+  text-color: @fg;
 }
 
 configuration {
@@ -56,7 +58,7 @@ listview {
   columns: 1;
   fixed-height: false;
   spacing: 7px;
-  padding: 8px 0px 0px;
+  padding: 8px 0px 0px 0px;
 }
 
 element {
