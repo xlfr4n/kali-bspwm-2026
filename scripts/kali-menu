@@ -32,7 +32,7 @@ choice="$(
 )"
 
 case "$choice" in
-  TERMINAL*) dock-launch kitty ;;
+  TERMINAL*) xlfr4n-launch "Kitty" --class kitty -- kitty ;;
   SPOTLIGHT*) rofi-xlfr4n -show drun -show-icons -p 'Spotlight' ;;
   MISSION*) mission-control ;;
   BRAVE*) dock-launch brave ;;
