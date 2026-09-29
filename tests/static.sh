@@ -32,9 +32,14 @@ grep -Fq 'virtualbox-guest-utils.service' install.sh
 grep -Fq 'virtualbox-guest-utils.service' scripts/doctor.sh
 grep -Fq 'wm-restack = bspwm' config/polybar/config.ini
 grep -Fq 'enable-ipc = true' config/polybar/config.ini
+grep -Fq 'glass = #E50B0E12' config/polybar/config.ini
+grep -Fq 'border = #55ff3344' config/polybar/config.ini
 grep -Fq 'width = 96%' config/polybar/config.ini
 grep -Fq 'radius = 12' config/polybar/config.ini
 grep -Fq 'plank' install.sh
+grep -Fq 'SPOTLIGHT Launch apps' scripts/kali-menu
+grep -Fq 'MISSION   Window overview' scripts/kali-menu
+grep -Fq 'DOCK      Toggle floating dock' scripts/kali-menu
 grep -Fq 'Super' docs/DESKTOP-STYLE.md 2>/dev/null || true
 grep -Fq 'xlfr4n' scripts/*.sh scripts/* 2>/dev/null || true
 
