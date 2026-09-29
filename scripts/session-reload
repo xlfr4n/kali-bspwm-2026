@@ -2,3 +2,4 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 set -Eeuo pipefail
 bspc wm -r
+pkill -USR1 -x sxhkd 2>/dev/null || true
