@@ -40,9 +40,10 @@ apply() {
       return 2
       ;;
   esac
+  border="#55${accent#\\#}"
 
   sed -i -E \
-    "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/" \
+    "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/; s/^border = .*/border = $border/" \
     "$POLYBAR"
 
   sed -i -E \
