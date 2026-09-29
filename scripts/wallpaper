@@ -73,7 +73,7 @@ set_wallpaper() {
   feh --no-fehbg --bg-fill "$rendered"
   printf '%s\n' "$image" > "$STATE_FILE"
   printf 'Wallpaper: %s\n' "$image"
-}}
+}
 
 case "${1:-}" in
   --random|"")
