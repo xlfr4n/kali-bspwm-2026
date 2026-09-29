@@ -83,6 +83,7 @@ required_files=(
   scripts/desktop-style
   scripts/session-profile
   scripts/workspace-hud
+  scripts/workspace-rail
   scripts/audio-control
   scripts/network-status
   scripts/battery-status
@@ -184,10 +185,14 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
 check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
-check "Pulse animation typewriter" grep -Fq "xLFr4%{F#7d8590}▍" scripts/xlfr4n-pulse
+check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
+check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
+check "Pulse animation signal frames" grep -Fq "||" scripts/xlfr4n-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.18" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
+check "Workspace rail script" grep -Fq "polybar workspace" scripts/workspace-rail
+check "Workspace rail staged after dock" grep -Fq "workspace-rail" scripts/autostart
 check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
 check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
