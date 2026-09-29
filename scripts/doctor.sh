@@ -79,6 +79,7 @@ check "Picom" command -v picom
 check "Dunst" command -v dunst
 check "Desktop style helper" command -v desktop-style
 check "Dock helper" command -v dock
+check "Dock launcher" command -v dock-launch
 check "Mission Control helper" command -v mission-control
 check "Feh" command -v feh
 check "xrandr" command -v xrandr
@@ -103,6 +104,10 @@ check "Floating dock configuration" sh -c 'test -s "$HOME/.config/tint2/tint2rc"
 check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
+
+if command -v tint2 >/dev/null 2>&1; then
+  check "Tint2" command -v tint2
+fi
 
 if command -v dock >/dev/null 2>&1; then
   info "floating dock backend: $(dock --backend 2>/dev/null || printf "unknown")"
