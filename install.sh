@@ -204,7 +204,7 @@ else
   warn "pywal16 unavailable; static themes remain available."
 fi
 
-for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr plank; do
+for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr dock; do
   command -v "$cmd" >/dev/null 2>&1 || warn "Missing command after install: $cmd"
 done
 
