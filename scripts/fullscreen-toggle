@@ -12,14 +12,18 @@ is_fullscreen() {
 
 hide_chrome() {
   pkill -x polybar 2>/dev/null || true
-  command -v dock >/dev/null 2>&1 && dock --stop >/dev/null 2>&1 || true
+  if command -v dock >/dev/null 2>&1; then
+    dock --stop >/dev/null 2>&1 || true
+  fi
 }
 
 show_chrome() {
   if [ -x "$POLYBAR_LAUNCH" ]; then
     "$POLYBAR_LAUNCH" >/dev/null 2>&1 &
   fi
-  command -v dock >/dev/null 2>&1 && dock --start >/dev/null 2>&1 &
+  if command -v dock >/dev/null 2>&1; then
+    dock --start >/dev/null 2>&1 &
+  fi
 }
 
 toggle() {
