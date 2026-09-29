@@ -3,6 +3,14 @@
 # Optional laptop battery indicator; silent on desktops and VMs.
 set -u
 
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+case "$theme" in
+  htb-green) good='#5ee881'; warn='#ffc857' ;;
+  nord) good='#a3be8c'; warn='#ebcb8b' ;;
+  purple) good='#50fa7b'; warn='#f1fa8c' ;;
+  *) good='#5ee881'; warn='#ffc857' ;;
+esac
+
 battery=''
 for candidate in /sys/class/power_supply/BAT*; do
   [ -d "$candidate" ] || continue
@@ -31,4 +39,8 @@ else
   icon=''
 fi
 
-printf "%s %s%%\n" "$icon" "$capacity"
+if [ "$status" = "Charging" ] || [ "$capacity" -gt 35 ]; then
+  printf "%%{F%s}%s %s%%%%{F-}\n" "$good" "$icon" "$capacity"
+else
+  printf "%%{F%s}%s %s%%%%{F-}\n" "$warn" "$icon" "$capacity"
+fi
