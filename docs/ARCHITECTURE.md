@@ -80,3 +80,26 @@ Startup is intentionally staged so the usable desktop appears before heavier vis
 Backups before overwrite, reversible changes, guest-only configuration, X11-native BSPWM behaviour, read-only diagnostics and a reliable static-theme core.
 
 **⚡ xLFr4n · One system, clear layers.**
+
+
+## 🎞️ UX feedback / Feedback visual
+
+### 🇪🇸 Español
+
+La capa interactiva se apoya en helpers ligeros y eventos, no en un segundo daemon de escritorio pesado:
+
+`bspc desktop focus` → `workspace-hud` → Dunst → fade de Picom.
+
+Las teclas multimedia llaman a `audio-control`, que utiliza `pamixer` o `wpctl` y comunica el estado mediante una notificación breve.
+
+Polybar usa helpers pequeños para estado dinámico: `network-status` sigue la ruta por defecto y `battery-status` permanece silencioso cuando no hay batería.
+
+### 🇬🇧 English
+
+The interactive layer relies on lightweight helpers and events instead of a heavy desktop daemon:
+
+`bspc desktop focus` → `workspace-hud` → Dunst → Picom fade.
+
+Media keys call `audio-control`, which uses `pamixer` or `wpctl` and reports the state with a short notification.
+
+Polybar uses small dynamic status helpers: `network-status` follows the default route and `battery-status` stays silent when no battery exists.
