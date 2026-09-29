@@ -3,12 +3,13 @@
   bg: #0b0d10;
   fg: #ffffff;
   accent: #ff3344;
+  border: #66ff3344;
   muted: #8b949e;
   font: "JetBrains Mono 10";
   background-color: @bg;
   text-color: @fg;
 }
-window { width: 48%; location: center; anchor: center; background-color: @bg; border: 1px; border-color: @accent; border-radius: 16px; padding: 18px; }
+window { width: 46%; location: center; anchor: center; background-color: @bg; border: 1px; border-color: @accent; border-radius: 16px; padding: 16px; }
 mainbox { padding: 4px; }
 inputbar { padding: 10px; background-color: #161b22; border: 1px; border-color: @accent; border-radius: 8px; }
 prompt { text-color: @accent; padding: 0px 10px 0px 0px; }
