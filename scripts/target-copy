@@ -5,8 +5,18 @@ set -Eeuo pipefail
 
 TARGET_FILE="$HOME/.config/polybar/target"
 
+notify() {
+  local urgency="$1"
+  local timeout="$2"
+  local title="$3"
+  local body="$4"
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send -u "$urgency" -t "$timeout" "$title" "$body" >/dev/null 2>&1 || true
+  fi
+}
+
 [ -s "$TARGET_FILE" ] || {
-  command -v notify-send >/dev/null 2>&1 && notify-send -u low -t 1600 "xLFr4n • Target" "No target is currently set." || true
+  notify low 1600 "xLFr4n • Target" "No target is currently set."
   exit 1
 }
 
@@ -18,9 +28,9 @@ if command -v xclip >/dev/null 2>&1; then
 elif command -v xsel >/dev/null 2>&1; then
   printf "%s" "$value" | xsel --clipboard --input
 else
-  command -v notify-send >/dev/null 2>&1 && notify-send -u critical -t 2600 "xLFr4n • Clipboard unavailable" "Install xclip to copy targets from Polybar." || true
+  notify critical 2600 "xLFr4n • Clipboard unavailable" "Install xclip to copy targets from Polybar."
   exit 127
 fi
 
-command -v notify-send >/dev/null 2>&1 && notify-send -u low -t 1500 "xLFr4n • TARGET copied" "$value  ·  clipboard ready." || true
+notify low 1500 "xLFr4n • TARGET copied" "$value  ·  clipboard ready."
 printf "%s\n" "$value"
