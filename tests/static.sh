@@ -130,6 +130,146 @@ check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
+check "Kitty hyperlink underline mode" grep -Eq '^underline_hyperlinks (hover|always|never)check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
+check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
+check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
+check "Battery is optional" grep -Fq "BAT*" scripts/battery-status
+check "Network state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/network-status
+check "Battery state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/battery-status
+check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
+check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
+check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
+check "Dock Tint2 backend" grep -Fq "tint2" scripts/dock
+check "Tint2 launcher-only" grep -Fq "panel_items = L" config/tint2/tint2rc
+check "Dock launcher helper" grep -Fq "dock-launch" scripts/dock
+check "System Monitor launcher" grep -Fq "System Monitor" scripts/dock
+check "Screenshot launcher" grep -Fq "screenshot" scripts/dock-launch
+check "Nine BSPWM desktops" grep -Fq "bspc monitor -d 1 2 3 4 5 6 7 8 9" config/bspwm/bspwmrc
+check "Nine workspace bindings" grep -Fq "super + {1,2,3,4,5,6,7,8,9}" config/sxhkd/sxhkdrc
+check_not_present "No nm-applet startup" grep -Fq "command -v nm-applet" scripts/autostart
+check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
+check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
+check "Menu system snapshot" grep -Fq "SYSTEM    Terminal system snapshot" scripts/kali-menu
+check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
+check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
+check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
+check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
+check "System snapshot hotkey" grep -Fq "xlfr4n-banner --static" config/sxhkd/sxhkdrc
+check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
+check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
+check "Banner guard" grep -Fq "XLFR4N_BANNER_DONE" config/zshrc
+check "Launch feedback" grep -Fq "xLFr4n • Launching" scripts/dock-launch
+check "Lab uses xLFr4n banner" grep -Fq "xlfr4n-banner --static" scripts/lab
+check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
+check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
+check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
+check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
+check "Pulse animation frames" grep -Fq "[●●●]" scripts/xlfr4n-pulse
+check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
+check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
+check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
+
+printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
+[ "$fail" -eq 0 ]
+
+check "Install guide" test -s docs/INSTALL.md
+check "CI workflow least privilege" grep -Fq "contents: read" .github/workflows/shellcheck.yml
+check "CI stale run cancellation" grep -Fq "cancel-in-progress: true" .github/workflows/shellcheck.yml
+check "CI manual trigger" grep -Fq "workflow_dispatch:" .github/workflows/shellcheck.yml
+check "CI desktop validation" grep -Fq "desktop-file-validate" .github/workflows/shellcheck.yml
+check "Fast autostart core phase" grep -Fq "phase=core ready" scripts/autostart
+check "Autostart dispatches background polish" grep -Fq "phase=background staged" scripts/autostart
+check "Autostart stages wallpaper" grep -Fq "nice -n 10" scripts/autostart
+check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any files" scripts/autostart
+check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
+check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
+check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
+check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
+check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
+check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
+check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
+check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
+check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
+check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
+check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
+check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
+check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
+check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
+check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
+check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
+check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
+check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
+check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart config/kitty/kitty.conf
+check_not_present "Kitty invalid hyperlink underline mode" grep -Eq '^underline_hyperlinks (yes|no)check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
+check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
+check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
+check "Battery is optional" grep -Fq "BAT*" scripts/battery-status
+check "Network state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/network-status
+check "Battery state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/battery-status
+check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
+check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
+check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
+check "Dock Tint2 backend" grep -Fq "tint2" scripts/dock
+check "Tint2 launcher-only" grep -Fq "panel_items = L" config/tint2/tint2rc
+check "Dock launcher helper" grep -Fq "dock-launch" scripts/dock
+check "System Monitor launcher" grep -Fq "System Monitor" scripts/dock
+check "Screenshot launcher" grep -Fq "screenshot" scripts/dock-launch
+check "Nine BSPWM desktops" grep -Fq "bspc monitor -d 1 2 3 4 5 6 7 8 9" config/bspwm/bspwmrc
+check "Nine workspace bindings" grep -Fq "super + {1,2,3,4,5,6,7,8,9}" config/sxhkd/sxhkdrc
+check_not_present "No nm-applet startup" grep -Fq "command -v nm-applet" scripts/autostart
+check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
+check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
+check "Menu system snapshot" grep -Fq "SYSTEM    Terminal system snapshot" scripts/kali-menu
+check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
+check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
+check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
+check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
+check "System snapshot hotkey" grep -Fq "xlfr4n-banner --static" config/sxhkd/sxhkdrc
+check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
+check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
+check "Banner guard" grep -Fq "XLFR4N_BANNER_DONE" config/zshrc
+check "Launch feedback" grep -Fq "xLFr4n • Launching" scripts/dock-launch
+check "Lab uses xLFr4n banner" grep -Fq "xlfr4n-banner --static" scripts/lab
+check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
+check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
+check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
+check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
+check "Pulse animation frames" grep -Fq "[●●●]" scripts/xlfr4n-pulse
+check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
+check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
+check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
+
+printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
+[ "$fail" -eq 0 ]
+
+check "Install guide" test -s docs/INSTALL.md
+check "CI workflow least privilege" grep -Fq "contents: read" .github/workflows/shellcheck.yml
+check "CI stale run cancellation" grep -Fq "cancel-in-progress: true" .github/workflows/shellcheck.yml
+check "CI manual trigger" grep -Fq "workflow_dispatch:" .github/workflows/shellcheck.yml
+check "CI desktop validation" grep -Fq "desktop-file-validate" .github/workflows/shellcheck.yml
+check "Fast autostart core phase" grep -Fq "phase=core ready" scripts/autostart
+check "Autostart dispatches background polish" grep -Fq "phase=background staged" scripts/autostart
+check "Autostart stages wallpaper" grep -Fq "nice -n 10" scripts/autostart
+check "Autostart avoids startup theme rewrite" grep -Fq "without rewriting any files" scripts/autostart
+check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" scripts/autostart
+check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
+check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
+check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
+check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
+check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
+check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
+check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
+check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
+check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
+check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
+check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
+check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
+check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
+check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
+check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
+check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
+check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
+check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart config/kitty/kitty.conf
 check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
 check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
 check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
