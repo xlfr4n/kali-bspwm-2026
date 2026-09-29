@@ -124,6 +124,7 @@ for p in \
   "$CONFIG_DIR/dunst" \
   "$CONFIG_DIR/plank" \
   "$CONFIG_DIR/tint2" \
+  "$CONFIG_DIR/fastfetch" \
   "$CONFIG_DIR/theme-state" \
   "$CONFIG_DIR/wallpaper-state" \
   "$HOME/.zshrc"
@@ -139,7 +140,7 @@ done
 log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 
-for dir in bspwm sxhkd polybar rofi picom kitty dunst plank tint2; do
+for dir in bspwm sxhkd polybar rofi picom kitty dunst plank tint2 fastfetch; do
   if [ -L "$CONFIG_DIR/$dir" ]; then
     unlink "$CONFIG_DIR/$dir"
   elif [ -d "$CONFIG_DIR/$dir" ]; then
