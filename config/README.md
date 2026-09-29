@@ -15,3 +15,8 @@ This directory contains declarative configuration for BSPWM, SXHKD, Polybar, Kit
 Configuration is part of the reproducible installation system. Do not introduce personal secrets or machine-specific paths that only work on one host.
 
 **⚡ xLFr4n · Configuration as documentation**
+
+
+## 🪟 Desktop presentation / Presentación del escritorio
+
+The desktop layer now combines a floating rounded Polybar, a Plank dock with hover zoom, Spotlight-like application search, Mission Control, Brave-first launch and Papirus-Dark icon selection when available. All of it remains under the existing BSPWM/SXHKD architecture.
