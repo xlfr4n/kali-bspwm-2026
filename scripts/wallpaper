@@ -6,6 +6,7 @@ STATE_DIR="$HOME/.config/wallpaper-state"
 STATE_FILE="$STATE_DIR/current"
 INDEX_FILE="$HOME/.cache/xlfr4n/wallpapers.index"
 INDEX_TTL_MINUTES=360
+DEFAULT_WALLPAPER="/usr/share/backgrounds/kali/kali-hack-16x9.jpg"
 mkdir -p "$STATE_DIR"
 
 declare -a ROOTS=(
@@ -101,6 +102,10 @@ set_wallpaper() {
 }
 
 case "${1:-}" in
+  --default)
+    [ -f "$DEFAULT_WALLPAPER" ] || { echo "Default wallpaper not found: $DEFAULT_WALLPAPER" >&2; exit 1; }
+    set_wallpaper "$DEFAULT_WALLPAPER"
+    ;;
   --random|"")
     index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
     if [ "${#wallpapers[@]}" -gt 1 ] && [ "${wallpapers[$index]}" = "$current" ]; then
@@ -131,7 +136,7 @@ case "${1:-}" in
     set_wallpaper "$2"
     ;;
   *)
-    echo "Usage: wallpaper [--random|--next|--current|--set FILE]" >&2
+    echo "Usage: wallpaper [--default|--random|--next|--current|--set FILE]" >&2
     exit 2
     ;;
 esac
