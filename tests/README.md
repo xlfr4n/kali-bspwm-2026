@@ -4,7 +4,7 @@
 
 ## 🇪🇸 Español
 
-Los tests comprueban sintaxis Bash, guardas estáticas y superficies de configuración que pueden validarse sin iniciar una sesión gráfica real.
+Los tests comprueban sintaxis Bash, archivos obligatorios, atajos, integración VM, composición visual y superficies críticas sin modificar el sistema.
 
 Ejecuta:
 
@@ -13,11 +13,11 @@ bash tests/static.sh
 bash tests/shellcheck.sh
 ```
 
-La validación CI debe adaptarse al entorno del runner; los componentes gráficos se comprueban con una pantalla virtual cuando sea necesario.
+CI añade validación de la sintaxis del theme Rofi mediante una pantalla virtual y ejecuta ShellCheck.
 
 ## 🇬🇧 English
 
-These tests validate Bash syntax, static guards and configuration surfaces that can be checked without starting a real graphical session.
+The tests validate Bash syntax, required files, shortcuts, VM integration, visual composition and critical configuration surfaces without changing the system.
 
 Run:
 
@@ -26,6 +26,6 @@ bash tests/static.sh
 bash tests/shellcheck.sh
 ```
 
-CI validation should account for the runner environment; graphical components are checked with a virtual display when required.
+CI also validates the Rofi theme through a virtual display and runs ShellCheck.
 
 **⚡ xLFr4n · Test the boundary, not the illusion**
