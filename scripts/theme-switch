@@ -40,7 +40,7 @@ apply() {
       return 2
       ;;
   esac
-  border="#55${accent#\\#}"
+  border="#55${accent:1}"
 
   sed -i -E \
     "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/; s/^border = .*/border = $border/" \
