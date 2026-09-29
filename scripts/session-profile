@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Read-only login timing report from the xLFr4n session log.
+
+set -u
+
+LOG="$HOME/.cache/xlfr4n-session.log"
+
+if [ ! -s "$LOG" ]; then
+  echo "No session log found: $LOG"
+  exit 1
+fi
+
+awk '
+function ms(ts, a) {
+  split(ts, a, /[:.]/)
+  return (((a[1] * 60 + a[2]) * 60 + a[3]) * 1000 + a[4])
+}
+function fmt(v) {
+  return sprintf("%.3fs", v / 1000)
+}
+/^\[[0-9][0-9]:[0-9][0-9]:[0-9][0-9]\.[0-9][0-9][0-9]\]/ {
+  ts = substr($0, 2, 12)
+  event = $0
+  sub(/^\[[^]]+\] /, "", event)
+  now = ms(ts)
+
+  if (first == "") {
+    first = now
+    printf "⚡ xLFr4n session profile\n"
+  }
+
+  printf "%-32s +%s\n", event, fmt(now - first)
+
+  if (prev != "") {
+    printf "  ↳ since previous: %s\n", fmt(now - prev)
+  }
+
+  prev = now
+}
+END {
+  if (first != "" && prev != "") {
+    printf "\nTotal logged span: %s\n", fmt(prev - first)
+  }
+}' "$LOG"
