@@ -174,7 +174,7 @@ check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
 check "System snapshot hotkey" grep -Fq "xlfr4n-banner --static" config/sxhkd/sxhkdrc
 check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
 check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
-check "Banner guard" grep -Fq "XLFR4N_BANNER_DONE" config/zshrc
+check "Fastfetch startup guard" grep -Fq "KALI_BSPWM_FASTFETCH_DONE" config/zshrc
 check "Launch feedback" grep -Fq "xLFr4n • Launching" scripts/dock-launch
 check "Lab uses xLFr4n banner" grep -Fq "xlfr4n-banner --static" scripts/lab
 check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
