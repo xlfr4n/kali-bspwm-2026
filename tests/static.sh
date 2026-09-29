@@ -176,4 +176,12 @@ check_not_present "Autostart does not restart themes" grep -Fq "theme-switch" sc
 check "Autostart starts Polybar directly" grep -Fq "polybar/launch.sh" scripts/autostart
 check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autostart
 check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
+check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
+check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
+check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
+check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
+check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
+check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
+check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
+check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
