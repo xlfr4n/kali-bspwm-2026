@@ -96,6 +96,17 @@ check "Workspace bar" grep -Fq "[bar/workspace]" config/polybar/config.ini
 check "Workspace modules" grep -Fq "modules-left = bspwm" config/polybar/config.ini
 check "Clock module" grep -Fq "modules-right = date" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
+check "Workspace HUD offset" grep -Fq "offset-y = 78pt" config/polybar/config.ini
+check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
+check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
+check "Date right module" grep -Fq "modules-right = date" config/polybar/config.ini
+check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
+check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
+check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
+check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
+check "Kitty cursor trail" grep -Fq "cursor_trail 20" config/kitty/kitty.conf
+check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
+check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
 check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
 check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
 check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
