@@ -41,6 +41,8 @@ Selecciona **BSPWM** en el display manager.
 
 ### 4️⃣ Actualización del proyecto
 
+Actualización completa, incluidos paquetes:
+
 ```bash
 cd ~/Downloads/kali-bspwm-2026
 git pull --ff-only
@@ -49,7 +51,16 @@ chmod +x install.sh uninstall.sh
 reboot
 ```
 
-**`git pull` actualiza el checkout; `./install.sh` despliega los cambios.**
+Actualización rápida del workspace, sin APT:
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+./install.sh --deploy
+bspc wm -r
+```
+
+**`git pull` actualiza el checkout; `./install.sh` despliega los cambios. `--deploy` está pensado para iterar rápidamente sobre la configuración.**
 
 ### 5️⃣ VirtualBox
 
@@ -104,7 +115,17 @@ Super+Shift+M
 Super+Ctrl+R
 ```
 
-### 9️⃣ Si el login parece lento
+### 9️⃣ Perfil del login
+
+Después de entrar en BSPWM:
+
+```bash
+session-profile
+```
+
+El comando es read-only y muestra cuándo terminaron las distintas fases del bootstrap.
+
+### 🔟 Si el login parece lento
 
 El proyecto ya escalona wallpaper, dock, monitor-refresh y Picom para no competir en el mismo instante.
 
@@ -118,7 +139,7 @@ journalctl --user -b --no-pager | tail -200
 
 No reinstales varias veces a ciegas.
 
-### 🔟 Rollback
+### 1️⃣1️⃣ Rollback
 
 ```bash
 ./uninstall.sh
@@ -169,6 +190,8 @@ Select **BSPWM** in the display manager.
 
 ### 4️⃣ Update an existing checkout
 
+Full system/package update:
+
 ```bash
 cd ~/Downloads/kali-bspwm-2026
 git pull --ff-only
@@ -177,7 +200,16 @@ chmod +x install.sh uninstall.sh
 reboot
 ```
 
-**`git pull` updates the checkout; `./install.sh` deploys the updated configuration.**
+Fast workspace-only update:
+
+```bash
+cd ~/Downloads/kali-bspwm-2026
+git pull --ff-only
+./install.sh --deploy
+bspc wm -r
+```
+
+**`git pull` updates the checkout; `./install.sh` deploys the updated configuration. `--deploy` skips APT for fast configuration iteration.**
 
 ### 5️⃣ VirtualBox
 
