@@ -54,6 +54,7 @@ launcher_item_app = ~/.local/share/applications/xLFr4n-brave.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-terminal.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-files.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-editor.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-code.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-burp.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-lab.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-target.desktop
