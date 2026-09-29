@@ -1,12 +1,10 @@
-# 🧪 Primera prueba VMware / First VMware test
+# 🧪 First VM Test / Primera prueba de VM
 
 ## 🇪🇸 Español
 
-Esta guía valida la primera instalación sobre una máquina Kali real ejecutándose como guest de VMware.
+Esta guía sirve para validar la primera instalación del proyecto dentro de un **guest Kali**. La virtualización puede ser VirtualBox o VMware.
 
 ### 1️⃣ Preflight
-
-Antes de modificar el escritorio:
 
 ```bash
 cat /etc/os-release
@@ -18,203 +16,102 @@ xrandr --query 2>/dev/null || true
 free -h
 ```
 
-Para este proyecto esperamos principalmente:
+Base esperada:
 
-- 🐧 Kali Linux
-- 💻 x86_64
-- 🖥️ VMware detectado por `systemd-detect-virt`
-- 🪟 sesión X11 cuando se lance BSPWM
+- Kali Linux
+- x86_64
+- sesión X11
+- virtualización identificable cuando se usa una VM
 
 ### 2️⃣ Instalar
 
 ```bash
 git clone https://github.com/xlfr4n/kali-bspwm-2026.git
 cd kali-bspwm-2026
-chmod +x install.sh
+chmod +x install.sh uninstall.sh
 ./install.sh
 ```
 
-El instalador:
+### 3️⃣ Reiniciar y entrar
 
-- 💾 crea un backup con timestamp
-- 📦 instala paquetes desde Kali
-- 🖥️ registra la sesión BSPWM X11
-- 🧩 instala la integración VMware cuando detecta VMware
-- 🎨 despliega la configuración
-- 🐍 instala pywal16 solo como componente opcional y aislado
+```bash
+reboot
+```
 
-### 3️⃣ Reiniciar y entrar en BSPWM
+Selecciona **BSPWM** en el display manager.
 
-Desde el display manager selecciona:
-
-`bspwm`
-
-La primera sesión debería iniciar:
-
-- 📊 Polybar
-- 🐱 Kitty
-- 🚀 Rofi
-- 🔔 Dunst
-- 🌫️ Picom
-- 🖼️ wallpaper
-- 🎯 target helper
-- 🌐 NetworkManager applet
-
-### 4️⃣ Diagnóstico
-
-Abre Kitty y ejecuta:
+### 4️⃣ Primera comprobación
 
 ```bash
 doctor.sh
 systemd-detect-virt
-systemctl is-active open-vm-tools
-test -x /usr/bin/vmware-user
 xrandr --query
+pgrep -a bspwm
+pgrep -a sxhkd
+pgrep -a polybar
+pgrep -a tint2
+pgrep -a plank
+pgrep -a picom
+pgrep -a dunst
 ```
 
-### 5️⃣ Pruebas visuales
+No todos los backends del dock deben estar ejecutándose a la vez: `dock` selecciona uno.
 
-Comprueba:
+### 5️⃣ Smoke test
 
 ```text
-Super+Enter       → Kitty
-Super+D           → launcher
-Super+Arrow       → focus
-Super+Shift+Arrow → swap
-Super+F           → fullscreen
-Super+M           → monocle
-Super+Shift+W     → wallpaper
-Super+Alt+T       → themes
-Super+Shift+L     → lab
-Super+Shift+H     → menú xlfr4n
-Super+Shift+K     → lock
-Super+Ctrl+V      → VMware tools
+Super+Enter
+Super+D
+Super+Space
+Super+Shift+Space
+Super+1 ... Super+9
+Super+Arrow
+Super+Shift+Arrow
+Super+F
+Super+Shift+W
+Super+Alt+T
+Super+Shift+M
+Super+Ctrl+R
 ```
 
-### 6️⃣ Prueba de target + VPN
+### 6️⃣ Target / VPN
 
 ```bash
-settarget 10.10.10.10 Web01
 settarget --status
 ```
 
-Con una interfaz VPN activa, Polybar debería mostrarla automáticamente si utiliza `tun*` o `wg*`.
+Con una VPN `tun*` o `wg*` activa, Polybar puede mostrar su estado.
 
-### 7️⃣ Multi-monitor
+### 7️⃣ Si el login parece lento
 
-Conecta/configura el segundo monitor virtual o físico en VMware y ejecuta:
+El arranque del proyecto no espera a que terminen wallpaper, dock, monitor-refresh o Picom.
 
-```bash
-monitor-refresh
-xrandr --query
-```
-
-La configuración actual coloca el segundo monitor a la derecha y reparte los escritorios entre las dos pantallas.
-
-### 8️⃣ Qué registrar si algo falla
-
-No reinstales varias veces a ciegas. Guarda primero:
+Recoge:
 
 ```bash
-doctor.sh
-systemd-detect-virt
-systemctl --failed
+sed -n '1,220p' ~/.cache/xlfr4n-session.log
+systemd-analyze --user blame 2>/dev/null | head -30 || true
 journalctl --user -b --no-pager | tail -200
-cat /tmp/kali-bspwm-polybar.log 2>/dev/null || true
-xrandr --query
 ```
 
-Esto permite aislar el fallo antes de cambiar configuración.
+### 8️⃣ Evidencia
 
----
+Si aparece un problema visual, no reinstales repetidamente. Guarda también:
+
+```bash
+cat /tmp/kali-bspwm-polybar.log 2>/dev/null || true
+cat /tmp/kali-bspwm-picom.log 2>/dev/null || true
+xrandr --query
+```
 
 ## 🇬🇧 English
 
-This procedure validates the first installation on a real Kali guest running under VMware.
+This guide validates the first installation inside a **Kali guest**. The hypervisor may be VirtualBox or VMware.
 
-### 1️⃣ Preflight
+Run the preflight commands, install the project, reboot into BSPWM and use `doctor.sh` plus the process checks above.
 
-Run before changing the desktop:
+The dock is intentionally single-backend at runtime: Tint2 is preferred, with Plank or native Polybar fallback.
 
-```bash
-cat /etc/os-release
-uname -m
-systemd-detect-virt
-echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE"
-echo "DISPLAY=$DISPLAY"
-xrandr --query 2>/dev/null || true
-free -h
-```
+For slow login, collect the session log and user-service diagnostics before reinstalling.
 
-Expected baseline:
-
-- 🐧 Kali Linux
-- 💻 x86_64
-- 🖥️ VMware detected by `systemd-detect-virt`
-- 🪟 X11 available when BSPWM is launched
-
-### 2️⃣ Install
-
-```bash
-git clone https://github.com/xlfr4n/kali-bspwm-2026.git
-cd kali-bspwm-2026
-chmod +x install.sh
-./install.sh
-```
-
-The installer creates a timestamped backup, installs Kali packages, registers the BSPWM X11 session, enables VMware guest integration when detected and deploys the desktop configuration.
-
-### 3️⃣ Reboot into BSPWM
-
-Choose `bspwm` from the display manager.
-
-### 4️⃣ Diagnostics
-
-```bash
-doctor.sh
-systemd-detect-virt
-systemctl is-active open-vm-tools
-test -x /usr/bin/vmware-user
-xrandr --query
-```
-
-### 5️⃣ Visual checks
-
-Test Kitty, Rofi, focus/swap, fullscreen, monocle, wallpapers, themes, the lab workspace and screen lock.
-
-### 6️⃣ Target + VPN
-
-```bash
-settarget 10.10.10.10 Web01
-settarget --status
-```
-
-Polybar should detect `tun*` and `wg*` VPN interfaces automatically.
-
-### 7️⃣ Multiple monitors
-
-```bash
-monitor-refresh
-xrandr --query
-```
-
-### 8️⃣ Failure capture
-
-Before reinstalling or changing random settings:
-
-```bash
-doctor.sh
-systemd-detect-virt
-systemctl --failed
-journalctl --user -b --no-pager | tail -200
-cat /tmp/kali-bspwm-polybar.log 2>/dev/null || true
-xrandr --query
-```
-
-These outputs are the evidence used to troubleshoot the first live VM test.
-
-## 📌 Validation status
-
-🧪 **First live VMware test: pending / pendiente**
-
-Static repository checks and CI are useful, but the guest itself is the final compatibility test.
+**⚡ xLFr4n · Verify the guest, not the illusion.**
