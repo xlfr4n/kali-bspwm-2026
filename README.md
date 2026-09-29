@@ -289,7 +289,7 @@ La zona inferior también es transparente:
 
 Los escritorios están deliberadamente **pequeños y compactos**. El escritorio activo se distingue mediante un acento/línea fina, no mediante una caja. Al cambiar de escritorio, `workspace-hud` añade una señal breve y animada para confirmar el foco sin llenar la pantalla.
 
-Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro.
+Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro. La fecha larga usa el idioma temporal predeterminado del sistema mediante `LC_TIME` cuando la locale está disponible.
 
 ## Dock
 
@@ -809,7 +809,7 @@ command -v vmware-user || true
 Both the upper and lower UI rails are intentionally **transparent and borderless**.
 
 - Compact workspaces 1→9 on the lower-left.
-- Date and time on the lower-right.
+- Date and time on the lower-right, with the long date following the system `LC_TIME` locale when available.
 - Icon dock centered below.
 - System status in the upper rail.
 - Accent colors come from the active xLFr4n theme.
