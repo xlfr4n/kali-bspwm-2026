@@ -220,6 +220,8 @@ check "Autostart starts Dunst" grep -Fq "dunst >/dev/null 2>&1 &" scripts/autost
 check "Launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/xlfr4n-launch
 check "Dock launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/dock-launch
 check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
+check "Session reload restores workspace rail" grep -Fq 'workspace-rail" --restart' scripts/session-reload
+check "Doctor checks workspace rail" grep -Fq 'Workspace rail' scripts/doctor.sh
 check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
 check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
