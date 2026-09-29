@@ -9,7 +9,7 @@ set -Eeuo pipefail
   exit 1
 }
 
-for proc in sxhkd polybar dunst nm-applet picom plank; do
+for proc in sxhkd polybar dunst picom plank tint2; do
   pkill -x "$proc" 2>/dev/null || true
 done
 pkill -f '[p]olybar dock' 2>/dev/null || true
@@ -27,7 +27,7 @@ if [ -n "$latest_backup" ]; then
   [[ "$ans" =~ ^[Yy]$ ]] && restore=1
 fi
 
-rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/dunst"   "$HOME/.config/plank"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
+rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/dunst"   "$HOME/.config/plank"   "$HOME/.config/tint2"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
 
 rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.local/bin/st"   "$HOME/.local/bin/ct"   "$HOME/.local/bin/monitor-refresh"   "$HOME/.local/bin/theme-switch"   "$HOME/.local/bin/power-menu"   "$HOME/.local/bin/screenshot-menu"   "$HOME/.local/bin/keyboard"   "$HOME/.local/bin/start-picom"   "$HOME/.local/bin/doctor.sh"   "$HOME/.local/bin/wallpaper"   "$HOME/.local/bin/lab"   "$HOME/.local/bin/lock-screen"   "$HOME/.local/bin/session-reload"   "$HOME/.local/bin/autostart"   "$HOME/.local/bin/kali-menu"   "$HOME/.local/bin/vmware-tools"   "$HOME/.local/bin/dock"   "$HOME/.local/bin/mission-control"   "$HOME/.local/bin/desktop-style"
 
