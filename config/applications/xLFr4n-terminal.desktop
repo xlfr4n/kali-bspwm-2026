@@ -8,3 +8,5 @@ Icon=kitty
 Terminal=false
 NoDisplay=true
 StartupWMClass=kitty
+
+StartupNotify=true
