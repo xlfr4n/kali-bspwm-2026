@@ -40,6 +40,7 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
   "$HOME/.local/bin/target-copy" \
   "$HOME/.local/bin/xlfr4n-banner" \
   "$HOME/.local/bin/xlfr4n-pulse" \
+  "$HOME/.local/bin/telemetry-pulse" \
   "$HOME/.local/bin/brightness-control" \
   "$HOME/.local/bin/keys-help"
 
