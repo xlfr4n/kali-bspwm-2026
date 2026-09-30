@@ -128,7 +128,7 @@ check "Workspace transparent background" grep -Fq "background = #00000000" confi
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
 check "Workspace rail offset above dock" grep -Fq "offset-y = 40pt" config/polybar/config.ini
-check "Workspace rail live offset" grep -Fq "offset-y = 40pt" config/polybar/config.ini
+check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -141,6 +141,15 @@ check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
 check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
 check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
+check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
+check "Neutral focused border" grep -Fq "focused_border_color '#262a31'" config/bspwm/bspwmrc
+check "Frameless Kitty" grep -Fq "window_border_width 0" config/kitty/kitty.conf
+check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
+check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
+check "Target boot state" grep -Fq "xlfr4n-target-boot-ms" scripts/autostart
+check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
+check "Apps static white" grep -Fq 'content = "⌘ APPS"' config/polybar/config.ini
+check "Target white rail" grep -Fq "label-foreground = \${colors.fg}" config/polybar/config.ini
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
@@ -197,10 +206,10 @@ check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
 check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
-check "Pulse animation signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
-check "Telemetry helper required" test -s scripts/telemetry-pulse
-check "Apps pulse module" grep -Fq "launcher-pulse" config/polybar/config.ini
-check "Target pulse module" grep -Fq "target-pulse" config/polybar/config.ini
+check "Identity pulse signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
+check_not_present "Right KALI telemetry disabled" grep -Fq "telemetry" config/polybar/config.ini
+check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/polybar/config.ini
+check "Target one-shot module" grep -Fq "target-pulse" config/polybar/config.ini
 check "Launcher pulse helper" test -s scripts/launcher-pulse
 check "Target pulse helper" test -s scripts/target-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
