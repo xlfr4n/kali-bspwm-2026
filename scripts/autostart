@@ -119,8 +119,8 @@ log "dunst ready"
 
 (
   sleep 0.65
-  "$HOME/.local/bin/dock" --start >/dev/null 2>&1 || true
-  log "dock ready"
+  "$HOME/.local/bin/dock" --restart >/dev/null 2>&1 || true
+  log "dock ready (single backend enforced)"
 ) &
 
 (
