@@ -1,6 +1,6 @@
 # ⚡ xLFr4n // Kali BSPWM 2026
 
-> Kali Linux · X11 · BSPWM · SXHKD · Polybar · Tint2 · Rofi · Ghostty · tmux · Kitty fallback · Picom · Dunst
+> Kali Linux · X11 · BSPWM · SXHKD · Polybar · Tint2 · Rofi · Ghostty · tmux · Picom · Dunst
 >
 > A personal, reproducible and VM-friendly workspace by xLFr4n.
 
@@ -33,7 +33,7 @@ La idea no es instalar otro escritorio completo. La base sigue siendo ligera:
         ↓
     xLFr4n UI
 
-Encima de esa base se organizan Polybar, Tint2, Rofi, Ghostty + tmux, Kitty como fallback, Picom, Dunst, Fastfetch, Zsh y una colección de helpers de sesión.
+Encima de esa base se organizan Polybar, Tint2, Rofi, Ghostty + tmux, Ghostty como único terminal gráfico, Picom, Dunst, Fastfetch, Zsh y una colección de helpers de sesión.
 
 El proyecto está pensado para un guest Kali. No modifica automáticamente la configuración del Windows host ni la configuración del hipervisor.
 
@@ -121,7 +121,7 @@ It does not replace Kali with a full desktop environment. The core remains:
         ↓
     xLFr4n UI
 
-Polybar, Tint2, Rofi, Ghostty + tmux, Kitty fallback, Picom, Dunst, Fastfetch, Zsh and the session helpers build the user-facing layer.
+Polybar, Tint2, Rofi, Ghostty + tmux,  Picom, Dunst, Fastfetch, Zsh and the session helpers build the user-facing layer.
 
 The project targets a Kali guest. Host Windows, VirtualBox and VMware settings are not changed automatically.
 
@@ -204,8 +204,7 @@ The full mode updates APT metadata and installs the available package set.
       rofi/         launcher themes
       ghostty/      primary terminal profile
       tmux/         persistent terminal/session profile
-      kitty/        legacy fallback terminal profile
-      picom/        compositor
+            picom/        compositor
       dunst/        notifications
       fastfetch/    Kali + xLFr4n login snapshot
       applications/ .desktop launchers
@@ -380,7 +379,7 @@ The wallpaper helper keeps an index/cache so login does not repeatedly rescan th
 
 # 🖥️ Terminal stack
 
-Ghostty is now the preferred graphical terminal and tmux is the persistence/multiplexer layer. Kitty remains documented and configured as a rollback path while the real VM is being validated.
+Ghostty is the only graphical terminal and tmux is the persistence/multiplexer layer. The terminal helper has no alternate graphical backend.
 
 Check the selected backend:
 
@@ -388,8 +387,7 @@ Check the selected backend:
 
 Force a backend for one launch:
 
-    XLFR4N_TERMINAL=ghostty xlfr4n-terminal
-    XLFR4N_TERMINAL=kitty xlfr4n-terminal
+    xlfr4n-terminal --backend
 
 Operational path:
 
@@ -399,36 +397,19 @@ Operational path:
         ↓
    zsh / tools / SSH
 
-The migration deliberately keeps Kitty instead of uninstalling it during this stage.
+Ghostty is now the single graphical terminal. Its configuration provides explicit copy/paste, selection and scrollback controls, while tmux exposes the full pane history through Ctrl+A, A.
 
----
+Ghostty clipboard/scrollback controls:
 
-# 🐱 Kitty
+    Ctrl+Shift+C          copy selection
+    Ctrl+Shift+V          paste clipboard
+    Ctrl+Shift+A          select visible screen
+    Ctrl+Shift+Home       scroll to top
+    Ctrl+Shift+End        scroll to bottom
 
-Kitty remains the legacy fallback terminal.
+Full tmux pane history:
 
-The profile includes:
-
-    JetBrains Mono
-    dark background
-    cursor blink
-    cursor trail
-    powerline tabs
-    keyboard navigation
-    scrollback
-    X11 backend
-    no application border
-
-Useful Kitty controls:
-
-    Ctrl+Shift+T          new tab
-    Ctrl+Shift+Q          close tab
-    Ctrl+Shift+Left/Right previous / next tab
-    Ctrl+Shift+N          new window
-    Ctrl+Shift+W          close window
-    Ctrl+Shift+F5         reload configuration (legacy Kitty)
-    Ctrl+Shift+Plus/Minus font scaling
-    Ctrl+Shift+Backspace  restore font size
+    Ctrl+A, A             copy the complete active pane history to X11 clipboard
 
 Manual system snapshot:
 
