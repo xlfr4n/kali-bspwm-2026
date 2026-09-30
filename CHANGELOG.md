@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-09-30 — Ghostty + tmux terminal layer
+
+- Added a Ghostty profile as the preferred terminal layer for the X11/BSPWM workspace.
+- Added a tmux profile for persistent sessions, pane navigation, large scrollback and synchronized-input toggling.
+- Added scripts/xlfr4n-terminal as the single terminal backend selector: Ghostty first, Kitty fallback, explicit override supported.
+- Routed BSPWM shortcuts, Polybar terminal actions, dock launchers and Kali Lab through the new terminal helper.
+- Kept the existing Kitty configuration and package path intact so this stage remains reversible at VM level.
+- Made tmux part of the core package set; Ghostty remains optional and never becomes a hard installer dependency.
+- Added SSH-oriented Ghostty shell integration and Ghostty-compatible tmux RGB settings.
+- Added static and diagnostic guardrails plus an authorized red-team workflow document.
+
+
 ## 2026-09-30 — Kitty surface cleanup
 
 - Set Kitty background opacity to 1.0 by default so the wallpaper cannot bleed through the application surface near the dock/bottom edge.
