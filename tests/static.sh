@@ -173,6 +173,7 @@ check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scri
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
 check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
 check "Installer purges legacy Kitty" grep -Fq "legacy_kitty_packages" install.sh
+check "Installer removes Kitty config" grep -Fq 'rm -rf "$CONFIG_DIR/kitty"' install.sh
 check_not_present "Ghostty is not optional" grep -Fq "OPTIONAL_PACKAGES=(ghostty" install.sh
 check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
 check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_config' config/ghostty/config
