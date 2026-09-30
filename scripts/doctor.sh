@@ -146,7 +146,7 @@ check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
 check "Workspace rail spacing" grep -Fq "offset-y = 40pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
-check "Ghostty/Kitty backend" xlfr4n-terminal --backend
+check "Ghostty backend" xlfr4n-terminal --backend
 check "tmux configuration" test -s "$HOME/.config/tmux/tmux.conf"
 check "Ghostty configuration" test -s "$HOME/.config/ghostty/config"
 check "Rofi frameless window" grep -Fq "border: 0px;" "$HOME/.config/rofi/launcher.rasi"
@@ -178,17 +178,10 @@ check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
 check "No red BSPWM window frame" grep -Fq "focused_border_color '#262a31'" "$HOME/.config/bspwm/bspwmrc"
-if command -v kitty >/dev/null 2>&1; then
-  check "Legacy Kitty config" test -s "$HOME/.config/kitty/kitty.conf"
-  check "Legacy Kitty frameless profile" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
-else
-  info "legacy Kitty not installed; Ghostty is the only terminal backend available"
-fi
-if command -v ghostty >/dev/null 2>&1; then
-  info "preferred terminal: Ghostty"
-else
-  info "preferred terminal: Kitty fallback (Ghostty not installed)"
-fi
+check "Ghostty command" command -v ghostty
+check "Kitty command absent" sh -c '! command -v kitty >/dev/null 2>&1'
+check "Kitty config absent" test ! -e "$HOME/.config/kitty"
+info "terminal: Ghostty + tmux"
 
 if command -v tint2 >/dev/null 2>&1; then
   check "Tint2" command -v tint2
