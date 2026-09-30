@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Animated target indicator for the top-left status rail.
+# One-shot TARGET entrance animation. After the session intro, the value stays static.
 set -u
 
 TARGET_FILE="$HOME/.config/polybar/target"
-theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
-case "$theme" in
-  htb-green) accent='#9fef00' ;;
-  nord) accent='#88c0d0' ;;
-  purple) accent='#bd93f9' ;;
-  *) accent='#ff3344' ;;
-esac
+START_FILE="$HOME/.cache/xlfr4n-target-boot-ms"
+FG='#f0f3f7'
 
 target="$(cat "$TARGET_FILE" 2>/dev/null || true)"
-tick="$(awk '{printf "%d", $1 * 6}' /proc/uptime 2>/dev/null || printf '0')"
-signals=('·' '•' '●' '•')
-signal="${signals[$((tick % ${#signals[@]}))]}"
+value="${target:-—}"
+label=" TARGET ${value}"
 
-if [ -n "$target" ]; then
-  printf '%%{F%s} %s %s%%{F-}' "$accent" "$target" "$signal"
+now="$(date '+%s%3N' 2>/dev/null || printf '0')"
+started="$(cat "$START_FILE" 2>/dev/null || printf '0')"
+elapsed=999999
+if [[ "$now" =~ ^[0-9]+$ && "$started" =~ ^[0-9]+$ ]]; then
+  elapsed=$((now - started))
+  (( elapsed < 0 )) && elapsed=0
+fi
+
+if (( elapsed < 1400 )); then
+  frames=('·' '•' '●' '◉' '●' '•')
+  index=$(( (elapsed / 220) % ${#frames[@]} ))
+  printf '%%{F%s}%s %s%%{F-}' "$FG" "$label" "${frames[$index]}"
 else
-  printf '%%{F%s} TARGET — %s%%{F-}' "$accent" "$signal"
+  printf '%%{F%s}%s%%{F-}' "$FG" "$label"
 fi
