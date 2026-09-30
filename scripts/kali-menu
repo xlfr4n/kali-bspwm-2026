@@ -10,10 +10,13 @@ command -v rofi-xlfr4n >/dev/null 2>&1 || {
 
 choice="$(
   printf '%s\n' \
-    'TERMINAL  Open Kitty' \
+    'TERMINAL  Ghostty + tmux' \
     'SPOTLIGHT Launch apps' \
     'MISSION   Window overview' \
     'BRAVE     Open Brave' \
+    'FIREFOX   Open Firefox' \
+    'WIRESHARK Capture & analyse traffic' \
+    'BURP      Open Burp Suite' \
     'DOCK      Toggle floating dock' \
     'DESKTOP   Apply desktop style' \
     'TARGET    Set / clear target' \
@@ -21,6 +24,7 @@ choice="$(
     'WALLPAPER Change wallpaper' \
     'LAB       Open Kali Lab' \
     'MONITOR   Refresh displays' \
+    'NETWORK   Network manager' \
     'DOCTOR    Run diagnostics' \
     'SYSTEM    Terminal system snapshot' \
     'VIRT      Virtualization tools' \
@@ -32,10 +36,13 @@ choice="$(
 )"
 
 case "$choice" in
-  TERMINAL*) xlfr4n-launch "Kitty" --class kitty -- kitty ;;
+  TERMINAL*) dock-launch terminal ;;
   SPOTLIGHT*) rofi-xlfr4n -show drun -show-icons -p 'Spotlight' ;;
   MISSION*) mission-control ;;
   BRAVE*) dock-launch brave ;;
+  FIREFOX*) dock-launch firefox ;;
+  WIRESHARK*) dock-launch wireshark ;;
+  BURP*) dock-launch burp ;;
   DOCK*) dock --toggle ;;
   DESKTOP*) desktop-style --apply ;;
   TARGET*) settarget ;;
@@ -43,9 +50,10 @@ case "$choice" in
   WALLPAPER*) wallpaper --random ;;
   LAB*) dock-launch lab ;;
   MONITOR*) monitor-refresh ;;
-  DOCTOR*) xlfr4n-launch "Doctor" --class xLFr4n-Doctor -- kitty --class xLFr4n-Doctor --title Kali-Doctor -e doctor.sh ;;
-  SYSTEM*) xlfr4n-launch "System Snapshot" --class xLFr4n-System -- kitty --class xLFr4n-System --title xLFr4n-System -e xlfr4n-banner --static ;;
-  VMWARE*) xlfr4n-launch "Virtualization Tools" --class VMware-Tools -- kitty --class VMware-Tools --title VMware-Tools -e vmware-tools ;;
+  NETWORK*) dock-launch network ;;
+  DOCTOR*) xlfr4n-terminal --title Kali-Doctor -- doctor.sh ;;
+  SYSTEM*) xlfr4n-terminal --title xLFr4n-System -- xlfr4n-banner --static ;;
+  VIRT*) xlfr4n-terminal --title Virtualization-Tools -- vmware-tools ;;
   SCREEN*) screenshot-menu ;;
   LOCK*) lock-screen ;;
   POWER*) power-menu ;;
