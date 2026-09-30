@@ -5,10 +5,10 @@ set -u
 
 theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
 case "$theme" in
-  htb-green) accent='#9fef00'; muted='#728060' ;;
-  nord) accent='#88c0d0'; muted='#71849a' ;;
-  purple) accent='#bd93f9'; muted='#877b9d' ;;
-  *) accent='#ff3344'; muted='#7d8590' ;;
+  htb-green) accent='#9fef00' ;;
+  nord) accent='#88c0d0' ;;
+  purple) accent='#bd93f9' ;;
+  *) accent='#ff3344' ;;
 esac
 
 frames=(
