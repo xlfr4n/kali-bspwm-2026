@@ -8,7 +8,7 @@ Esta lista define el estado interno del proyecto y separa explícitamente lo val
 
 | Área | Estado | Qué se cubre |
 |---|---|---|
-| 🖥️ BSPWM | ✅ | 9 escritorios, borders, padding, reglas flotantes y fullscreen |
+| 🖥️ BSPWM | ✅ | 9 escritorios, ventanas frameless, padding de sesión, reglas flotantes y fullscreen |
 | ⌨️ SXHKD | ✅ | Atajos de ventanas, workspaces, apps, media, captura, lock y VM |
 | 📊 Polybar | ✅ | Barra superior transparente, rail inferior separado y acciones interactivas |
 | 🗓️ Fecha/hora | ✅ | Fecha larga en español por defecto, hora separada y mejor jerarquía visual |
