@@ -171,6 +171,8 @@ check "Notification sender" command -v notify-send
 check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
+check "No red BSPWM window frame" grep -Fq "focused_border_color '#262a31'" "$HOME/.config/bspwm/bspwmrc"
+check "No red Kitty window frame" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
 
 if command -v tint2 >/dev/null 2>&1; then
   check "Tint2" command -v tint2
