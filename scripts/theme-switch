@@ -25,7 +25,7 @@ current_theme() {
 apply() {
   local t="$1"
   local silent="${2:-0}"
-  local accent good warn plank_rgb
+  local accent good warn
 
   case "$silent" in
     0|1) ;;
