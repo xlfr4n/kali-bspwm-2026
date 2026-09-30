@@ -13,7 +13,7 @@ if [ -x "$HOME/.local/bin/workspace-hud" ]; then
   "$HOME/.local/bin/workspace-hud" --stop >/dev/null 2>&1 || true
 fi
 
-for proc in sxhkd polybar dunst picom plank tint2; do
+for proc in sxhkd polybar dunst picom plank tint2 ghostty; do
   pkill -u "$UID" -x "$proc" 2>/dev/null || true
 done
 pkill -f '[p]olybar dock' 2>/dev/null || true
