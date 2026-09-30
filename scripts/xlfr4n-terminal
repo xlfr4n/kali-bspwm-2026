@@ -21,7 +21,7 @@ EOF
 }
 
 select_backend() {
-  local choice="${1:-$backend}"
+  local choice="$backend"
   case "$choice" in
     auto)
       if command -v ghostty >/dev/null 2>&1; then
@@ -86,7 +86,26 @@ selected="$(select_backend)" || {
   exit 1
 }
 
+tmux_session="${XLFR4N_TMUX_SESSION:-xLFr4n}"
+
 if [ "${#cmd[@]}" -eq 0 ]; then
+  if command -v tmux >/dev/null 2>&1; then
+    case "$selected" in
+      ghostty)
+        if [ -n "$title" ]; then
+          exec ghostty --title="$title" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+        fi
+        exec ghostty -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+        ;;
+      kitty)
+        if [ -n "$title" ]; then
+          exec kitty --title "$title" tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+        fi
+        exec kitty tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+        ;;
+    esac
+  fi
+
   case "$selected" in
     ghostty)
       if [ -n "$title" ]; then
