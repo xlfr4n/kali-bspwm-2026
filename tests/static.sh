@@ -297,8 +297,8 @@ check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/la
 check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
 check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
 check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
-check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
-check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
+check "Polybar target action opens terminal" grep -Fq 'xlfr4n-terminal --title Kali-Target -- settarget' config/polybar/config.ini
+check "Polybar doctor action opens terminal" grep -Fq 'xlfr4n-terminal --title xLFr4n-Doctor -- doctor.sh' config/polybar/config.ini
 check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
 check "Theme feedback mentions Ghostty reload" grep -Fq 'Ctrl+Shift+, to reload' scripts/theme-switch
 check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
