@@ -11,10 +11,10 @@ background_color = #00000000 0
 border_color = #00000000 0
 
 rounded = 12
-border_width = 1
+border_width = 0
 border_sides = TBLR
-background_color = #161b22 98
-border_color = #ff3344 70
+background_color = #161b22 96
+border_color = #00000000 0
 
 #-------------------------------------
 # Panel
