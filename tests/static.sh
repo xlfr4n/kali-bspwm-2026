@@ -181,6 +181,13 @@ check "Ghostty is optional package" grep -Fq 'OPTIONAL_PACKAGES=(ghostty' instal
 check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
 check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_config' config/ghostty/config
 check "Ghostty SSH integration" grep -Fq 'shell-integration-features = ssh-env,ssh-terminfo,no-cursor' config/ghostty/config
+check "Kitty clipboard control" grep -Fq 'clipboard_control write-clipboard write-primary no-append' config/kitty/kitty.conf
+check "Kitty copy shortcut" grep -Fq 'map ctrl+shift+c copy_to_clipboard' config/kitty/kitty.conf
+check "Kitty paste shortcut" grep -Fq 'map ctrl+shift+v paste_from_clipboard' config/kitty/kitty.conf
+check "Kitty full scrollback copy" grep -Fq 'map ctrl+shift+alt+c launch --stdin-source=@screen_scrollback --type=clipboard' config/kitty/kitty.conf
+check "Kitty scrollback viewer" grep -Fq 'map ctrl+shift+h show_scrollback' config/kitty/kitty.conf
+check "tmux clipboard mode" grep -Fq 'set -s set-clipboard external' config/tmux/tmux.conf
+check "tmux mouse copy" grep -Fq 'bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel' config/tmux/tmux.conf
 check "Ghostty working directory inheritance" grep -Fq 'window-inherit-working-directory = true' config/ghostty/config
 check "tmux Ghostty RGB" grep -Fq 'terminal-features ",xterm-ghostty:RGB"' config/tmux/tmux.conf
 check "tmux synchronize panes" grep -Fq 'bind y set-window-option synchronize-panes' config/tmux/tmux.conf
