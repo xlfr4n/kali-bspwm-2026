@@ -55,7 +55,7 @@ Dunst mantiene el historial y apila estas notificaciones para evitar una cascada
 
 ### 🇬🇧 English
 
-The desktop uses a shared feedback layer so important actions have a visible response without filling the screen with widgets. The lower date rail follows the system `LC_TIME` locale when available:
+The desktop uses a shared feedback layer so important actions have a visible response without filling the screen with widgets. The lower date rail is Spanish by default and can follow the session locale with `XLFR4N_DATE_LOCALE=system`:
 
 `workspace-hud` → desktop change → compact two-frame notification → Picom fade.
 
