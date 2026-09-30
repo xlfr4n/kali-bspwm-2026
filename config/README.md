@@ -31,7 +31,7 @@ BOTTOM
                          iconos del dock
 ```
 
-Las barras no dibujan un panel sólido detrás del contenido. El dock es launcher-only y no pretende ser una taskbar tradicional.
+Las barras no dibujan un panel sólido detrás del contenido. El dock es launcher-only y no pretende ser una taskbar tradicional. Las ventanas son frameless: no se usa un borde rojo de BSPWM, Kitty, Rofi, Tint2 o Plank.
 
 Al abrir una shell interactiva, Fastfetch muestra el logo oficial de Kali con la firma `⚡ xLFr4n` debajo, junto a TARGET, IP y fecha. El banner ASCII `xlfr4n-banner` se conserva como snapshot manual para diagnósticos.
 
