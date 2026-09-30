@@ -202,6 +202,26 @@ check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-lau
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
 check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
 
+# ── Hardening / regression guards (2026-09-30 review) ─────────────────────
+check "syntax brightness-control" bash -n scripts/brightness-control
+check "syntax keys-help" bash -n scripts/keys-help
+check "Wallpaper temp index is per-process" grep -Fq 'tmp_index="$INDEX_FILE.tmp.$$"' scripts/wallpaper
+check_not_present "No predictable /tmp logs in scripts" grep -rqE '/tmp/kali-bspwm' scripts config
+check_not_present "No duplicated sxhkd command bindings" bash -c "awk '/^[^[:space:]#]/{k=\$0;next} /^[[:space:]]+[^[:space:]]/{c=\$0; sub(/^[[:space:]]+/,\"\",c); if(c==\"mission-control\"||c==\"theme-switch\")n[c]++} END{exit !(n[\"mission-control\"]>1||n[\"theme-switch\"]>1)}' config/sxhkd/sxhkdrc"
+check "Media keys bound" grep -Fq "XF86AudioPlay" config/sxhkd/sxhkdrc
+check "Brightness keys bound" grep -Fq "brightness-control up" config/sxhkd/sxhkdrc
+check "Keybinding cheat sheet bound" grep -Fq "keys-help" config/sxhkd/sxhkdrc
+check "Polkit agent staged in autostart" grep -Fq "polkit" scripts/autostart
+check "Idle lock is opt-in" grep -Fq ".config/xlfr4n/autolock" scripts/autostart
+check "Keyboard layout configurable" grep -Fq "XLFR4N_KB_LAYOUT" scripts/keyboard
+check "Installer skips unavailable extra packages" grep -Fq "EXTRA_PACKAGES" install.sh
+check "Zsh completion enabled" grep -Fq "compinit" config/zshrc
+check "Zsh syntax-highlighting sourced last" bash -c "tail -n 3 config/zshrc | grep -Fq zsh-syntax-highlighting"
+for _s in $(ls scripts | grep -v '^README.md$'); do
+  case "$_s" in st|ct) continue ;; esac
+  check "Uninstall removes $_s" grep -Fq "\"\$HOME/.local/bin/$_s\"" uninstall.sh
+done
+
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
 

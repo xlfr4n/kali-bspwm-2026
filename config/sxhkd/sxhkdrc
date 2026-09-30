@@ -21,9 +21,6 @@ super + shift + h
 super + shift + a
     dock --toggle
 
-super + shift + o
-    mission-control
-
 super + {q,w}
     bspc node -{c,k}
 
@@ -57,6 +54,24 @@ super + alt + {Left,Down,Up,Right}
 super + ctrl + {Left,Down,Up,Right}
     bspc node -v {-30 0,0 30,0 -30,30 0}
 
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+super + {bracketleft,bracketright}
+    bspc desktop -f {prev,next}.local
+
+super + c
+    bspc node -f next.local.!hidden.window
+
+super + r
+    bspc node @/ -R 90
+
+super + equal
+    bspc node @/ -B
+
+super + F1
+    keys-help
+
 super + {1,2,3,4,5,6,7,8,9}
     bspc desktop -f {1,2,3,4,5,6,7,8,9}
 
@@ -73,9 +88,6 @@ super + alt + q
     bspc quit
 
 super + alt + t
-    theme-switch
-
-super + ctrl + t
     theme-switch
 
 super + shift + w
@@ -137,6 +149,24 @@ XF86AudioLowerVolume
 
 XF86AudioMute
     audio-control mute
+
+XF86AudioMicMute
+    xlfr4n-launch "Microphone" -- pamixer --default-source --toggle-mute
+
+XF86AudioPlay
+    playerctl play-pause
+
+XF86AudioNext
+    playerctl next
+
+XF86AudioPrev
+    playerctl previous
+
+XF86MonBrightnessUp
+    brightness-control up
+
+XF86MonBrightnessDown
+    brightness-control down
 
 Print
     xlfr4n-launch "Screenshot" -- flameshot full -p "$HOME/Pictures/Screenshots"

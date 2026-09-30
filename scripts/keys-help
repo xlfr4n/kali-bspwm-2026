@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Searchable cheat sheet generated from the live sxhkdrc (always in sync with the real bindings).
+set -Eeuo pipefail
+
+RC="${XDG_CONFIG_HOME:-$HOME/.config}/sxhkd/sxhkdrc"
+[ -r "$RC" ] || { echo "sxhkdrc not found: $RC" >&2; exit 1; }
+
+# Each binding is: key line(s) at column 0, command indented below. Join them as "keys  →  command".
+list="$(awk '
+  /^[[:space:]]*#/ || /^[[:space:]]*$/ { next }
+  /^[^[:space:]]/ { key=$0; next }
+  /^[[:space:]]/  { sub(/^[[:space:]]+/, "", $0); printf "%-38s →  %s\n", key, $0 }
+' "$RC")"
+
+if command -v rofi-xlfr4n >/dev/null 2>&1; then
+  printf '%s\n' "$list" | rofi-xlfr4n -dmenu -i -p 'Keys' >/dev/null || true
+else
+  printf '%s\n' "$list"
+fi

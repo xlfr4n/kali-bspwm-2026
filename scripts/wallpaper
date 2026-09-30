@@ -30,7 +30,7 @@ collect() {
     return 0
   fi
 
-  tmp_index="$INDEX_FILE.tmp.$"
+  tmp_index="$INDEX_FILE.tmp.$$"
   for root in "${ROOTS[@]}"; do
     [ -d "$root" ] || continue
     find "$root" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print

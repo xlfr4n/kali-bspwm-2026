@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# ⚡ xlfr4n // Kali BSPWM 2026
+# Brightness shortcuts with instant visual feedback. Silent on VMs/desktops without a backlight.
+set -Eeuo pipefail
+
+action="${1:-}"
+case "$action" in
+  up|down) ;;
+  *) printf 'Usage: brightness-control {up|down}\n' >&2; exit 2 ;;
+esac
+
+percent=""
+if command -v brightnessctl >/dev/null 2>&1; then
+  if [ "$action" = "up" ]; then brightnessctl -q set +5%; else brightnessctl -q set 5%-; fi
+  cur="$(brightnessctl get 2>/dev/null || true)"
+  max="$(brightnessctl max 2>/dev/null || true)"
+  if [[ "$cur" =~ ^[0-9]+$ && "$max" =~ ^[0-9]+$ && "$max" -gt 0 ]]; then
+    percent=$(( cur * 100 / max ))
+  fi
+elif command -v xbacklight >/dev/null 2>&1; then
+  if [ "$action" = "up" ]; then xbacklight -inc 5; else xbacklight -dec 5; fi
+  percent="$(xbacklight -get 2>/dev/null | cut -d. -f1 || true)"
+else
+  exit 0
+fi
+
+if [ -n "$percent" ] && command -v notify-send >/dev/null 2>&1; then
+  notify-send -u low -t 850 -h int:value:"$percent" "xLFr4n // BRIGHTNESS" "${percent}%" >/dev/null 2>&1 || true
+fi

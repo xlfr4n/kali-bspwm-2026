@@ -11,8 +11,34 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE="$HOME/.zsh_history"
 
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY SHARE_HISTORY EXTENDED_HISTORY
+
+# Completion system (was missing: Tab had no smart completion for git, ssh, kill, ...).
+autoload -Uz compinit
+compinit -C -d "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Prefix history search on the arrow keys.
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
 [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# fzf: Ctrl+R fuzzy history, Ctrl+T files, Alt+C directories (installed but never wired before).
+for _fzf in /usr/share/doc/fzf/examples/key-bindings.zsh /usr/share/fzf/key-bindings.zsh; do
+  [[ -r "$_fzf" ]] && { source "$_fzf"; break; }
+done
+unset _fzf
+
+# Debian/Kali ship fd as "fdfind" (bat is handled below).
+if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi
 
 autoload -Uz add-zsh-hook
 
@@ -35,13 +61,16 @@ alias kdoctor='doctor.sh'
 alias kbspwm='session-reload'
 
 cat() {
-  if command -v batcat >/dev/null 2>&1; then
-    batcat "$@"
-  elif command -v bat >/dev/null 2>&1; then
-    bat "$@"
-  else
-    command cat "$@"
+  # Decorate only for interactive, flag-less use. Pipes, redirects and options
+  # (cat -A, cat -n, ...) keep the real coreutils behaviour, so nothing breaks.
+  if [[ -t 1 && $# -gt 0 && "$1" != -* ]]; then
+    if command -v batcat >/dev/null 2>&1; then
+      batcat --paging=never "$@"; return
+    elif command -v bat >/dev/null 2>&1; then
+      bat --paging=never "$@"; return
+    fi
   fi
+  command cat "$@"
 }
 
 settarget(){ "$HOME/.local/bin/settarget" "$@"; }
@@ -109,8 +138,11 @@ _kali_prompt() {
 
 add-zsh-hook precmd _kali_prompt
 
-if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" && -t 1 ]]; then
+if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" && -z "${TMUX:-}" && -t 1 ]]; then
   # Keep the guard shell-local so every new interactive Kitty gets the Kali logo.
   typeset -g KALI_BSPWM_FASTFETCH_DONE=1
   command -v fastfetch >/dev/null 2>&1 && fastfetch
 fi
+
+# zsh-syntax-highlighting must be sourced last so it can wrap every widget defined above.
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

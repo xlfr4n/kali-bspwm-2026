@@ -4,7 +4,8 @@
 set -Eeuo pipefail
 
 CONFIG="$HOME/.config/polybar/config.ini"
-LOG="/tmp/kali-bspwm-polybar.log"
+LOG="$HOME/.cache/xlfr4n-polybar.log"
+mkdir -p "$(dirname "$LOG")"
 
 command -v polybar >/dev/null 2>&1 || exit 1
 [ -r "$CONFIG" ] || exit 1

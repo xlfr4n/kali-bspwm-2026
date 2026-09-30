@@ -3,7 +3,8 @@
 # Start Picom with a VM-aware backend choice and a deterministic fallback.
 set -u
 
-LOG=/tmp/kali-bspwm-picom.log
+LOG="$HOME/.cache/xlfr4n-picom.log"
+mkdir -p "$(dirname "$LOG")"
 virt="$(systemd-detect-virt 2>/dev/null || true)"
 backend="${XLFR4N_PICOM_BACKEND:-}"
 

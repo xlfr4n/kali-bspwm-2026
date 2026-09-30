@@ -59,3 +59,13 @@ session-profile
 - `audio-control` keeps media keys with visual feedback and uses `pamixer` or `wpctl`.
 - `network-status` follows the default-route interface instead of assuming Ethernet.
 - `battery-status` appears automatically when Kali exposes a battery and stays silent on VM/desktop systems without one.
+
+## ⌨️ Keys & brightness / Atajos y brillo
+
+### 🇪🇸 Español
+
+`keys-help` (`Super + F1`) genera una chuleta de atajos buscable a partir del `sxhkdrc` real. `brightness-control up|down` ajusta el brillo con `brightnessctl` o `xbacklight` y no hace nada en máquinas sin retroiluminación.
+
+### 🇬🇧 English
+
+`keys-help` (`Super + F1`) builds a searchable shortcut cheat sheet from the live `sxhkdrc`. `brightness-control up|down` adjusts brightness through `brightnessctl` or `xbacklight` and is a silent no-op on machines without a backlight.

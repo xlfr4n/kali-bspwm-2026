@@ -43,6 +43,11 @@ if [ -x "$HOME/.local/bin/keyboard" ]; then
   "$HOME/.local/bin/keyboard" >/dev/null 2>&1 &
 fi
 
+# Replace the default X11 "cross" cursor with a normal arrow on the root window.
+if command -v xsetroot >/dev/null 2>&1; then
+  xsetroot -cursor_name left_ptr >/dev/null 2>&1 || true
+fi
+
 # Apply the runtime accent without rewriting any files.
 if command -v bspc >/dev/null 2>&1; then
   theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf "cyber-red")"
@@ -126,3 +131,37 @@ log "dunst ready"
 ) &
 
 log "phase=background staged"
+
+# Polkit agent: without one, GUI tools that need privileges (Wireshark helpers, gparted,
+# NetworkManager edits) fail silently. Start the first agent found; absence is harmless.
+(
+  sleep 0.80
+  if ! pgrep -u "$UID" -f 'polkit.*agent|lxpolkit' >/dev/null 2>&1; then
+    for agent in \
+      /usr/libexec/polkit-gnome-authentication-agent-1 \
+      /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 \
+      /usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1 \
+      "$(command -v lxpolkit 2>/dev/null || true)"; do
+      if [ -n "$agent" ] && [ -x "$agent" ]; then
+        "$agent" >/dev/null 2>&1 &
+        break
+      fi
+    done
+  fi
+  log "polkit agent checked"
+) &
+
+# Optional idle lock. Off by default; enable with:  echo 10 > ~/.config/xlfr4n/autolock  (minutes)
+(
+  sleep 1.30
+  lock_file="$HOME/.config/xlfr4n/autolock"
+  if [ -r "$lock_file" ] && command -v xss-lock >/dev/null 2>&1 && [ -x "$HOME/.local/bin/lock-screen" ]; then
+    minutes="$(tr -dc '0-9' < "$lock_file" | head -c 3 || true)"
+    if [ -n "$minutes" ] && [ "$minutes" -gt 0 ]; then
+      pkill -u "$UID" -x xss-lock 2>/dev/null || true
+      xset s "$((minutes * 60))" 10 >/dev/null 2>&1 || true
+      xss-lock --transfer-sleep-lock -- "$HOME/.local/bin/lock-screen" >/dev/null 2>&1 &
+      log "autolock enabled (${minutes} min)"
+    fi
+  fi
+) &

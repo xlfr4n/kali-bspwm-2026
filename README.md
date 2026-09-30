@@ -462,8 +462,8 @@ Archivos de diagnóstico especialmente útiles:
 ~/.cache/xlfr4n-session.log
 ~/.cache/xlfr4n-dock.log
 ~/.cache/xlfr4n-rofi.log
-/tmp/kali-bspwm-polybar.log
-/tmp/kali-bspwm-picom.log
+~/.cache/xlfr4n-polybar.log
+~/.cache/xlfr4n-picom.log
 ```
 
 ---
