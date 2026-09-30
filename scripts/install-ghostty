@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Install Ghostty without adding third-party APT repositories.
+# Prefers a distro package when available; otherwise builds the pinned stable
+# Ghostty release from the official source tarball using its required Zig toolchain.
+
+set -Eeuo pipefail
+
+GHOSTTY_VERSION="${XLFR4N_GHOSTTY_VERSION:-1.3.1}"
+ZIG_VERSION="${XLFR4N_GHOSTTY_ZIG_VERSION:-0.15.2}"
+PREFIX="${XLFR4N_GHOSTTY_PREFIX:-$HOME/.local}"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/xlfr4n-ghostty"
+SRC_DIR="$CACHE_DIR/src/$GHOSTTY_VERSION"
+ZIG_DIR="$CACHE_DIR/zig/$ZIG_VERSION"
+GHOSTTY_BIN="$PREFIX/bin/ghostty"
+
+log(){ printf '[*] %s\n' "$*"; }
+ok(){ printf '[+] %s\n' "$*"; }
+die(){ printf '[-] %s\n' "$*" >&2; exit 1; }
+
+[ "$(id -u)" -ne 0 ] || die "Run this helper as your normal user."
+command -v sudo >/dev/null 2>&1 || die "sudo is required."
+command -v apt-get >/dev/null 2>&1 || die "apt-get is required."
+
+if command -v ghostty >/dev/null 2>&1; then
+  ok "Ghostty already available: $(ghostty --version 2>/dev/null || printf 'installed')"
+  exit 0
+fi
+
+if apt-cache show ghostty >/dev/null 2>&1; then
+  log "Ghostty is available from the configured distro repositories."
+  sudo apt-get install -y ghostty
+  command -v ghostty >/dev/null 2>&1 || die "APT reported success but ghostty is still unavailable."
+  ok "Ghostty installed from the distro package."
+  exit 0
+fi
+
+case "$(uname -m)" in
+  x86_64|amd64)
+    zig_arch="x86_64"
+    ;;
+  aarch64|arm64)
+    zig_arch="aarch64"
+    ;;
+  *)
+    die "Unsupported architecture for the automated Ghostty bootstrap: $(uname -m)"
+    ;;
+esac
+
+log "Ghostty is not packaged in this Kali snapshot; building the official $GHOSTTY_VERSION source tarball."
+
+sudo apt-get update
+sudo apt-get install -y   build-essential   curl   gettext   libadwaita-1-dev   libgtk-4-dev   libgtk4-layer-shell-dev   libxml2-utils   minisign   pkg-config   tar   xz-utils
+
+mkdir -p "$CACHE_DIR/downloads" "$SRC_DIR" "$ZIG_DIR" "$PREFIX/bin"
+
+zig_bin=""
+if command -v zig >/dev/null 2>&1 && [ "$(zig version)" = "$ZIG_VERSION" ]; then
+  zig_bin="$(command -v zig)"
+fi
+
+if [ -z "$zig_bin" ]; then
+  zig_archive="$CACHE_DIR/downloads/zig-x86_64-linux-$ZIG_VERSION.tar.xz"
+  zig_url="https://ziglang.org/download/$ZIG_VERSION/zig-$zig_arch-linux-$ZIG_VERSION.tar.xz"
+  zig_sig="$zig_archive.minisig"
+
+  if [ ! -s "$zig_archive" ]; then
+    log "Downloading Zig $ZIG_VERSION"
+    curl -fL --retry 3 --proto '=https' --tlsv1.2 "$zig_url" -o "$zig_archive"
+  fi
+  if [ ! -s "$zig_sig" ]; then
+    curl -fL --retry 3 --proto '=https' --tlsv1.2 "$zig_url.minisig" -o "$zig_sig"
+  fi
+
+  zig_key='RWSGOq2NVecA2UPNdBUZykf1CCb147pkmdtYxgb3Ti+JO/wCYvhbAb/U'
+  minisign -Vm "$zig_archive" -P "$zig_key"
+
+  zig_extract="$ZIG_DIR/zig-$zig_arch-linux-$ZIG_VERSION"
+  if [ ! -x "$zig_extract/zig" ]; then
+    rm -rf "$ZIG_DIR"
+    mkdir -p "$ZIG_DIR"
+    tar -xJf "$zig_archive" -C "$ZIG_DIR"
+  fi
+  zig_bin="$zig_extract/zig"
+fi
+
+[ -x "$zig_bin" ] || die "Zig $ZIG_VERSION is unavailable."
+
+ghostty_archive="$CACHE_DIR/downloads/ghostty-$GHOSTTY_VERSION.tar.gz"
+ghostty_url="https://release.files.ghostty.org/$GHOSTTY_VERSION/ghostty-$GHOSTTY_VERSION.tar.gz"
+ghostty_sig="$ghostty_archive.minisig"
+ghostty_key='RWQlAjJC23149WL2sEpT/l0QKy7hMIFhYdQOFy0Z7z7PbneUgvlsnYcV'
+
+if [ ! -s "$ghostty_archive" ]; then
+  log "Downloading Ghostty $GHOSTTY_VERSION source tarball"
+  curl -fL --retry 3 --proto '=https' --tlsv1.2 "$ghostty_url" -o "$ghostty_archive"
+fi
+if [ ! -s "$ghostty_sig" ]; then
+  curl -fL --retry 3 --proto '=https' --tlsv1.2 "$ghostty_url.minisig" -o "$ghostty_sig"
+fi
+minisign -Vm "$ghostty_archive" -P "$ghostty_key"
+
+rm -rf "$SRC_DIR"
+mkdir -p "$SRC_DIR"
+tar -xzf "$ghostty_archive" --strip-components=1 -C "$SRC_DIR"
+
+cd "$SRC_DIR"
+
+# Kali Rolling tracks Debian testing/unstable-era packages. The official
+# Ghostty instructions note gcc-multilib for Debian unstable/testing.
+if apt-cache show gcc-multilib >/dev/null 2>&1; then
+  sudo apt-get install -y gcc-multilib
+fi
+
+"$zig_bin" build -p "$PREFIX" -Doptimize=ReleaseFast
+
+[ -x "$GHOSTTY_BIN" ] || die "Ghostty build completed without $GHOSTTY_BIN."
+
+ok "Ghostty installed at $GHOSTTY_BIN"
+ok "Ghostty version: $("$GHOSTTY_BIN" --version 2>/dev/null || printf 'unknown')"
