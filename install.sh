@@ -113,6 +113,13 @@ if [ "$MODE" = "full" ]; then
   sudo apt-get install -y "${PACKAGES[@]}"
 fi
 
+# Wireshark capture support: when Kali creates the dedicated group, add the current
+# user so dumpcap can capture without launching the whole GUI as root. A new login
+# (or reboot) is required before the supplementary group is active.
+if [ "$MODE" = "full" ] && command -v wireshark >/dev/null 2>&1 && getent group wireshark >/dev/null 2>&1; then
+  sudo usermod -aG wireshark "$USER" || warn "Could not add $USER to the wireshark group."
+fi
+
 if [ "$MODE" = "full" ] && ! command -v ghostty >/dev/null 2>&1; then
   log "Ghostty is not available from APT; using the official source bootstrap"
   bash "$ROOT_DIR/scripts/install-ghostty"
