@@ -9,6 +9,7 @@ STAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="$HOME/.kali-bspwm-backups/$STAMP"
 CONFIG_DIR="$HOME/.config"
 BIN_DIR="$HOME/.local/bin"
+export PATH="$BIN_DIR:$PATH"
 
 log(){ printf '[*] %s\n' "$*"; }
 ok(){ printf '[+] %s\n' "$*"; }
