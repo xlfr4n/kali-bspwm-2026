@@ -32,7 +32,7 @@ La Fase 2 no bloquea la creación de la sesión. Las tareas que pueden consumir 
 | Capa | Responsabilidad |
 |---|---|
 | `install.sh` | Comprueba Kali, detecta virtualización, instala paquetes, crea backups y despliega. |
-| `config/` | Configuración reproducible de BSPWM, SXHKD, Polybar, Ghostty + tmux, Kitty fallback, Rofi, Picom, Dunst, Tint2/Plank y Zsh. |
+| `config/` | Configuración reproducible de BSPWM, SXHKD, Polybar, Ghostty + tmux, Rofi, Picom, Dunst, Tint2/Plank y Zsh. |
 | `scripts/` | Menú, dock, target, wallpapers, monitores, themes, diagnóstico y VM helpers. |
 | `docs/` | Procedimientos operativos y validación. |
 | `tests/` | Bash syntax, static guards y ShellCheck/CI. |
@@ -48,9 +48,9 @@ La Fase 2 no bloquea la creación de la sesión. Las tareas que pueden consumir 
 
 ### 🖥️ Terminal layer
 
-Ghostty is the preferred graphical terminal and tmux owns persistence, pane layouts and synchronized input. The xlfr4n-terminal helper selects Ghostty automatically when available and falls back to Kitty.
+Ghostty is the only graphical terminal and tmux owns persistence, pane layouts, scrollback and clipboard workflows. The `xlfr4n-terminal` helper launches Ghostty and uses tmux automatically when available.
 
-The repository deliberately keeps config/kitty/ so the previous terminal profile remains recoverable during VM validation.
+Kitty is not part of the project runtime. A fresh deployment does not install, configure or select it.
 
 ### 🎨 Themes
 
