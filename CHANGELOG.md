@@ -48,6 +48,11 @@
 - Standardized the lower date to Spanish by default, with an explicit `XLFR4N_DATE_LOCALE=system` opt-in for session locale.
 - Restored more visible application launch notifications using Dunst stack tags and normal urgency so OPENING → READY feedback is visible at the top-right.
 - Reworked the top `xLFr4n` identity into a faster signal-sweep animation that follows the active theme and kept telemetry modules clearly separated.
+- Lowered and tightened the bottom 1→9/date rail so it sits near the launcher dock instead of floating high above it.
+- Added animated `⌘ APPS`, target activity and `KALI // LIVE` telemetry modules for the top rail.
+- Hardened all custom desktop launchers to use the portable local helper path and restored Dunst launch feedback through stacked notifications.
+- Fixed the session profiler to report only the latest bootstrap block, eliminating misleading negative timings across reboots.
+- Extended runtime diagnostics and regression guards for the live visual services and new animated helpers.
 
 ## 2026-09-29 — Final workspace pass
 
