@@ -8,7 +8,8 @@ Esta carpeta contiene la configuración reproducible del workspace:
 
 - BSPWM + SXHKD;
 - Polybar;
-- Kitty;
+- Ghostty + tmux as the primary terminal stack;
+- Kitty as a retained fallback;
 - Rofi;
 - Picom;
 - Dunst;
@@ -55,6 +56,6 @@ This directory contains the reproducible workspace configuration:
 
 The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces lowered into the dock lane, Spanish date/time on the lower-right, and a centered icon launcher dock.
 
-Configuration is reproducible and should not contain personal secrets or host-only paths. Fastfetch keeps the official Kali logo as its visual base and adds the `⚡ xLFr4n` signature below it. Kitty is opaque by default so the wallpaper does not bleed through application surfaces; the existing Kitty opacity shortcuts remain available for intentional manual transparency. TARGET, local IP and date/time are shown as live session data; `xlfr4n-banner` remains available for manual system snapshots. The displayed date/time is Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow the session `LC_TIME` locale.
+Configuration is reproducible and should not contain personal secrets or host-only paths. Fastfetch keeps the official Kali logo as its visual base and adds the `⚡ xLFr4n` signature below it. Ghostty is opaque by default so the wallpaper does not bleed through application surfaces. Kitty remains opaque as the fallback terminal; its existing opacity shortcuts remain available for intentional manual transparency. TARGET, local IP and date/time are shown as live session data; `xlfr4n-banner` remains available for manual system snapshots. The displayed date/time is Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow the session `LC_TIME` locale.
 
 **⚡ xLFr4n · Configuration as documentation**
