@@ -72,7 +72,29 @@ case "$app" in
   settings) wmclass="lxappearance"; cmd=(lxappearance); app_label="Appearance" ;;
   network) wmclass="nm-connection-editor"; cmd=(nm-connection-editor); app_label="Network" ;;
   screenshot) wmclass=""; cmd=(flameshot gui); app_label="Screenshot" ;;
-  *) echo "Usage: dock-launch {brave|terminal|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot}" >&2; exit 2 ;;
+  wireshark)
+    wmclass="wireshark"
+    cmd=(wireshark)
+    app_label="Wireshark"
+    ;;
+  firefox)
+    wmclass="firefox"
+    if command -v firefox-esr >/dev/null 2>&1; then
+      cmd=(firefox-esr --new-window)
+    elif command -v firefox >/dev/null 2>&1; then
+      cmd=(firefox --new-window)
+    else
+      echo "Firefox is not installed." >&2
+      exit 127
+    fi
+    app_label="Firefox"
+    ;;
+  zaproxy)
+    wmclass="zaproxy"
+    cmd=(zaproxy)
+    app_label="OWASP ZAP"
+    ;;
+  *) echo "Usage: dock-launch {brave|terminal|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot|wireshark|firefox|zaproxy}" >&2; exit 2 ;;
 esac
 
 if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
