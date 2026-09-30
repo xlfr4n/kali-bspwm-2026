@@ -6,6 +6,7 @@ set -Eeuo pipefail
 
 POLYBAR="$HOME/.config/polybar/config.ini"
 KITTY="$HOME/.config/kitty/kitty.conf"
+GHOSTTY="$HOME/.config/ghostty/config"
 ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
 ROFI_FALLBACK="$HOME/.config/rofi/fallback.rasi"
@@ -48,9 +49,17 @@ apply() {
     "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/" \
     "$POLYBAR"
 
-  sed -i -E \
-    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/; s/^active_border_color .*/active_border_color #262a31/" \
-    "$KITTY"
+  if [ -f "$KITTY" ]; then
+    sed -i -E \
+      "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/; s/^active_border_color .*/active_border_color #262a31/" \
+      "$KITTY"
+  fi
+
+  if [ -f "$GHOSTTY" ]; then
+    sed -i -E \
+      "s/^selection-background = .*/selection-background = $accent/; s/^cursor-color = .*/cursor-color = $accent/" \
+      "$GHOSTTY"
+  fi
 
   sed -i -E \
     "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: #262a31;/" \
@@ -94,7 +103,7 @@ apply() {
   fi
 
   if [ "$silent" -eq 0 ] && command -v notify-send >/dev/null 2>&1; then
-    notify-send "xLFr4n // THEME" "Theme: $t · Kitty: Ctrl+Shift+F5 to reload existing windows." || true
+    notify-send "xLFr4n // THEME" "Theme: $t · Ghostty: Ctrl+Shift+, to reload existing windows." || true
   fi
 }
 
