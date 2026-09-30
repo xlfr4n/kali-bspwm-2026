@@ -68,7 +68,7 @@ apply() {
   fi
 
   if [ -f "$PLANK_THEME" ]; then
-    sed -i -E "s/^OuterStrokeColor=.*/OuterStrokeColor=$plank_rgb;;45/" "$PLANK_THEME"
+    sed -i -E "s/^LineWidth=.*/LineWidth=0/; s/^OuterStrokeColor=.*/OuterStrokeColor=38;;42;;49;;0/; s/^InnerStrokeColor=.*/InnerStrokeColor=38;;42;;49;;0/" "$PLANK_THEME"
   fi
 
   if command -v bspc >/dev/null 2>&1; then
