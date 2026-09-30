@@ -17,7 +17,7 @@ case "${XLFR4N_GHOSTTY_SOFTWARE_RENDERING:-auto}" in
   auto)
     if command -v systemd-detect-virt >/dev/null 2>&1; then
       case "$(systemd-detect-virt --vm 2>/dev/null || true)" in
-        virtualbox)
+        virtualbox|oracle)
           export LIBGL_ALWAYS_SOFTWARE=1
           ;;
       esac
