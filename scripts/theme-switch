@@ -35,7 +35,7 @@ apply() {
 
   case "$t" in
     cyber-red) accent='#ff3344'; good='#5ee881'; warn='#ffc857' ;;
-    htb-green) accent='#9fef00'; good='#5ee881'; warn='#ffc857'; plank_rgb='159;;239;;0' ;;
+    htb-green) accent='#9fef00'; good='#5ee881'; warn='#ffc857' ;;
     nord) accent='#88c0d0'; good='#a3be8c'; warn='#ebcb8b'; plank_rgb='136;;192;;208' ;;
     purple) accent='#bd93f9'; good='#50fa7b'; warn='#f1fa8c'; plank_rgb='189;;147;;249' ;;
     *)
