@@ -10,7 +10,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Barra inferior transparente y sin borde.
 - Escritorios 1→9 compactos abajo a la izquierda.
 - Fecha y hora abajo a la derecha; la fecha larga es española por defecto y admite `XLFR4N_DATE_LOCALE=system` para seguir el locale de la sesión.
-- Dock centrado con iconos reales.
+- Dock Tint2 centrado con iconos reales, con carril propio separado del rail de workspaces.
 - Acento xLFr4n coherente entre Polybar, Ghostty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
 - Ghostty opaco por defecto para evitar fugas del wallpaper a través de la superficie de la aplicación.
@@ -31,7 +31,7 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Transparent, borderless bottom rail.
 - Compact 1→9 workspaces on the lower-left.
 - Date and time on the lower-right.
-- Centered real-icon launcher dock.
+- Centered Tint2 real-icon launcher dock with its own lane, separated from the workspace rail.
 - Synchronized xLFr4n accents across Polybar, Ghostty, Rofi, Dunst and BSPWM.
 - Picom with soft fades/shadows and no blur for VM compatibility.
 - Ghostty is opaque by default so the wallpaper does not bleed through the application surface.
