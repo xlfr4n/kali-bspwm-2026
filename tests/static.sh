@@ -85,6 +85,7 @@ required_files=(
   scripts/xlfr4n-date
   scripts/xlfr4n-launch
   scripts/xlfr4n-terminal
+  scripts/install-ghostty
   scripts/xLFr4n-dock-launch
   scripts/target-copy
   scripts/fullscreen-toggle
@@ -173,6 +174,11 @@ check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scri
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
 check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
 check "Installer purges legacy Kitty" grep -Fq "legacy_kitty_packages" install.sh
+check "Ghostty source version pinned" grep -Fq 'GHOSTTY_VERSION="${XLFR4N_GHOSTTY_VERSION:-1.3.1}"' scripts/install-ghostty
+check "Ghostty Zig version pinned" grep -Fq 'ZIG_VERSION="${XLFR4N_GHOSTTY_ZIG_VERSION:-0.15.2}"' scripts/install-ghostty
+check "Ghostty official source URL" grep -Fq 'https://release.files.ghostty.org/' scripts/install-ghostty
+check "Ghostty Zig official URL" grep -Fq 'https://ziglang.org/download/' scripts/install-ghostty
+check "Ghostty source signature check" grep -Fq 'minisign -Vm "$ghostty_archive"' scripts/install-ghostty
 check "Installer removes Kitty config" grep -Fq 'rm -rf "$CONFIG_DIR/kitty"' install.sh
 check_not_present "Ghostty is not optional" grep -Fq "OPTIONAL_PACKAGES=(ghostty" install.sh
 check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
