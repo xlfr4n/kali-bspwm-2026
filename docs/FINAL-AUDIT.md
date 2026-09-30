@@ -30,7 +30,7 @@ Esta lista define el cierre funcional del proyecto sin sustituir la última prue
 
 ### 🔬 Última comprobación externa
 
-El CI sirve para validar sintaxis, guardas, Rofi y ShellCheck, pero la comprobación final del aspecto depende de la VM/monitor reales. La rama `main` debe probarse después de `git pull` + `./install.sh --deploy`. La validación visual debe confirmar además el logo oficial de Kali con firma `xLFr4n`, la presencia de TARGET/IP/fecha en Fastfetch, la microanimación de identidad y la aparición de notificaciones al lanzar aplicaciones.
+El CI sirve para validar sintaxis, guardas, Rofi y ShellCheck, pero la comprobación final del aspecto depende de la VM/monitor reales. La rama `main` debe probarse después de `git pull` + `./install.sh --deploy`. La validación visual debe confirmar además el logo oficial de Kali con firma `xLFr4n`, la presencia de TARGET/IP/fecha en Fastfetch, el barrido visible de identidad, el rail inferior alineado con el dock y la aparición de notificaciones al lanzar aplicaciones.
 
 ## 🇬🇧 English
 
