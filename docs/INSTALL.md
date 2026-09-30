@@ -83,11 +83,12 @@ xrandr --query
 
 ### 7️⃣ Terminal stack
 
-Ghostty is the only graphical terminal and tmux is part of the core terminal workflow. The full installer installs Ghostty as a core package and removes legacy Kitty packages when present.
+Ghostty is the only graphical terminal and tmux is part of the core terminal workflow. The installer uses a distro Ghostty package when available; otherwise it builds the pinned Ghostty release from the official source tarball and installs it under `~/.local`. Legacy Kitty packages/configuration are then removed.
 
     xlfr4n-terminal --backend
     tmux -V
     command -v ghostty
+    ghostty --version
     command -v tmux
 
 Operational path:
