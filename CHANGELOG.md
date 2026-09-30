@@ -44,6 +44,10 @@
 - Extended the read-only doctor and static guardrails for the new UX helpers.
 - Updated the visual and script documentation to make the new feedback layer explicit.
 - Refined the xLFr4n terminal banner into a fixed-column live system snapshot with theme-aware accents and deterministic geometry.
+- Lowered the workspace/date rail into the dock lane by removing the extra global bottom strut and tightening its offset.
+- Standardized the lower date to Spanish by default, with an explicit `XLFR4N_DATE_LOCALE=system` opt-in for session locale.
+- Restored more visible application launch notifications using Dunst stack tags and normal urgency so OPENING → READY feedback is visible at the top-right.
+- Reworked the top `xLFr4n` identity into a faster signal-sweep animation that follows the active theme and kept telemetry modules clearly separated.
 
 ## 2026-09-29 — Final workspace pass
 
