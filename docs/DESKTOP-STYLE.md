@@ -36,7 +36,7 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Fastfetch login view with the official Kali logo, `⚡ xLFr4n` signature and live TARGET/IP/date data.
 - Fixed-width terminal banner, reserved for manual diagnostics.
 
-The top identity uses a small typewriter/dissolve micro-animation: `xLFr4n` appears and disappears character by character with a discreet cursor. Other animation is used where it provides feedback rather than visual noise: cursor effects, window fades, workspace HUD transitions, audio feedback and dock hover.
+The top identity uses a visible signal sweep (`[●···]` → `[···●]`) that keeps `xLFr4n` readable at all times and follows the active theme. Other animation is used where it provides feedback rather than visual noise: cursor effects, window fades, workspace HUD transitions, audio feedback and dock hover.
 
 **⚡ xLFr4n · Kali · BSPWM · floating workspace**
 
