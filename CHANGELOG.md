@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-09-30 — Final clean UI pass
+
+### Visual
+- Removed the extra animated `KALI // LIVE` telemetry marker from the top-right rail.
+- Removed the `⌘ APPS` animation; APPS is now static and white.
+- Changed TARGET to white with a one-shot session-entry pulse; it becomes static afterwards.
+- Disabled BSPWM application borders and the Kitty single-window border.
+- Removed decorative red frames from Rofi, Tint2 and Plank while keeping theme accents available for intentional highlights.
+- Disabled the old 70px BSPWM bottom reservation so the 1→9/date rail can sit close to the dock.
+
+### Reliability
+- Added an absolute `/usr/local/bin/xLFr4n-dock-launch` bridge for GUI desktop launchers so they no longer depend on shell PATH inheritance.
+- Updated generated and repository `.desktop` launchers to use the bridge.
+- Kept the existing `launcher-pulse` and `telemetry-pulse` source files in the repository for compatibility/reference, but disconnected them from the active Polybar layout.
+- Rebuilt the main README around the final visual contract, operational workflow and VM validation model.
+
+
 ## 2026-09-30 — Review pass: fixes, hardening & QoL
 
 ### Fixed
