@@ -149,6 +149,7 @@ check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
 check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
 check "Target boot state" grep -Fq "xlfr4n-target-boot-ms" scripts/autostart
 check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
+check "Target update cadence" grep -Fq "interval = 1" config/polybar/config.ini
 check "Apps static white" grep -Fq 'content = "⌘ APPS"' config/polybar/config.ini
 check "Target white rail" grep -Fq "label-foreground = \${colors.fg}" config/polybar/config.ini
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
@@ -213,7 +214,7 @@ check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/pol
 check "Target one-shot module" grep -Fq "exec = ~/.local/bin/target-pulse" config/polybar/config.ini
 check "Launcher pulse helper" test -s scripts/launcher-pulse
 check "Target pulse helper" test -s scripts/target-pulse
-check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
+check "Pulse animation cadence" grep -Fq "interval = 0.18" config/polybar/config.ini
 check_not_present "KALI right telemetry disabled" grep -Eq "modules-right = .*telemetry" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
