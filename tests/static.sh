@@ -146,6 +146,7 @@ check "Date and time right modules" grep -Fq "modules-right = date time" config/
 check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" config/polybar/config.ini
 check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
+check "Tint2 dock width" grep -Fq "panel_size = 860 64" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
 check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
@@ -227,6 +228,7 @@ check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
 check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
 check "Menu system snapshot" grep -Fq "SYSTEM    Terminal system snapshot" scripts/kali-menu
 check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
+check "Dock repair action" grep -Fq "REPAIR    Re-sync dock backends" scripts/kali-menu
 check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
 check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
