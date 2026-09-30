@@ -45,6 +45,7 @@ session-profile
 - `target-pulse` muestra `TARGET` en blanco y ejecuta únicamente el pulso de entrada de la sesión; después queda estático.
 - `launcher-pulse` queda conservado como helper histórico/referencia y no está conectado al Polybar actual.
 - `xlfr4n-launch` centraliza el feedback Dunst de los lanzamientos iniciados desde atajos y menús propios.
+- `xLFr4n-dock-launch` actúa como puente absoluto para los launchers gráficos `.desktop`, evitando depender del PATH de la shell.
 - `xlfr4n-date` genera la fecha larga en español por defecto; `XLFR4N_DATE_LOCALE=system` permite seguir `LC_TIME`.
 - `telemetry-pulse` queda conservado como helper histórico/referencia y no está conectado al Polybar actual.
 - `workspace-hud` escucha los cambios de escritorio de BSPWM y muestra un feedback breve, apilado y animado mediante Dunst/Picom.
@@ -60,6 +61,7 @@ session-profile
 - `launcher-pulse` is retained as a historical/reference helper and is not connected to the current Polybar.
 - `telemetry-pulse` is retained as a historical/reference helper and is not connected to the current Polybar.
 - `xlfr4n-launch` centralizes Dunst launch feedback for apps started from the workspace's own shortcuts and menus.
+- `xLFr4n-dock-launch` is the absolute bridge used by graphical `.desktop` launchers, avoiding shell PATH inheritance issues.
 - `xlfr4n-date` renders the long date in Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow `LC_TIME`.
 - `workspace-hud` listens for BSPWM desktop changes and provides a brief stacked visual transition cue through Dunst/Picom.
 - `audio-control` keeps media keys with visual feedback and uses `pamixer` or `wpctl`.
