@@ -11,7 +11,7 @@ Esta lista define el cierre funcional del proyecto sin sustituir la última prue
 | 🖥️ BSPWM | ✅ | 9 escritorios, borders, padding, reglas flotantes y fullscreen |
 | ⌨️ SXHKD | ✅ | Atajos de ventanas, workspaces, apps, media, captura, lock y VM |
 | 📊 Polybar | ✅ | Barra superior transparente, rail inferior separado y acciones interactivas |
-| 🗓️ Fecha/hora | ✅ | Fecha larga con `LC_TIME`, hora separada y mejor jerarquía visual |
+| 🗓️ Fecha/hora | ✅ | Fecha larga en español por defecto, hora separada y mejor jerarquía visual |
 | 🧭 Workspaces | ✅ | 1→9 abajo a la izquierda + HUD de transición |
 | 🧊 Dock | ✅ | Tint2 → Plank → Polybar, launchers reales, hover y foco de ventanas |
 | 🐱 Kitty | ✅ | Tabs, cursor, transparencia, reload y controles rápidos; Fastfetch queda como entrada visual |
