@@ -53,7 +53,7 @@ This directory contains the reproducible workspace configuration:
 
 ### 🧭 Current presentation
 
-The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces on the lower-left, date/time on the lower-right and a centered icon launcher dock.
+The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces lowered into the dock lane, Spanish date/time on the lower-right, and a centered icon launcher dock.
 
 Configuration is reproducible and should not contain personal secrets or host-only paths. Fastfetch keeps the official Kali logo as its visual base and adds the `⚡ xLFr4n` signature below it. TARGET, local IP and date/time are shown as live session data; `xlfr4n-banner` remains available for manual system snapshots. The displayed date/time follows `LC_TIME`.
 
