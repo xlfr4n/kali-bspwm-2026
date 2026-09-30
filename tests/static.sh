@@ -153,7 +153,7 @@ check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
 check "Target update cadence" grep -Fq "interval = 1" config/polybar/config.ini
 check "Apps static white" grep -Fq 'content = "⌘ APPS"' config/polybar/config.ini
 check "Target white rail" grep -Fq "label-foreground = \${colors.fg}" config/polybar/config.ini
-check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
+check "Kitty frameless single-window" grep -Fq "draw_window_borders_for_single_window no" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
 check "Fastfetch Kali logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
