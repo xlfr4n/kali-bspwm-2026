@@ -13,6 +13,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Dock centrado con iconos reales.
 - Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
+- Kitty opaco por defecto para evitar fugas del wallpaper a través de la superficie de la aplicación.
 - Fastfetch de entrada con logo oficial de Kali + firma `⚡ xLFr4n` y datos TARGET/IP/fecha.
 - Banner de terminal con marco de ancho fijo, reservado para diagnósticos manuales.
 
