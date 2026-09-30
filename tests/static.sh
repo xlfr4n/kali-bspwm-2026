@@ -78,6 +78,8 @@ required_files=(
   scripts/xlfr4n-banner
   scripts/xlfr4n-pulse
   scripts/telemetry-pulse
+  scripts/launcher-pulse
+  scripts/target-pulse
   scripts/xlfr4n-date
   scripts/xlfr4n-launch
   scripts/target-copy
@@ -197,6 +199,10 @@ check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-p
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
 check "Pulse animation signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
 check "Telemetry helper required" test -s scripts/telemetry-pulse
+check "Apps pulse module" grep -Fq "launcher-pulse" config/polybar/config.ini
+check "Target pulse module" grep -Fq "target-pulse" config/polybar/config.ini
+check "Launcher pulse helper" test -s scripts/launcher-pulse
+check "Target pulse helper" test -s scripts/target-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
 check "Right telemetry pulse" grep -Fq "telemetry-pulse" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
