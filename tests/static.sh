@@ -148,6 +148,7 @@ check "Neutral focused border" grep -Fq "focused_border_color '#262a31'" config/
 check "Frameless Kitty" grep -Fq "window_border_width 0" config/kitty/kitty.conf
 check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
 check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
+check "Frameless Plank" grep -Fq "LineWidth=0" config/plank/xLFr4n/dock.theme
 check "Target boot state" grep -Fq "xlfr4n-target-boot-ms" scripts/autostart
 check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
 check "Target update cadence" grep -Fq "interval = 1" config/polybar/config.ini
