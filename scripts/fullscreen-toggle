@@ -13,11 +13,9 @@ is_fullscreen() {
 toggle() {
   bspc query -N -n focused >/dev/null 2>&1 || exit 0
 
-  if is_fullscreen; then
-    bspc node -t "~fullscreen"
-  else
-    bspc node -t "~fullscreen"
-  fi
+  # BSPWM scopes fullscreen to the focused node. Do not stop Polybar or Dock:
+  # they are session-wide services and must remain available on other desktops.
+  bspc node -t "~fullscreen"
 }
 
 toggle
