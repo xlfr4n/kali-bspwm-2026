@@ -9,7 +9,7 @@ Esta carpeta contiene la configuración reproducible del workspace:
 - BSPWM + SXHKD;
 - Polybar;
 - Ghostty + tmux as the primary terminal stack;
-- Ghostty as the only graphical terminal, with tmux as the persistence layer;
+- Ghostty as the only graphical terminal, with tmux as the persistence layer; Ghostty is installed from Kali APT when available and otherwise bootstrapped from its official source tarball;
 - Rofi;
 - Picom;
 - Dunst;
