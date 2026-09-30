@@ -222,6 +222,11 @@ for _s in $(ls scripts | grep -v '^README.md$'); do
   check "Uninstall removes $_s" grep -Fq "\"\$HOME/.local/bin/$_s\"" uninstall.sh
 done
 
+check "Brightness targets backlight class" grep -Fq "brightnessctl -c backlight" scripts/brightness-control
+check "Brightness is safe without backlight" grep -Fq "! brightnessctl -c backlight get" scripts/brightness-control
+check "Brightness helper executable bit" bash -c 'git ls-files --stage scripts/brightness-control | grep -Eq "^100755 .+scripts/brightness-control$"'
+check "Keys helper executable bit" bash -c 'git ls-files --stage scripts/keys-help | grep -Eq "^100755 .+scripts/keys-help$"'
+
 printf "\nStatic checks: %d PASS, %d FAIL\n" "$pass" "$fail"
 [ "$fail" -eq 0 ]
 
