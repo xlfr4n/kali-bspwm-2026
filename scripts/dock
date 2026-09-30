@@ -104,8 +104,8 @@ start_backend(){
 }
 
 stop_backend(){
-  pkill -x tint2 2>/dev/null || true
-  pkill -x plank 2>/dev/null || true
+  pkill -u "$UID" -x tint2 2>/dev/null || true
+  pkill -u "$UID" -x plank 2>/dev/null || true
   pkill -f '[p]olybar dock' 2>/dev/null || true
 }
 
