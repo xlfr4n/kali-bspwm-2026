@@ -183,6 +183,7 @@ check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_confi
 check "Ghostty SSH integration" grep -Fq 'shell-integration-features = ssh-env,ssh-terminfo,no-cursor' config/ghostty/config
 check "Kitty clipboard control" grep -Fq 'clipboard_control write-clipboard write-primary no-append' config/kitty/kitty.conf
 check "Kitty copy shortcut" grep -Fq 'map ctrl+shift+c copy_to_clipboard' config/kitty/kitty.conf
+check "Kitty output copy shortcut" grep -Fq 'map ctrl+shift+alt+a copy_selection_or_last_command_output' config/kitty/kitty.conf
 check "Kitty paste shortcut" grep -Fq 'map ctrl+shift+v paste_from_clipboard' config/kitty/kitty.conf
 check "Kitty full scrollback copy" grep -Fq 'map ctrl+shift+alt+c launch --stdin-source=@screen_scrollback --type=clipboard' config/kitty/kitty.conf
 check "Kitty scrollback viewer" grep -Fq 'map ctrl+shift+h show_scrollback' config/kitty/kitty.conf
