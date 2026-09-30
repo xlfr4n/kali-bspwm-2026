@@ -41,6 +41,8 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
   "$HOME/.local/bin/xlfr4n-banner" \
   "$HOME/.local/bin/xlfr4n-pulse" \
   "$HOME/.local/bin/telemetry-pulse" \
+  "$HOME/.local/bin/launcher-pulse" \
+  "$HOME/.local/bin/target-pulse" \
   "$HOME/.local/bin/brightness-control" \
   "$HOME/.local/bin/keys-help"
 
