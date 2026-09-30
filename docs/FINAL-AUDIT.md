@@ -4,7 +4,7 @@
 
 ## 🇪🇸 Español
 
-Esta lista define el cierre funcional del proyecto sin sustituir la última prueba visual dentro de cada máquina.
+Esta lista define el estado interno del proyecto y separa explícitamente lo validado en código de lo que requiere la última prueba visual dentro de la VM.
 
 | Área | Estado | Qué se cubre |
 |---|---|---|
@@ -25,7 +25,7 @@ Esta lista define el cierre funcional del proyecto sin sustituir la última prue
 | 🩺 Doctor | ✅ | Diagnóstico read-only de runtime, visual, VM y helpers |
 | 🖥️ VM | ✅ | VirtualBox/VMware detectados desde el guest |
 | 🚀 Startup | ✅ | Fases escalonadas + bloqueo single-instance + limpieza scoped al usuario |
-| 🧪 CI | ✅ | Bash/static guards, Rofi y ShellCheck sobre los scripts del proyecto |
+| 🧪 CI | 🟡 | Workflow configurado para Bash/static guards, Rofi y ShellCheck; la última ejecución verificada corresponde a un commit anterior y falló en un guardrail antiguo de Kitty ya corregido en `main` |
 | 📚 Docs | ✅ | README ES/EN, instalación, arquitectura, VM, estilo, Fastfetch y launch feedback |
 
 ### 🔬 Última comprobación externa
@@ -34,7 +34,7 @@ El CI sirve para validar sintaxis, guardas, Rofi y ShellCheck, pero la comprobac
 
 ## 🇬🇧 English
 
-The desktop layers are internally aligned in `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including the official Kali Fastfetch logo + xLFr4n signature, live TARGET/IP/date fields, lower rail geometry and launch notifications.
+The desktop layers are internally aligned in `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including the official Kali Fastfetch logo + xLFr4n signature, live TARGET/IP/date fields, lower rail geometry, identity animation and launch notifications. CI should also be re-checked against the current head when GitHub schedules the next run.
 
 ### ✅ Validation commands
 
