@@ -25,7 +25,7 @@ current_theme() {
 apply() {
   local t="$1"
   local silent="${2:-0}"
-  local accent good warn border plank_rgb
+  local accent good warn plank_rgb
 
   case "$silent" in
     0|1) ;;
@@ -43,29 +43,28 @@ apply() {
       return 2
       ;;
   esac
-  border="#55${accent:1}"
-
+  # Window and UI frames stay neutral; the theme accent is reserved for text, focus and selection.
   sed -i -E \
-    "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/; s/^border = .*/border = $border/" \
+    "s/^accent = .*/accent = $accent/; s/^good = .*/good = $good/; s/^warn = .*/warn = $warn/" \
     "$POLYBAR"
 
   sed -i -E \
-    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/; s/^active_border_color .*/active_border_color $accent/" \
+    "s/^selection_background .*/selection_background $accent/; s/^cursor .*/cursor $accent/; s/^active_border_color .*/active_border_color #262a31/" \
     "$KITTY"
 
   sed -i -E \
-    "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: $border;/" \
+    "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: #262a31;/" \
     "$ROFI"
 
   if [ -f "$ROFI_FALLBACK" ]; then
     sed -i -E \
-      "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: $border;/" \
+      "s/^  accent: .*/  accent: $accent;/; s/^  border: .*/  border: #262a31;/" \
       "$ROFI_FALLBACK"
   fi
 
-  sed -i -E "s/^frame_color = .*/frame_color = \"$accent\"/" "$DUNST"
+  sed -i -E "s/^frame_color = .*/frame_color = \"#262a31\"/" "$DUNST"
   if [ -f "$TINT2" ]; then
-    sed -i -E "s/^border_color = .*/border_color = $accent 60/" "$TINT2"
+    sed -i -E "s/^border_color = .*/border_color = #262a31 0/" "$TINT2"
   fi
 
   if [ -f "$PLANK_THEME" ]; then
@@ -73,9 +72,11 @@ apply() {
   fi
 
   if command -v bspc >/dev/null 2>&1; then
-    bspc config active_border_color "$accent"
-    bspc config focused_border_color "$accent"
+    bspc config normal_border_color "#262a31"
+    bspc config active_border_color "#262a31"
+    bspc config focused_border_color "#262a31"
     bspc config presel_feedback_color "$accent"
+    bspc config border_width 0
   fi
 
   printf '%s\n' "$t" > "$STATE/current"
