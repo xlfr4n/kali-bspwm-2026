@@ -302,8 +302,10 @@ Launchers currently cover:
     Settings
     Network
     Screenshot
+    Firefox
+    Wireshark
 
-The dock uses xLFr4n launch helpers. Existing application windows are focused when their class can be detected; otherwise a new process is started. Desktop launchers use the installed absolute bridge /usr/local/bin/xLFr4n-dock-launch so graphical sessions do not depend on a shell PATH.
+The dock uses xLFr4n launch helpers. Existing application windows are focused when their class can be detected; otherwise a new process is started. Tint2 is kept as the single active primary backend; stale Polybar dock processes are cleared before the session rails are started. Desktop launchers use the installed absolute bridge /usr/local/bin/xLFr4n-dock-launch so graphical sessions do not depend on a shell PATH.
 
 Launch feedback:
 
