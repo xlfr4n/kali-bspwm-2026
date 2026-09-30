@@ -65,7 +65,7 @@ log "Virtualization detected: $HYPER"
 
 # Core packages: the desktop cannot work without them, so a missing one aborts.
 CORE_PACKAGES=(
-  bspwm sxhkd polybar picom ghostty rofi dunst feh xclip xdotool wmctrl
+  bspwm sxhkd polybar picom rofi dunst feh xclip xdotool wmctrl
   zsh git curl wget network-manager tmux
   x11-xserver-utils xserver-xorg
 )
@@ -109,6 +109,17 @@ fi
 if [ "$MODE" = "full" ]; then
   log "Installing packages"
   sudo apt-get install -y "${PACKAGES[@]}"
+fi
+
+if [ "$MODE" = "full" ] && ! command -v ghostty >/dev/null 2>&1; then
+  log "Ghostty is not available from APT; using the official source bootstrap"
+  bash "$ROOT_DIR/scripts/install-ghostty"
+elif [ "$MODE" = "deploy" ] && ! command -v ghostty >/dev/null 2>&1; then
+  die "Ghostty is required for --deploy. Run ./install.sh once to bootstrap it."
+fi
+
+if ! command -v ghostty >/dev/null 2>&1; then
+  die "Ghostty is required by the xLFr4n terminal layer."
 fi
 
 if [ "$MODE" = "full" ]; then
