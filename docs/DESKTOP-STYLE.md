@@ -34,6 +34,7 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Centered real-icon launcher dock.
 - Synchronized xLFr4n accents across Polybar, Kitty, Rofi, Dunst and BSPWM.
 - Picom with soft fades/shadows and no blur for VM compatibility.
+- Kitty is opaque by default so the wallpaper does not bleed through the application surface.
 - Fastfetch login view with the official Kali logo, `⚡ xLFr4n` signature and live TARGET/IP/date data.
 - Fixed-width terminal banner, reserved for manual diagnostics.
 
