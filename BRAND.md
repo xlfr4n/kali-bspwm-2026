@@ -6,7 +6,7 @@
 
 **Kali BSPWM 2026** es el entorno Linux personal de **xlfr4n**: oscuro, rápido, modular y construido para convertir un Kali normal en un escritorio reconocible como parte del mismo laboratorio.
 
-La identidad visual combina **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Ghostty, tmux, Zsh, Dunst, BSPWM y wallpapers. La personalización alcanza desde el selector de sesión hasta el prompt del terminal, las pestañas de Kitty, la barra superior, los menús de energía y los indicadores del escritorio.
+La identidad visual combina **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Ghostty, tmux, Zsh, Dunst, BSPWM y wallpapers. La personalización alcanza desde el selector de sesión hasta el prompt del terminal, los controles de Ghostty, la barra superior, los menús de energía y los indicadores del escritorio.
 
 La regla técnica sigue siendo simple: compatibilidad, legibilidad y reversibilidad primero; estética agresiva después.
 
