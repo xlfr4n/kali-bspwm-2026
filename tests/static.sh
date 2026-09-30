@@ -122,7 +122,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset above dock" grep -Fq "offset-y = 82pt" config/polybar/config.ini
+check "Workspace rail offset above dock" grep -Fq "offset-y = 70pt" config/polybar/config.ini
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -134,7 +134,7 @@ check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
 check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
-check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
+check "Kitty cursor trail" grep -Fq "cursor_trail 20" config/kitty/kitty.conf
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
@@ -147,7 +147,7 @@ check "Fastfetch local IP module" grep -Fq '"type": "localip"' config/fastfetch/
 check "Fastfetch date module" grep -Fq '"type": "datetime"' config/fastfetch/config.jsonc
 check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
-check "Unified launch feedback helper" grep -Fq "xLFr4n // LAUNCH" scripts/xlfr4n-launch
+check "Unified launch feedback helper" grep -Fq "xLFr4n // OPENING" scripts/xlfr4n-launch
 check "Launch helper accepts WM class" grep -Fq -- '--class' scripts/xlfr4n-launch
 check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
 check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
