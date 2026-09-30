@@ -84,6 +84,7 @@ EXTRA_PACKAGES=(
   xdg-utils
   libnotify-bin pipx python3-venv
   kali-tweaks kali-wallpapers-2026
+  wireshark firefox-esr
 )
 
 PACKAGES=("${CORE_PACKAGES[@]}")
