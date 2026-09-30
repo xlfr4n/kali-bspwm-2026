@@ -8,7 +8,8 @@ Esta carpeta contiene la configuración reproducible del workspace:
 
 - BSPWM + SXHKD;
 - Polybar;
-- Kitty;
+- Ghostty + tmux as the primary terminal stack;
+- Ghostty as the only graphical terminal, with tmux as the persistence layer;
 - Rofi;
 - Picom;
 - Dunst;
@@ -31,7 +32,7 @@ BOTTOM
                          iconos del dock
 ```
 
-Las barras no dibujan un panel sólido detrás del contenido. El dock es launcher-only y no pretende ser una taskbar tradicional. Las ventanas son frameless: no se usa un borde rojo de BSPWM, Kitty, Rofi, Tint2 o Plank.
+Las barras no dibujan un panel sólido detrás del contenido. El dock es launcher-only y no pretende ser una taskbar tradicional. Las ventanas son frameless y no usan marcos rojos decorativos.
 
 Al abrir una shell interactiva, Fastfetch muestra el logo oficial de Kali con la firma `⚡ xLFr4n` debajo, junto a TARGET, IP y fecha. El banner ASCII `xlfr4n-banner` se conserva como snapshot manual para diagnósticos.
 
@@ -41,7 +42,7 @@ This directory contains the reproducible workspace configuration:
 
 - BSPWM + SXHKD;
 - Polybar;
-- Kitty;
+
 - Rofi;
 - Picom;
 - Dunst;
@@ -55,6 +56,6 @@ This directory contains the reproducible workspace configuration:
 
 The visual language is intentionally clean: transparent top and bottom rails, compact 1→9 workspaces lowered into the dock lane, Spanish date/time on the lower-right, and a centered icon launcher dock.
 
-Configuration is reproducible and should not contain personal secrets or host-only paths. Fastfetch keeps the official Kali logo as its visual base and adds the `⚡ xLFr4n` signature below it. Kitty is opaque by default so the wallpaper does not bleed through application surfaces; the existing Kitty opacity shortcuts remain available for intentional manual transparency. TARGET, local IP and date/time are shown as live session data; `xlfr4n-banner` remains available for manual system snapshots. The displayed date/time is Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow the session `LC_TIME` locale.
+Configuration is reproducible and should not contain personal secrets or host-only paths. Fastfetch keeps the official Kali logo as its visual base and adds the `⚡ xLFr4n` signature below it. Ghostty is opaque by default so the wallpaper does not bleed through application surfaces. Terminal clipboard and scrollback are handled explicitly by Ghostty + tmux. TARGET, local IP and date/time are shown as live session data; `xlfr4n-banner` remains available for manual system snapshots. The displayed date/time is Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow the session `LC_TIME` locale.
 
 **⚡ xLFr4n · Configuration as documentation**

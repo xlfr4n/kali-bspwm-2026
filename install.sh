@@ -65,8 +65,8 @@ log "Virtualization detected: $HYPER"
 
 # Core packages: the desktop cannot work without them, so a missing one aborts.
 CORE_PACKAGES=(
-  bspwm sxhkd polybar picom kitty rofi dunst feh xclip xdotool wmctrl
-  zsh git curl wget network-manager
+  bspwm sxhkd polybar picom ghostty rofi dunst feh xclip xdotool wmctrl
+  zsh git curl wget network-manager tmux
   x11-xserver-utils xserver-xorg
 )
 
@@ -77,7 +77,7 @@ EXTRA_PACKAGES=(
   network-manager-gnome
   fastfetch fzf ripgrep fd-find bat eza btop htop glances
   flameshot playerctl pamixer pavucontrol jq rsync unzip
-  thunar arandr gpick neovim tmux i3lock xss-lock brightnessctl lxpolkit
+  thunar arandr gpick neovim i3lock xss-lock brightnessctl lxpolkit
   lxappearance
   fonts-font-awesome fonts-jetbrains-mono
   xdg-utils
@@ -112,6 +112,19 @@ if [ "$MODE" = "full" ]; then
 fi
 
 if [ "$MODE" = "full" ]; then
+  legacy_kitty_packages=()
+  for pkg in kitty kitty-doc kitty-shell-integration kitty-terminfo; do
+    if dpkg-query -W -f='${db:Status-Status}' "$pkg" 2>/dev/null | grep -qx 'installed'; then
+      legacy_kitty_packages+=("$pkg")
+    fi
+  done
+  if [ "${#legacy_kitty_packages[@]}" -gt 0 ]; then
+    log "Removing legacy Kitty packages"
+    sudo apt-get purge -y "${legacy_kitty_packages[@]}"
+  fi
+fi
+
+if [ "$MODE" = "full" ]; then
   # Optional visual packages. Kali Rolling can remove individual desktop
   # packages over time, so their absence must never abort the base installer.
   OPTIONAL_PACKAGES=(tint2 plank papirus-icon-theme imagemagick)
@@ -143,7 +156,8 @@ for p in \
   "$CONFIG_DIR/polybar" \
   "$CONFIG_DIR/rofi" \
   "$CONFIG_DIR/picom" \
-  "$CONFIG_DIR/kitty" \
+  "$CONFIG_DIR/ghostty" \
+  "$CONFIG_DIR/tmux" \
   "$CONFIG_DIR/dunst" \
   "$CONFIG_DIR/plank" \
   "$CONFIG_DIR/tint2" \
@@ -163,7 +177,7 @@ done
 log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
 
-for dir in bspwm sxhkd polybar rofi picom kitty dunst plank tint2 fastfetch; do
+for dir in bspwm sxhkd polybar rofi picom ghostty tmux dunst plank tint2 fastfetch; do
   if [ -L "$CONFIG_DIR/$dir" ]; then
     unlink "$CONFIG_DIR/$dir"
   elif [ -d "$CONFIG_DIR/$dir" ]; then
@@ -264,11 +278,15 @@ if [ "$MODE" = "full" ]; then
   fi
 fi
 
-for cmd in bspwm sxhkd polybar kitty rofi dunst picom feh xrandr dock; do
+for cmd in bspwm sxhkd polybar ghostty rofi dunst picom feh xrandr dock tmux xlfr4n-terminal; do
   command -v "$cmd" >/dev/null 2>&1 || warn "Missing command after install: $cmd"
 done
 
-ok "Deployment complete (mode=$MODE)."
+if command -v xlfr4n-terminal >/dev/null 2>&1; then
+  ok "Terminal backend: $(xlfr4n-terminal --backend 2>/dev/null || printf 'unavailable')"
+fi
+
+ok "Deployment complete (mode=$MODE). Ghostty is the only supported graphical terminal."
 ok "Backup: $BACKUP_DIR"
 ok "Reboot and select 'bspwm' when ready."
 ok "After login run: doctor.sh"

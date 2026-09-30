@@ -1,7 +1,7 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 
 super + Return
-    xlfr4n-launch "Kitty" --class kitty -- kitty
+    xlfr4n-launch "Ghostty + tmux" -- xlfr4n-terminal
 
 super + d
     rofi-xlfr4n -show drun -show-icons
@@ -97,7 +97,7 @@ super + ctrl + w
     wallpaper --next
 
 super + shift + l
-    xlfr4n-launch "Kali Lab" --class kali-lab -- kitty --class kali-lab --title Kali-Lab -e lab
+    xlfr4n-launch "Kali Lab" -- xlfr4n-terminal --title Kali-Lab -- lab
 
 super + shift + e
     xlfr4n-launch "Files" --class Thunar -- thunar
@@ -112,16 +112,16 @@ super + shift + m
     monitor-refresh
 
 super + ctrl + r
-    xlfr4n-launch "Doctor" --class xLFr4n-Doctor -- kitty --class xLFr4n-Doctor --title Kali-Doctor -e doctor.sh
+    xlfr4n-launch "Doctor" -- xlfr4n-terminal --title Kali-Doctor -- doctor.sh
 
 super + shift + i
-    xlfr4n-launch "System Snapshot" --class xLFr4n-System -- kitty --class xLFr4n-System --title xLFr4n-System -e xlfr4n-banner --static
+    xlfr4n-launch "System Snapshot" -- xlfr4n-terminal --title xLFr4n-System -- xlfr4n-banner --static
 
 super + ctrl + x
     settarget
 
 super + ctrl + v
-    xlfr4n-launch "Virtualization Tools" --class VMware-Tools -- kitty --class VMware-Tools --title VMware-Tools -e vmware-tools
+    xlfr4n-launch "Virtualization Tools" -- xlfr4n-terminal --title VMware-Tools -- vmware-tools
 
 super + shift + f
     xlfr4n-launch "Firefox" --class firefox -- firefox
@@ -136,7 +136,7 @@ super + shift + c
     xlfr4n-launch "Visual Studio Code" --class Code -- code
 
 super + shift + n
-    xlfr4n-launch "Neovim" --class floating_nvim -- kitty --class floating_nvim -e nvim
+    xlfr4n-launch "Neovim" -- xlfr4n-terminal --title Neovim -- nvim
 
 super + shift + k
     lock-screen

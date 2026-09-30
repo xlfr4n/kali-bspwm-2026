@@ -138,8 +138,8 @@ _kali_prompt() {
 
 add-zsh-hook precmd _kali_prompt
 
-if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" && -z "${TMUX:-}" && -t 1 ]]; then
-  # Keep the guard shell-local so every new interactive Kitty gets the Kali logo.
+if [[ -o interactive && -z "${KALI_BSPWM_FASTFETCH_DONE:-}" && ( -z "${TMUX:-}" || "${XLFR4N_FASTFETCH:-0}" = 1 ) && -t 1 ]]; then
+  # Keep the guard shell-local so every new interactive Ghostty session gets the Kali logo.
   typeset -g KALI_BSPWM_FASTFETCH_DONE=1
   command -v fastfetch >/dev/null 2>&1 && fastfetch
 fi

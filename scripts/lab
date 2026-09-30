@@ -16,12 +16,19 @@ if tmux has-session -t "$name" 2>/dev/null; then
   exec tmux attach-session -t "$name"
 fi
 
-tmux new-session -d -s "$name" -c "$dir"
-tmux rename-window -t "$name:0" main
-tmux split-window -h -t "$name:0" -c "$dir"
-tmux split-window -v -t "$name:0.1" -c "$dir"
-tmux send-keys -t "$name:0.1" 'xlfr4n-banner --static' C-m
-tmux send-keys -t "$name:0.2" 'btop' C-m
-tmux select-pane -t "$name:0.0"
+mkdir -p "$dir"/{recon,loot,notes,evidence,web}
+
+tmux new-session -d -s "$name" -c "$dir" -n main
+tmux split-window -h -t "$name:main" -c "$dir"
+tmux split-window -v -t "$name:main.1" -c "$dir"
+tmux send-keys -t "$name:main.1" 'printf "%s\\n" "⚡ xLFr4n // RECON"; exec zsh' C-m
+tmux send-keys -t "$name:main.0" 'xlfr4n-banner --static' C-m
+tmux send-keys -t "$name:main.2" 'btop' C-m
+tmux new-window -t "$name:" -n recon -c "$dir/recon"
+tmux new-window -t "$name:" -n web -c "$dir/web"
+tmux new-window -t "$name:" -n notes -c "$dir/notes"
+tmux new-window -t "$name:" -n loot -c "$dir/loot"
+tmux select-window -t "$name:main"
+tmux select-pane -t "$name:main.0"
 
 exec tmux attach-session -t "$name"

@@ -32,7 +32,7 @@ La Fase 2 no bloquea la creación de la sesión. Las tareas que pueden consumir 
 | Capa | Responsabilidad |
 |---|---|
 | `install.sh` | Comprueba Kali, detecta virtualización, instala paquetes, crea backups y despliega. |
-| `config/` | Configuración reproducible de BSPWM, SXHKD, Polybar, Kitty, Rofi, Picom, Dunst, Tint2/Plank y Zsh. |
+| `config/` | Configuración reproducible de BSPWM, SXHKD, Polybar, Ghostty + tmux, Rofi, Picom, Dunst, Tint2/Plank y Zsh. |
 | `scripts/` | Menú, dock, target, wallpapers, monitores, themes, diagnóstico y VM helpers. |
 | `docs/` | Procedimientos operativos y validación. |
 | `tests/` | Bash syntax, static guards y ShellCheck/CI. |
@@ -46,9 +46,15 @@ La Fase 2 no bloquea la creación de la sesión. Las tareas que pueden consumir 
 - Fecha + hora: abajo a la derecha.
 - Dock: centrado y launcher-only.
 
+### 🖥️ Terminal layer
+
+Ghostty is the only graphical terminal and tmux owns persistence, pane layouts, scrollback and clipboard workflows. The `xlfr4n-terminal` helper launches Ghostty and uses tmux automatically when available.
+
+Kitty is not part of the project runtime. A fresh deployment does not install, configure or select it.
+
 ### 🎨 Themes
 
-Los themes sincronizan Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM. `pywal16` es opcional.
+Los themes sincronizan Polybar, Ghostty, Rofi, Dunst y los colores de borde de BSPWM. `pywal16` es opcional.
 
 ### 🔐 Principios
 

@@ -1,4 +1,26 @@
+## 2026-09-30 — Ghostty-only terminal consolidation
+
+- Removed the Kitty terminal profile from the repository.
+- Removed Kitty from package installation, deployment, theme integration and runtime diagnostics.
+- Made Ghostty a core package and the only graphical terminal backend.
+- Added explicit Ghostty copy/paste, selection and large-scrollback controls.
+- Added a tmux shortcut (`Ctrl+A`, `A`) to copy the complete active pane history to the X11 clipboard.
+- Removed the Kitty fallback path from the terminal launcher and active documentation.
+- The previous Kitty migration entries remain in this changelog as historical record.
+
 # Changelog
+
+## 2026-09-30 — Ghostty + tmux terminal layer
+
+- Added a Ghostty profile as the preferred terminal layer for the X11/BSPWM workspace.
+- Added a tmux profile for persistent sessions, pane navigation, large scrollback and synchronized-input toggling.
+- Added scripts/xlfr4n-terminal as the single terminal backend selector: Ghostty first, Kitty fallback, explicit override supported.
+- Routed BSPWM shortcuts, Polybar terminal actions, dock launchers and Kali Lab through the new terminal helper.
+- Kept the existing Kitty configuration and package path intact so this stage remains reversible at VM level.
+- Made tmux part of the core package set; Ghostty remains optional and never becomes a hard installer dependency.
+- Added SSH-oriented Ghostty shell integration and Ghostty-compatible tmux RGB settings.
+- Added static and diagnostic guardrails plus an authorized red-team workflow document.
+
 
 ## 2026-09-30 — Kitty surface cleanup
 

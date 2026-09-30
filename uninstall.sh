@@ -13,7 +13,7 @@ if [ -x "$HOME/.local/bin/workspace-hud" ]; then
   "$HOME/.local/bin/workspace-hud" --stop >/dev/null 2>&1 || true
 fi
 
-for proc in sxhkd polybar dunst picom plank tint2; do
+for proc in sxhkd polybar dunst picom plank tint2 ghostty; do
   pkill -u "$UID" -x "$proc" 2>/dev/null || true
 done
 pkill -f '[p]olybar dock' 2>/dev/null || true
@@ -31,7 +31,7 @@ if [ -n "$latest_backup" ]; then
   [[ "$ans" =~ ^[Yy]$ ]] && restore=1
 fi
 
-rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/dunst"   "$HOME/.config/plank"   "$HOME/.config/tint2"   "$HOME/.config/fastfetch"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
+rm -rf   "$HOME/.config/bspwm"   "$HOME/.config/sxhkd"   "$HOME/.config/polybar"   "$HOME/.config/rofi"   "$HOME/.config/picom"   "$HOME/.config/kitty"   "$HOME/.config/ghostty"   "$HOME/.config/tmux"   "$HOME/.config/dunst"   "$HOME/.config/plank"   "$HOME/.config/tint2"   "$HOME/.config/fastfetch"   "$HOME/.config/theme-state"   "$HOME/.config/wallpaper-state"
 
 rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.local/bin/st"   "$HOME/.local/bin/ct"   "$HOME/.local/bin/monitor-refresh"   "$HOME/.local/bin/theme-switch"   "$HOME/.local/bin/power-menu"   "$HOME/.local/bin/screenshot-menu"   "$HOME/.local/bin/keyboard"   "$HOME/.local/bin/start-picom"   "$HOME/.local/bin/doctor.sh"   "$HOME/.local/bin/wallpaper"   "$HOME/.local/bin/lab"   "$HOME/.local/bin/lock-screen"   "$HOME/.local/bin/session-reload"   "$HOME/.local/bin/autostart"   "$HOME/.local/bin/kali-menu"   "$HOME/.local/bin/vmware-tools"   "$HOME/.local/bin/dock"   "$HOME/.local/bin/dock-launch"   "$HOME/.local/bin/mission-control"   "$HOME/.local/bin/desktop-style"   "$HOME/.local/bin/workspace-hud"   "$HOME/.local/bin/workspace-rail"   "$HOME/.local/bin/audio-control"   "$HOME/.local/bin/xlfr4n-date"   "$HOME/.local/bin/xlfr4n-launch"   "$HOME/.local/bin/network-status"   "$HOME/.local/bin/battery-status" \
   "$HOME/.local/bin/fullscreen-toggle" \
@@ -40,6 +40,7 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
   "$HOME/.local/bin/target-copy" \
   "$HOME/.local/bin/xlfr4n-banner" \
   "$HOME/.local/bin/xlfr4n-pulse" \
+  "$HOME/.local/bin/xlfr4n-terminal" \
   "$HOME/.local/bin/telemetry-pulse" \
   "$HOME/.local/bin/launcher-pulse" \
   "$HOME/.local/bin/target-pulse" \
