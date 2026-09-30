@@ -209,11 +209,11 @@ check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
 check "Identity pulse signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
 check_not_present "Right KALI telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
 check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/polybar/config.ini
-check "Target one-shot module" grep -Fq "target-pulse" config/polybar/config.ini
+check "Target one-shot module" grep -Fq "exec = ~/.local/bin/target-pulse" config/polybar/config.ini
 check "Launcher pulse helper" test -s scripts/launcher-pulse
 check "Target pulse helper" test -s scripts/target-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
-check "Right telemetry pulse" grep -Fq "telemetry-pulse" config/polybar/config.ini
+check_not_present "KALI right telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
