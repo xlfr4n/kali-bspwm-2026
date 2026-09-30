@@ -21,7 +21,7 @@
 - Keyboard layout is configurable (`XLFR4N_KB_LAYOUT` or `~/.config/xlfr4n/keyboard`); default remains `es`.
 - Zsh: completion system (`compinit`), shared/deduplicated history, prefix history search on arrow keys, fzf key bindings, `fd` alias for `fdfind`, `zsh-syntax-highlighting` sourced last as it requires.
 - Zsh: the `cat` wrapper only decorates with `bat` on a terminal and without flags, so pipes and options (`cat -A`, `cat -n`) keep real coreutils behaviour; Fastfetch no longer fires in every tmux pane of `lab`.
-- 51 new static guardrails (187 → 238) covering all of the above.
+- 55 new static guardrails (187 → 242) covering all of the above.
 
 ## 2026-09-30 — Terminal, HUD & clock refinement
 
