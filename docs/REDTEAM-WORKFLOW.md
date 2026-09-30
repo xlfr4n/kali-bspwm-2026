@@ -27,7 +27,7 @@ El backend se comprueba con:
 xlfr4n-terminal --backend
 ```
 
-Ghostty se selecciona automáticamente cuando está instalado; Kitty permanece como fallback durante la migración.
+Ghostty es el único terminal gráfico; tmux aporta persistencia, panes y el flujo de consola del laboratorio.
 
 El laboratorio se abre con:
 
