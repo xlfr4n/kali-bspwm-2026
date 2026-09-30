@@ -34,7 +34,7 @@ CI valida sintaxis, guardas, Rofi, launchers `.desktop` y ShellCheck sobre `main
 
 ## 🇬🇧 English
 
-The desktop layers and CI are now aligned on `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including Fastfetch, lower rail geometry, visible identity/telemetry animation, dock click-through and launch notifications.
+The desktop layers and CI are aligned on `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including Fastfetch, lower rail geometry, white `APPS`/`TARGET`, one-shot TARGET entrance animation, frameless windows, dock click-through and launch notifications.
 
 ### ✅ Validation commands
 
