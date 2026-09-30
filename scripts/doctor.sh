@@ -44,6 +44,8 @@ visual_layout_check() {
   grep -Fq "background = #00000000" "$cfg" &&
   grep -Fq "border-size = 0pt" "$cfg" &&
   grep -Fq "[bar/workspace]" "$cfg" &&
+  grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc" &&
+  grep -Fq "bottom_padding 0" "$HOME/.config/bspwm/bspwmrc" &&
   grep -Fq "offset-y = 70pt" "$cfg" &&
   grep -Fq "label-focused-margin = 1" "$cfg" &&
   grep -Fq "modules-right = date time" "$cfg" &&
