@@ -46,6 +46,7 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
   "$HOME/.local/bin/target-pulse" \
   "$HOME/.local/bin/brightness-control" \
   "$HOME/.local/bin/keys-help" \
+  "$HOME/.local/bin/install-ghostty" \
   "$HOME/.local/bin/xLFr4n-dock-launch"
 
 sudo rm -f /usr/share/xsessions/bspwm.desktop
