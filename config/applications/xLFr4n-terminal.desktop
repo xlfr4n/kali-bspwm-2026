@@ -2,7 +2,7 @@
 Type=Application
 Version=1.0
 Name=xLFr4n — Terminal
-Comment=Ghostty + tmux primary terminal with Kitty fallback
+Comment=Ghostty + tmux terminal
 Exec=/usr/local/bin/xLFr4n-dock-launch terminal
 Icon=utilities-terminal
 Terminal=false
