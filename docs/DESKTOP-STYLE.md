@@ -9,7 +9,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Barra superior transparente y sin borde.
 - Barra inferior transparente y sin borde.
 - Escritorios 1→9 compactos abajo a la izquierda.
-- Fecha y hora abajo a la derecha; la fecha usa el idioma temporal (`LC_TIME`) del sistema cuando está disponible.
+- Fecha y hora abajo a la derecha; la fecha larga es española por defecto y admite `XLFR4N_DATE_LOCALE=system` para seguir el locale de la sesión.
 - Dock centrado con iconos reales.
 - Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
