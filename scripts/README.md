@@ -58,7 +58,7 @@ session-profile
 - `xlfr4n-pulse` provides the visible signal sweep used by the top Polybar identity and follows the active theme.
 - `target-pulse` renders `TARGET` in white and only performs the session-entry pulse; it remains static afterwards.
 - `launcher-pulse` is retained as a historical/reference helper and is not connected to the current Polybar.
-- `telemetry-pulse` provides the animated `KALI` marker on the right status rail.
+- `telemetry-pulse` is retained as a historical/reference helper and is not connected to the current Polybar.
 - `xlfr4n-launch` centralizes Dunst launch feedback for apps started from the workspace's own shortcuts and menus.
 - `xlfr4n-date` renders the long date in Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow `LC_TIME`.
 - `workspace-hud` listens for BSPWM desktop changes and provides a brief stacked visual transition cue through Dunst/Picom.
