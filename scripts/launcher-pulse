@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Small left-rail launcher animation; keeps the APPS action visibly alive.
+set -u
+
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+case "$theme" in
+  htb-green) accent='#9fef00' ;;
+  nord) accent='#88c0d0' ;;
+  purple) accent='#bd93f9' ;;
+  *) accent='#ff3344' ;;
+esac
+
+frames=(
+  '⌘ APPS'
+  '⌘ A▸PS'
+  '⌘ AP▸S'
+  '⌘ APP▸'
+  '⌘ APPS'
+  '⌘ APP◂'
+  '⌘ AP◂S'
+  '⌘ A◂PS'
+)
+
+tick="$(awk '{printf "%d", $1 * 8}' /proc/uptime 2>/dev/null || printf '0')"
+index=$((tick % ${#frames[@]}))
+printf '%%{F%s}%s%%{F-}' "$accent" "${frames[$index]}"
