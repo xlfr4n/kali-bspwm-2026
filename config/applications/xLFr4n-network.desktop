@@ -9,4 +9,4 @@ Terminal=false
 NoDisplay=true
 StartupWMClass=nm-connection-editor
 StartupNotify=true
-Categories=Network;Settings;
+Categories=Network;
