@@ -18,7 +18,7 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 
 ### ⚡ Animación
 
-La identidad superior usa una microanimación de typewriter/dissolve: `xLFr4n` aparece y desaparece carácter a carácter con un cursor discreto. El resto de la animación se reserva para lugares donde aporta feedback: cursor, fades de ventana, transición de workspace mediante el HUD, feedback de audio y hover del dock. El banner de Kitty usa fases cortas y un progreso visual para sentirse vivo sin mantener procesos en segundo plano. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
+La identidad superior usa un barrido de señal visible y fijo (`[●···]` → `[···●]`) que mantiene `xLFr4n` siempre legible y adapta el color al tema activo. El resto de la animación se reserva para lugares donde aporta feedback: cursor, fades de ventana, transición de workspace mediante el HUD, feedback de audio y hover del dock. El banner de Kitty usa fases cortas y un progreso visual para sentirse vivo sin mantener procesos en segundo plano. La estructura del escritorio permanece limpia y no depende de animaciones pesadas.
 
 ## 🇬🇧 English
 
