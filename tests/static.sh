@@ -214,7 +214,7 @@ check "Target one-shot module" grep -Fq "exec = ~/.local/bin/target-pulse" confi
 check "Launcher pulse helper" test -s scripts/launcher-pulse
 check "Target pulse helper" test -s scripts/target-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
-check_not_present "KALI right telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
+check_not_present "KALI right telemetry disabled" grep -Eq "modules-right = .*telemetry" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
