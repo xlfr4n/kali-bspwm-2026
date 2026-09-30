@@ -83,20 +83,23 @@ xrandr --query
 
 ### 7️⃣ Terminal stack
 
-The installer keeps Kitty available as a fallback and makes tmux part of the core terminal workflow. Ghostty is attempted as an optional Kali package when the configured repository contains it.
+Ghostty is the only graphical terminal and tmux is part of the core terminal workflow. The full installer installs Ghostty as a core package and removes legacy Kitty packages when present.
 
     xlfr4n-terminal --backend
     tmux -V
-    command -v ghostty || true
-    command -v kitty || true
+    command -v ghostty
+    command -v tmux
 
-Preferred path:
+Operational path:
 
     Ghostty → tmux → zsh / tooling / SSH
 
-Fallback path during migration:
+Clipboard:
 
-    Kitty → tmux → zsh / tooling / SSH
+    Ctrl+Shift+C / Ctrl+Shift+V
+    Ctrl+Shift+A → select visible screen → Ctrl+Shift+C
+    Ctrl+Shift+Home / Ctrl+Shift+End → scroll to extremes
+    Ctrl+A, A in tmux → copy full pane history to the X11 clipboard
 
 ### 8️⃣ Primera comprobación
 
@@ -249,10 +252,11 @@ xrandr --query
 
 ### 7️⃣ Terminal stack
 
-The terminal layer prefers Ghostty with tmux and keeps Kitty as a rollback path while the VM is being validated.
+Ghostty is the only graphical terminal. tmux provides persistence, panes and the lab workspace.
 
     xlfr4n-terminal --backend
     tmux -V
+    command -v ghostty
 
 ### 8️⃣ First health check
 
