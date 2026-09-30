@@ -1,33 +1,40 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Locale-aware long date for the lower-right metadata rail.
+# Consistent Spanish date for the lower-right metadata rail.
+# Set XLFR4N_DATE_LOCALE=system to honor the session locale instead.
 set -u
 
-locale_name="${LC_ALL:-${LC_TIME:-${LANG:-C}}}"
-render_date() {
-  local value raw weekday month day year
-  if value="$(LC_TIME="$locale_name" date '+%A, %-d de %B de %Y' 2>/dev/null)"; then
-    printf '%s\n' "$value"
-    return 0
-  fi
+locale_mode="${XLFR4N_DATE_LOCALE:-es}"
 
-  raw="$(LC_TIME=C date '+%A|%B|%-d|%Y' 2>/dev/null || true)"
-  IFS='|' read -r weekday month day year <<< "$raw"
-  case "$locale_name" in
-    es*)
-      case "$weekday" in
-        Sunday) weekday='domingo' ;; Monday) weekday='lunes' ;; Tuesday) weekday='martes' ;;
-        Wednesday) weekday='miércoles' ;; Thursday) weekday='jueves' ;; Friday) weekday='viernes' ;; Saturday) weekday='sábado' ;;
-      esac
-      case "$month" in
-        January) month='enero' ;; February) month='febrero' ;; March) month='marzo' ;; April) month='abril' ;;
-        May) month='mayo' ;; June) month='junio' ;; July) month='julio' ;; August) month='agosto' ;;
-        September) month='septiembre' ;; October) month='octubre' ;; November) month='noviembre' ;; December) month='diciembre' ;;
-      esac
-      printf '%s, %s de %s de %s\n' "$weekday" "$day" "$month" "$year"
-      ;;
-    *) printf '%s, %s %s %s\n' "$weekday" "$day" "$month" "$year" ;;
-  esac
+render_system_date() {
+  LC_TIME="${LC_TIME:-${LANG:-C}}" date '+%A, %-d de %B de %Y' 2>/dev/null
 }
 
-render_date
+render_spanish_date() {
+  local raw weekday month day year
+  raw="$(LC_TIME=C date '+%A|%B|%-d|%Y' 2>/dev/null || true)"
+  IFS='|' read -r weekday month day year <<< "$raw"
+
+  case "$weekday" in
+    Sunday) weekday='domingo' ;; Monday) weekday='lunes' ;; Tuesday) weekday='martes' ;;
+    Wednesday) weekday='miércoles' ;; Thursday) weekday='jueves' ;; Friday) weekday='viernes' ;; Saturday) weekday='sábado' ;;
+  esac
+
+  case "$month" in
+    January) month='enero' ;; February) month='febrero' ;; March) month='marzo' ;;
+    April) month='abril' ;; May) month='mayo' ;; June) month='junio' ;;
+    July) month='julio' ;; August) month='agosto' ;; September) month='septiembre' ;;
+    October) month='octubre' ;; November) month='noviembre' ;; December) month='diciembre' ;;
+  esac
+
+  printf '%s, %s de %s de %s\n' "$weekday" "$day" "$month" "$year"
+}
+
+case "$locale_mode" in
+  system)
+    render_system_date
+    ;;
+  *)
+    render_spanish_date
+    ;;
+esac
