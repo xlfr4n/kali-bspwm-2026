@@ -32,7 +32,7 @@ choice="$(
     'LOCK      Lock session' \
     'POWER     Power menu' \
     'EXIT      Close menu' |
-    rofi-xlfr4n -dmenu -p 'xlfr4n // Kali' || true
+    rofi-xlfr4n -dmenu -i -matching fuzzy -p '⚡ xLFr4n // Kali' || true
 )"
 
 case "$choice" in
