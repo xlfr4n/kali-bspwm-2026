@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-30 — Kitty surface cleanup
+
+- Set Kitty background opacity to 1.0 by default so the wallpaper cannot bleed through the application surface near the dock/bottom edge.
+- Kept the existing Kitty opacity shortcuts for deliberate manual transparency.
+- Added a static regression guard for the opaque default.
+
 ## 2026-09-30 — Final clean UI pass
 
 ### Visual
