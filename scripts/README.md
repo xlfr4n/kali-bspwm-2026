@@ -40,7 +40,7 @@ session-profile
 
 ### 🇪🇸 Español
 
-- `xlfr4n-terminal` selecciona Ghostty por defecto y usa Kitty como fallback; `XLFR4N_TERMINAL` permite fijar el backend.
+- `xlfr4n-terminal` usa Ghostty como único backend gráfico y abre tmux automáticamente cuando está disponible.
 - `lab` crea un workspace persistente de tmux para organizar recon/web/notas/loot sin ejecutar herramientas de seguridad automáticamente.
 - `xlfr4n-banner` imprime el snapshot de terminal como herramienta manual de diagnóstico.
 - `xlfr4n-pulse` ejecuta el barrido de señal visible de la identidad superior y adapta sus colores al tema activo.
@@ -57,7 +57,7 @@ session-profile
 
 ### 🇬🇧 English
 
-- `xlfr4n-terminal` selects Ghostty by default and falls back to Kitty; `XLFR4N_TERMINAL` can pin a backend.
+- `xlfr4n-terminal` uses Ghostty as the only graphical backend and starts tmux automatically when available.
 - `lab` creates a persistent tmux workspace for recon/web/notes/loot organization without automatically running security tooling.
 - `xlfr4n-banner` prints the terminal system snapshot as a manual diagnostic tool.
 - `xlfr4n-pulse` provides the visible signal sweep used by the top Polybar identity and follows the active theme.
