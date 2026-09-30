@@ -137,6 +137,10 @@ check "Workspace transparent background" grep -Fq "background = #00000000" confi
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
 check "Workspace rail at bottom edge" grep -Fq "offset-y = 0pt" config/polybar/config.ini
+check "Workspace rail full icon lane" grep -Fq "height = 64pt" config/polybar/config.ini
+check "Workspace rail edge offset" grep -Fq "offset-x = 0%" config/polybar/config.ini
+check "Dock edge offset" grep -Fq "offset-y = 0pt" config/polybar/config.ini
+check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
 check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
