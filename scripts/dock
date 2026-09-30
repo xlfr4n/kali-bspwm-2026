@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Floating application dock. Prefers Tint2 real-icon launchers, then Plank, then Polybar.
+# Floating application dock. One backend only: Tint2 first, Plank fallback, Polybar fallback.
 set -Eeuo pipefail
 
 CONFIG="$HOME/.config/plank"
@@ -66,6 +66,11 @@ build_launchers(){
   command -v lxappearance >/dev/null 2>&1 && install_launcher settings "Appearance" "preferences-desktop-theme" "Lxappearance"
   command -v nm-connection-editor >/dev/null 2>&1 && install_launcher network "Network" "network-wired" "Nm-connection-editor"
   command -v flameshot >/dev/null 2>&1 && install_launcher screenshot "Screenshot" "camera-photo"
+  command -v wireshark >/dev/null 2>&1 && install_launcher wireshark "Wireshark" "wireshark" "wireshark"
+  if command -v firefox-esr >/dev/null 2>&1 || command -v firefox >/dev/null 2>&1; then
+    install_launcher firefox "Firefox" "firefox" "firefox"
+  fi
+  command -v zaproxy >/dev/null 2>&1 && install_launcher zaproxy "OWASP ZAP" "zaproxy" "ZAP"
 }
 
 start_tint2(){
