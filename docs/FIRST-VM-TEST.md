@@ -99,8 +99,8 @@ journalctl --user -b --no-pager | tail -200
 Si aparece un problema visual, no reinstales repetidamente. Guarda también:
 
 ```bash
-cat /tmp/kali-bspwm-polybar.log 2>/dev/null || true
-cat /tmp/kali-bspwm-picom.log 2>/dev/null || true
+cat ~/.cache/xlfr4n-polybar.log 2>/dev/null || true
+cat ~/.cache/xlfr4n-picom.log 2>/dev/null || true
 xrandr --query
 ```
 

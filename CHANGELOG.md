@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-09-30 — Review pass: fixes, hardening & QoL
+
+### Fixed
+- `wallpaper`: the temporary index file was named `...tmp.$` (missing `$`), so concurrent runs collided; it now uses the PID (`$$`).
+- `uninstall.sh`: six installed helpers were left behind (`fullscreen-toggle`, `rofi-xlfr4n`, `session-profile`, `target-copy`, `xlfr4n-banner`, `xlfr4n-pulse`). A static test now fails if any script in `scripts/` is not removed by the uninstaller.
+- `sxhkdrc`: removed duplicated bindings (`mission-control` and `theme-switch` were each bound twice).
+- `picom.conf`: removed a duplicated `rounded-corners-exclude` entry.
+- `doctor.sh`: silenced the ShellCheck 0.11 `SC2329` info notice for indirectly invoked checks.
+
+### Hardened
+- Polybar and Picom logs moved from predictable `/tmp` paths to `~/.cache/xlfr4n-*.log`, consistent with the rest of the helpers.
+- `install.sh` now separates core from extra packages: an extra package that disappears from Kali Rolling is skipped with a warning instead of aborting the whole `apt-get install`.
+
+### Added
+- Media keys (`playerctl`), microphone mute and brightness keys (`brightness-control`, `brightnessctl`/`xbacklight`, silent when there is no backlight).
+- `keys-help` (`Super + F1`): searchable cheat sheet generated from the live `sxhkdrc`.
+- Extra navigation: `Super + h/j/k/l`, `Super + [ / ]` (prev/next desktop), `Super + c` (next window), `Super + r` (rotate), `Super + =` (balance).
+- Autostart: normal arrow cursor on the root window, Polkit agent when one is installed, and an **opt-in** idle lock (`echo 10 > ~/.config/xlfr4n/autolock`, minutes; needs `xss-lock`).
+- Keyboard layout is configurable (`XLFR4N_KB_LAYOUT` or `~/.config/xlfr4n/keyboard`); default remains `es`.
+- Zsh: completion system (`compinit`), shared/deduplicated history, prefix history search on arrow keys, fzf key bindings, `fd` alias for `fdfind`, `zsh-syntax-highlighting` sourced last as it requires.
+- Zsh: the `cat` wrapper only decorates with `bat` on a terminal and without flags, so pipes and options (`cat -A`, `cat -n`) keep real coreutils behaviour; Fastfetch no longer fires in every tmux pane of `lab`.
+- 55 new static guardrails (187 → 242) covering all of the above.
+
 ## 2026-09-30 — Terminal, HUD & clock refinement
 
 - Upgraded the xLFr4n Kitty banner with a five-stage progress animation, spinner and deterministic fixed-width output.

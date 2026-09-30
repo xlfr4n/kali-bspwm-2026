@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2317
+# shellcheck disable=SC2317,SC2329
 # ⚡ xlfr4n // Kali BSPWM 2026
 # Diagnostics are read-only: this script never "fixes" a broken session.
 

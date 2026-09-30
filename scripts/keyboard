@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 # ⚡ xlfr4n // Kali BSPWM 2026
+# Keyboard layout. Default: es. Override with XLFR4N_KB_LAYOUT or a one-line file:
+#   echo "us" > ~/.config/xlfr4n/keyboard        (optional variant on line 2)
 set -u
+
+conf="$HOME/.config/xlfr4n/keyboard"
+layout="${XLFR4N_KB_LAYOUT:-}"
+variant=""
+
+if [ -z "$layout" ] && [ -r "$conf" ]; then
+  layout="$(sed -n '1p' "$conf" | tr -cd 'A-Za-z0-9_,-')"
+  variant="$(sed -n '2p' "$conf" | tr -cd 'A-Za-z0-9_,-')"
+fi
+layout="${layout:-es}"
+
 if command -v setxkbmap >/dev/null 2>&1; then
-  setxkbmap -layout es -variant '' >/dev/null 2>&1 || true
+  setxkbmap -layout "$layout" -variant "$variant" >/dev/null 2>&1 || true
 fi

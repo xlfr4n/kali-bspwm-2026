@@ -63,19 +63,42 @@ case "$HYPER" in
 esac
 log "Virtualization detected: $HYPER"
 
-PACKAGES=(
+# Core packages: the desktop cannot work without them, so a missing one aborts.
+CORE_PACKAGES=(
   bspwm sxhkd polybar picom kitty rofi dunst feh xclip xdotool wmctrl
-  zsh zsh-autosuggestions zsh-syntax-highlighting git curl wget
-  network-manager network-manager-gnome
+  zsh git curl wget network-manager
+  x11-xserver-utils xserver-xorg
+)
+
+# Extra packages: nice to have. Kali Rolling renames/drops packages over time, so a
+# missing one is skipped with a warning instead of failing the whole apt transaction.
+EXTRA_PACKAGES=(
+  zsh-autosuggestions zsh-syntax-highlighting
+  network-manager-gnome
   fastfetch fzf ripgrep fd-find bat eza btop htop glances
   flameshot playerctl pamixer pavucontrol jq rsync unzip
-  thunar arandr gpick neovim tmux i3lock
-  x11-xserver-utils xserver-xorg lxappearance
+  thunar arandr gpick neovim tmux i3lock xss-lock brightnessctl lxpolkit
+  lxappearance
   fonts-font-awesome fonts-jetbrains-mono
   xdg-utils
   libnotify-bin pipx python3-venv
   kali-tweaks kali-wallpapers-2026
 )
+
+PACKAGES=("${CORE_PACKAGES[@]}")
+SKIPPED_PACKAGES=()
+if [ "$MODE" = "full" ]; then
+  for pkg in "${EXTRA_PACKAGES[@]}"; do
+    if apt-cache show "$pkg" >/dev/null 2>&1; then
+      PACKAGES+=("$pkg")
+    else
+      SKIPPED_PACKAGES+=("$pkg")
+    fi
+  done
+  if [ "${#SKIPPED_PACKAGES[@]}" -gt 0 ]; then
+    warn "Not available in this Kali snapshot (skipped): ${SKIPPED_PACKAGES[*]}"
+  fi
+fi
 
 if [ "$HYPER" = "vmware" ]; then
   PACKAGES+=(open-vm-tools open-vm-tools-desktop)
