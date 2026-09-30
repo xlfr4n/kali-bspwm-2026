@@ -22,6 +22,7 @@ tmux new-session -d -s "$name" -c "$dir" -n main
 tmux split-window -h -t "$name:main" -c "$dir"
 tmux split-window -v -t "$name:main.1" -c "$dir"
 tmux send-keys -t "$name:main.1" 'printf "⚡ xLFr4n // RECON\nWorking directory: %s\n" "$PWD"; exec zsh' C-m
+tmux send-keys -t "$name:main.0" 'xlfr4n-banner --static' C-m
 tmux send-keys -t "$name:main.2" 'btop' C-m
 tmux new-window -t "$name:" -n recon -c "$dir/recon"
 tmux new-window -t "$name:" -n web -c "$dir/web"
