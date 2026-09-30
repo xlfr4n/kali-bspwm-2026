@@ -57,7 +57,6 @@ required_files=(
   config/sxhkd/sxhkdrc
   config/polybar/config.ini
   config/polybar/launch.sh
-  config/kitty/kitty.conf
   config/ghostty/config
   config/tmux/tmux.conf
   config/fastfetch/config.jsonc
@@ -144,12 +143,8 @@ check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" co
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
-check "Legacy Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
-check "Legacy Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
 check "Neutral focused border" grep -Fq "focused_border_color '#262a31'" config/bspwm/bspwmrc
-check "Legacy Kitty frameless" grep -Fq "window_border_width 0" config/kitty/kitty.conf
-check "Legacy Kitty opaque default" grep -Fq "background_opacity 1.0" config/kitty/kitty.conf
 check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
 check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
 check "Frameless Plank" grep -Fq "LineWidth=0" config/plank/xLFr4n/dock.theme
@@ -158,9 +153,6 @@ check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
 check "Target update cadence" grep -Fq "interval = 1" config/polybar/config.ini
 check "Apps static white" grep -Fq 'content = "⌘ APPS"' config/polybar/config.ini
 check "Target white rail" grep -Fq "label-foreground = \${colors.fg}" config/polybar/config.ini
-check "Legacy Kitty frameless single-window" grep -Fq "draw_window_borders_for_single_window no" config/kitty/kitty.conf
-check "Legacy Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
-check "Legacy Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
 check "Fastfetch Kali logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
 check "Fastfetch Kali logo shape" grep -Fq ".............." config/fastfetch/xLFr4n.logo
 check "Fastfetch xLFr4n signature" grep -Fq '⚡ xLFr4n' config/fastfetch/xLFr4n.logo
@@ -175,26 +167,32 @@ check "Launch helper accepts WM class" grep -Fq -- '--class' scripts/xlfr4n-laun
 check "Launch notification stack" grep -Fq "x-dunst-stack-tag" scripts/xlfr4n-launch
 check "Dock notification stack" grep -Fq "x-dunst-stack-tag" scripts/dock-launch
 check "Primary terminal is Ghostty + tmux" grep -Fq 'xlfr4n-launch "Ghostty + tmux"' config/sxhkd/sxhkdrc
-check "Terminal helper backend selector" grep -Fq 'XLFR4N_TERMINAL=auto|ghostty|kitty' scripts/xlfr4n-terminal
+check "Terminal helper is Ghostty-only" grep -Fq "Ghostty is the only graphical terminal" scripts/xlfr4n-terminal
+check "Terminal helper selects Ghostty" grep -Fq "printf '%s\\n' ghostty" scripts/xlfr4n-terminal
+check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scripts/xlfr4n-terminal
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
-check "Ghostty is optional package" grep -Fq 'OPTIONAL_PACKAGES=(ghostty' install.sh
+check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
+check_not_present "Ghostty is not optional" grep -Fq "OPTIONAL_PACKAGES=(ghostty" install.sh
 check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
 check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_config' config/ghostty/config
 check "Ghostty SSH integration" grep -Fq 'shell-integration-features = ssh-env,ssh-terminfo,no-cursor' config/ghostty/config
-check "Kitty clipboard control" grep -Fq 'clipboard_control write-clipboard write-primary no-append' config/kitty/kitty.conf
-check "Kitty copy shortcut" grep -Fq 'map ctrl+shift+c copy_to_clipboard' config/kitty/kitty.conf
-check "Kitty output copy shortcut" grep -Fq 'map ctrl+shift+alt+a copy_selection_or_last_command_output' config/kitty/kitty.conf
-check "Kitty paste shortcut" grep -Fq 'map ctrl+shift+v paste_from_clipboard' config/kitty/kitty.conf
-check "Kitty full scrollback copy" grep -Fq 'map ctrl+shift+alt+c launch --stdin-source=@screen_scrollback --type=clipboard' config/kitty/kitty.conf
-check "Kitty scrollback viewer" grep -Fq 'map ctrl+shift+h show_scrollback' config/kitty/kitty.conf
+check "Ghostty copy shortcut" grep -Fq 'keybind = ctrl+shift+c=copy_to_clipboard' config/ghostty/config
+check "Ghostty paste shortcut" grep -Fq 'keybind = ctrl+shift+v=paste_from_clipboard' config/ghostty/config
+check "Ghostty select-all shortcut" grep -Fq 'keybind = ctrl+shift+a=select_all' config/ghostty/config
+check "Ghostty scrollback top" grep -Fq 'keybind = ctrl+shift+home=scroll_to_top' config/ghostty/config
+check "Ghostty scrollback bottom" grep -Fq 'keybind = ctrl+shift+end=scroll_to_bottom' config/ghostty/config
+check "Ghostty large scrollback" grep -Fq 'scrollback-limit = 134217728' config/ghostty/config
+check "Ghostty explicit selection" grep -Fq 'copy-on-select = false' config/ghostty/config
+check "Ghostty Shift mouse selection" grep -Fq 'mouse-shift-capture = never' config/ghostty/config
+check "tmux full pane copy" grep -Fq 'capture-pane -JpS - | xclip -selection clipboard -i' config/tmux/tmux.conf
+check "tmux no Kitty terminal feature" bash -c '! grep -Fq "xterm-kitty" config/tmux/tmux.conf'
+check "Kitty config removed" test ! -e config/kitty/kitty.conf
 check "tmux clipboard mode" grep -Fq 'set -s set-clipboard external' config/tmux/tmux.conf
 check "tmux mouse copy" grep -Fq 'bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel' config/tmux/tmux.conf
 check "Ghostty working directory inheritance" grep -Fq 'window-inherit-working-directory = true' config/ghostty/config
 check "tmux Ghostty RGB" grep -Fq 'terminal-features ",xterm-ghostty:RGB"' config/tmux/tmux.conf
 check "tmux synchronize panes" grep -Fq 'bind y set-window-option synchronize-panes' config/tmux/tmux.conf
 check "dock terminal route" grep -Fq 'dock-launch terminal' config/polybar/config.ini
-check "Legacy Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
-check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
 check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
 check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
 check "Network follows default route" grep -Fq "ip route show default" scripts/network-status
