@@ -169,7 +169,7 @@ check "Launch notification stack" grep -Fq "x-dunst-stack-tag" scripts/xlfr4n-la
 check "Dock notification stack" grep -Fq "x-dunst-stack-tag" scripts/dock-launch
 check "Primary terminal is Ghostty + tmux" grep -Fq 'xlfr4n-launch "Ghostty + tmux"' config/sxhkd/sxhkdrc
 check "Terminal helper is Ghostty-only" grep -Fq "Ghostty is the only graphical terminal" scripts/xlfr4n-terminal
-check "Terminal helper selects Ghostty" grep -Fq "printf '%s\\n' ghostty" scripts/xlfr4n-terminal
+check "Terminal helper resolves Ghostty" grep -Fq 'GHOSTTY_BIN="${XLFR4N_GHOSTTY_BIN:-}"' scripts/xlfr4n-terminal
 check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scripts/xlfr4n-terminal
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
 check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
