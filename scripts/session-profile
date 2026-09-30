@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
-# Read-only login timing report from the xLFr4n session log.
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Read-only login timing report for the most recent xLFr4n session.
 
 set -u
 
-LOG="$HOME/.cache/xlfr4n-session.log"
+LOG="${XDG_CACHE_HOME:-$HOME/.cache}/xlfr4n-session.log"
 
 if [ ! -s "$LOG" ]; then
   echo "No session log found: $LOG"
@@ -12,34 +12,62 @@ if [ ! -s "$LOG" ]; then
 fi
 
 awk '
-function ms(ts, a) {
+function ms(ts, a, total) {
   split(ts, a, /[:.]/)
-  return (((a[1] * 60 + a[2]) * 60 + a[3]) * 1000 + a[4])
+  total = (((a[1] * 60 + a[2]) * 60 + a[3]) * 1000 + a[4])
+  return total
 }
 function fmt(v) {
   return sprintf("%.3fs", v / 1000)
 }
-/^\[[0-9][0-9]:[0-9][0-9]:[0-9][0-9]\.[0-9][0-9][0-9]\]/ {
-  ts = substr($0, 2, 12)
-  event = $0
+{
+  line=$0
+  ts=substr(line, 2, 12)
+  if (line !~ /^\[[0-9][0-9]:[0-9][0-9]:[0-9][0-9]\.[0-9][0-9][0-9]\] /)
+    next
+  event=line
   sub(/^\[[^]]+\] /, "", event)
-  now = ms(ts)
 
-  if (first == "") {
-    first = now
-    printf "⚡ xLFr4n session profile\n"
+  # Keep only the most recent complete bootstrap block. This prevents old boots
+  # from producing negative timings after reboot and keeps the report actionable.
+  if (event == "phase=core start") {
+    count=0
+    first=""
+    prev=""
+    delete events
+    delete times
+    delete deltas
   }
 
-  printf "%-32s +%s\n", event, fmt(now - first)
+  count++
+  events[count]=event
+  times[count]=ms(ts)
 
-  if (prev != "") {
-    printf "  ↳ since previous: %s\n", fmt(now - prev)
-  }
+  if (count == 1)
+    first=times[count]
 
-  prev = now
+  if (count > 1)
+    deltas[count]=times[count]-times[count-1]
 }
 END {
-  if (first != "" && prev != "") {
-    printf "\nTotal logged span: %s\n", fmt(prev - first)
+  if (count == 0 || first == "") {
+    print "No complete xLFr4n bootstrap found."
+    exit 1
   }
+
+  # Correct a midnight rollover inside the same bootstrap block.
+  for (i=1; i<=count; i++) {
+    if (i > 1 && times[i] < times[i-1])
+      times[i] += 86400000
+    if (i > 1)
+      deltas[i]=times[i]-times[i-1]
+  }
+
+  printf "⚡ xLFr4n session profile // latest boot\n"
+  for (i=1; i<=count; i++) {
+    printf "%-32s +%s\n", events[i], fmt(times[i]-first)
+    if (i > 1)
+      printf "  ↳ since previous: %s\n", fmt(deltas[i])
+  }
+  printf "\nTotal logged span: %s\n", fmt(times[count]-first)
 }' "$LOG"
