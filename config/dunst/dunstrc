@@ -1,7 +1,7 @@
 # ⚡ xlfr4n // Kali BSPWM 2026
 [global]
 font = JetBrains Mono 10
-frame_width = 2
+frame_width = 1
 corner_radius = 8
 padding = 10
 horizontal_padding = 10
@@ -19,7 +19,7 @@ hide_duplicate_count = true
 history_length = 30
 notification_limit = 8
 show_indicators = true
-frame_color = "#ff3344"
+frame_color = "#262a31"
 background = "#101216"
 foreground = "#f0f3f7"
 
