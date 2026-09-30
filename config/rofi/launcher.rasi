@@ -8,7 +8,7 @@
   accent: #ff3344;
   dark-accent: #ffffff;
   font: "JetBrains Mono 10";
-  border: #66ff3344;
+  border: #22262d;
   background-color: @bg;
   text-color: @fg;
 }
