@@ -3,6 +3,8 @@
 # Unified application launch feedback for keyboard and desktop actions.
 set -Eeuo pipefail
 
+export PATH="$HOME/.local/bin:$PATH"
+
 label="${1:-Application}"
 shift || true
 
@@ -60,5 +62,6 @@ fi
 if kill -0 "$pid" 2>/dev/null; then
   notify "⚡ xLFr4n // OPEN" "$label  ·  launch requested." 1400
 else
-  notify "⚡ xLFr4n // READY" "$label  ·  launch process accepted." 1400
+  notify "⚡ xLFr4n // FAILED" "$label  ·  launch process exited immediately." 3000
+  exit 1
 fi
