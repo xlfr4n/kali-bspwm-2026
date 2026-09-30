@@ -25,9 +25,10 @@ shell-integration-features = ssh-env,ssh-terminfo,no-cursor
 
 window-height = 34
 window-width = 118
-tab-style = powerline
-tab-bar-show = auto
-new-window-inherit-working-directory = true
+gtk-tabs-location = top
+gtk-wide-tabs = false
+window-show-tab-bar = auto
+window-inherit-working-directory = true
 
 keybind = ctrl+shift+t=new_tab
 keybind = ctrl+shift+q=close_surface
