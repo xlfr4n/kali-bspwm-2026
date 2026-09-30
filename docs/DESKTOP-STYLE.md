@@ -11,9 +11,9 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 - Escritorios 1→9 compactos abajo a la izquierda.
 - Fecha y hora abajo a la derecha; la fecha larga es española por defecto y admite `XLFR4N_DATE_LOCALE=system` para seguir el locale de la sesión.
 - Dock centrado con iconos reales.
-- Acento xLFr4n coherente entre Polybar, Kitty, Rofi, Dunst y BSPWM.
+- Acento xLFr4n coherente entre Polybar, Ghostty, Rofi, Dunst y BSPWM.
 - Picom con fades/sombras suaves y sin blur para conservar compatibilidad con VM.
-- Kitty opaco por defecto para evitar fugas del wallpaper a través de la superficie de la aplicación.
+- Ghostty opaco por defecto para evitar fugas del wallpaper a través de la superficie de la aplicación.
 - Fastfetch de entrada con logo oficial de Kali + firma `⚡ xLFr4n` y datos TARGET/IP/fecha.
 - Banner de terminal con marco de ancho fijo, reservado para diagnósticos manuales.
 
@@ -32,9 +32,9 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 - Compact 1→9 workspaces on the lower-left.
 - Date and time on the lower-right.
 - Centered real-icon launcher dock.
-- Synchronized xLFr4n accents across Polybar, Kitty, Rofi, Dunst and BSPWM.
+- Synchronized xLFr4n accents across Polybar, Ghostty, Rofi, Dunst and BSPWM.
 - Picom with soft fades/shadows and no blur for VM compatibility.
-- Kitty is opaque by default so the wallpaper does not bleed through the application surface.
+- Ghostty is opaque by default so the wallpaper does not bleed through the application surface.
 - Fastfetch login view with the official Kali logo, `⚡ xLFr4n` signature and live TARGET/IP/date data.
 - Fixed-width terminal banner, reserved for manual diagnostics.
 
