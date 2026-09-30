@@ -68,6 +68,14 @@ dock_single_backend_check() {
   [ "$active" -le 1 ]
 }
 
+dock_no_stale_polybar_dock_check() {
+  if [ "$(dock --backend 2>/dev/null || true)" = "tint2" ]; then
+    ! pgrep -u "$UID" -af '[p]olybar dock' >/dev/null 2>&1
+  else
+    return 0
+  fi
+}
+
 rofi_launcher_files_check() {
   local app
   for app in     xLFr4n-kali-menu.desktop     xLFr4n-brave.desktop     xLFr4n-terminal.desktop     xLFr4n-files.desktop     xLFr4n-editor.desktop     xLFr4n-code.desktop     xLFr4n-burp.desktop     xLFr4n-lab.desktop     xLFr4n-target.desktop     xLFr4n-btop.desktop     xLFr4n-settings.desktop     xLFr4n-network.desktop     xLFr4n-screenshot.desktop
@@ -156,6 +164,7 @@ check "Workspace rail process" workspace-rail --status
 check "Polybar interactive terminal" grep -Fq "click-left = xlfr4n-terminal --title xLFr4n-Monitor -- btop" "$HOME/.config/polybar/config.ini"
 check "Date helper locale support" grep -Fq "LC_TIME" "$HOME/.local/bin/xlfr4n-date"
 check "Single dock backend" dock_single_backend_check
+check "No stale Polybar dock" dock_no_stale_polybar_dock_check
 check "Target helper" command -v settarget
 check "Monitor helper" command -v monitor-refresh
 check "Theme helper" command -v theme-switch
