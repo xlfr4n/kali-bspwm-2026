@@ -156,6 +156,7 @@ for p in \
   "$CONFIG_DIR/polybar" \
   "$CONFIG_DIR/rofi" \
   "$CONFIG_DIR/picom" \
+  "$CONFIG_DIR/kitty" \
   "$CONFIG_DIR/ghostty" \
   "$CONFIG_DIR/tmux" \
   "$CONFIG_DIR/dunst" \
@@ -173,6 +174,13 @@ for p in "$HOME/.local/share/applications"/xLFr4n-*.desktop          "$HOME/.loc
   [ -e "$p" ] || continue
   backup_path "$p"
 done
+
+# Retire the old Kitty user configuration from the active session.
+# It is backed up above so the change remains recoverable.
+if [ -e "$CONFIG_DIR/kitty" ] || [ -L "$CONFIG_DIR/kitty" ]; then
+  log "Removing retired Kitty user configuration"
+  rm -rf "$CONFIG_DIR/kitty"
+fi
 
 log "Deploying BSPWM configuration"
 mkdir -p "$CONFIG_DIR" "$BIN_DIR"
