@@ -302,7 +302,7 @@ Launchers currently cover:
     Network
     Screenshot
 
-The dock uses xLFr4n launch helpers. Existing application windows are focused when their class can be detected; otherwise a new process is started.
+The dock uses xLFr4n launch helpers. Existing application windows are focused when their class can be detected; otherwise a new process is started. Desktop launchers use the installed absolute bridge /usr/local/bin/xLFr4n-dock-launch so graphical sessions do not depend on a shell PATH.
 
 Launch feedback:
 
@@ -599,7 +599,7 @@ CI additionally validates:
     .desktop launchers
     ShellCheck
 
-The latest verified CI on the previous repository close was green; after this visual pass, CI must validate the new final state again.
+CI validates the repository after every change; the badge above reflects the current state of main.
 
 ---
 
