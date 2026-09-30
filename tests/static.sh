@@ -180,7 +180,7 @@ check "System snapshot hotkey" grep -Fq "xlfr4n-banner --static" config/sxhkd/sx
 check "Target clipboard binding" grep -Fq "click-left = target-copy" config/polybar/config.ini
 check "Interactive comment paste" grep -Fq "setopt interactivecomments" config/zshrc
 check "Fastfetch startup guard" grep -Fq "KALI_BSPWM_FASTFETCH_DONE" config/zshrc
-check "Launch feedback" grep -Fq "xLFr4n • Launching" scripts/dock-launch
+check "Dock launch feedback" grep -Fq "xLFr4n // OPENING" scripts/dock-launch
 check "Lab uses xLFr4n banner" grep -Fq "xlfr4n-banner --static" scripts/lab
 check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
@@ -188,9 +188,10 @@ check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
-check "Pulse animation signal frames" grep -Fq "||" scripts/xlfr4n-pulse
-check "Pulse animation cadence" grep -Fq "interval = 0.18" config/polybar/config.ini
+check "Pulse animation signal frames" grep -Fq "[●···]" scripts/xlfr4n-pulse
+check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
+check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
 check "Workspace rail script" grep -Fq "polybar workspace" scripts/workspace-rail
 check "Workspace rail staged after dock" grep -Fq "workspace-rail" scripts/autostart
