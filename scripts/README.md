@@ -2,7 +2,7 @@
 
 ## 🇪🇸 Español
 
-Los helpers de **Kali BSPWM 2026** forman la capa operativa del escritorio: sesión, target, monitores, temas, wallpapers, VMware, diagnóstico, identidad visual y controles del sistema.
+Los helpers de **Kali BSPWM 2026** forman la capa operativa del escritorio: sesión, target, monitores, temas, wallpapers, VMware, diagnóstico, identidad visual y controles del sistema. Los helpers `launcher-pulse` y `telemetry-pulse` se conservan por compatibilidad del repositorio, pero no se cargan en la interfaz actual.
 
 Todos los scripts activos llevan la firma **xlfr4n**.
 
