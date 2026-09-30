@@ -44,9 +44,10 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
   "$HOME/.local/bin/launcher-pulse" \
   "$HOME/.local/bin/target-pulse" \
   "$HOME/.local/bin/brightness-control" \
-  "$HOME/.local/bin/keys-help"
+  "$HOME/.local/bin/keys-help" \
+  "$HOME/.local/bin/xLFr4n-dock-launch"
 
-sudo rm -f /usr/share/xsessions/bspwm.desktop
+sudo rm -f /usr/local/bin/xLFr4n-dock-launch /usr/share/xsessions/bspwm.desktop
 
 rm -f "$HOME/.cache/xlfr4n-workspace-hud.pid"
 rm -f "$HOME/.cache/xlfr4n-target-boot-ms"
