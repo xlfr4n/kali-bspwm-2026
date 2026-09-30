@@ -172,6 +172,7 @@ check "Terminal helper selects Ghostty" grep -Fq "printf '%s\\n' ghostty" script
 check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scripts/xlfr4n-terminal
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
 check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
+check "Installer purges legacy Kitty" grep -Fq "legacy_kitty_packages" install.sh
 check_not_present "Ghostty is not optional" grep -Fq "OPTIONAL_PACKAGES=(ghostty" install.sh
 check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
 check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_config' config/ghostty/config
@@ -190,7 +191,7 @@ check "Kitty config removed" test ! -e config/kitty/kitty.conf
 check "tmux clipboard mode" grep -Fq 'set -s set-clipboard external' config/tmux/tmux.conf
 check "tmux mouse copy" grep -Fq 'bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel' config/tmux/tmux.conf
 check "Ghostty working directory inheritance" grep -Fq 'window-inherit-working-directory = true' config/ghostty/config
-check "tmux Ghostty RGB" grep -Fq 'terminal-features ",xterm-ghostty:RGB"' config/tmux/tmux.conf
+check "tmux Ghostty RGB + clipboard" grep -Fq 'terminal-features ",xterm-ghostty:RGB,clipboard"' config/tmux/tmux.conf
 check "tmux synchronize panes" grep -Fq 'bind y set-window-option synchronize-panes' config/tmux/tmux.conf
 check "dock terminal route" grep -Fq 'dock-launch terminal' config/polybar/config.ini
 check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
