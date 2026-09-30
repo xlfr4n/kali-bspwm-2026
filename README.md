@@ -290,7 +290,7 @@ La zona inferior también es transparente:
 
 Los escritorios están deliberadamente **pequeños y compactos**. El escritorio activo se distingue mediante un acento/línea fina, no mediante una caja. Al cambiar de escritorio, `workspace-hud` añade una señal breve y animada para confirmar el foco sin llenar la pantalla.
 
-Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro. La fecha larga usa el idioma temporal predeterminado del sistema mediante `LC_TIME` cuando la locale está disponible.
+Fecha y hora se mantienen separadas para que sean más legibles y no formen otro recuadro. La fecha larga usa español por defecto para mantener una identidad visual consistente; puede volver al locale de la sesión con `XLFR4N_DATE_LOCALE=system`.
 
 ## Dock
 
