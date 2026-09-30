@@ -49,7 +49,8 @@ Usage:
 
 Backend:
   Ghostty only.
-  tmux is used automatically when available.
+  Every graphical terminal gets a fresh tmux session by default.
+  Set XLFR4N_TMUX_SESSION to reuse a specific session explicitly.
 EOF
 }
 
@@ -89,12 +90,12 @@ while [ "$#" -gt 0 ]; do
 done
 
 
-tmux_session="${XLFR4N_TMUX_SESSION:-xLFr4n}"
+tmux_session="${XLFR4N_TMUX_SESSION:-xLFr4n-$(date +%Y%m%d-%H%M%S)-$}"
 
 if [ "${#cmd[@]}" -eq 0 ]; then
   if command -v tmux >/dev/null 2>&1; then
     if [ -n "$title" ]; then
-      exec "$GHOSTTY_BIN" --title="$title" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+      exec "$GHOSTTY_BIN" --title="$title" -e tmux new-session -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
     fi
     exec "$GHOSTTY_BIN" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
   fi
