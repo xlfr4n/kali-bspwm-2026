@@ -180,6 +180,9 @@ check "Launch notification stack" grep -Fq "x-dunst-stack-tag" scripts/xlfr4n-la
 check "Dock notification stack" grep -Fq "x-dunst-stack-tag" scripts/dock-launch
 check "Primary terminal is Ghostty + tmux" grep -Fq 'xlfr4n-launch "Ghostty + tmux"' config/sxhkd/sxhkdrc
 check "Terminal helper is Ghostty-only" grep -Fq "Ghostty is the only graphical terminal" scripts/xlfr4n-terminal
+check "Terminal helper creates fresh tmux session" grep -Fq 'tmux new-session -s "$tmux_session"' scripts/xlfr4n-terminal
+check_not_present "Terminal helper does not auto-attach tmux session" grep -Fq "new-session -A -s" scripts/xlfr4n-terminal
+check "Terminal helper uses unique default tmux session" grep -Fq 'xLFr4n-$(date +%Y%m%d-%H%M%S)-$' scripts/xlfr4n-terminal
 check "Terminal helper resolves Ghostty" grep -Fq 'GHOSTTY_BIN="${XLFR4N_GHOSTTY_BIN:-}"' scripts/xlfr4n-terminal
 check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scripts/xlfr4n-terminal
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
