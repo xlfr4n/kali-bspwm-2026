@@ -3,6 +3,14 @@
 # Central terminal launcher. Ghostty is the only graphical terminal.
 set -Eeuo pipefail
 
+export PATH="$HOME/.local/bin:$PATH"
+GHOSTTY_BIN="${XLFR4N_GHOSTTY_BIN:-}"
+if [ -z "$GHOSTTY_BIN" ] && command -v ghostty >/dev/null 2>&1; then
+  GHOSTTY_BIN="$(command -v ghostty)"
+elif [ -z "$GHOSTTY_BIN" ] && [ -x "$HOME/.local/bin/ghostty" ]; then
+  GHOSTTY_BIN="$HOME/.local/bin/ghostty"
+fi
+
 title=""
 cmd=()
 
@@ -23,11 +31,11 @@ EOF
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --backend)
-      command -v ghostty >/dev/null 2>&1 || {
+      [ -x "$GHOSTTY_BIN" ] || {
         echo "Ghostty is not installed." >&2
         exit 1
       }
-      printf '%s\n' ghostty
+      printf '%s\n' "$GHOSTTY_BIN"
       exit 0
       ;;
     --ghostty)
@@ -65,15 +73,15 @@ tmux_session="${XLFR4N_TMUX_SESSION:-xLFr4n}"
 if [ "${#cmd[@]}" -eq 0 ]; then
   if command -v tmux >/dev/null 2>&1; then
     if [ -n "$title" ]; then
-      exec ghostty --title="$title" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+      exec "$GHOSTTY_BIN" --title="$title" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
     fi
-    exec ghostty -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
+    exec "$GHOSTTY_BIN" -e tmux new-session -A -s "$tmux_session" 'env XLFR4N_FASTFETCH=1 zsh'
   fi
 
   if [ -n "$title" ]; then
     exec ghostty --title="$title"
   fi
-  exec ghostty
+  exec "$GHOSTTY_BIN"
 fi
 
 if [ -n "$title" ]; then
