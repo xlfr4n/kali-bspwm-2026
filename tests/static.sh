@@ -58,6 +58,8 @@ required_files=(
   config/polybar/config.ini
   config/polybar/launch.sh
   config/kitty/kitty.conf
+  config/ghostty/config
+  config/tmux/tmux.conf
   config/fastfetch/config.jsonc
   config/fastfetch/xLFr4n.logo
   config/rofi/launcher.rasi
@@ -83,6 +85,7 @@ required_files=(
   scripts/target-pulse
   scripts/xlfr4n-date
   scripts/xlfr4n-launch
+  scripts/xlfr4n-terminal
   scripts/xLFr4n-dock-launch
   scripts/target-copy
   scripts/fullscreen-toggle
@@ -141,12 +144,12 @@ check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" co
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
-check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
-check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
+check "Legacy Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
+check "Legacy Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
 check "Neutral focused border" grep -Fq "focused_border_color '#262a31'" config/bspwm/bspwmrc
-check "Frameless Kitty" grep -Fq "window_border_width 0" config/kitty/kitty.conf
-check "Kitty opaque default" grep -Fq "background_opacity 1.0" config/kitty/kitty.conf
+check "Legacy Kitty frameless" grep -Fq "window_border_width 0" config/kitty/kitty.conf
+check "Legacy Kitty opaque default" grep -Fq "background_opacity 1.0" config/kitty/kitty.conf
 check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
 check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
 check "Frameless Plank" grep -Fq "LineWidth=0" config/plank/xLFr4n/dock.theme
@@ -155,9 +158,9 @@ check "Target one-shot timing" grep -Fq "elapsed < 1400" scripts/target-pulse
 check "Target update cadence" grep -Fq "interval = 1" config/polybar/config.ini
 check "Apps static white" grep -Fq 'content = "⌘ APPS"' config/polybar/config.ini
 check "Target white rail" grep -Fq "label-foreground = \${colors.fg}" config/polybar/config.ini
-check "Kitty frameless single-window" grep -Fq "draw_window_borders_for_single_window no" config/kitty/kitty.conf
-check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
-check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
+check "Legacy Kitty frameless single-window" grep -Fq "draw_window_borders_for_single_window no" config/kitty/kitty.conf
+check "Legacy Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
+check "Legacy Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
 check "Fastfetch Kali logo source" grep -Fq '"source": "~/.config/fastfetch/xLFr4n.logo"' config/fastfetch/config.jsonc
 check "Fastfetch Kali logo shape" grep -Fq ".............." config/fastfetch/xLFr4n.logo
 check "Fastfetch xLFr4n signature" grep -Fq '⚡ xLFr4n' config/fastfetch/xLFr4n.logo
@@ -171,8 +174,18 @@ check "Unified launch feedback helper" grep -Fq "xLFr4n // OPENING" scripts/xlfr
 check "Launch helper accepts WM class" grep -Fq -- '--class' scripts/xlfr4n-launch
 check "Launch notification stack" grep -Fq "x-dunst-stack-tag" scripts/xlfr4n-launch
 check "Dock notification stack" grep -Fq "x-dunst-stack-tag" scripts/dock-launch
-check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
-check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
+check "Primary terminal is Ghostty + tmux" grep -Fq 'xlfr4n-launch "Ghostty + tmux"' config/sxhkd/sxhkdrc
+check "Terminal helper backend selector" grep -Fq 'XLFR4N_TERMINAL=auto|ghostty|kitty' scripts/xlfr4n-terminal
+check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
+check "Ghostty is optional package" grep -Fq 'OPTIONAL_PACKAGES=(ghostty' install.sh
+check "Ghostty opaque surface" grep -Fq 'background-opacity = 1.0' config/ghostty/config
+check "Ghostty reload binding" grep -Fq 'keybind = ctrl+shift+comma=reload_config' config/ghostty/config
+check "Ghostty SSH integration" grep -Fq 'shell-integration-features = ssh-env,ssh-terminfo,no-cursor' config/ghostty/config
+check "Ghostty working directory inheritance" grep -Fq 'window-inherit-working-directory = true' config/ghostty/config
+check "tmux Ghostty RGB" grep -Fq 'terminal-features ",xterm-ghostty:RGB"' config/tmux/tmux.conf
+check "tmux synchronize panes" grep -Fq 'bind y set-window-option synchronize-panes' config/tmux/tmux.conf
+check "dock terminal route" grep -Fq 'dock-launch terminal' config/polybar/config.ini
+check "Legacy Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
 check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
 check "Workspace HUD subscribe" grep -Fq "bspc subscribe desktop_focus" scripts/workspace-hud
 check "Workspace HUD stack tag" grep -Fq "x-dunst-stack-tag" scripts/workspace-hud
@@ -228,7 +241,7 @@ check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
 check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
 check "Default wallpaper preserves source image" grep -Fq 'XLFR4N_WALLPAPER_RAW=1 set_wallpaper "$DEFAULT_WALLPAPER"' scripts/wallpaper
-check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch kitty" config/polybar/config.ini
+check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
 check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
 
@@ -287,7 +300,7 @@ check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
 check "Polybar target action opens terminal" grep -Fq 'Kali-Target -e settarget' config/polybar/config.ini
 check "Polybar doctor action opens terminal" grep -Fq 'xLFr4n-Doctor -e doctor.sh' config/polybar/config.ini
 check "Theme synchronizes Plank" grep -Fq 'PLANK_THEME' scripts/theme-switch
-check "Theme feedback mentions Kitty reload" grep -Fq 'Ctrl+Shift+F5' scripts/theme-switch
+check "Theme feedback mentions Ghostty reload" grep -Fq 'Ctrl+Shift+, to reload' scripts/theme-switch
 check "VM-aware Picom backend" grep -Fq 'systemd-detect-virt' scripts/start-picom
 check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
 check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
