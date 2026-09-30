@@ -46,7 +46,7 @@ visual_layout_check() {
   grep -Fq "[bar/workspace]" "$cfg" &&
   grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc" &&
   grep -Fq "bottom_padding 0" "$HOME/.config/bspwm/bspwmrc" &&
-  grep -Fq "offset-y = 78pt" "$cfg" &&
+  grep -Fq "offset-y = 0pt" "$cfg" &&
   grep -Fq "label-focused-margin = 1" "$cfg" &&
   grep -Fq "modules-right = date time" "$cfg" &&
   grep -Fq "margin-bottom = 0pt" "$cfg"
@@ -152,7 +152,7 @@ check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl 
 check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
-check "Workspace rail spacing" grep -Fq "offset-y = 78pt" "$HOME/.config/polybar/config.ini"
+check "Workspace rail spacing" grep -Fq "offset-y = 0pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
 check "Ghostty backend" sh -c 'backend="$(xlfr4n-terminal --backend 2>/dev/null)" && [ -x "$backend" ]'
 check "Ghostty user binary" test -x "$HOME/.local/bin/ghostty"
