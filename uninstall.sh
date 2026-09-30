@@ -63,3 +63,6 @@ fi
 
 printf 'Kali BSPWM user configuration removed. Packages were intentionally left installed.\n'
 printf 'Your timestamped backups remain under ~/.kali-bspwm-backups/.\n'
+
+# Desktop-entry bridge installed outside the user bin.
+sudo rm -f /usr/local/bin/xLFr4n-dock-launch 2>/dev/null || true
