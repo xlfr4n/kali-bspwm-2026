@@ -15,7 +15,7 @@ esac
 signals=( '●···' '◉···' '○●··' '·◉··' '··●·' '··◉·' '···●' '··◉·' '··●·' '·◉··' '○●··' '◉···' )
 frames=()
 for signal in "${signals[@]}"; do
-  frames+=( "%{F$accent}⚡ xLFr4n%{F$muted}  [$signal]  KALI%{F-}" )
+  frames+=( "%{F$accent}⚡ xLFr4n%{F$accent}  [$signal]  KALI%{F-}" )
 done
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
