@@ -8,33 +8,42 @@ command -v rofi-xlfr4n >/dev/null 2>&1 || {
   exit 1
 }
 
-choice="$(
-  printf '%s\n' \
-    'TERMINAL  Ghostty + tmux' \
-    'SPOTLIGHT Launch apps' \
-    'MISSION   Window overview' \
-    'BRAVE     Open Brave' \
-    'FIREFOX   Open Firefox' \
-    'WIRESHARK Capture & analyse traffic' \
-    'BURP      Open Burp Suite' \
-    'DOCK      Toggle floating dock' \
-    'REPAIR    Re-sync dock backends' \
-    'DESKTOP   Apply desktop style' \
-    'TARGET    Set / clear target' \
-    'THEME     Change theme' \
-    'WALLPAPER Change wallpaper' \
-    'LAB       Open Kali Lab' \
-    'MONITOR   Refresh displays' \
-    'NETWORK   Network manager' \
-    'DOCTOR    Run diagnostics' \
-    'SYSTEM    Terminal system snapshot' \
-    'VIRT      Virtualization tools' \
-    'SCREEN    Screenshot menu' \
-    'LOCK      Lock session' \
-    'POWER     Power menu' \
-    'EXIT      Close menu' |
-    rofi-xlfr4n -dmenu -i -matching fuzzy -p '⚡ xLFr4n // Kali' || true
-)"
+entries=$(cat <<'EOF'
+TERMINAL  Ghostty + tmux
+SPOTLIGHT Launch apps
+MISSION   Window overview
+BRAVE     Open Brave
+DOCK      Toggle floating dock
+REPAIR    Re-sync dock backends
+DESKTOP   Apply desktop style
+TARGET    Set / clear target
+THEME     Change theme
+WALLPAPER Change wallpaper
+LAB       Open Kali Lab
+MONITOR   Refresh displays
+NETWORK   Network manager
+DOCTOR    Run diagnostics
+SYSTEM    Terminal system snapshot
+VIRT      Virtualization tools
+SCREEN    Screenshot menu
+LOCK      Lock session
+POWER     Power menu
+EXIT      Close menu
+EOF
+)
+if command -v firefox-esr >/dev/null 2>&1 || command -v firefox >/dev/null 2>&1; then
+  entries=$entries$'\n'"FIREFOX   Open Firefox"
+fi
+if command -v wireshark >/dev/null 2>&1; then
+  entries=$entries$'\n'"WIRESHARK Capture & analyse traffic"
+fi
+if command -v burpsuite >/dev/null 2>&1; then
+  entries=$entries$'\n'"BURP      Open Burp Suite"
+fi
+if command -v zaproxy >/dev/null 2>&1; then
+  entries=$entries$'\n'"ZAPROXY   Open OWASP ZAP"
+fi
+choice="$(printf '%s\n' "$entries" | rofi-xlfr4n -dmenu -i -matching fuzzy -p '⚡ xLFr4n // Kali' || true)"
 
 case "$choice" in
   TERMINAL*) dock-launch terminal ;;
