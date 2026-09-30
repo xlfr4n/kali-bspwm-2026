@@ -76,6 +76,7 @@ required_files=(
   scripts/doctor.sh
   scripts/xlfr4n-banner
   scripts/xlfr4n-pulse
+  scripts/telemetry-pulse
   scripts/xlfr4n-date
   scripts/xlfr4n-launch
   scripts/target-copy
@@ -123,7 +124,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset above dock" grep -Fq "offset-y = 70pt" config/polybar/config.ini
+check "Workspace rail offset above dock" grep -Fq "offset-y = 40pt" config/polybar/config.ini
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -193,7 +194,9 @@ check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
 check "Pulse animation signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
+check "Telemetry helper required" test -s scripts/telemetry-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
+check "Right telemetry pulse" grep -Fq "telemetry-pulse" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
 check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
