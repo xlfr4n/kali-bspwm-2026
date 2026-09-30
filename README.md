@@ -817,7 +817,7 @@ command -v vmware-user || true
 Both the upper and lower UI rails are intentionally **transparent and borderless**.
 
 - Compact workspaces 1→9 on the lower-left.
-- Date and time on the lower-right, with the long date following the system `LC_TIME` locale when available.
+- Date and time stay on the lower-right; the long date is Spanish by default and can follow the session locale with `XLFR4N_DATE_LOCALE=system`.
 - Icon dock centered below.
 - System status in the upper rail.
 - Accent colors come from the active xLFr4n theme.
