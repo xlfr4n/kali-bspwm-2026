@@ -1,0 +1,36 @@
+# ⚡ xLFr4n // Ghostty terminal profile
+# Primary terminal for Kali BSPWM 2026.
+# Kitty remains available as the rollback/fallback terminal.
+
+font-family = JetBrains Mono
+font-size = 11
+background = #101216
+foreground = #f0f3f7
+cursor-color = #ff3344
+selection-background = #ff3344
+selection-foreground = #101216
+background-opacity = 1.0
+window-padding-x = 10
+window-padding-y = 8
+window-decoration = none
+window-save-state = never
+confirm-close-surface = false
+
+cursor-style = block
+cursor-style-blink = true
+scrollback-limit = 10000
+mouse-scroll-multiplier = 4
+shell-integration = zsh
+shell-integration-features = ssh-env,ssh-terminfo,no-cursor
+
+window-height = 34
+window-width = 118
+tab-style = powerline
+tab-bar-show = auto
+new-window-inherit-working-directory = true
+
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+q=close_surface
+keybind = ctrl+shift+right=next_tab
+keybind = ctrl+shift+left=previous_tab
+keybind = ctrl+shift+comma=reload_config
