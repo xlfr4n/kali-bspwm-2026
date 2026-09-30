@@ -3,11 +3,11 @@
 [PlankTheme]
 TopRoundness=12
 BottomRoundness=12
-LineWidth=1
-OuterStrokeColor=255;;255;;255;;45
+LineWidth=0
+OuterStrokeColor=38;;42;;49;;0
 FillStartColor=14;;17;;22;;235
 FillEndColor=14;;17;;22;;235
-InnerStrokeColor=255;;255;;255;;12
+InnerStrokeColor=38;;42;;49;;0
 
 [PlankDockTheme]
 HorizPadding=4
