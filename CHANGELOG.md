@@ -1,3 +1,13 @@
+## 2026-09-30 — Dock / menu hardening
+
+- Fixed fullscreen transitions so Polybar and the dock remain visible when switching workspaces.
+- Separated the lower workspace rail from the floating dock with a dedicated visual gap.
+- Expanded the Tint2 launcher lane for reliable icon spacing.
+- Hardened the session so stale Polybar dock processes are cleared before the top/workspace rails start.
+- Added direct dock/menu routes for Firefox and Wireshark, with optional OWASP ZAP support when installed.
+- Added an xLFr4n dock re-sync action and modernized the Rofi menu search.
+- Added Wireshark and Firefox ESR to the full installer package set; Wireshark group membership is prepared when available.
+
 ## 2026-09-30 — Ghostty-only terminal consolidation
 
 - Removed the Kitty terminal profile from the repository.
