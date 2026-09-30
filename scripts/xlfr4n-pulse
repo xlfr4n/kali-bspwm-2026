@@ -4,20 +4,19 @@
 # The brand never disappears; only the signal sweep moves.
 set -u
 
-frames=(
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [●···]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [◉···]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [○●··]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [·◉··]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··●·]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··◉·]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#ff3344}  [···●]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··◉·]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··●·]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [·◉··]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [○●··]  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [◉···]  KALI%{F-}'
-)
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+case "$theme" in
+  htb-green) accent='#9fef00'; muted='#7d8f78' ;;
+  nord) accent='#88c0d0'; muted='#81a1c1' ;;
+  purple) accent='#bd93f9'; muted='#9183a8' ;;
+  *) accent='#ff3344'; muted='#7d8590' ;;
+esac
+
+signals=( '●···' '◉···' '○●··' '·◉··' '··●·' '··◉·' '···●' '··◉·' '··●·' '·◉··' '○●··' '◉···' )
+frames=()
+for signal in "${signals[@]}"; do
+  frames+=( "%{F$accent}⚡ xLFr4n%{F$muted}  [$signal]  KALI%{F-}" )
+done
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
 index=$((tick % ${#frames[@]}))
