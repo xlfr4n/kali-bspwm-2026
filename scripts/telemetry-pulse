@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Live right-rail pulse: a lightweight signal sweep proving the status surface is alive.
+set -u
+
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+case "$theme" in
+  htb-green) accent='#9fef00'; muted='#728060' ;;
+  nord) accent='#88c0d0'; muted='#71849a' ;;
+  purple) accent='#bd93f9'; muted='#877b9d' ;;
+  *) accent='#ff3344'; muted='#7d8590' ;;
+esac
+
+frames=(
+  'KALI [●···]'
+  'KALI [◉···]'
+  'KALI [○●··]'
+  'KALI [·◉··]'
+  'KALI [··●·]'
+  'KALI [··◉·]'
+  'KALI [···●]'
+  'KALI [··◉·]'
+  'KALI [··●·]'
+  'KALI [·◉··]'
+  'KALI [○●··]'
+  'KALI [◉···]'
+)
+
+tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
+index=$((tick % ${#frames[@]}))
+printf '%%{F%s}%s%%{F-}' "$accent" "${frames[$index]}"
