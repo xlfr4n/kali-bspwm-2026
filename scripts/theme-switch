@@ -5,7 +5,6 @@
 set -Eeuo pipefail
 
 POLYBAR="$HOME/.config/polybar/config.ini"
-KITTY="$HOME/.config/kitty/kitty.conf"
 GHOSTTY="$HOME/.config/ghostty/config"
 ROFI="$HOME/.config/rofi/launcher.rasi"
 DUNST="$HOME/.config/dunst/dunstrc"
