@@ -18,6 +18,7 @@ choice="$(
     'WIRESHARK Capture & analyse traffic' \
     'BURP      Open Burp Suite' \
     'DOCK      Toggle floating dock' \
+    'REPAIR    Re-sync dock backends' \
     'DESKTOP   Apply desktop style' \
     'TARGET    Set / clear target' \
     'THEME     Change theme' \
