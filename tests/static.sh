@@ -150,6 +150,8 @@ check "Zsh starts Fastfetch" grep -Fq "command -v fastfetch" config/zshrc
 check_not_present "Zsh does not auto-start ASCII banner" grep -Fq "xlfr4n-banner --animate" config/zshrc
 check "Unified launch feedback helper" grep -Fq "xLFr4n // OPENING" scripts/xlfr4n-launch
 check "Launch helper accepts WM class" grep -Fq -- '--class' scripts/xlfr4n-launch
+check "Launch notification stack" grep -Fq "x-dunst-stack-tag" scripts/xlfr4n-launch
+check "Dock notification stack" grep -Fq "x-dunst-stack-tag" scripts/dock-launch
 check "Launch feedback in super Return" grep -Fq 'xlfr4n-launch "Kitty"' config/sxhkd/sxhkdrc
 check "Kitty hyperlink underline mode" grep -Fq "underline_hyperlinks hover" config/kitty/kitty.conf
 check_not_present "Kitty invalid hyperlink underline mode" grep -Fq "underline_hyperlinks yes" config/kitty/kitty.conf
@@ -190,7 +192,7 @@ check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
 check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
-check "Pulse animation signal frames" grep -Fq "[●···]" scripts/xlfr4n-pulse
+check "Pulse animation signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
 check "Pulse animation cadence" grep -Fq "interval = 0.12" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
