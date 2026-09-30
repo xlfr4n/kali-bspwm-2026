@@ -103,9 +103,9 @@ check "binding: kali-menu" grep -Fq "kali-menu" config/sxhkd/sxhkdrc
 check "binding: Rofi drun" grep -Fq "rofi-xlfr4n -show drun" config/sxhkd/sxhkdrc
 check "binding: Rofi run" grep -Fq "rofi-xlfr4n -show run" config/sxhkd/sxhkdrc
 check "Audio feedback binding" grep -Fq "audio-control up" config/sxhkd/sxhkdrc
-check "Brave URL field" grep -Fq 'Exec=/bin/sh -c "$HOME/.local/bin/dock-launch brave $@" -- %U' config/applications/xLFr4n-brave.desktop
-check "Dock Code launcher file" grep -Fq 'Exec=/bin/sh -c "$HOME/.local/bin/dock-launch code"' config/applications/xLFr4n-code.desktop
-check "Dock monitor launcher file" grep -Fq 'Exec=/bin/sh -c "$HOME/.local/bin/dock-launch btop"' config/applications/xLFr4n-btop.desktop
+check "Brave URL field" grep -Fq 'Exec=/bin/sh -c "~/.local/bin/dock-launch brave $@" -- %U' config/applications/xLFr4n-brave.desktop
+check "Dock Code launcher file" grep -Fq 'Exec=/bin/sh -c "~/.local/bin/dock-launch code"' config/applications/xLFr4n-code.desktop
+check "Dock monitor launcher file" grep -Fq 'Exec=/bin/sh -c "~/.local/bin/dock-launch btop"' config/applications/xLFr4n-btop.desktop
 check "Dock settings launcher file" grep -Fq "dock-launch settings" config/applications/xLFr4n-settings.desktop
 check "Dock network launcher file" grep -Fq "dock-launch network" config/applications/xLFr4n-network.desktop
 check "Dock screenshot launcher file" grep -Fq "dock-launch screenshot" config/applications/xLFr4n-screenshot.desktop
