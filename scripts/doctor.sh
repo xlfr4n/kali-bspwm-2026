@@ -110,7 +110,6 @@ check "BSPWM command" command -v bspwm
 check "SXHKD command" command -v sxhkd
 check "Polybar" command -v polybar
 check "Terminal helper" command -v xlfr4n-terminal
-check "tmux" command -v tmux
 check "Rofi" command -v rofi
 check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
