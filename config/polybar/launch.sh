@@ -8,6 +8,9 @@ LOG="$HOME/.cache/xlfr4n-polybar.log"
 mkdir -p "$(dirname "$LOG")"
 
 command -v polybar >/dev/null 2>&1 || exit 1
+# Polybar owns the top/workspace rails; the floating dock owns the bottom launcher lane.
+# Remove any stale dock bar left by an older session so two icon layers can never coexist.
+pkill -u "$UID" -f "[p]olybar dock" 2>/dev/null || true
 [ -r "$CONFIG" ] || exit 1
 
 if pgrep -x polybar >/dev/null 2>&1; then
