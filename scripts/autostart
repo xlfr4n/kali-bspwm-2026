@@ -23,6 +23,8 @@ for proc in sxhkd polybar dunst picom plank tint2; do
 done
 
 mkdir -p "$HOME/.config/polybar" "$HOME/.config/theme-state" "$HOME/.config/wallpaper-state" "$HOME/.config/plank/dock1" "$HOME/.cache"
+# One-shot TARGET entry animation window; the Polybar target stays static afterwards.
+date '+%s%3N' > "$HOME/.cache/xlfr4n-target-boot-ms"
 
 if [ -x "$HOME/.local/bin/workspace-hud" ]; then
   "$HOME/.local/bin/workspace-hud" --stop >/dev/null 2>&1 || true
