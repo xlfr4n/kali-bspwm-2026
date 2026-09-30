@@ -55,7 +55,10 @@ session-profile
 ### 🇬🇧 English
 
 - `xlfr4n-banner` prints the terminal system snapshot as a manual diagnostic tool.
-- `xlfr4n-pulse` provides the typewriter/dissolve micro-animation used by Polybar.
+- `xlfr4n-pulse` provides the visible signal sweep used by the top Polybar identity and follows the active theme.
+- `launcher-pulse` animates the `⌘ APPS` module without losing its Rofi action.
+- `target-pulse` keeps the target visible with a discreet activity signal.
+- `telemetry-pulse` provides the animated `KALI` marker on the right status rail.
 - `xlfr4n-launch` centralizes Dunst launch feedback for apps started from the workspace's own shortcuts and menus.
 - `xlfr4n-date` renders the long date in Spanish by default; set `XLFR4N_DATE_LOCALE=system` to follow `LC_TIME`.
 - `workspace-hud` listens for BSPWM desktop changes and provides a brief stacked visual transition cue through Dunst/Picom.
