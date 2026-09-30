@@ -22,7 +22,7 @@ border_color = #00000000 0
 panel_monitor = primary
 panel_position = bottom center horizontal
 panel_items = L
-panel_size = 680 64
+panel_size = 860 64
 panel_margin = 0 6
 panel_padding = 0 0 0
 panel_background_id = 0
@@ -39,7 +39,7 @@ mouse_pressed_icon_asb = 100 0 -10
 #-------------------------------------
 # Launcher
 #-------------------------------------
-launcher_padding = 7 0 4
+launcher_padding = 5 0 4
 launcher_background_id = 0
 launcher_icon_background_id = 0
 launcher_icon_size = 42
@@ -62,6 +62,8 @@ launcher_item_app = ~/.local/share/applications/xLFr4n-btop.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-settings.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-network.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-screenshot.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-wireshark.desktop
+launcher_item_app = ~/.local/share/applications/xLFr4n-firefox.desktop
 
 #-------------------------------------
 # Tooltips
