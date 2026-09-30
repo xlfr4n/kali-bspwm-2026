@@ -54,7 +54,7 @@ Kitty is not part of the project runtime. A fresh deployment does not install, c
 
 ### 🎨 Themes
 
-Los themes sincronizan Polybar, Kitty, Rofi, Dunst y los colores de borde de BSPWM. `pywal16` es opcional.
+Los themes sincronizan Polybar, Ghostty, Rofi, Dunst y los colores de borde de BSPWM. `pywal16` es opcional.
 
 ### 🔐 Principios
 
