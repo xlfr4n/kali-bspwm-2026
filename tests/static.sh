@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ⚡ xlfr4n // Kali BSPWM 2026
 # Static guardrail with explicit diagnostics. No system changes, no runtime dependencies.
+# Geometry/UX guardrails follow the current 2026-09-30 desktop layout.
 set -Eeuo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
