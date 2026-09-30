@@ -50,6 +50,14 @@ visual_layout_check() {
   grep -Fq "margin-bottom = 0pt" "$cfg"
 }
 
+workspace_hud_process_check() {
+  local pid_file="$HOME/.cache/xlfr4n-workspace-hud.pid" pid
+  [ -s "$pid_file" ] || return 1
+  pid="$(cat "$pid_file" 2>/dev/null || true)"
+  [[ "$pid" =~ ^[0-9]+$ ]] || return 1
+  kill -0 "$pid" 2>/dev/null
+}
+
 dock_single_backend_check() {
   local active=0
   pgrep -u "$UID" -x tint2 >/dev/null 2>&1 && active=$((active + 1))
@@ -107,7 +115,7 @@ check "Picom" command -v picom
 check "Dunst" command -v dunst
 check "Dunst process" pgrep -u "$UID" -x dunst
 check "Workspace HUD" command -v workspace-hud
-check "Workspace HUD process" pgrep -u "$UID" -af '[w]orkspace-hud --daemon'
+check "Workspace HUD process" workspace_hud_process_check
 check "Audio feedback" command -v audio-control
 check "Network status helper" command -v network-status
 check "Battery status helper" command -v battery-status
