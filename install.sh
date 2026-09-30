@@ -181,6 +181,7 @@ fi
 install -Dm644 "$ROOT_DIR/config/zshrc" "$HOME/.zshrc"
 cp -a "$ROOT_DIR/scripts/." "$BIN_DIR/"
 chmod +x "$BIN_DIR"/* 2>/dev/null || true
+sudo install -Dm755 "$ROOT_DIR/scripts/xLFr4n-dock-launch" /usr/local/bin/xLFr4n-dock-launch
 
 mkdir -p "$HOME/.local/share/applications"
 for desktop in "$ROOT_DIR"/config/applications/*.desktop; do
