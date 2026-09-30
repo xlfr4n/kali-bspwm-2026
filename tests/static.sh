@@ -140,7 +140,7 @@ check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
 check "Kitty cursor animation" grep -Fq "cursor_blink_interval 0.5 ease-in-out" config/kitty/kitty.conf
-check "Kitty cursor trail" grep -Fq "cursor_trail 20" config/kitty/kitty.conf
+check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Kitty single-window border" grep -Fq "draw_window_borders_for_single_window yes" config/kitty/kitty.conf
 check "Kitty input latency" grep -Fq "input_delay 2" config/kitty/kitty.conf
 check "Kitty tab shortcuts" grep -Fq "map ctrl+shift+t new_tab" config/kitty/kitty.conf
