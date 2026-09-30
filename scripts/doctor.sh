@@ -44,8 +44,10 @@ visual_layout_check() {
   grep -Fq "background = #00000000" "$cfg" &&
   grep -Fq "border-size = 0pt" "$cfg" &&
   grep -Fq "[bar/workspace]" "$cfg" &&
+  grep -Fq "offset-y = 70pt" "$cfg" &&
   grep -Fq "label-focused-margin = 1" "$cfg" &&
-  grep -Fq "modules-right = date time" "$cfg"
+  grep -Fq "modules-right = date time" "$cfg" &&
+  grep -Fq "margin-bottom = 0pt" "$cfg"
 }
 
 dock_single_backend_check() {
