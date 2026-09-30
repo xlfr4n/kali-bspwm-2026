@@ -114,6 +114,10 @@ check "Dock monitor launcher file" grep -Fq "Exec=/usr/local/bin/xLFr4n-dock-lau
 check "Dock settings launcher file" grep -Fq "dock-launch settings" config/applications/xLFr4n-settings.desktop
 check "Dock network launcher file" grep -Fq "dock-launch network" config/applications/xLFr4n-network.desktop
 check "Dock screenshot launcher file" grep -Fq "dock-launch screenshot" config/applications/xLFr4n-screenshot.desktop
+check "Dock Wireshark launcher route" grep -Fq "install_launcher wireshark" scripts/dock
+check "Dock Firefox launcher route" grep -Fq "install_launcher firefox" scripts/dock
+check "Dock Wireshark route" grep -Fq "wireshark)" scripts/dock-launch
+check "Dock Firefox route" grep -Fq "firefox)" scripts/dock-launch
 check "VirtualBox service detection" grep -Fq "virtualbox-guest-utils.service" install.sh
 check "Fastfetch deployment" grep -Fq "fastfetch; do" install.sh
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
@@ -132,7 +136,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset above dock" grep -Fq "offset-y = 40pt" config/polybar/config.ini
+check "Workspace rail offset above dock" grep -Fq "offset-y = 78pt" config/polybar/config.ini
 check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
@@ -172,7 +176,7 @@ check "Terminal helper is Ghostty-only" grep -Fq "Ghostty is the only graphical 
 check "Terminal helper resolves Ghostty" grep -Fq 'GHOSTTY_BIN="${XLFR4N_GHOSTTY_BIN:-}"' scripts/xlfr4n-terminal
 check_not_present "Terminal helper has no Kitty fallback" grep -Fiq "kitty" scripts/xlfr4n-terminal
 check "tmux is core package" grep -Fq 'network-manager tmux' install.sh
-check "Ghostty is a core package" grep -Fq "picom ghostty rofi" install.sh
+check "Ghostty source bootstrap" test -s scripts/install-ghostty
 check "Installer purges legacy Kitty" grep -Fq "legacy_kitty_packages" install.sh
 check "Ghostty source version pinned" grep -Fq 'GHOSTTY_VERSION="${XLFR4N_GHOSTTY_VERSION:-1.3.1}"' scripts/install-ghostty
 check "Ghostty Zig version pinned" grep -Fq 'ZIG_VERSION="${XLFR4N_GHOSTTY_ZIG_VERSION:-0.15.2}"' scripts/install-ghostty
@@ -208,7 +212,8 @@ check "Battery is optional" grep -Fq "BAT*" scripts/battery-status
 check "Network state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/network-status
 check "Battery state coloring" grep -Fq '%{F%s}%s %s%%{F-}' scripts/battery-status
 check "Dock bar" grep -Fq "[bar/dock]" config/polybar/config.ini
-check "Dock Polybar backend" grep -Fq "Polybar dock" scripts/dock
+check "Dock Polybar backend" grep -Fq "Polybar fallback" scripts/dock
+check "Polybar clears stale dock" grep -Fq "stale dock bar" config/polybar/launch.sh
 check "Dock Polybar fallback" grep -Fq "polybar-fallback" scripts/dock
 check "Dock Tint2 backend" grep -Fq "tint2" scripts/dock
 check "Tint2 launcher-only" grep -Fq "panel_items = L" config/tint2/tint2rc
