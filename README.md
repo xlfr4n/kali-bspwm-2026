@@ -84,7 +84,7 @@ El proyecto está pensado para un guest Kali. No modifica automáticamente la co
       • fecha y hora
       • dock centrado
 
-Las ventanas del escritorio no dibujan el típico marco rojo. BSPWM usa superficie frameless y Kitty tampoco añade un marco rojo propio.
+Las ventanas del escritorio no dibujan el típico marco rojo. BSPWM usa superficie frameless y Ghostty no añade un marco rojo propio.
 
 Rofi, Tint2 y Plank siguen la misma regla: ningún contorno rojo decorativo.
 
