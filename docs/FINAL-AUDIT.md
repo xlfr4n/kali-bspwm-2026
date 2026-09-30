@@ -14,10 +14,10 @@ Esta lista define el estado interno del proyecto y separa explícitamente lo val
 | 🗓️ Fecha/hora | ✅ | Fecha larga en español por defecto, hora separada y mejor jerarquía visual |
 | 🧭 Workspaces | ✅ | 1→9 abajo a la izquierda + HUD de transición |
 | 🧊 Dock | ✅ | Tint2 → Plank → Polybar, launchers reales, hover y foco de ventanas |
-| 🐱 Kitty | ✅ | Tabs, cursor, transparencia, reload y controles rápidos; Fastfetch queda como entrada visual |
+| 🖥️ Ghostty + tmux | ✅ | Terminal única, scrollback amplio, copia/pega explícitos, persistencia y panes |
 | 🌫️ Picom | ✅ | Fades, sombras y redondeado VM-friendly |
 | 🔔 Dunst | ✅ | Feedback temporal, stacking, historial, workspace HUD y lanzamiento de aplicaciones |
-| 🎨 Themes | ✅ | Polybar, Kitty, Rofi, Dunst, BSPWM y fallback Plank sincronizados |
+| 🎨 Themes | ✅ | Polybar, Ghostty, Rofi, Dunst, BSPWM y fallback Plank sincronizados |
 | 🖼️ Wallpapers | ✅ | Wallpaper de sesión fijo en `kali-hack-16x9.jpg` + random/next/current/set manuales y feedback |
 | 🌐 Red/VPN | ✅ | Ruta por defecto, Wi-Fi/Ethernet/VPN y estados de color |
 | 🔋 Batería | ✅ | Opcional, silenciosa sin batería y estados de color |
