@@ -105,7 +105,9 @@ check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
 check "Picom" command -v picom
 check "Dunst" command -v dunst
+check "Dunst process" pgrep -u "$UID" -x dunst
 check "Workspace HUD" command -v workspace-hud
+check "Workspace HUD process" pgrep -u "$UID" -af '[w]orkspace-hud --daemon'
 check "Audio feedback" command -v audio-control
 check "Network status helper" command -v network-status
 check "Battery status helper" command -v battery-status
@@ -162,6 +164,7 @@ check "Zsh configuration" test -f "$HOME/.zshrc"
 
 if command -v tint2 >/dev/null 2>&1; then
   check "Tint2" command -v tint2
+  check "Tint2 process" pgrep -u "$UID" -x tint2
 fi
 
 if command -v dock >/dev/null 2>&1; then
