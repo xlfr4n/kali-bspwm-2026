@@ -4,7 +4,7 @@
 
 ## 🇪🇸 Español
 
-Los temas son deliberadamente ligeros. No son un segundo instalador ni una dependencia obligatoria: cambian acentos de **Polybar, Kitty, Rofi y Dunst**, mientras Zsh lee el estado activo para adaptar el prompt.
+Los temas son deliberadamente ligeros. No son un segundo instalador ni una dependencia obligatoria: cambian acentos de **Polybar, Kitty, Rofi y Dunst**, mientras Zsh lee el estado activo para adaptar el prompt. El color de tema no vuelve a introducir marcos de ventana: los contornos de las superficies permanecen neutrales.
 
 ### 🌈 Temas actuales
 
