@@ -39,39 +39,38 @@ NOTIFY_TAG="xLFr4n-dock-${app:-unknown}"
 case "$app" in
   brave) wmclass="brave-browser"; cmd=(brave-browser --new-window); [ "$#" -gt 0 ] && cmd+=( "$@" ); app_label="Brave Browser" ;;
   terminal)
-    if command -v ghostty >/dev/null 2>&1; then wmclass="com.mitchellh.ghostty"; else wmclass="kitty"; fi
+    wmclass="com.mitchellh.ghostty"
     cmd=(xlfr4n-terminal)
     app_label="xLFr4n Terminal"
     ;;
-  kitty) wmclass="kitty"; cmd=(kitty); app_label="Kitty (legacy)" ;;
   files) wmclass="thunar"; cmd=(thunar); app_label="Thunar" ;;
   code) wmclass="code"; cmd=(code); app_label="Visual Studio Code" ;;
   burp) wmclass="burpsuite"; cmd=(burpsuite); app_label="Burp Suite" ;;
   editor|nvim)
-    if command -v ghostty >/dev/null 2>&1; then wmclass="com.mitchellh.ghostty"; else wmclass="kitty"; fi
+    wmclass="com.mitchellh.ghostty"
     cmd=(xlfr4n-terminal --title Neovim -- nvim)
     app_label="Neovim"
     ;;
   kali) wmclass=""; cmd=(kali-menu); app_label="xLFr4n Menu" ;;
   target)
-    if command -v ghostty >/dev/null 2>&1; then wmclass="com.mitchellh.ghostty"; else wmclass="kitty"; fi
+    wmclass="com.mitchellh.ghostty"
     cmd=(xlfr4n-terminal --title Kali-Target -- settarget)
     app_label="Target Console"
     ;;
   lab)
-    if command -v ghostty >/dev/null 2>&1; then wmclass="com.mitchellh.ghostty"; else wmclass="kitty"; fi
+    wmclass="com.mitchellh.ghostty"
     cmd=(xlfr4n-terminal --title Kali-Lab -- lab)
     app_label="Kali Lab"
     ;;
   btop)
-    if command -v ghostty >/dev/null 2>&1; then wmclass="com.mitchellh.ghostty"; else wmclass="kitty"; fi
+    wmclass="com.mitchellh.ghostty"
     cmd=(xlfr4n-terminal --title xLFr4n-Monitor -- btop)
     app_label="System Monitor"
     ;;
   settings) wmclass="lxappearance"; cmd=(lxappearance); app_label="Appearance" ;;
   network) wmclass="nm-connection-editor"; cmd=(nm-connection-editor); app_label="Network" ;;
   screenshot) wmclass=""; cmd=(flameshot gui); app_label="Screenshot" ;;
-  *) echo "Usage: dock-launch {brave|terminal|kitty|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot}" >&2; exit 2 ;;
+  *) echo "Usage: dock-launch {brave|terminal|files|code|burp|editor|nvim|kali|target|lab|btop|settings|network|screenshot}" >&2; exit 2 ;;
 esac
 
 if [ -n "$wmclass" ] && command -v wmctrl >/dev/null 2>&1; then
