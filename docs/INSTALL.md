@@ -81,7 +81,24 @@ command -v vmware-user || true
 xrandr --query
 ```
 
-### 7️⃣ Primera comprobación
+### 7️⃣ Terminal stack
+
+The installer keeps Kitty available as a fallback and makes tmux part of the core terminal workflow. Ghostty is attempted as an optional Kali package when the configured repository contains it.
+
+    xlfr4n-terminal --backend
+    tmux -V
+    command -v ghostty || true
+    command -v kitty || true
+
+Preferred path:
+
+    Ghostty → tmux → zsh / tooling / SSH
+
+Fallback path during migration:
+
+    Kitty → tmux → zsh / tooling / SSH
+
+### 8️⃣ Primera comprobación
 
 ```bash
 doctor.sh
@@ -94,7 +111,7 @@ pgrep -a picom
 pgrep -a dunst
 ```
 
-### 8️⃣ Prueba del workspace
+### 9️⃣ Prueba del workspace
 
 Prueba como mínimo:
 
@@ -115,7 +132,7 @@ Super+Shift+M
 Super+Ctrl+R
 ```
 
-### 9️⃣ Perfil del login
+### 🔟 Perfil del login
 
 Después de entrar en BSPWM, una shell interactiva mostrará Fastfetch con el logo oficial de Kali, la firma `⚡ xLFr4n` y los datos TARGET/IP/fecha. El snapshot ASCII `xlfr4n-banner --static` queda disponible para diagnóstico manual.
 
@@ -125,7 +142,7 @@ session-profile
 
 El comando es read-only y muestra cuándo terminaron las distintas fases del bootstrap.
 
-### 🔟 Si el login parece lento
+### 1️⃣1️⃣ Si el login parece lento
 
 El proyecto ya escalona wallpaper, dock, monitor-refresh y Picom para no competir en el mismo instante.
 
@@ -139,7 +156,7 @@ journalctl --user -b --no-pager | tail -200
 
 No reinstales varias veces a ciegas.
 
-### 1️⃣1️⃣ Rollback
+### 1️⃣2️⃣ Rollback
 
 ```bash
 ./uninstall.sh
@@ -230,7 +247,14 @@ command -v vmware-user || true
 xrandr --query
 ```
 
-### 7️⃣ First health check
+### 7️⃣ Terminal stack
+
+The terminal layer prefers Ghostty with tmux and keeps Kitty as a rollback path while the VM is being validated.
+
+    xlfr4n-terminal --backend
+    tmux -V
+
+### 8️⃣ First health check
 
 ```bash
 doctor.sh
@@ -243,11 +267,11 @@ pgrep -a picom
 pgrep -a dunst
 ```
 
-### 8️⃣ Workspace smoke test
+### 9️⃣ Workspace smoke test
 
 At minimum, test launcher, Spotlight, Mission Control, workspaces, focus/swap/resize, fullscreen, wallpaper, theme switch, monitor refresh and doctor.
 
-### 9️⃣ Slow-login diagnostics
+### 🔟 Slow-login diagnostics
 
 The session stages heavier jobs instead of running them as one blocking chain.
 
