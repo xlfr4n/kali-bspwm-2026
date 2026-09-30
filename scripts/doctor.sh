@@ -145,6 +145,10 @@ check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
 check "Workspace rail spacing" grep -Fq "offset-y = 40pt" "$HOME/.config/polybar/config.ini"
+check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
+check "Kitty frameless windows" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
+check "Rofi frameless window" grep -Fq "border: 0px;" "$HOME/.config/rofi/launcher.rasi"
+check "Tint2 frameless dock" grep -Fq "border_width = 0" "$HOME/.config/tint2/tint2rc"
 check "Workspace rail process" workspace-rail --status
 check "Polybar interactive status" grep -Fq "click-left = kitty --class xLFr4n-btop" "$HOME/.config/polybar/config.ini"
 check "Date helper locale support" grep -Fq "LC_TIME" "$HOME/.local/bin/xlfr4n-date"
