@@ -34,7 +34,7 @@ El CI sirve para validar sintaxis, guardas, Rofi y ShellCheck, pero la comprobac
 
 ## 🇬🇧 English
 
-The project is functionally closed across the desktop layers. The remaining real-world step is the final visual smoke test on the target VM/monitor combination after deployment, including the official Kali Fastfetch logo + xLFr4n signature and live TARGET/IP/date fields.
+The desktop layers are internally aligned in `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including the official Kali Fastfetch logo + xLFr4n signature, live TARGET/IP/date fields, lower rail geometry and launch notifications.
 
 ### ✅ Validation commands
 
