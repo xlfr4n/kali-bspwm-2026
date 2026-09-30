@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Stable Polybar identity with a visible signal sweep.
-# The full identity always remains readable; only the signal changes.
+# Visible, fixed-width Polybar identity animation.
+# The brand never disappears; only the signal sweep moves.
 set -u
 
 frames=(
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  //  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  ▸/  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  ▸>  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  >>  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#ff3344}  ||  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  <<  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  <◂  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  /◂  KALI%{F-}'
-  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  //  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [●···]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [◉···]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [○●··]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [·◉··]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··●·]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··◉·]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#ff3344}  [···●]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··◉·]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [··●·]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [·◉··]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [○●··]  KALI%{F-}'
+  '%{F#ff3344}⚡ xLFr4n%{F#7d8590}  [◉···]  KALI%{F-}'
 )
 
 tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
