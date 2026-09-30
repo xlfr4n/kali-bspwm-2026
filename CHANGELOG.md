@@ -1,3 +1,13 @@
+## 2026-09-30 — Ghostty-only terminal consolidation
+
+- Removed the Kitty terminal profile from the repository.
+- Removed Kitty from package installation, deployment, theme integration and runtime diagnostics.
+- Made Ghostty a core package and the only graphical terminal backend.
+- Added explicit Ghostty copy/paste, selection and large-scrollback controls.
+- Added a tmux shortcut (`Ctrl+A`, `A`) to copy the complete active pane history to the X11 clipboard.
+- Removed the Kitty fallback path from the terminal launcher and active documentation.
+- The previous Kitty migration entries remain in this changelog as historical record.
+
 # Changelog
 
 ## 2026-09-30 — Ghostty + tmux terminal layer
