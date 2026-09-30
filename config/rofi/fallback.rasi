@@ -3,15 +3,15 @@
   bg: #0b0d10;
   fg: #ffffff;
   accent: #ff3344;
-  border: #66ff3344;
+  border: #22262d;
   muted: #8b949e;
   font: "JetBrains Mono 10";
   background-color: @bg;
   text-color: @fg;
 }
-window { width: 46%; location: center; anchor: center; background-color: @bg; border: 1px; border-color: @accent; border-radius: 16px; padding: 16px; }
+window { width: 46%; location: center; anchor: center; background-color: @bg; border: 0px; border-color: transparent; border-radius: 16px; padding: 16px; }
 mainbox { padding: 4px; }
-inputbar { padding: 10px; background-color: #161b22; border: 1px; border-color: @accent; border-radius: 8px; }
+inputbar { padding: 10px; background-color: #161b22; border: 0px; border-color: transparent; border-radius: 8px; }
 prompt { text-color: @accent; padding: 0px 10px 0px 0px; }
 entry { text-color: @fg; placeholder: "Search xLFr4n..."; placeholder-color: @muted; }
 listview { lines: 9; spacing: 6px; padding: 8px 0px 0px; }
