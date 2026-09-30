@@ -25,16 +25,16 @@ Esta lista define el estado interno del proyecto y separa explícitamente lo val
 | 🩺 Doctor | ✅ | Diagnóstico read-only de runtime, visual, VM y helpers |
 | 🖥️ VM | ✅ | VirtualBox/VMware detectados desde el guest |
 | 🚀 Startup | ✅ | Fases escalonadas + bloqueo single-instance + limpieza scoped al usuario |
-| 🧪 CI | 🟡 | Workflow configurado para Bash/static guards, Rofi y ShellCheck; la última ejecución verificada corresponde a un commit anterior y falló en un guardrail antiguo de Kitty ya corregido en `main` |
+| 🧪 CI | ✅ | Última ejecución verificada sobre `main`: static guards, Rofi, desktop-file validation y ShellCheck pasan |
 | 📚 Docs | ✅ | README ES/EN, instalación, arquitectura, VM, estilo, Fastfetch y launch feedback |
 
 ### 🔬 Última comprobación externa
 
-El CI sirve para validar sintaxis, guardas, Rofi y ShellCheck, pero la comprobación final del aspecto depende de la VM/monitor reales. La rama `main` debe probarse después de `git pull` + `./install.sh --deploy`. La validación visual debe confirmar además el logo oficial de Kali con firma `xLFr4n`, la presencia de TARGET/IP/fecha en Fastfetch, el barrido visible de identidad, el rail inferior alineado con el dock y la aparición de notificaciones al lanzar aplicaciones.
+CI valida sintaxis, guardas, Rofi, launchers `.desktop` y ShellCheck sobre `main`. La única comprobación que permanece ligada a la máquina real es la inspección visual/ergonómica después de `git pull` + `./install.sh --deploy`, especialmente la posición final del rail 1→9/fecha, el pulso superior, el dock y la entrega de notificaciones.
 
 ## 🇬🇧 English
 
-The desktop layers are internally aligned in `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including the official Kali Fastfetch logo + xLFr4n signature, live TARGET/IP/date fields, lower rail geometry, identity animation and launch notifications. CI should also be re-checked against the current head when GitHub schedules the next run.
+The desktop layers and CI are now aligned on `main`; the remaining real-world gate is the final visual smoke test on the target VM/monitor combination after deployment, including Fastfetch, lower rail geometry, visible identity/telemetry animation, dock click-through and launch notifications.
 
 ### ✅ Validation commands
 
