@@ -109,7 +109,8 @@ check "SXHKD process" pgrep -x sxhkd
 check "BSPWM command" command -v bspwm
 check "SXHKD command" command -v sxhkd
 check "Polybar" command -v polybar
-check "Kitty" command -v kitty
+check "Terminal helper" command -v xlfr4n-terminal
+check "tmux" command -v tmux
 check "Rofi" command -v rofi
 check "Rofi theme" rofi_theme_check
 check "Rofi xlfr4n wrapper" command -v rofi-xlfr4n
@@ -146,11 +147,13 @@ check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
 check "Workspace rail spacing" grep -Fq "offset-y = 40pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
-check "Kitty frameless windows" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
+check "Ghostty/Kitty backend" xlfr4n-terminal --backend
+check "tmux configuration" test -s "$HOME/.config/tmux/tmux.conf"
+check "Ghostty configuration" test -s "$HOME/.config/ghostty/config"
 check "Rofi frameless window" grep -Fq "border: 0px;" "$HOME/.config/rofi/launcher.rasi"
 check "Tint2 frameless dock" grep -Fq "border_width = 0" "$HOME/.config/tint2/tint2rc"
 check "Workspace rail process" workspace-rail --status
-check "Polybar interactive status" grep -Fq "click-left = kitty --class xLFr4n-btop" "$HOME/.config/polybar/config.ini"
+check "Polybar interactive terminal" grep -Fq "click-left = xlfr4n-terminal --title xLFr4n-Monitor -- btop" "$HOME/.config/polybar/config.ini"
 check "Date helper locale support" grep -Fq "LC_TIME" "$HOME/.local/bin/xlfr4n-date"
 check "Single dock backend" dock_single_backend_check
 check "Target helper" command -v settarget
@@ -176,7 +179,17 @@ check "9 BSPWM desktops" desktop_count_check
 check "BSPWM session file" test -f /usr/share/xsessions/bspwm.desktop
 check "Zsh configuration" test -f "$HOME/.zshrc"
 check "No red BSPWM window frame" grep -Fq "focused_border_color '#262a31'" "$HOME/.config/bspwm/bspwmrc"
-check "No red Kitty window frame" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
+if command -v kitty >/dev/null 2>&1; then
+  check "Legacy Kitty config" test -s "$HOME/.config/kitty/kitty.conf"
+  check "Legacy Kitty frameless profile" grep -Fq "window_border_width 0" "$HOME/.config/kitty/kitty.conf"
+else
+  info "legacy Kitty not installed; Ghostty is the only terminal backend available"
+fi
+if command -v ghostty >/dev/null 2>&1; then
+  info "preferred terminal: Ghostty"
+else
+  info "preferred terminal: Kitty fallback (Ghostty not installed)"
+fi
 
 if command -v tint2 >/dev/null 2>&1; then
   check "Tint2" command -v tint2
