@@ -49,6 +49,7 @@ rm -f   "$HOME/.local/bin/settarget"   "$HOME/.local/bin/cleartarget"   "$HOME/.
 sudo rm -f /usr/share/xsessions/bspwm.desktop
 
 rm -f "$HOME/.cache/xlfr4n-workspace-hud.pid"
+rm -f "$HOME/.cache/xlfr4n-target-boot-ms"
 rm -f "$HOME/.local/share/applications"/xLFr4n-*.desktop
 rm -f "$HOME/.local/share/icons/hicolor/scalable/apps"/xlfr4n-*.svg
 
