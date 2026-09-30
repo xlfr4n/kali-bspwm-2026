@@ -50,12 +50,12 @@ El proyecto está pensado para un guest Kali. No modifica automáticamente la co
 ### Composición visual
 
     ┌──────────────────────────────────────────────────────────────────────┐
-    │ ⚡ xLFr4n     ⌘ APPS      TARGET             ventana actual   CPU...│
-    │                                                        RED · RAM... │
+    │ ⚡ xLFr4n     ⌘ APPS      TARGET                  VENTANA ACTUAL  │
+    │                                                        RED · RAM...  │
     │                                                                      │
     │                         BSPWM / WORKSPACE                            │
     │                                                                      │
-    │                    1  2  3  4  5  6  7  8  9                        │
+    │                    1  2  3  4  5  6  7  8  9                         │
     │                       fecha larga · hora                             │
     │                         iconos / dock                                │
     └──────────────────────────────────────────────────────────────────────┘
