@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Stable desktop-entry bridge. GUI launchers must not depend on a session PATH.
+set -Eeuo pipefail
+
+[ -x "$HOME/.local/bin/dock-launch" ] || {
+  printf 'xLFr4n dock launcher is not deployed for %s\n' "$USER" >&2
+  exit 127
+}
+
+exec "$HOME/.local/bin/dock-launch" "$@"
