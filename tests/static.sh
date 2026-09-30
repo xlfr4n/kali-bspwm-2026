@@ -186,6 +186,7 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
 check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
+check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
 check "Pulse animation signal frames" grep -Fq "[●···]" scripts/xlfr4n-pulse
