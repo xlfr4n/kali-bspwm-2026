@@ -43,7 +43,7 @@ session-profile
 - `xlfr4n-banner` imprime el snapshot de terminal como herramienta manual de diagnóstico.
 - `xlfr4n-pulse` ejecuta el barrido de señal visible de la identidad superior y adapta sus colores al tema activo.
 - `xlfr4n-launch` centraliza el feedback Dunst de los lanzamientos iniciados desde atajos y menús propios.
-- `xlfr4n-date` genera la fecha larga según `LC_TIME`, con fallback legible cuando la locale no está instalada.
+- `xlfr4n-date` genera la fecha larga en español por defecto; `XLFR4N_DATE_LOCALE=system` permite seguir `LC_TIME`.
 - `workspace-hud` escucha los cambios de escritorio de BSPWM y muestra un feedback breve, apilado y animado mediante Dunst/Picom.
 - `audio-control` mantiene las teclas multimedia con feedback visual y usa `pamixer` o `wpctl`.
 - `network-status` sigue la interfaz de la ruta por defecto; ya no asume Ethernet.
