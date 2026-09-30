@@ -125,6 +125,7 @@ check "Workspace transparent background" grep -Fq "background = #00000000" confi
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
 check "Workspace rail offset above dock" grep -Fq "offset-y = 40pt" config/polybar/config.ini
+check "Workspace rail live offset" grep -Fq "offset-y = 40pt" config/polybar/config.ini
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -254,6 +255,7 @@ check "Launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/xlfr4n-la
 check "Dock launch helper guarantees Dunst" grep -Fq "ensure_dunst" scripts/dock-launch
 check "Autostart starts workspace HUD" grep -Fq 'workspace-hud" --daemon' scripts/autostart
 check "Session reload restores workspace rail" grep -Fq 'workspace-rail" --restart' scripts/session-reload
+check "Latest session profiler" grep -Fq "most recent xLFr4n session" scripts/session-profile
 check "Doctor checks workspace rail" grep -Fq 'Workspace rail' scripts/doctor.sh
 check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
