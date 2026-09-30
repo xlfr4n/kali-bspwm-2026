@@ -4,6 +4,8 @@
 # The user always gets immediate launch feedback through Dunst.
 set -Eeuo pipefail
 
+export PATH="$HOME/.local/bin:$PATH"
+
 app=${1:-}
 shift || true
 
@@ -84,10 +86,15 @@ fi
 
 notify "⚡ xLFr4n // OPENING" "$app_label  ·  starting..." 1400
 "${cmd[@]}" >/dev/null 2>&1 &
+launch_pid=$!
 
 if [ -n "$wmclass" ] && wait_for_window "$wmclass"; then
   notify "⚡ xLFr4n // READY" "$app_label  ·  window ready." 1400
 elif [ -n "$wmclass" ]; then
+  if ! kill -0 "$launch_pid" 2>/dev/null; then
+    notify "⚡ xLFr4n // FAILED" "$app_label · launcher exited before the window appeared." 3000
+    exit 1
+  fi
   notify "⚡ xLFr4n // WAITING" "$app_label · still starting; Mission Control remains available." 2600
 else
   sleep 0.2
