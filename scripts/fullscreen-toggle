@@ -1,29 +1,13 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Reliable fullscreen toggle: hide desktop chrome while fullscreen is active.
+# Reliable fullscreen toggle: scope fullscreen to the focused window.
+# Desktop chrome is never killed globally, so Polybar/Dock remain available
+# when switching to another workspace while a fullscreen window is active.
 set -Eeuo pipefail
-
-POLYBAR_LAUNCH="$HOME/.config/polybar/launch.sh"
 
 is_fullscreen() {
   command -v jq >/dev/null 2>&1 || return 1
   [ "$(bspc query -T -n focused 2>/dev/null | jq -r '.client.state // empty')" = "fullscreen" ]
-}
-
-hide_chrome() {
-  pkill -u "$UID" -x polybar 2>/dev/null || true
-  if command -v dock >/dev/null 2>&1; then
-    dock --stop >/dev/null 2>&1 || true
-  fi
-}
-
-show_chrome() {
-  if [ -x "$POLYBAR_LAUNCH" ]; then
-    "$POLYBAR_LAUNCH" >/dev/null 2>&1 &
-  fi
-  if command -v dock >/dev/null 2>&1; then
-    dock --start >/dev/null 2>&1 &
-  fi
 }
 
 toggle() {
@@ -31,10 +15,8 @@ toggle() {
 
   if is_fullscreen; then
     bspc node -t "~fullscreen"
-    show_chrome
   else
     bspc node -t "~fullscreen"
-    hide_chrome
   fi
 }
 
