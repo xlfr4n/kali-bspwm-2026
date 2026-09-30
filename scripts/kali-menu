@@ -44,6 +44,7 @@ case "$choice" in
   WIRESHARK*) dock-launch wireshark ;;
   BURP*) dock-launch burp ;;
   DOCK*) dock --toggle ;;
+  REPAIR*) dock --restart ;;
   DESKTOP*) desktop-style --apply ;;
   TARGET*) settarget ;;
   THEME*) theme-switch ;;
