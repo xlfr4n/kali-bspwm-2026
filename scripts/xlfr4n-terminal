@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Central terminal launcher. Ghostty is preferred; Kitty remains the fallback.
+set -Eeuo pipefail
+
+backend="${XLFR4N_TERMINAL:-auto}"
+title=""
+cmd=()
+
+usage() {
+  cat <<'EOF'
+Usage:
+  xlfr4n-terminal
+  xlfr4n-terminal --backend
+  xlfr4n-terminal --ghostty|--kitty
+  xlfr4n-terminal [--title TITLE] -- COMMAND [ARGS...]
+
+Environment:
+  XLFR4N_TERMINAL=auto|ghostty|kitty
+EOF
+}
+
+select_backend() {
+  local choice="${1:-$backend}"
+  case "$choice" in
+    auto)
+      if command -v ghostty >/dev/null 2>&1; then
+        printf '%s\n' ghostty
+      elif command -v kitty >/dev/null 2>&1; then
+        printf '%s\n' kitty
+      else
+        return 1
+      fi
+      ;;
+    ghostty)
+      command -v ghostty >/dev/null 2>&1 || return 1
+      printf '%s\n' ghostty
+      ;;
+    kitty)
+      command -v kitty >/dev/null 2>&1 || return 1
+      printf '%s\n' kitty
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --backend)
+      select_backend
+      exit
+      ;;
+    --ghostty)
+      backend=ghostty
+      ;;
+    --kitty)
+      backend=kitty
+      ;;
+    --title)
+      [ "$#" -ge 2 ] || { echo "--title requires a value." >&2; exit 2; }
+      title="$2"
+      shift
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      cmd=("$@")
+      break
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+selected="$(select_backend)" || {
+  echo "No supported terminal found. Install Ghostty or keep Kitty available as fallback." >&2
+  exit 1
+}
+
+if [ "${#cmd[@]}" -eq 0 ]; then
+  case "$selected" in
+    ghostty)
+      if [ -n "$title" ]; then
+        exec ghostty --title="$title"
+      fi
+      exec ghostty +new-window
+      ;;
+    kitty)
+      if [ -n "$title" ]; then
+        exec kitty --title "$title"
+      fi
+      exec kitty
+      ;;
+  esac
+fi
+
+case "$selected" in
+  ghostty)
+    if [ -n "$title" ]; then
+      exec ghostty --title="$title" -e "${cmd[@]}"
+    fi
+    exec ghostty -e "${cmd[@]}"
+    ;;
+  kitty)
+    if [ -n "$title" ]; then
+      exec kitty --title "$title" "${cmd[@]}"
+    fi
+    exec kitty "${cmd[@]}"
+    ;;
+esac
