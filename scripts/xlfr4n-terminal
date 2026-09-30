@@ -4,6 +4,31 @@
 set -Eeuo pipefail
 
 export PATH="$HOME/.local/bin:$PATH"
+
+# VirtualBox commonly exposes OpenGL 4.1 to Linux guests, while Ghostty
+# requires OpenGL 4.3+. In that VM, use Mesa software rendering automatically.
+# Override with XLFR4N_GHOSTTY_SOFTWARE_RENDERING=0 to disable or 1 to force.
+case "${XLFR4N_GHOSTTY_SOFTWARE_RENDERING:-auto}" in
+  1|true|yes|on)
+    export LIBGL_ALWAYS_SOFTWARE=1
+    ;;
+  0|false|no|off)
+    ;;
+  auto)
+    if command -v systemd-detect-virt >/dev/null 2>&1; then
+      case "$(systemd-detect-virt --vm 2>/dev/null || true)" in
+        virtualbox)
+          export LIBGL_ALWAYS_SOFTWARE=1
+          ;;
+      esac
+    fi
+    ;;
+  *)
+    echo "Invalid XLFR4N_GHOSTTY_SOFTWARE_RENDERING value; use auto, 0, or 1." >&2
+    exit 2
+    ;;
+esac
+
 GHOSTTY_BIN="${XLFR4N_GHOSTTY_BIN:-}"
 if [ -z "$GHOSTTY_BIN" ] && command -v ghostty >/dev/null 2>&1; then
   GHOSTTY_BIN="$(command -v ghostty)"
@@ -63,10 +88,6 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
-command -v ghostty >/dev/null 2>&1 || {
-  echo "Ghostty is required by the xLFr4n terminal layer." >&2
-  exit 1
-}
 
 tmux_session="${XLFR4N_TMUX_SESSION:-xLFr4n}"
 
@@ -79,12 +100,12 @@ if [ "${#cmd[@]}" -eq 0 ]; then
   fi
 
   if [ -n "$title" ]; then
-    exec ghostty --title="$title"
+    exec "$GHOSTTY_BIN" --title="$title"
   fi
   exec "$GHOSTTY_BIN"
 fi
 
 if [ -n "$title" ]; then
-  exec ghostty --title="$title" -e "${cmd[@]}"
+  exec "$GHOSTTY_BIN" --title="$title" -e "${cmd[@]}"
 fi
-exec ghostty -e "${cmd[@]}"
+exec "$GHOSTTY_BIN" -e "${cmd[@]}"
