@@ -21,7 +21,7 @@ Esta lista define el estado interno del proyecto y separa explícitamente lo val
 | 🖼️ Wallpapers | ✅ | Wallpaper de sesión fijo en `kali-hack-16x9.jpg` + random/next/current/set manuales y feedback |
 | 🌐 Red/VPN | ✅ | Ruta por defecto, Wi-Fi/Ethernet/VPN y estados de color |
 | 🔋 Batería | ✅ | Opcional, silenciosa sin batería y estados de color |
-| 🎯 Target | ✅ | Set/status/copy/clear con acceso visible desde Polybar |
+| 🎯 Target | ✅ | Set/status/copy/clear, control blanco y pulso de entrada de una sola vez por sesión |
 | 🩺 Doctor | ✅ | Diagnóstico read-only de runtime, visual, VM y helpers |
 | 🖥️ VM | ✅ | VirtualBox/VMware detectados desde el guest |
 | 🚀 Startup | ✅ | Fases escalonadas + bloqueo single-instance + limpieza scoped al usuario |
