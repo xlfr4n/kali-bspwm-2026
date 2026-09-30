@@ -50,7 +50,15 @@ esac
 log "Ghostty is not packaged in this Kali snapshot; building the official $GHOSTTY_VERSION source tarball."
 
 sudo apt-get update
-sudo apt-get install -y   build-essential   curl   gettext   libadwaita-1-dev   libgtk-4-dev   libgtk4-layer-shell-dev   libxml2-utils   minisign   pkg-config   tar   xz-utils
+sudo apt-get install -y   build-essential   curl   gettext   libadwaita-1-dev   libgtk-4-dev   libxml2-utils   minisign   pkg-config   tar   xz-utils
+
+build_flags=(-Doptimize=ReleaseFast)
+if apt-cache show libgtk4-layer-shell-dev >/dev/null 2>&1; then
+  sudo apt-get install -y libgtk4-layer-shell-dev
+else
+  log "gtk4-layer-shell is not packaged here; letting Ghostty build it from source."
+  build_flags+=(-fno-sys=gtk4-layer-shell)
+fi
 
 mkdir -p "$CACHE_DIR/downloads" "$SRC_DIR" "$ZIG_DIR" "$PREFIX/bin"
 
@@ -60,7 +68,7 @@ if command -v zig >/dev/null 2>&1 && [ "$(zig version)" = "$ZIG_VERSION" ]; then
 fi
 
 if [ -z "$zig_bin" ]; then
-  zig_archive="$CACHE_DIR/downloads/zig-x86_64-linux-$ZIG_VERSION.tar.xz"
+  zig_archive="$CACHE_DIR/downloads/zig-$zig_arch-linux-$ZIG_VERSION.tar.xz"
   zig_url="https://ziglang.org/download/$ZIG_VERSION/zig-$zig_arch-linux-$ZIG_VERSION.tar.xz"
   zig_sig="$zig_archive.minisig"
 
@@ -112,7 +120,7 @@ if apt-cache show gcc-multilib >/dev/null 2>&1; then
   sudo apt-get install -y gcc-multilib
 fi
 
-"$zig_bin" build -p "$PREFIX" -Doptimize=ReleaseFast
+"$zig_bin" build -p "$PREFIX" "${build_flags[@]}"
 
 [ -x "$GHOSTTY_BIN" ] || die "Ghostty build completed without $GHOSTTY_BIN."
 
