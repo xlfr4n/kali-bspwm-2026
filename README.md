@@ -189,7 +189,7 @@ The important distinction:
     ./install.sh
     reboot
 
-The full mode updates APT metadata and installs the available package set.
+The full mode updates APT metadata, installs the available package set, bootstraps Ghostty when Kali does not package it, and removes the retired Kitty terminal layer.
 
 ---
 
@@ -397,7 +397,7 @@ Operational path:
         ↓
    zsh / tools / SSH
 
-Ghostty is now the single graphical terminal. Its configuration provides explicit copy/paste, selection and scrollback controls, while tmux exposes the full pane history through Ctrl+A, A.
+Ghostty is now the single graphical terminal. Its configuration provides explicit copy/paste, selection and scrollback controls, while tmux exposes the full pane history through Ctrl+A, A. The installer uses a distro package when available and otherwise builds the pinned release from Ghostty's official source tarball without adding a third-party Debian repository.
 
 Ghostty clipboard/scrollback controls:
 
