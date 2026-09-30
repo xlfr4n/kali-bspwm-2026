@@ -24,8 +24,8 @@ window {
   location: center;
   anchor: center;
   background-color: @bg;
-  border: 1px;
-  border-color: @border;
+  border: 0px;
+  border-color: transparent;
   border-radius: 16px;
   padding: 16px;
 }
@@ -37,8 +37,8 @@ mainbox {
 inputbar {
   padding: 8px;
   background-color: @bg-alt;
-  border: 1px;
-  border-color: @accent;
+  border: 0px;
+  border-color: transparent;
   border-radius: 8px;
 }
 
