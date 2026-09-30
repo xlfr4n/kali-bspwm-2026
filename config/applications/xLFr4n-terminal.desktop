@@ -1,12 +1,9 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=xLFr4n — Kitty
-Comment=Primary terminal
+Name=xLFr4n — Terminal
+Comment=Ghostty + tmux primary terminal with Kitty fallback
 Exec=/usr/local/bin/xLFr4n-dock-launch terminal
-Icon=kitty
+Icon=utilities-terminal
 Terminal=false
-NoDisplay=true
-StartupWMClass=kitty
-
 StartupNotify=true
