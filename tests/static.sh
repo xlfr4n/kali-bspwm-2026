@@ -146,6 +146,7 @@ check "Kitty cursor trail" grep -Fq "cursor_trail 18" config/kitty/kitty.conf
 check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
 check "Neutral focused border" grep -Fq "focused_border_color '#262a31'" config/bspwm/bspwmrc
 check "Frameless Kitty" grep -Fq "window_border_width 0" config/kitty/kitty.conf
+check "Kitty opaque default" grep -Fq "background_opacity 1.0" config/kitty/kitty.conf
 check "Frameless Rofi window" grep -Fq "border: 0px;" config/rofi/launcher.rasi
 check "Frameless Tint2" grep -Fq "border_width = 0" config/tint2/tint2rc
 check "Frameless Plank" grep -Fq "LineWidth=0" config/plank/xLFr4n/dock.theme
