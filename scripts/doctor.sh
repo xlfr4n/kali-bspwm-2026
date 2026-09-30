@@ -146,7 +146,8 @@ check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
 check "Workspace rail spacing" grep -Fq "offset-y = 40pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
-check "Ghostty backend" xlfr4n-terminal --backend
+check "Ghostty backend" sh -c 'backend="$(xlfr4n-terminal --backend 2>/dev/null)" && [ -x "$backend" ]'
+check "Ghostty user binary" test -x "$HOME/.local/bin/ghostty"
 check "tmux configuration" test -s "$HOME/.config/tmux/tmux.conf"
 check "Ghostty configuration" test -s "$HOME/.config/ghostty/config"
 check "Rofi frameless window" grep -Fq "border: 0px;" "$HOME/.config/rofi/launcher.rasi"
