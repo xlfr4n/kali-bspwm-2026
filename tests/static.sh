@@ -136,7 +136,7 @@ check "Compact workspace labels" grep -Fq "label-focused-margin = 1" config/poly
 check "Workspace transparent background" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Clock modules" grep -Fq "modules-right = date time" config/polybar/config.ini
 check "Workspace launch" grep -Fq "polybar workspace -c" config/polybar/launch.sh
-check "Workspace rail offset above dock" grep -Fq "offset-y = 78pt" config/polybar/config.ini
+check "Workspace rail at bottom edge" grep -Fq "offset-y = 0pt" config/polybar/config.ini
 check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
@@ -147,6 +147,8 @@ check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" co
 check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Tint2 dock width" grep -Fq "panel_size = 860 64" config/tint2/tint2rc
+check "Tint2 no window strut" grep -Fq "strut_policy = none" config/tint2/tint2rc
+check "Tint2 dock edge margin" grep -Fq "panel_margin = 0 0" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
 check "Frameless BSPWM" grep -Fq "border_width 0" config/bspwm/bspwmrc
