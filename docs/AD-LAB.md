@@ -74,3 +74,55 @@ Repository helpers provision the lab domain and validate its baseline without st
 ```
 
 Passwords are requested interactively. The provisioner creates synthetic lab OUs and accounts. The join helper requires operator-supplied credentials. Run these scripts only on the AD lab VMs.
+
+## 🧭 Runbook / Procedimiento
+
+### 🇪🇸 Español
+
+```text
+1. Crear snapshots baseline de Kali, DC01 y WS01.
+2. Conectar las VMs al segmento XLFR4N-LAB.
+3. Configurar IP estable y DNS de laboratorio.
+4. Ejecutar Provision-DC.ps1 en DC01.
+5. Reiniciar DC01 y validar con Test-ADLab.ps1.
+6. Ejecutar Join-Client.ps1 en WS01.
+7. Reiniciar WS01 y validar resolución / pertenencia al dominio.
+8. Registrar DC01 y WS01 como targets del engagement.
+9. Crear un snapshot post-baseline.
+10. Comenzar ejercicios solo después de lab doctor --strict y topology validate --strict.
+```
+
+Targets de ejemplo dentro del engagement:
+
+```bash
+lab scope allow 10.77.0.0/24
+lab target add 10.77.0.10 dc01
+lab target add 10.77.0.20 ws01
+lab target use dc01
+lab doctor --strict
+```
+
+### 🇬🇧 English
+
+```text
+1. Create clean baseline snapshots for Kali, DC01 and WS01.
+2. Connect the VMs to XLFR4N-LAB.
+3. Configure stable lab IP addressing and DNS.
+4. Run Provision-DC.ps1 on DC01.
+5. Reboot DC01 and validate with Test-ADLab.ps1.
+6. Run Join-Client.ps1 on WS01.
+7. Reboot WS01 and validate DNS / domain membership.
+8. Register DC01 and WS01 as engagement targets.
+9. Create a post-baseline snapshot.
+10. Start exercises only after lab doctor --strict and topology validate --strict pass.
+```
+
+Example target registration:
+
+```bash
+lab scope allow 10.77.0.0/24
+lab target add 10.77.0.10 dc01
+lab target add 10.77.0.20 ws01
+lab target use dc01
+lab doctor --strict
+```
