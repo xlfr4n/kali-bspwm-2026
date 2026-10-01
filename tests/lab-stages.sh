@@ -25,7 +25,7 @@ check 'Web no automatic restart' grep -Fq 'restart: "no"' tools/web-lab/compose.
 check 'Web localhost binding by default' grep -Fq 'WEB_LAB_BIND:-127.0.0.1' tools/web-lab/compose.yml
 check 'Web drop capabilities' grep -Fq 'cap_drop:' tools/web-lab/compose.yml
 check 'Web read-only filesystem' grep -Fq 'read_only: true' tools/web-lab/compose.yml
-check 'VirtualBox atomic apply guard' grep -Fq '$notPoweredOff' tools/virtualbox/xlfr4n-lab-vbox.ps1
+check 'VirtualBox atomic apply guard' grep -Fq 'notPoweredOff' tools/virtualbox/xlfr4n-lab-vbox.ps1
 check 'VirtualBox post-apply verification' grep -Fq 'Post-apply verification failed' tools/virtualbox/xlfr4n-lab-vbox.ps1
 check 'Snapshot existence guard' grep -Fq 'was not found on' tools/virtualbox/xlfr4n-lab-snapshot.ps1
 check 'Snapshot reset confirmation' grep -Fq 'RESET' tools/virtualbox/xlfr4n-lab-snapshot.ps1
