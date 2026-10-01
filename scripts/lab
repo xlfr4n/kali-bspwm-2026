@@ -214,6 +214,7 @@ init_engagement(){
     created_at: $created,
     updated_at: $created,
     scope: {include: [], exclude: []},
+    authorization: {status: "pending", reference: null},
     targets: [],
     current_target: null
   }' > "$dir/engagement.json"
@@ -251,6 +252,7 @@ Operational directories are numbered so the same workflow works across recon, we
 EOF
 
   set_current "$dir"
+  timeline_event "$dir" "engagement created: $name"
   ok "Engagement created: $dir"
   ok "Active context: $CURRENT_FILE"
 }
@@ -278,6 +280,7 @@ target_add(){
     '.targets += [{name:$name,value:$value,added_at:$now}] | .updated_at=$now' \
     "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "target added: $name -> $value"
   ok "Target added: $name -> $value"
 }
 
@@ -307,6 +310,7 @@ target_use(){
   tmp="$meta.tmp.$$"
   jq --arg name "$name" --arg now "$(timestamp)" '.current_target=$name | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "active target selected: $name -> $value"
   ok "Active target: $name -> $value"
 }
 
@@ -323,6 +327,7 @@ target_remove(){
      if .current_target == $name then .current_target=null else .current_target end |
      .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "target removed: $name"
   ok "Target removed: $name"
 }
 
@@ -350,6 +355,7 @@ scope_change(){
     jq --arg v "$value" --arg now "$(timestamp)" '.scope.exclude |= (if index($v) then . else . + [$v] end) | .updated_at=$now' "$meta" > "$tmp"
   fi
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "scope $action: $value"
   ok "Scope $action: $value"
 }
 
@@ -462,6 +468,8 @@ status(){
   echo "⚡ xLFr4n // ENGAGEMENT"
   printf 'Name       : %s\n' "$(jq -r '.name' "$dir/engagement.json")"
   printf 'Status     : %s\n' "$(jq -r '.status' "$dir/engagement.json")"
+  printf 'Authorization: %s\n' "$(jq -r '.authorization.status // "pending"' "$dir/engagement.json")"
+  printf 'Auth ref    : %s\n' "$(jq -r '.authorization.reference // "—"' "$dir/engagement.json")"
   printf 'Workspace  : %s\n' "$dir"
   printf 'Scope      : %s allowed / %s excluded\n' \
     "$(jq '.scope.include | length' "$dir/engagement.json")" \
@@ -475,12 +483,11 @@ status(){
 }
 
 notes_add(){
-  local dir message file
+  local dir message
   dir="$(require_engagement)" || exit 1
   message="${*:-}"
   [ -n "$message" ] || die "Usage: lab note TEXT..."
-  file="$dir/notes/timeline.log"
-  printf '[%s] %s\n' "$(timestamp)" "$message" >> "$file"
+  timeline_event "$dir" "$message"
   ok "Note recorded."
 }
 
@@ -495,6 +502,8 @@ exec_command(){
   shift 2
   [ "${1:-}" = "--" ] && shift
   [ "$#" -gt 0 ] || die "No command supplied."
+  [ "$(jq -r '.status' "$dir/engagement.json")" = "open" ] || die "Execution blocked: engagement is not open."
+  authorization_is_confirmed "$dir" || die "Execution blocked: authorization is not confirmed."
   target_value="$(target_value_by_name "$dir" "$target_name")"
   [ -n "$target_value" ] || die "Unknown target: $target_name"
   scope_matches "$target_value" "$dir/engagement.json" || die "Execution blocked: target is not in scope."
@@ -899,6 +908,7 @@ close_engagement(){
   tmp="$meta.tmp.$$"
   jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "engagement closed"
   ok "Engagement closed. Data remains locally intact."
 }
 
