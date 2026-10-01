@@ -542,7 +542,7 @@ finding_summary(){
   for severity in critical high medium low info; do
     local count
     count="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print0 2>/dev/null |
-      xargs -0 -r grep -hE '^\\*\\*Severity:\\*\\* ' 2>/dev/null |
+      xargs -0 -r grep -hE '^\*\*Severity:\*\* ' 2>/dev/null |
       grep -F -- "**Severity:** $severity" |
       wc -l | tr -d ' ')"
     printf '%-10s %s\n' "$severity" "$count"
@@ -574,7 +574,7 @@ lab_doctor(){
   printf '⚡ xLFr4n // LAB DOCTOR\n'
   if ! dir="$(engagement_dir)"; then
     printf '[FAIL] active engagement\n'
-    printf '\\nSummary: 0 OK, 1 FAIL\\n'
+    printf '\nSummary: 0 OK, 1 FAIL\n'
     return 1
   fi
 
@@ -638,7 +638,7 @@ lab_doctor(){
     fi
   fi
 
-  printf '\\nSummary: %d OK, %d FAIL\\n' "$ok_count" "$fail_count"
+  printf '\nSummary: %d OK, %d FAIL\n' "$ok_count" "$fail_count"
   return $((fail_count > 0 ? 1 : 0))
 }
 
@@ -954,7 +954,7 @@ case "${1:-}" in
   init) shift; init_engagement "$@" ;;
   status) status ;;
   status-short|--status-short) status_short ;;
-  doctor) lab_doctor ;;
+  doctor) shift; lab_doctor "$@" ;;
   scope)
     shift
     case "${1:-list}" in
