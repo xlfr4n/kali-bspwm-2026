@@ -28,7 +28,10 @@ jobs:
 
       - name: Validate desktop launchers
         run: desktop-file-validate config/applications/*.desktop
+      - name: Lab functional smoke test
+        run: bash tests/lab-smoke.sh
       - name: Check shell scripts
         run: |
           shellcheck install.sh uninstall.sh config/bspwm/bspwmrc config/polybar/launch.sh
           find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | xargs -0 shellcheck
+          shellcheck tests/lab-smoke.sh

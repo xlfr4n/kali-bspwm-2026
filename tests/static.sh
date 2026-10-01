@@ -350,3 +350,7 @@ check "Polybar engagement status" grep -Fq "lab --status-short" config/polybar/c
 check "Polybar engagement interval" grep -Fq "interval = 2" config/polybar/config.ini
 check "Menu engagement status" grep -Fq "LABSTATUS" scripts/kali-menu
 check "CI jq dependency" grep -Eq "apt-get install .*jq" .github/workflows/shellcheck.yml
+
+check "Lab smoke test" test -x tests/lab-smoke.sh
+check "CI lab smoke step" grep -Fq "bash tests/lab-smoke.sh" .github/workflows/shellcheck.yml
+check "CI shellcheck smoke script" grep -Fq "shellcheck tests/lab-smoke.sh" .github/workflows/shellcheck.yml
