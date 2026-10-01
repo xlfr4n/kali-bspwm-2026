@@ -806,7 +806,10 @@ PY
   fi
 
   if command -v sha256sum >/dev/null 2>&1; then
-    sha256sum "$report" "$html" > "$dir/10-report/REPORT-SHA256SUMS"
+    (
+      cd "$dir/10-report"
+      sha256sum "report.md" "report.html"
+    ) > "$dir/10-report/REPORT-SHA256SUMS"
   fi
   ok "Report generated: $report"
   ok "HTML generated:  $html"
