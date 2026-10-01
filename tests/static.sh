@@ -121,7 +121,7 @@ check "Dock Firefox route" grep -Fq "firefox)" scripts/dock-launch
 check "VirtualBox service detection" grep -Fq "virtualbox-guest-utils.service" install.sh
 check "Fastfetch deployment" grep -Fq "fastfetch; do" install.sh
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
-check "Lab doctor command" grep -Fq "doctor) lab_doctor" scripts/lab
+check "Lab doctor command" grep -Fq "doctor) shift; lab_doctor" scripts/lab
 check "Lab finding summary command" grep -Fq "summary) finding_summary" scripts/lab
 check "Lab engagement health docs" test -s docs/LAB-TEST-MATRIX.md
 check "VirtualBox topology docs" test -s docs/VIRTUALBOX-LAB-TOPOLOGY.md
