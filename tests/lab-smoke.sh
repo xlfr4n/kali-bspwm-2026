@@ -25,7 +25,6 @@ assert_contains(){
 }
 
 lab init CI-Smoke
-lab authorization set confirmed CI-SMOKE
 lab scope allow 192.0.2.0/24
 lab scope deny 192.0.2.10
 lab scope check 192.0.2.20
@@ -36,6 +35,7 @@ fi
 
 lab target add 192.0.2.20 smoke
 lab target use smoke
+lab authorization set pending
 if lab exec --target smoke -- sh -c 'printf blocked' >/dev/null 2>&1; then
   echo "Unauthorized execution unexpectedly passed." >&2
   exit 1
