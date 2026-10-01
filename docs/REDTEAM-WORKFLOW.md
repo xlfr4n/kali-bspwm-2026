@@ -128,3 +128,31 @@ authorization → scope → targets → context → operation → evidence → f
 Keep the source of truth inside the engagement workspace and use the desktop only as a presentation/control surface.
 
 See the supporting architecture, evidence and reporting documents for the detailed lifecycle.
+
+## 🩺 Lab health / Salud del Lab
+
+### 🇪🇸 Español
+
+Antes de instalar perfiles adicionales o iniciar una práctica, comprueba la estructura del engagement:
+
+```bash
+lab doctor
+lab status
+lab target list
+lab finding summary
+```
+
+`lab doctor` es read-only y valida el metadata JSON, la estructura de directorios y la coherencia del target activo. No modifica el sistema ni ejecuta herramientas ofensivas.
+
+### 🇬🇧 English
+
+Before enabling additional tool profiles or starting a lab exercise, validate the engagement structure:
+
+```bash
+lab doctor
+lab status
+lab target list
+lab finding summary
+```
+
+`lab doctor` is read-only. It checks engagement metadata, required directories and active-target consistency. It does not modify the system or launch offensive tooling.
