@@ -419,7 +419,7 @@ evidence_add(){
   [ -n "$safe" ] || safe="artifact"
   dest="$dir/08-evidence/raw/$(stamp)-$safe-$base"
   cp -a "$source" "$dest"
-  hash="$(sha256sum "$dest" | awk '{print \$1}')"
+  hash="$(sha256sum "$dest" | awk '{print $1}' )"
   file="$dir/08-evidence/index.tsv"
   if [ ! -f "$file" ]; then
     printf 'timestamp\tsha256\tfile\tsource\n' > "$file"
@@ -660,7 +660,7 @@ report_generate(){
     echo "## Evidence"
     echo
     if [ -f "$dir/08-evidence/index.tsv" ]; then
-      tail -n +2 "$dir/08-evidence/index.tsv" | awk -F '\t' '{print "- " \$2 "  " \$3 "  (" \$1 ")"}'
+      tail -n +2 "$dir/08-evidence/index.tsv" | awk -F '\t' '{print "- " $2 "  " $3 "  (" $1 ")"}'
     else
       echo "_No evidence registered._"
     fi
