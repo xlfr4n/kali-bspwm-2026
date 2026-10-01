@@ -30,7 +30,7 @@ Superficies de entrenamiento:
 
 ## 🇬🇧 English
 
-This is a self-contained local training target using synthetic data. Run it only on the isolated lab network.
+This is a self-contained local training target using synthetic data. Run it only on the isolated lab network. The container requires `LAB_MODE=isolated-lab` before it will start.
 
 ```bash
 cd tools/web-lab
