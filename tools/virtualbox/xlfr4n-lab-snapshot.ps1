@@ -68,7 +68,8 @@ if ($List) {
     exit 0
 }
 
-if ($Create -and $Apply -and $Plan) { throw '-Create cannot combine -Plan and -Apply together.' }
+if ($Plan -and $Apply) { throw '-Plan and -Apply cannot be used together.' }
+if ($Create -and $List) { throw '-Create and -List cannot be used together.' }
 [string]$snapshot = $SnapshotName
 if ([string]::IsNullOrWhiteSpace($snapshot)) { throw '-SnapshotName is required unless -List is used.' }
 
