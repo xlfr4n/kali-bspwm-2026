@@ -40,3 +40,59 @@ jobs:
           shellcheck install.sh uninstall.sh config/bspwm/bspwmrc config/polybar/launch.sh
           find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | xargs -0 shellcheck
           shellcheck tests/lab-smoke.sh tools/web-lab/reset.sh tools/web-lab/test.sh
+
+  powershell-validate:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Parse PowerShell lab scripts
+        shell: pwsh
+        run: |
+          $errors = @()
+          Get-ChildItem -Path tools -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null
+            $parseErrors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $_.FullName,
+              [ref]$tokens,
+              [ref]$parseErrors
+            ) | Out-Null
+            if ($parseErrors.Count -gt 0) {
+              $errors += "$($_.FullName): $($parseErrors -join '; ')"
+            } else {
+              Write-Host "[OK] $($_.FullName)"
+            }
+          }
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+          Write-Host "PowerShell parser validation: PASS"
+
+  web-lab:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Validate Web Lab compose
+        run: docker compose -f tools/web-lab/compose.yml config -q
+      - name: Start Web Lab
+        run: docker compose -f tools/web-lab/compose.yml up -d --build
+      - name: Wait for Web Lab
+        run: |
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/healthz >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose -f tools/web-lab/compose.yml logs
+          exit 1
+      - name: Web Lab smoke
+        run: bash tools/web-lab/test.sh http://127.0.0.1:8080
+      - name: Stop Web Lab
+        if: always()
+        run: docker compose -f tools/web-lab/compose.yml down --remove-orphans
