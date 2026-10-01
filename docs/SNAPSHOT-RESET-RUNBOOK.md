@@ -22,7 +22,7 @@ Restauración explícita:
 .\tools\virtualbox\xlfr4n-lab-snapshot.ps1 -VMName WEB01 -SnapshotName WEB01-clean -Apply
 ```
 
-El helper exige que la VM esté apagada y la confirmación literal `RESET`. La evidencia debe conservarse antes de restaurar y el reset debe anotarse en el engagement.
+El helper comprueba que el snapshot exista, exige que la VM esté apagada y pide la confirmación literal `RESET`. Puede escribir un log del reset con `-LogPath` para adjuntarlo como evidencia. La evidencia debe conservarse antes de restaurar y el reset debe anotarse en el engagement.
 
 ## 🇬🇧 English
 
@@ -30,4 +30,4 @@ Create and document a clean baseline snapshot for each lab VM.
 
 List snapshots with `-List`, preview restore with `-Plan`, and restore with `-Apply` after powering the VM off. Restore requires the explicit `RESET` confirmation.
 
-Preserve evidence before restoring and record the reset event in the engagement.
+The helper validates that the snapshot exists, requires the VM to be powered off and requires the literal `RESET` confirmation. Use `-LogPath` to preserve a timestamped reset event alongside the engagement evidence.
