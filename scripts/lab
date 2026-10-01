@@ -59,6 +59,38 @@ timeline_event(){
   printf '[%s] %s\n' "$(timestamp)" "$*" >> "$dir/notes/timeline.log"
 }
 
+authorization_status(){
+  local dir
+  dir="$(require_engagement)" || exit 1
+  jq -r '.authorization.status // "pending"' "$dir/engagement.json"
+}
+
+authorization_change(){
+  need_jq
+  local status="${1:-}" reference="${2:-}" dir meta tmp
+  dir="$(require_engagement)" || exit 1
+  case "$status" in
+    pending|confirmed|expired) ;;
+    *) die "Usage: lab authorization set {pending|confirmed|expired} [REFERENCE]" ;;
+  esac
+  meta="$dir/engagement.json"
+  tmp="$meta.tmp.$"
+  jq --arg status "$status" --arg reference "${reference:-}" --arg now "$(timestamp)" \
+    '.authorization = {status:$status, reference:(if $reference == "" then null else $reference end)} | .updated_at=$now' "$meta" > "$tmp"
+  mv -f "$tmp" "$meta"
+  if [ -n "${reference:-}" ]; then
+    timeline_event "$dir" "authorization changed to $status (reference=$reference)"
+  else
+    timeline_event "$dir" "authorization changed to $status"
+  fi
+  ok "Authorization status: $status"
+}
+
+authorization_is_confirmed(){
+  local dir="$1"
+  jq -e '.authorization.status == "confirmed"' "$dir/engagement.json" >/dev/null 2>&1
+}
+
 ensure_layout(){
   local dir="$1"
   mkdir -p \
