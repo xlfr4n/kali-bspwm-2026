@@ -26,6 +26,19 @@ assert_contains(){
 
 lab init CI-Smoke
 lab scope allow 192.0.2.0/24
+lab topology validate
+sed -i \
+  -e 's/^- Hipervisor:$/- Hipervisor: VirtualBox/' \
+  -e 's/^- Modo de red:$/- Modo de red: Internal Network/' \
+  -e 's/^- Nombre de red:$/- Nombre de red: XLFR4N-LAB/' \
+  -e 's/^- Subred:$/- Subred: 10.77.0.0\/24/' \
+  -e 's/| DC01 | | AD\/DNS | | |/| DC01 | 10.77.0.10 | AD\/DNS | DC01 | DC01-domain-ready |/' \
+  -e 's/| WS01 | | Windows client | | |/| WS01 | 10.77.0.20 | Windows client | WS01 | WS01-joined |/' \
+  -e 's/| WEB01 | | Web target | | |/| WEB01 | 10.77.0.30 | Web target | WEB01 | WEB01-clean |/' \
+  -e 's/^- Snapshot utilizado antes del ejercicio:$/- Snapshot utilizado antes del ejercicio: baseline/' \
+  "$XLFR4N_LAB_ROOT/ci-smoke/00-scope/TOPOLOGY.md"
+lab topology validate --strict
+lab topology show | grep -Fq 'XLFR4N-LAB'
 lab scope deny 192.0.2.10
 lab scope check 192.0.2.20
 if lab scope check 192.0.2.10 >/dev/null 2>&1; then
