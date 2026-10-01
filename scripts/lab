@@ -52,6 +52,13 @@ set_current(){
   printf '%s\n' "$1" > "$CURRENT_FILE"
 }
 
+timeline_event(){
+  local dir="$1"
+  shift
+  mkdir -p "$dir/notes"
+  printf '[%s] %s\n' "$(timestamp)" "$*" >> "$dir/notes/timeline.log"
+}
+
 authorization_status(){
   local dir
   dir="$(require_engagement)" || exit 1
@@ -75,6 +82,9 @@ authorization_change(){
   ok "Authorization status: $status"
   if [ -n "${reference:-}" ]; then
     ok "Authorization reference: $reference"
+    timeline_event "$dir" "authorization changed to $status (reference=$reference)"
+  else
+    timeline_event "$dir" "authorization changed to $status"
   fi
 }
 
@@ -159,6 +169,7 @@ Operational directories are numbered so the same workflow works across recon, we
 EOF
 
   set_current "$dir"
+  timeline_event "$dir" "engagement created: $name"
   ok "Engagement created: $dir"
   ok "Active context: $CURRENT_FILE"
 }
@@ -186,6 +197,7 @@ target_add(){
     '.targets += [{name:$name,value:$value,added_at:$now}] | .updated_at=$now' \
     "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "target added: $name -> $value"
   ok "Target added: $name -> $value"
 }
 
@@ -215,6 +227,7 @@ target_use(){
   tmp="$meta.tmp.$$"
   jq --arg name "$name" --arg now "$(timestamp)" '.current_target=$name | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "active target selected: $name -> $value"
   ok "Active target: $name -> $value"
 }
 
@@ -231,6 +244,7 @@ target_remove(){
      if .current_target == $name then .current_target=null else .current_target end |
      .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "target removed: $name"
   ok "Target removed: $name"
 }
 
@@ -258,6 +272,7 @@ scope_change(){
     jq --arg v "$value" --arg now "$(timestamp)" '.scope.exclude |= (if index($v) then . else . + [$v] end) | .updated_at=$now' "$meta" > "$tmp"
   fi
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "scope $action: $value"
   ok "Scope $action: $value"
 }
 
@@ -384,12 +399,11 @@ status(){
 }
 
 notes_add(){
-  local dir message file
+  local dir message
   dir="$(require_engagement)" || exit 1
   message="${*:-}"
   [ -n "$message" ] || die "Usage: lab note TEXT..."
-  file="$dir/notes/timeline.log"
-  printf '[%s] %s\n' "$(timestamp)" "$message" >> "$file"
+  timeline_event "$dir" "$message"
   ok "Note recorded."
 }
 
@@ -834,6 +848,14 @@ report_generate(){
       echo "_No evidence registered._"
     fi
     echo
+    echo "## Engagement timeline"
+    echo
+    if [ -s "$dir/notes/timeline.log" ]; then
+      sed 's/^/- /' "$dir/notes/timeline.log"
+    else
+      echo "_No timeline entries recorded._"
+    fi
+    echo
     echo "## Command timeline"
     echo
     if find "$dir/08-evidence/commands" -type f -name '*.log' | grep -q .; then
@@ -955,6 +977,7 @@ close_engagement(){
   tmp="$meta.tmp.$$"
   jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
+  timeline_event "$dir" "engagement closed"
   ok "Engagement closed. Data remains locally intact."
 }
 
