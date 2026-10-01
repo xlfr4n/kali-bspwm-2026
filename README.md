@@ -816,6 +816,7 @@ Evidencia:
 lab evidence add captura.png screenshot
 lab evidence list
 lab evidence manifest
+lab evidence verify
 ~~~
 
 Findings:
@@ -823,6 +824,7 @@ Findings:
 lab finding new "Example finding" medium
 lab finding list
 lab finding summary
+lab finding set F-001 status confirmed
 ~~~
 
 Reporting:
