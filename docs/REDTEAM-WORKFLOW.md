@@ -137,12 +137,13 @@ Antes de instalar perfiles adicionales o iniciar una práctica, comprueba la est
 
 ```bash
 lab doctor
+lab doctor --strict
 lab status
 lab target list
 lab finding summary
 ```
 
-`lab doctor` es read-only y valida el metadata JSON, la estructura de directorios y la coherencia del target activo. No modifica el sistema ni ejecuta herramientas ofensivas.
+`lab doctor` es read-only y valida el metadata JSON, la estructura de directorios y la coherencia del target activo. `lab doctor --strict` añade la puerta de scope y target activo antes de una práctica. No modifica el sistema ni ejecuta herramientas ofensivas.
 
 ### 🇬🇧 English
 
@@ -155,4 +156,4 @@ lab target list
 lab finding summary
 ```
 
-`lab doctor` is read-only. It checks engagement metadata, required directories and active-target consistency. It does not modify the system or launch offensive tooling.
+`lab doctor` is read-only. `lab doctor --strict` additionally requires registered scope and an in-scope active target before a practice. Neither modifies the system or launches offensive tooling.
