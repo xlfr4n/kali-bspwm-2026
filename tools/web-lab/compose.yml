@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     environment:
       LAB_PORT: '8080'
+      LAB_MODE: isolated-lab
     ports:
       - '8080:8080'
     healthcheck:
