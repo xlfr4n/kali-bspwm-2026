@@ -62,8 +62,20 @@ lab finding summary | grep -Fq 'low        1'
 
 printf 'ci evidence\n' > "$TMP/artifact.txt"
 lab evidence add "$TMP/artifact.txt" smoke
+printf "tampered\n" > "$(find "$ENGAGEMENT/08-evidence/raw" -type f -name "*artifact.txt" -print -quit)"
+if lab evidence verify >/dev/null 2>&1; then
+  echo "Tampered evidence unexpectedly verified." >&2
+  exit 1
+fi
+printf "ci evidence\n" > "$TMP/artifact.txt"
+lab evidence add "$TMP/artifact.txt" smoke
 lab evidence manifest
+lab evidence verify
+lab evidence manifest
+lab evidence verify
 lab finding new "CI smoke finding" low
+lab finding set F-001 status confirmed
+grep -Fq "**Status:** confirmed" "$ENGAGEMENT/09-findings/F-001-ci-smoke-finding.md"
 lab finding summary | grep -Fq 'low        1'
 lab report
 
