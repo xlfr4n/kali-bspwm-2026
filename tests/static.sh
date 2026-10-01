@@ -352,6 +352,9 @@ check "Lab report timeline" grep -Fq "Engagement timeline" scripts/lab
 check "VirtualBox host helper script" test -s tools/virtualbox/xlfr4n-lab-vbox.ps1
 check "VirtualBox helper defaults to plan-safe mode" grep -Fq "[switch]$Apply" tools/virtualbox/xlfr4n-lab-vbox.ps1
 check "Lab strict doctor authorization gate" grep -Fq "authorization       confirmed" scripts/lab
+check "Lab topology commands" grep -Fq "topology_validate" scripts/lab
+check "Lab topology template" grep -Fq "TOPOLOGY.md" scripts/lab
+check "Lab topology strict command" grep -Fq "validate [--strict]" scripts/lab
 check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
 check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
 check "Lab findings" grep -Fq "finding new" scripts/lab
