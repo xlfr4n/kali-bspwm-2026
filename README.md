@@ -790,6 +790,7 @@ Crear un engagement:
 lab init NOMBRE
 lab status
 lab doctor
+lab doctor --strict
 ~~~
 
 lab doctor es una comprobación read-only de la estructura y coherencia del engagement. No ejecuta herramientas ofensivas.
