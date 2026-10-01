@@ -141,7 +141,7 @@ check "Workspace rail full icon lane" grep -Fq "height = 48pt" config/polybar/co
 check "Workspace rail edge offset" grep -Fq "offset-x = 0%" config/polybar/config.ini
 check "Dock edge offset" grep -Fq "offset-y = 0pt" config/polybar/config.ini
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
-check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
+check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
