@@ -1136,6 +1136,7 @@ EVIDENCE
   lab evidence add FILE [LABEL]
   lab evidence list
   lab evidence manifest
+  lab evidence verify
 
 FINDINGS
   lab finding new "TITLE" [low|medium|high|critical|info]
