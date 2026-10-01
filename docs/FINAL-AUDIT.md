@@ -27,11 +27,11 @@ Esta lista define el estado interno del proyecto y separa explícitamente lo val
 | 🚀 Startup | ✅ | Fases escalonadas + bloqueo single-instance + limpieza scoped al usuario |
 | 🧪 CI | ✅ | Última ejecución verificada sobre `main`: static guards, Rofi, desktop-file validation y ShellCheck pasan |
 | 📚 Docs | ✅ | README ES/EN, instalación, arquitectura, VM, estilo, Fastfetch y launch feedback |
-| 🟥 Red Team Lab | ✅* | Engagement, scope, targets, evidence, findings, reporting, tool profiles y smoke test estructural; AD/Web multi-VM todavía requieren la validación L3-L7 del laboratorio real |
+| 🟥 Red Team Lab | 🟡 | Engagement, scope, targets, evidence, findings, reporting, tool profiles y smoke test estructural; AD/Web multi-VM todavía requieren la validación L3-L7 del laboratorio real |
 
 ### 🔬 Estado del Red Team Lab
 
-*El controlador y su CI están cubiertos; la topología AD/Web multi-VM y los ejercicios prácticos permanecen como las siguientes fases de laboratorio, no como funciones ya validadas en esta VM.
+El controlador, sus guards y su CI cubren L0-L2; la documentación y preparación de la topología cubren L3. La topología AD/Web multi-VM, los ejercicios prácticos y el reset final siguen pendientes de validación L4-L7 en el laboratorio real.
 
 ### 🔬 Última comprobación externa
 
