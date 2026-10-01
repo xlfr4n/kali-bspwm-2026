@@ -43,6 +43,7 @@ AD-LAB.md
 WEB-LAB.md
 LAB-TEST-MATRIX.md
 VIRTUALBOX-LAB-TOPOLOGY.md
+VIRTUALBOX-HOST-HELPER.md
 ~~~
 
 Estos documentos forman la ruta operativa del laboratorio y están separados de la documentación puramente visual del escritorio.
