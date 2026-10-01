@@ -28,4 +28,4 @@ El modo Apply exige que todas las VMs estén apagadas y una confirmación manual
 
 Run this helper on the Windows VirtualBox host.
 
-Audit and plan modes are read-only. Apply requires powered-off VMs and explicit confirmation. The helper only changes the selected VM adapter to the requested Internal Network.
+Audit and plan modes are read-only. Apply first preflights that every selected VM exists and is powered off, then requires the literal `APPLY` confirmation. After the mutation it verifies every selected adapter is actually attached to the requested Internal Network. Only the selected adapter is modified.
