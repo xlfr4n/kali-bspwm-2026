@@ -3,6 +3,8 @@
 # Pasting commented command blocks works normally in interactive Zsh.
 
 setopt interactivecomments
+# Keep terminal bracketed-paste escape sequences out of the editable command line.
+setopt BRACKETED_PASTE
 
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim
