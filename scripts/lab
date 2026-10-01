@@ -52,6 +52,35 @@ set_current(){
   printf '%s\n' "$1" > "$CURRENT_FILE"
 }
 
+authorization_status(){
+  local dir
+  dir="$(require_engagement)" || exit 1
+  jq -r '.authorization.status // "pending"' "$dir/engagement.json"
+}
+
+authorization_change(){
+  need_jq
+  local status="${1:-}" reference="${2:-}" dir meta tmp
+  dir="$(require_engagement)" || exit 1
+  case "$status" in
+    pending|confirmed|expired) ;;
+    *) die "Usage: lab authorization set {pending|confirmed|expired} [REFERENCE]" ;;
+  esac
+  meta="$dir/engagement.json"
+  tmp="$meta.tmp.$"
+  jq --arg status "$status" --arg reference "${reference:-}" --arg now "$(timestamp)" \
+    '.authorization = {status:$status, reference:(if $reference == "" then null else $reference end)} |
+     .updated_at=$now' "$meta" > "$tmp"
+  mv -f "$tmp" "$meta"
+  ok "Authorization status: $status"
+  [ -n "${reference:-}" ] && ok "Authorization reference: $reference"
+}
+
+authorization_is_confirmed(){
+  local dir="$1"
+  jq -e '.authorization.status == "confirmed"' "$dir/engagement.json" >/dev/null 2>&1
+}
+
 ensure_layout(){
   local dir="$1"
   mkdir -p \
@@ -90,6 +119,7 @@ init_engagement(){
     created_at: $created,
     updated_at: $created,
     scope: {include: [], exclude: []},
+    authorization: {status: "pending", reference: null},
     targets: [],
     current_target: null
   }' > "$dir/engagement.json"
@@ -338,6 +368,7 @@ status(){
   echo "⚡ xLFr4n // ENGAGEMENT"
   printf 'Name       : %s\n' "$(jq -r '.name' "$dir/engagement.json")"
   printf 'Status     : %s\n' "$(jq -r '.status' "$dir/engagement.json")"
+  printf 'Authorization: %s\n' "$(jq -r '.authorization.status // "pending"' "$dir/engagement.json")"
   printf 'Workspace  : %s\n' "$dir"
   printf 'Scope      : %s allowed / %s excluded\n' \
     "$(jq '.scope.include | length' "$dir/engagement.json")" \
@@ -371,6 +402,8 @@ exec_command(){
   shift 2
   [ "${1:-}" = "--" ] && shift
   [ "$#" -gt 0 ] || die "No command supplied."
+  [ "$(jq -r '.status' "$dir/engagement.json")" = "open" ] || die "Execution blocked: engagement is not open."
+  authorization_is_confirmed "$dir" || die "Execution blocked: authorization is not confirmed."
   target_value="$(target_value_by_name "$dir" "$target_name")"
   [ -n "$target_value" ] || die "Unknown target: $target_name"
   scope_matches "$target_value" "$dir/engagement.json" || die "Execution blocked: target is not in scope."
@@ -596,6 +629,16 @@ lab_doctor(){
   check_doctor "notes directory" test -d "$dir/notes"
   check_doctor "loot directory" test -d "$dir/loot"
 
+  if [ "$(jq -r '.authorization.status // "pending"' "$meta")" = "confirmed" ]; then
+    printf '[OK]   authorization       confirmed\n'
+    ok_count=$((ok_count + 1))
+  elif [ "$strict" -eq 1 ]; then
+    printf '[FAIL] authorization       not confirmed\n'
+    fail_count=$((fail_count + 1))
+  else
+    printf '[INFO] authorization       %s\n' "$(jq -r '.authorization.status // "pending"' "$meta")"
+  fi
+
   current="$(jq -r '.current_target // empty' "$meta")"
   if [ -z "$current" ]; then
     if [ "$strict" -eq 1 ]; then
@@ -627,6 +670,13 @@ lab_doctor(){
       ok_count=$((ok_count + 1))
     else
       printf '[FAIL] scope entries       none\n'
+      fail_count=$((fail_count + 1))
+    fi
+    if [ "$(jq -r '.status' "$meta")" = "open" ]; then
+      printf '[OK]   engagement status   open\n'
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] engagement status   not open\n'
       fail_count=$((fail_count + 1))
     fi
     if [ "$target_count" -gt 0 ]; then
@@ -915,6 +965,8 @@ ENGAGEMENT
   lab status
   lab status-short
   lab doctor [--strict]
+  lab authorization status
+  lab authorization set {pending|confirmed|expired} [REFERENCE]
   lab close
 
 SCOPE
@@ -964,6 +1016,14 @@ case "${1:-}" in
   status) status ;;
   status-short|--status-short) status_short ;;
   doctor) shift; lab_doctor "$@" ;;
+  authorization)
+    shift
+    case "${1:-status}" in
+      status) authorization_status ;;
+      set) shift; authorization_change "$@" ;;
+      *) die "Usage: lab authorization {status|set} ..." ;;
+    esac
+    ;;
   scope)
     shift
     case "${1:-list}" in
