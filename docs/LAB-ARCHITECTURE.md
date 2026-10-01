@@ -33,3 +33,13 @@ The lab is an additive operations layer above the existing desktop.
 Desktop configuration remains in config/. Engagement state lives in ~/Lab/ and the active context pointer is kept in the xLFr4n configuration area.
 
 Numbered directories make the workflow consistent across engagements, VMs and future reporting integrations.
+
+## 🔐 Engagement controls
+
+### 🇪🇸 Español
+
+La arquitectura separa tres controles antes de una operación registrada: engagement abierto, autorización confirmada y target incluido en scope. La topología del laboratorio se documenta por engagement y las fases AD/Web viven como objetivos separados.
+
+### 🇬🇧 English
+
+The operational layer uses three gates before a registered command can run: the engagement is open, authorization is confirmed and the selected target is in scope. Lab topology is stored per engagement, while AD and Web are treated as separate lab targets.
