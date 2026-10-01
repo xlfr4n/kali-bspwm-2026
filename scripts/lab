@@ -419,7 +419,7 @@ evidence_add(){
   [ -n "$safe" ] || safe="artifact"
   dest="$dir/08-evidence/raw/$(stamp)-$safe-$base"
   cp -a "$source" "$dest"
-  hash="$(sha256sum "$dest" | awk '{print $1}' )"
+  hash="$(sha256sum "$dest" | cut -d " " -f1)"
   file="$dir/08-evidence/index.tsv"
   if [ ! -f "$file" ]; then
     printf 'timestamp\tsha256\tfile\tsource\n' > "$file"
