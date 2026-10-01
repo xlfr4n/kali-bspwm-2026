@@ -20,6 +20,8 @@ TARGET    Set / clear target
 THEME     Change theme
 WALLPAPER Change wallpaper
 LAB       Open Kali Lab
+LABSTATUS Engagement status
+LABTOOLS  Red Team tool profiles
 MONITOR   Refresh displays
 NETWORK   Network manager
 DOCTOR    Run diagnostics
@@ -60,6 +62,8 @@ case "$choice" in
   THEME*) theme-switch ;;
   WALLPAPER*) wallpaper --random ;;
   LAB*) dock-launch lab ;;
+LABSTATUS*) xlfr4n-terminal --title Kali-Engagement -- lab status ;;
+LABTOOLS*) xlfr4n-terminal --title Kali-RedTeam-Tools -- lab tools status ;;
   MONITOR*) monitor-refresh ;;
   NETWORK*) dock-launch network ;;
   DOCTOR*) xlfr4n-terminal --title Kali-Doctor -- doctor.sh ;;

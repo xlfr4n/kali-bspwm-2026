@@ -151,7 +151,7 @@ check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" co
 check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Tint2 dock width" grep -Fq "panel_size = 860 64" config/tint2/tint2rc
-check "Tint2 no window strut" grep -Fq "strut_policy = none" config/tint2/tint2rc
+check "Tint2 no window strut" grep -Fq "strut_policy = follow_size" config/tint2/tint2rc
 check "Tint2 dock edge margin" grep -Fq "panel_margin = 0 0" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
@@ -336,3 +336,17 @@ check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
 check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
 check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
+check "Lab controller syntax" bash -n scripts/lab
+check "Lab engagement initializer" grep -Fq "lab init NAME" scripts/lab
+check "Lab scope gate" grep -Fq "scope_matches" scripts/lab
+check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
+check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
+check "Lab findings" grep -Fq "finding new" scripts/lab
+check "Lab report generation" grep -Fq "report_generate" scripts/lab
+check "Lab official profiles" grep -Fq "kali-tools-top10" scripts/lab
+check "Lab AD profile" grep -Fq "kali-tools-windows-resources" scripts/lab
+check "Lab web profile" grep -Fq "kali-tools-web" scripts/lab
+check "Polybar engagement status" grep -Fq "lab --status-short" config/polybar/config.ini
+check "Polybar engagement interval" grep -Fq "interval = 2" config/polybar/config.ini
+check "Menu engagement status" grep -Fq "LABSTATUS" scripts/kali-menu
+check "CI jq dependency" grep -Fq "desktop-file-validate jq" .github/workflows/shellcheck.yml

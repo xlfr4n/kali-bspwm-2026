@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Install ShellCheck and Rofi
-        run: sudo apt-get update && sudo apt-get install -y shellcheck rofi xvfb desktop-file-utils
+        run: sudo apt-get update && sudo apt-get install -y shellcheck rofi xvfb desktop-file-utils jq
       - name: Bash syntax and static guards
         run: bash tests/static.sh
       - name: Validate Rofi themes
