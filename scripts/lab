@@ -73,7 +73,9 @@ authorization_change(){
      .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
   ok "Authorization status: $status"
-  [ -n "${reference:-}" ] && ok "Authorization reference: $reference"
+  if [ -n "${reference:-}" ]; then
+    ok "Authorization reference: $reference"
+  fi
 }
 
 authorization_is_confirmed(){
