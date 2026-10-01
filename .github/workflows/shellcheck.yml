@@ -30,8 +30,13 @@ jobs:
         run: desktop-file-validate config/applications/*.desktop
       - name: Lab functional smoke test
         run: bash tests/lab-smoke.sh
+      - name: Validate lab helpers
+        run: |
+          bash -n tools/web-lab/reset.sh
+          bash -n tools/web-lab/test.sh
+          python3 -m py_compile tools/web-lab/app.py
       - name: Check shell scripts
         run: |
           shellcheck install.sh uninstall.sh config/bspwm/bspwmrc config/polybar/launch.sh
           find scripts -maxdepth 1 -type f ! -name 'README.md' -print0 | xargs -0 shellcheck
-          shellcheck tests/lab-smoke.sh
+          shellcheck tests/lab-smoke.sh tools/web-lab/reset.sh tools/web-lab/test.sh
