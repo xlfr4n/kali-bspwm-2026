@@ -553,7 +553,9 @@ finding_summary(){
 
 lab_doctor(){
   need_jq
-  local dir meta current ok_count fail_count
+  local dir meta current current_value strict ok_count fail_count
+  strict=0
+  [ "${1:-}" = "--strict" ] && strict=1
   ok_count=0
   fail_count=0
 
@@ -596,13 +598,44 @@ lab_doctor(){
 
   current="$(jq -r '.current_target // empty' "$meta")"
   if [ -z "$current" ]; then
-    printf '[INFO] active target       none\n'
+    if [ "$strict" -eq 1 ]; then
+      printf '[FAIL] active target       required by --strict\n'
+      fail_count=$((fail_count + 1))
+    else
+      printf '[INFO] active target       none\n'
+    fi
   elif jq -e --arg n "$current" '.targets[]? | select(.name == $n)' "$meta" >/dev/null 2>&1; then
-    printf '[OK]   active target       %s\n' "$current"
-    ok_count=$((ok_count + 1))
+    current_value="$(target_value_by_name "$dir" "$current")"
+    if scope_matches "$current_value" "$meta"; then
+      printf '[OK]   active target       %s (in scope)\n' "$current"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] active target       %s (out of scope)\n' "$current"
+      fail_count=$((fail_count + 1))
+    fi
   else
     printf '[FAIL] active target       points to a missing target\n'
     fail_count=$((fail_count + 1))
+  fi
+
+  if [ "$strict" -eq 1 ]; then
+    local scope_count target_count
+    scope_count="$(jq '.scope.include | length' "$meta")"
+    target_count="$(jq '.targets | length' "$meta")"
+    if [ "$scope_count" -gt 0 ]; then
+      printf '[OK]   scope entries       %s\n' "$scope_count"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] scope entries       none\n'
+      fail_count=$((fail_count + 1))
+    fi
+    if [ "$target_count" -gt 0 ]; then
+      printf '[OK]   registered targets  %s\n' "$target_count"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] registered targets  none\n'
+      fail_count=$((fail_count + 1))
+    fi
   fi
 
   printf '\\nSummary: %d OK, %d FAIL\\n' "$ok_count" "$fail_count"
@@ -872,6 +905,7 @@ ENGAGEMENT
   lab init NAME
   lab status
   lab status-short
+  lab doctor [--strict]
   lab close
 
 SCOPE
