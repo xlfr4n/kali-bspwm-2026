@@ -32,6 +32,7 @@ sed -i \
   -e 's/^- Modo de red:$/- Modo de red: Internal Network/' \
   -e 's/^- Nombre de red:$/- Nombre de red: XLFR4N-LAB/' \
   -e 's/^- Subred:$/- Subred: 10.77.0.0\/24/' \
+  -e 's/^- Kali \/ operator IP:$/- Kali \/ operator IP: 10.77.0.40/' \
   -e 's/| DC01 | | AD\/DNS | | |/| DC01 | 10.77.0.10 | AD\/DNS | DC01 | DC01-domain-ready |/' \
   -e 's/| WS01 | | Windows client | | |/| WS01 | 10.77.0.20 | Windows client | WS01 | WS01-joined |/' \
   -e 's/| WEB01 | | Web target | | |/| WEB01 | 10.77.0.30 | Web target | WEB01 | WEB01-clean |/' \
