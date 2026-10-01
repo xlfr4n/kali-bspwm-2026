@@ -121,6 +121,10 @@ check "Dock Firefox route" grep -Fq "firefox)" scripts/dock-launch
 check "VirtualBox service detection" grep -Fq "virtualbox-guest-utils.service" install.sh
 check "Fastfetch deployment" grep -Fq "fastfetch; do" install.sh
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
+check "Lab doctor command" grep -Fq "doctor) lab_doctor" scripts/lab
+check "Lab finding summary command" grep -Fq "summary) finding_summary" scripts/lab
+check "Lab engagement health docs" test -s docs/LAB-TEST-MATRIX.md
+check "Lab workflow health docs" grep -Fq "lab doctor" docs/REDTEAM-WORKFLOW.md
 check "Polybar restack" grep -Fq "wm-restack = bspwm" config/polybar/config.ini
 check "Polybar IPC" grep -Fq "enable-ipc = true" config/polybar/config.ini
 check "Polybar transparent top rail" grep -Fq "background = #00000000" config/polybar/config.ini
