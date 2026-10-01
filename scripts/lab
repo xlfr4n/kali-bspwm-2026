@@ -577,6 +577,655 @@ evidence_list(){
   fi
 }
 
+evidence_verify(){
+  need_cmd sha256sum
+  local dir file expected actual rel source failures=0
+  dir="$(require_engagement)" || exit 1
+  file="$dir/08-evidence/index.tsv"
+  [ -s "$file" ] || die "No evidence index exists."
+
+  while IFS=
+  dir="$(require_engagement)" || exit 1
+  tmp="$dir/08-evidence/SHA256SUMS.tmp"
+  (
+    cd "$dir/08-evidence"
+    find . -type f ! -name 'SHA256SUMS' ! -name 'SHA256SUMS.tmp' ! -name 'index.tsv' -print0 |
+      sort -z | xargs -0 -r sha256sum
+  ) > "$tmp"
+  mv -f "$tmp" "$dir/08-evidence/SHA256SUMS"
+  ok "Evidence manifest generated: $dir/08-evidence/SHA256SUMS"
+}
+
+next_finding_id(){
+  local dir="$1" max
+  max="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -printf '%f\n' 2>/dev/null |
+    sed -n 's/^F-\([0-9][0-9][0-9]\)-.*/\1/p' | sort -n | tail -n1)"
+  if [ -z "$max" ]; then printf '001\n'; else printf '%03d\n' "$((10#$max + 1))"; fi
+}
+
+finding_new(){
+  local dir title severity id slug file
+  dir="$(require_engagement)" || exit 1
+  title="${1:-}"
+  severity="${2:-medium}"
+  [ -n "$title" ] || die "Usage: lab finding new TITLE [low|medium|high|critical|info]"
+  case "$severity" in low|medium|high|critical|info) ;; *) die "Invalid severity: $severity" ;; esac
+  id="F-$(next_finding_id "$dir")"
+  slug="$(slugify "$title")"
+  file="$dir/09-findings/$id-$slug.md"
+  cat > "$file" <<EOF
+# $id — $title
+
+**Status:** open  
+**Severity:** $severity  
+**Engagement:** $(jq -r '.name' "$dir/engagement.json")  
+**Created:** $(timestamp)
+
+## 🇪🇸 Español
+
+### Activo afectado
+-
+
+### Descripción
+-
+
+### Evidencia
+-
+
+### Reproducción / validación
+-
+
+### Impacto
+-
+
+### Remediación
+-
+
+## 🇬🇧 English
+
+### Affected asset
+-
+
+### Description
+-
+
+### Evidence
+-
+
+### Reproduction / validation
+-
+
+### Impact
+-
+
+### Remediation
+-
+
+## Timeline
+
+| Timestamp | Event |
+|---|---|
+| $(timestamp) | Finding created |
+EOF
+  ok "Finding created: $file"
+}
+
+finding_list(){
+  local dir
+  dir="$(require_engagement)" || exit 1
+  find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -printf '%f\n' 2>/dev/null | sort || true
+}
+
+finding_summary(){
+  local dir total=0
+  dir="$(require_engagement)" || exit 1
+
+  printf '⚡ xLFr4n // FINDING SUMMARY\n'
+  for severity in critical high medium low info; do
+    local count
+    count="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print0 2>/dev/null |
+      xargs -0 -r grep -hE '^\*\*Severity:\*\* ' 2>/dev/null |
+      grep -F -- "**Severity:** $severity" |
+      wc -l | tr -d ' ')"
+    printf '%-10s %s\n' "$severity" "$count"
+    total=$((total + count))
+  done
+  printf '%-10s %s\n' "total" "$total"
+}
+
+lab_doctor(){
+  need_jq
+  local dir meta current current_value strict ok_count fail_count
+  strict=0
+  [ "${1:-}" = "--strict" ] && strict=1
+  ok_count=0
+  fail_count=0
+
+  check_doctor(){
+    local label="$1"
+    shift
+    if "$@" >/dev/null 2>&1; then
+      printf '[OK]   %s\n' "$label"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] %s\n' "$label"
+      fail_count=$((fail_count + 1))
+    fi
+  }
+
+  printf '⚡ xLFr4n // LAB DOCTOR\n'
+  if ! dir="$(engagement_dir)"; then
+    printf '[FAIL] active engagement\n'
+    printf '\nSummary: 0 OK, 1 FAIL\n'
+    return 1
+  fi
+
+  meta="$dir/engagement.json"
+  check_doctor "engagement metadata" test -s "$meta"
+  check_doctor "valid JSON metadata" jq -e . "$meta"
+  check_doctor "scope document" test -s "$dir/00-scope/SCOPE.md"
+  check_doctor "recon directory" test -d "$dir/01-recon"
+  check_doctor "enumeration directory" test -d "$dir/02-enumeration"
+  check_doctor "web directory" test -d "$dir/03-web"
+  check_doctor "AD directory" test -d "$dir/04-active-directory"
+  check_doctor "credentials directory" test -d "$dir/05-credentials"
+  check_doctor "exploitation directory" test -d "$dir/06-exploitation"
+  check_doctor "post-exploitation directory" test -d "$dir/07-post-exploitation"
+  check_doctor "evidence raw directory" test -d "$dir/08-evidence/raw"
+  check_doctor "evidence command directory" test -d "$dir/08-evidence/commands"
+  check_doctor "findings directory" test -d "$dir/09-findings"
+  check_doctor "report directory" test -d "$dir/10-report"
+  check_doctor "notes directory" test -d "$dir/notes"
+  check_doctor "loot directory" test -d "$dir/loot"
+
+  if [ "$(jq -r '.authorization.status // "pending"' "$meta")" = "confirmed" ]; then
+    printf '[OK]   authorization       confirmed\n'
+    ok_count=$((ok_count + 1))
+  elif [ "$strict" -eq 1 ]; then
+    printf '[FAIL] authorization       not confirmed\n'
+    fail_count=$((fail_count + 1))
+  else
+    printf '[INFO] authorization       %s\n' "$(jq -r '.authorization.status // "pending"' "$meta")"
+  fi
+
+  current="$(jq -r '.current_target // empty' "$meta")"
+  if [ -z "$current" ]; then
+    if [ "$strict" -eq 1 ]; then
+      printf '[FAIL] active target       required by --strict\n'
+      fail_count=$((fail_count + 1))
+    else
+      printf '[INFO] active target       none\n'
+    fi
+  elif jq -e --arg n "$current" '.targets[]? | select(.name == $n)' "$meta" >/dev/null 2>&1; then
+    current_value="$(target_value_by_name "$dir" "$current")"
+    if scope_matches "$current_value" "$meta"; then
+      printf '[OK]   active target       %s (in scope)\n' "$current"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] active target       %s (out of scope)\n' "$current"
+      fail_count=$((fail_count + 1))
+    fi
+  else
+    printf '[FAIL] active target       points to a missing target\n'
+    fail_count=$((fail_count + 1))
+  fi
+
+  if [ "$strict" -eq 1 ]; then
+    local scope_count target_count
+    scope_count="$(jq '.scope.include | length' "$meta")"
+    target_count="$(jq '.targets | length' "$meta")"
+    if [ "$scope_count" -gt 0 ]; then
+      printf '[OK]   scope entries       %s\n' "$scope_count"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] scope entries       none\n'
+      fail_count=$((fail_count + 1))
+    fi
+    if [ "$(jq -r '.status' "$meta")" = "open" ]; then
+      printf '[OK]   engagement status   open\n'
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] engagement status   not open\n'
+      fail_count=$((fail_count + 1))
+    fi
+    if [ "$target_count" -gt 0 ]; then
+      printf '[OK]   registered targets  %s\n' "$target_count"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] registered targets  none\n'
+      fail_count=$((fail_count + 1))
+    fi
+  fi
+
+  printf '\nSummary: %d OK, %d FAIL\n' "$ok_count" "$fail_count"
+  return $((fail_count > 0 ? 1 : 0))
+}
+
+tools_profiles(){
+  cat <<'EOF'
+⚡ xLFr4n // RED TEAM PROFILES
+
+core          kali-tools-top10
+recon         kali-tools-information-gathering
+web           kali-tools-web
+credentials   kali-tools-passwords
+ad            kali-tools-windows-resources
+exploitation  kali-tools-exploitation
+post          kali-tools-post-exploitation
+reporting     kali-tools-reporting
+full          all profiles above
+
+The base desktop installer stays intentionally smaller. Install profiles explicitly:
+  lab tools install core
+  lab tools install web
+  lab tools status
+EOF
+}
+
+tools_install(){
+  local profile="${1:-}"
+  [ -n "$profile" ] || { tools_profiles; exit 0; }
+  need_cmd apt-get
+  command -v sudo >/dev/null 2>&1 || die "sudo is required."
+  local packages=()
+  case "$profile" in
+    core) packages=(kali-tools-top10) ;;
+    recon) packages=(kali-tools-information-gathering) ;;
+    web) packages=(kali-tools-web) ;;
+    credentials|passwords) packages=(kali-tools-passwords) ;;
+    ad|windows) packages=(kali-tools-windows-resources) ;;
+    exploitation|exploit) packages=(kali-tools-exploitation) ;;
+    post|post-exploitation) packages=(kali-tools-post-exploitation) ;;
+    reporting) packages=(kali-tools-reporting) ;;
+    full)
+      packages=(
+        kali-tools-top10 kali-tools-information-gathering kali-tools-web
+        kali-tools-passwords kali-tools-windows-resources kali-tools-exploitation
+        kali-tools-post-exploitation kali-tools-reporting
+      )
+      ;;
+    *) die "Unknown profile: $profile. Use: lab tools list" ;;
+  esac
+  log "Installing profile: $profile"
+  sudo apt-get update
+  sudo apt-get install -y "${packages[@]}"
+  ok "Profile installed: $profile"
+}
+
+tools_status(){
+  local profile pkg
+  while read -r profile pkg; do
+    if dpkg-query -W -f='${db:Status-Status}' "$pkg" 2>/dev/null | grep -qx installed; then
+      printf '[OK]   %-13s %s\n' "$profile" "$pkg"
+    else
+      printf '[----] %-13s %s\n' "$profile" "$pkg"
+    fi
+  done <<'EOF'
+core kali-tools-top10
+recon kali-tools-information-gathering
+web kali-tools-web
+credentials kali-tools-passwords
+ad kali-tools-windows-resources
+exploitation kali-tools-exploitation
+post kali-tools-post-exploitation
+reporting kali-tools-reporting
+EOF
+}
+
+report_generate(){
+  need_jq
+  local dir meta report html title status current
+  dir="$(require_engagement)" || exit 1
+  meta="$dir/engagement.json"
+  report="$dir/10-report/report.md"
+  html="$dir/10-report/report.html"
+  title="$(jq -r '.name' "$meta")"
+  status="$(jq -r '.status' "$meta")"
+  current="$(jq -r '.current_target // "—"' "$meta")"
+
+  {
+    echo "# ⚡ xLFr4n // Red Team Engagement Report"
+    echo
+    echo "**Engagement:** $title  "
+    echo "**Status:** $status  "
+    echo "**Generated:** $(timestamp)  "
+    echo "**Active target:** $current"
+    echo
+    echo "## 🇪🇸 Resumen"
+    echo
+    echo "Este documento se genera desde el estado local del engagement y debe revisarse antes de compartirlo."
+    echo
+    echo "## 🇬🇧 Executive Summary"
+    echo
+    echo "This document is generated from the local engagement state and must be reviewed before distribution."
+    echo
+    echo "## Scope"
+    echo
+    echo "### In scope"
+    jq -r '.scope.include[]? | "- " + .' "$meta"
+    echo
+    echo "### Excluded"
+    jq -r '.scope.exclude[]? | "- " + .' "$meta"
+    echo
+    echo "## Targets"
+    echo
+    printf '| Name | Value |\n|---|---|\n'
+    jq -r '.targets[]? | "| " + .name + " | " + .value + " |"' "$meta"
+    echo
+    echo "## Findings"
+    echo
+    echo "### Severity summary"
+    for severity in critical high medium low info; do
+      count="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print0 2>/dev/null |
+        xargs -0 -r grep -hE '^\*\*Severity:\*\* ' 2>/dev/null |
+        grep -F -- "**Severity:** $severity" |
+        wc -l | tr -d ' ')"
+      printf -- "- %s: %s\n" "$severity" "$count"
+    done
+    echo
+    if find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' | grep -q .; then
+      while IFS= read -r file; do
+        echo
+        sed -n '1,18p' "$file"
+        echo
+      done < <(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print | sort)
+    else
+      echo "_No findings recorded._"
+    fi
+    echo
+    echo "## Evidence"
+    echo
+    if [ -f "$dir/08-evidence/index.tsv" ]; then
+      tail -n +2 "$dir/08-evidence/index.tsv" | awk -F '\t' '{print "- " $2 "  " $3 "  (" $1 ")"}'
+    else
+      echo "_No evidence registered._"
+    fi
+    echo
+    echo "## Engagement timeline"
+    echo
+    if [ -s "$dir/notes/timeline.log" ]; then
+      sed 's/^/- /' "$dir/notes/timeline.log"
+    else
+      echo "_No timeline entries recorded._"
+    fi
+    echo
+    echo "## Command timeline"
+    echo
+    if find "$dir/08-evidence/commands" -type f -name '*.log' | grep -q .; then
+      find "$dir/08-evidence/commands" -type f -name '*.log' -printf '%f\n' | sort | sed 's/^/- /'
+    else
+      echo "_No command logs recorded._"
+    fi
+  } > "$report"
+
+  if command -v pandoc >/dev/null 2>&1; then
+    pandoc "$report" -o "$html" --standalone --metadata title="$title" >/dev/null 2>&1 || true
+  fi
+  if [ ! -s "$html" ]; then
+    if command -v python3 >/dev/null 2>&1; then
+      python3 - "$report" "$html" "$title" <<'PY'
+from html import escape
+from pathlib import Path
+import sys
+src, dst, title = sys.argv[1], sys.argv[2], sys.argv[3]
+body = escape(Path(src).read_text(encoding="utf-8"))
+Path(dst).write_text(
+    "<!doctype html><meta charset='utf-8'><title>" + escape(title) +
+    "</title><style>body{background:#101216;color:#f0f3f7;font:14px/1.55 ui-monospace,monospace;max-width:1100px;margin:40px auto;padding:0 24px}pre{white-space:pre-wrap}</style><pre>" +
+    body + "</pre>", encoding="utf-8"
+)
+PY
+    else
+      printf '<!doctype html><meta charset="utf-8"><pre>See report.md</pre>\n' > "$html"
+    fi
+  fi
+
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$report" "$html" > "$dir/10-report/REPORT-SHA256SUMS"
+  fi
+  ok "Report generated: $report"
+  ok "HTML generated:  $html"
+}
+
+attach_tmux_session(){
+  local session="$1"
+  if [ -n "${TMUX:-}" ]; then
+    tmux switch-client -t "$session"
+  else
+    exec tmux attach-session -t "$session"
+  fi
+}
+
+open_legacy(){
+  need_cmd tmux
+  local name="${1:-kali-lab}" dir="${2:-$PWD}"
+  dir="$(realpath -m "$dir")"
+  mkdir -p "$dir"
+  if tmux has-session -t "$name" 2>/dev/null; then
+    attach_tmux_session "$name"
+    return
+  fi
+  mkdir -p "$dir"/{recon,loot,notes,evidence,web}
+  tmux new-session -d -s "$name" -c "$dir" -n main
+  tmux split-window -h -t "$name:main" -c "$dir"
+  tmux split-window -v -t "$name:main.1" -c "$dir"
+  tmux send-keys -t "$name:main.1" 'printf "%s\\n" "⚡ xLFr4n // RECON"; exec zsh' C-m
+  tmux send-keys -t "$name:main.0" 'xlfr4n-banner --static' C-m
+  tmux send-keys -t "$name:main.2" 'btop' C-m
+  tmux new-window -t "$name:" -n recon -c "$dir/recon"
+  tmux new-window -t "$name:" -n web -c "$dir/web"
+  tmux new-window -t "$name:" -n notes -c "$dir/notes"
+  tmux new-window -t "$name:" -n loot -c "$dir/loot"
+  tmux select-window -t "$name:main"
+  tmux select-pane -t "$name:main.0"
+  attach_tmux_session "$name"
+}
+
+open_lab(){
+  need_jq
+  need_cmd tmux
+  ensure_default_engagement
+  local dir name session
+  dir="$(require_engagement)"
+  name="$(jq -r '.slug' "$dir/engagement.json")"
+  session="xLFr4n-$name"
+
+  if tmux has-session -t "$session" 2>/dev/null; then
+    attach_tmux_session "$session"
+    return
+  fi
+
+  tmux new-session -d -s "$session" -c "$dir" -n main
+  tmux split-window -h -t "$session:main" -c "$dir"
+  tmux split-window -v -t "$session:main.1" -c "$dir"
+  tmux send-keys -t "$session:main.0" 'xlfr4n-banner --static' C-m
+  tmux send-keys -t "$session:main.1" 'printf "%s\n" "⚡ xLFr4n // ENGAGEMENT"; exec zsh' C-m
+  tmux send-keys -t "$session:main.2" 'btop' C-m
+  tmux new-window -t "$session:" -n recon -c "$dir/01-recon"
+  tmux new-window -t "$session:" -n enum -c "$dir/02-enumeration"
+  tmux new-window -t "$session:" -n web -c "$dir/03-web"
+  tmux new-window -t "$session:" -n ad -c "$dir/04-active-directory"
+  tmux new-window -t "$session:" -n creds -c "$dir/05-credentials"
+  tmux new-window -t "$session:" -n exploit -c "$dir/06-exploitation"
+  tmux new-window -t "$session:" -n post -c "$dir/07-post-exploitation"
+  tmux new-window -t "$session:" -n evidence -c "$dir/08-evidence"
+  tmux new-window -t "$session:" -n findings -c "$dir/09-findings"
+  tmux new-window -t "$session:" -n report -c "$dir/10-report"
+  tmux select-window -t "$session:main"
+  tmux select-pane -t "$session:main.0"
+  attach_tmux_session "$session"
+}
+
+ensure_default_engagement(){
+  if ! engagement_dir >/dev/null 2>&1; then
+    init_engagement "$DEFAULT_NAME"
+  fi
+}
+
+close_engagement(){
+  need_jq
+  local dir meta tmp
+  dir="$(require_engagement)" || exit 1
+  meta="$dir/engagement.json"
+  tmp="$meta.tmp.$$"
+  jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
+  mv -f "$tmp" "$meta"
+  timeline_event "$dir" "engagement closed"
+  ok "Engagement closed. Data remains locally intact."
+}
+
+help(){
+  cat <<'EOF'
+⚡ xLFr4n // LAB
+
+ENGAGEMENT
+  lab init NAME
+  lab status
+  lab status-short
+  lab doctor [--strict]
+  lab authorization status
+  lab authorization set {pending|confirmed|expired} [REFERENCE]
+  lab topology show
+  lab topology validate [--strict]
+  lab close
+
+SCOPE
+  lab scope list
+  lab scope allow VALUE
+  lab scope deny VALUE
+  lab scope check VALUE
+
+TARGETS
+  lab target add VALUE [NAME]
+  lab target list
+  lab target use NAME
+  lab target remove NAME
+
+OPERATIONS
+  lab
+  lab exec --target NAME -- COMMAND [ARGS...]
+  lab note TEXT...
+
+EVIDENCE
+  lab evidence add FILE [LABEL]
+  lab evidence list
+  lab evidence manifest
+
+FINDINGS
+  lab finding new "TITLE" [low|medium|high|critical|info]
+  lab finding list
+
+REPORTING
+  lab report
+
+KALI TOOL PROFILES
+  lab tools list
+  lab tools install core|recon|web|credentials|ad|exploitation|post|reporting|full
+  lab tools status
+
+Design:
+  - No offensive tool runs automatically.
+  - Active execution requires an explicitly registered target.
+  - Target execution is blocked unless the target matches engagement scope.
+  - Command output and timestamps are recorded under 08-evidence/commands.
+EOF
+}
+
+case "${1:-}" in
+  init) shift; init_engagement "$@" ;;
+  status) status ;;
+  status-short|--status-short) status_short ;;
+  doctor) shift; lab_doctor "$@" ;;
+  topology)
+    shift
+    case "${1:-show}" in
+      show) topology_show ;;
+      validate) shift; topology_validate "$@" ;;
+      *) die "Usage: lab topology {show|validate [--strict]}" ;;
+    esac
+    ;;
+  authorization)    shift
+    case "${1:-status}" in
+      status) authorization_status ;;
+      set) shift; authorization_change "$@" ;;
+      *) die "Usage: lab authorization {status|set} ..." ;;
+    esac
+    ;;
+  scope)
+    shift
+    case "${1:-list}" in
+      list) scope_list ;;
+      allow|deny) scope_change "$@" ;;
+      check) shift; scope_check "${1:-}" ;;
+      *) die "Usage: lab scope {list|allow|deny|check}" ;;
+    esac
+    ;;
+  target)
+    shift
+    case "${1:-list}" in
+      add) shift; target_add "$@" ;;
+      list) target_list ;;
+      use) shift; target_use "$@" ;;
+      remove|rm) shift; target_remove "$@" ;;
+      *) die "Usage: lab target {add|list|use|remove}" ;;
+    esac
+    ;;
+  exec) shift; exec_command "$@" ;;
+  note) shift; notes_add "$@" ;;
+  evidence)
+    shift
+    case "${1:-list}" in
+      add) shift; evidence_add "$@" ;;
+      list) evidence_list ;;
+      manifest) evidence_manifest ;;
+      *) die "Usage: lab evidence {add|list|manifest}" ;;
+    esac
+    ;;
+  finding|findings)
+    shift
+    case "${1:-list}" in
+      new) shift; finding_new "$@" ;;
+      list) finding_list ;;
+      summary) finding_summary ;;
+      *) die "Usage: lab finding {new|list|summary}" ;;
+    esac
+    ;;
+  report) report_generate ;;
+  tools)
+    shift
+    case "${1:-list}" in
+      list) tools_profiles ;;
+      install) shift; tools_install "$@" ;;
+      status) tools_status ;;
+      *) die "Usage: lab tools {list|install|status}" ;;
+    esac
+    ;;
+  close) close_engagement ;;
+  help|--help|-h) help ;;
+  "") open_lab ;;
+  *) open_legacy "$@" ;;
+esac
+\t' read -r timestamp expected rel source; do
+    [ "$timestamp" = "timestamp" ] && continue
+    [ -n "$rel" ] || continue
+    if [ ! -f "$dir/$rel" ]; then
+      printf '[FAIL] missing: %s\n' "$rel"
+      failures=$((failures + 1))
+      continue
+    fi
+    actual="$(sha256sum "$dir/$rel" | cut -d " " -f1)"
+    if [ "$actual" = "$expected" ]; then
+      printf '[OK]   %s\n' "$rel"
+    else
+      printf '[FAIL] hash mismatch: %s\n' "$rel"
+      failures=$((failures + 1))
+    fi
+  done < "$file"
+
+  printf '\nSummary: %d FAIL\n' "$failures"
+  return "$failures"
+}
+
 evidence_manifest(){
   need_cmd sha256sum
   local dir tmp
