@@ -141,7 +141,7 @@ check "Workspace rail full icon lane" grep -Fq "height = 48pt" config/polybar/co
 check "Workspace rail edge offset" grep -Fq "offset-x = 0%" config/polybar/config.ini
 check "Dock edge offset" grep -Fq "offset-y = 0pt" config/polybar/config.ini
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
-check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 0" config/bspwm/bspwmrc
+check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
 check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
@@ -151,7 +151,7 @@ check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" co
 check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
 check "Tint2 dock width" grep -Fq "panel_size = 860 64" config/tint2/tint2rc
-check "Tint2 no window strut" grep -Fq "strut_policy = none" config/tint2/tint2rc
+check "Tint2 no window strut" grep -Fq "strut_policy = follow_size" config/tint2/tint2rc
 check "Tint2 dock edge margin" grep -Fq "panel_margin = 0 0" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
 check "Dock menu id" grep -Fq "xLFr4n-kali-menu.desktop" config/tint2/tint2rc
@@ -325,7 +325,7 @@ check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
 check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
 check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
-check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
+check "Fullscreen avoids global cleanup" bash -c '! grep -Eq "pkill|killall" scripts/fullscreen-toggle && grep -Fq "bspc node -t \"~fullscreen\"" scripts/fullscreen-toggle'
 check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
 check "Polybar target action opens terminal" grep -Fq 'xlfr4n-terminal --title Kali-Target -- settarget' config/polybar/config.ini
 check "Polybar doctor action opens terminal" grep -Fq 'xlfr4n-terminal --title xLFr4n-Doctor -- doctor.sh' config/polybar/config.ini
@@ -336,3 +336,21 @@ check "VirtualBox guest helper" grep -Fq "VIRTUALBOX GUEST" scripts/vmware-tools
 check "VMware guest helper" grep -Fq "VMWARE GUEST" scripts/vmware-tools
 check "Wallpaper feedback" grep -Fq 'xLFr4n // WALLPAPER' scripts/wallpaper
 check "Autostart stages workspace HUD" grep -Fq "workspace hud dispatched" scripts/autostart
+check "Lab controller syntax" bash -n scripts/lab
+check "Lab engagement initializer" grep -Fq "lab init NAME" scripts/lab
+check "Lab scope gate" grep -Fq "scope_matches" scripts/lab
+check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
+check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
+check "Lab findings" grep -Fq "finding new" scripts/lab
+check "Lab report generation" grep -Fq "report_generate" scripts/lab
+check "Lab official profiles" grep -Fq "kali-tools-top10" scripts/lab
+check "Lab AD profile" grep -Fq "kali-tools-windows-resources" scripts/lab
+check "Lab web profile" grep -Fq "kali-tools-web" scripts/lab
+check "Polybar engagement status" grep -Fq "lab --status-short" config/polybar/config.ini
+check "Polybar engagement interval" grep -Fq "interval = 2" config/polybar/config.ini
+check "Menu engagement status" grep -Fq "LABSTATUS" scripts/kali-menu
+check "CI jq dependency" grep -Eq "apt-get install .*jq" .github/workflows/shellcheck.yml
+
+check "Lab smoke test" test -x tests/lab-smoke.sh
+check "CI lab smoke step" grep -Fq "bash tests/lab-smoke.sh" .github/workflows/shellcheck.yml
+check "CI shellcheck smoke script" grep -Fq "shellcheck tests/lab-smoke.sh" .github/workflows/shellcheck.yml

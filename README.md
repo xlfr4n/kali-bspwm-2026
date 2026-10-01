@@ -777,3 +777,92 @@ Kali · BSPWM · X11 · cybersecurity · terminal first
 A green CI run validates the repository. Your VM validates the final pixels.
 
 Use both.
+
+
+## 🟥 Red Team Lab
+
+### 🇪🇸 Español
+
+La capa Red Team convierte el workspace en un flujo de engagement reproducible sin cambiar la identidad visual del escritorio.
+
+Crear un engagement:
+~~~bash
+lab init NOMBRE
+lab status
+~~~
+
+Registrar alcance:
+~~~bash
+lab scope allow 10.10.10.0/24
+lab scope deny 10.10.10.1
+lab scope list
+lab scope check 10.10.10.20
+~~~
+
+Registrar y seleccionar activos:
+~~~bash
+lab target add 10.10.10.20 web01
+lab target add 10.10.10.30 dc01
+lab target list
+lab target use web01
+~~~
+
+El flujo de operaciones puede registrar comandos y resultados cuando el operador decide ejecutarlos; la capa de engagement no inicia herramientas por sí sola.
+
+Evidencia:
+~~~bash
+lab evidence add captura.png screenshot
+lab evidence list
+lab evidence manifest
+~~~
+
+Findings:
+~~~bash
+lab finding new "Example finding" medium
+lab finding list
+~~~
+
+Reporting:
+~~~bash
+lab report
+~~~
+
+Estructura:
+~~~text
+~/Lab/<engagement>/
+├── 00-scope/
+├── 01-recon/
+├── 02-enumeration/
+├── 03-web/
+├── 04-active-directory/
+├── 05-credentials/
+├── 06-exploitation/
+├── 07-post-exploitation/
+├── 08-evidence/
+├── 09-findings/
+└── 10-report/
+~~~
+
+Perfiles de herramientas:
+~~~bash
+lab tools list
+lab tools install core
+lab tools install recon
+lab tools install web
+lab tools install ad
+lab tools install credentials
+lab tools install exploitation
+lab tools install post
+lab tools install reporting
+lab tools status
+~~~
+
+### 🇬🇧 English
+
+The Red Team layer turns the workspace into a reproducible engagement workflow while keeping desktop configuration and engagement state separate.
+
+Create an engagement, define explicit allow/deny scope, register targets, select the active target, preserve evidence, create findings and generate reports.
+
+No offensive tooling is started automatically. Tool selection and active operations remain explicit operator actions.
+
+The engagement structure is documented in docs/LAB-ARCHITECTURE.md, tool profiles in docs/TOOL-PROFILES.md, evidence handling in docs/EVIDENCE.md and delivery in docs/REPORTING.md.

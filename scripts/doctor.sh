@@ -45,7 +45,7 @@ visual_layout_check() {
   grep -Fq "border-size = 0pt" "$cfg" &&
   grep -Fq "[bar/workspace]" "$cfg" &&
   grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc" &&
-  grep -Fq "bottom_padding 0" "$HOME/.config/bspwm/bspwmrc" &&
+  grep -Fq "bottom_padding 64" "$HOME/.config/bspwm/bspwmrc" &&
   grep -Fq "offset-y = 0pt" "$cfg" &&
   grep -Fq "label-focused-margin = 1" "$cfg" &&
   grep -Fq "modules-right = date time" "$cfg" &&
@@ -108,6 +108,11 @@ desktop_count_check() {
   [ "$count" -eq 9 ]
 }
 
+ghostty_backend_check() {
+  local backend
+  backend="$(xlfr4n-terminal --backend 2>/dev/null)" &&
+    [ -x "$backend" ]
+}
 virt="$(systemd-detect-virt 2>/dev/null || true)"
 
 check "Kali Linux" grep -qi '^ID=kali$' /etc/os-release
@@ -154,7 +159,7 @@ check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
 check "Workspace rail spacing" grep -Fq "offset-y = 0pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
-check "Ghostty backend" sh -c 'backend="$(xlfr4n-terminal --backend 2>/dev/null)" && [ -x "$backend" ]'
+check "Ghostty backend" ghostty_backend_check
 check "Ghostty user binary" test -x "$HOME/.local/bin/ghostty"
 check "tmux configuration" test -s "$HOME/.config/tmux/tmux.conf"
 check "Ghostty configuration" test -s "$HOME/.config/ghostty/config"

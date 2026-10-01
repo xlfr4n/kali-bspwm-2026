@@ -89,3 +89,42 @@ tmux -V
 doctor.sh
 session-profile
 ```
+
+ 
+## 🧭 Operational workflow
+
+### 🇪🇸 Español
+
+La preparación del engagement sigue un orden fijo:
+
+~~~text
+AUTORIZACIÓN
+    ↓
+SCOPE
+    ↓
+TARGETS
+    ↓
+CONTEXT
+    ↓
+OPERACIÓN
+    ↓
+EVIDENCIA
+    ↓
+FINDINGS
+    ↓
+REPORT
+~~~
+
+Antes de una operación activa, registra el alcance con lab scope. Usa nombres estables para los targets y conserva la evidencia original.
+
+La UI de Polybar muestra el engagement activo; la fuente de verdad permanece en engagement.json dentro del workspace.
+
+### 🇬🇧 English
+
+Use the same fixed lifecycle for every engagement:
+
+authorization → scope → targets → context → operation → evidence → findings → report.
+
+Keep the source of truth inside the engagement workspace and use the desktop only as a presentation/control surface.
+
+See the supporting architecture, evidence and reporting documents for the detailed lifecycle.

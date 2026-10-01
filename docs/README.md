@@ -29,3 +29,18 @@ La documentación describe el **guest Kali**. El host Windows, VirtualBox o VMwa
 Documentation describes the **Kali guest**. Windows, VirtualBox and VMware host settings are not changed automatically.
 
 **⚡ xLFr4n · Reproducible setup · explicit boundaries · ES + EN**
+
+
+## 🟥 Red Team Lab
+
+~~~text
+LAB-ARCHITECTURE.md
+TOOL-PROFILES.md
+EVIDENCE.md
+REPORTING.md
+OPERATIONS-RUNBOOK.md
+AD-LAB.md
+WEB-LAB.md
+~~~
+
+Estos documentos forman la ruta operativa del laboratorio y están separados de la documentación puramente visual del escritorio.
