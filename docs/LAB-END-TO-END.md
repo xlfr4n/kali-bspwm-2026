@@ -138,6 +138,7 @@ lab target add 10.77.0.10 dc01
 lab target add 10.77.0.20 ws01
 lab target use web01
 lab status
+lab validate
 ```
 
 Sustituir los valores solo por las direcciones reales de las VMs y mantener el scope limitado a `XLFR4N-LAB`.
@@ -160,7 +161,9 @@ Crear y revisar el finding:
 ```bash
 lab finding new "Web Lab acceptance observation" info
 lab finding summary
+lab validate
 lab report
+lab validate
 ```
 
 Gate: el report debe contener scope, targets, finding summary, findings, evidence y timeline.

@@ -47,6 +47,15 @@ require_engagement(){
   printf '%s\n' "$dir"
 }
 
+
+require_open_engagement(){
+  need_jq
+  local dir status
+  dir="$(require_engagement)" || return 1
+  status="$(jq -r '.status // "unknown"' "$dir/engagement.json")"
+  [ "$status" = "open" ] || die "Engagement is not open (status=$status). Re-open is not supported; create or select an open engagement."
+  printf '%s\n' "$dir"
+}
 set_current(){
   mkdir -p "$LAB_CONFIG"
   printf '%s\n' "$1" > "$CURRENT_FILE"
@@ -139,7 +148,7 @@ target_value_by_name(){
 target_add(){
   need_jq
   local dir value name meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   value="${1:-}"
   name="${2:-target-$(date +%H%M%S)}"
   [ -n "$value" ] || die "Usage: lab target add VALUE [NAME]"
@@ -174,7 +183,7 @@ target_list(){
 target_use(){
   need_jq
   local dir name value meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   name="${1:-}"
   [ -n "$name" ] || die "Usage: lab target use NAME"
   value="$(target_value_by_name "$dir" "$name")"
@@ -189,7 +198,7 @@ target_use(){
 target_remove(){
   need_jq
   local dir name meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   name="${1:-}"
   [ -n "$name" ] || die "Usage: lab target remove NAME"
   meta="$dir/engagement.json"
@@ -214,7 +223,7 @@ scope_list(){
 scope_change(){
   need_jq
   local action="${1:-}" value="${2:-}" dir meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   [ "$action" = "allow" ] || [ "$action" = "deny" ] || die "Usage: lab scope {allow|deny} VALUE"
   [ -n "$value" ] || die "Usage: lab scope {allow|deny} VALUE"
   [[ "$value" =~ ^[A-Za-z0-9._:/?%#@*+-]+$ ]] || die "Scope contains unsupported characters."
@@ -352,7 +361,7 @@ status(){
 
 notes_add(){
   local dir message file
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   message="${*:-}"
   [ -n "$message" ] || die "Usage: lab note TEXT..."
   file="$dir/notes/timeline.log"
@@ -364,7 +373,7 @@ exec_command(){
   need_jq
   need_cmd tee
   local dir target_name target_value command_log start end rc
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   [ "${1:-}" = "--target" ] || die "Usage: lab exec --target NAME -- COMMAND [ARGS...]"
   target_name="${2:-}"
   [ -n "$target_name" ] || die "Target name is required."
@@ -410,7 +419,7 @@ exec_command(){
 evidence_add(){
   need_cmd sha256sum
   local dir source label safe base dest hash file rel
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   source="${1:-}"
   label="${2:-}"
   [ -f "$source" ] || die "Evidence file not found: $source"
@@ -443,7 +452,7 @@ evidence_list(){
 evidence_manifest(){
   need_cmd sha256sum
   local dir tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   tmp="$dir/08-evidence/SHA256SUMS.tmp"
   (
     cd "$dir/08-evidence"
@@ -463,7 +472,7 @@ next_finding_id(){
 
 finding_new(){
   local dir title severity id slug file
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   title="${1:-}"
   severity="${2:-medium}"
   [ -n "$title" ] || die "Usage: lab finding new TITLE [low|medium|high|critical|info]"
@@ -660,6 +669,151 @@ reporting kali-tools-reporting
 EOF
 }
 
+validate_engagement(){
+  need_jq
+  need_cmd sha256sum
+  local dir meta includes excludes current current_value errors=0
+  dir="$(require_engagement)" || exit 1
+  meta="$dir/engagement.json"
+
+  echo "⚡ xLFr4n // ENGAGEMENT VALIDATION"
+
+  if jq -e '
+    type == "object"
+    and (.schema_version == 1)
+    and (.name | type == "string")
+    and (.slug | type == "string")
+    and (.status | type == "string")
+    and (.scope | type == "object")
+    and (.scope.include | type == "array")
+    and (.scope.exclude | type == "array")
+    and (.targets | type == "array")
+  ' "$meta" >/dev/null; then
+    echo "[PASS] engagement.json schema/structure"
+  else
+    echo "[FAIL] engagement.json schema/structure"
+    errors=$((errors+1))
+  fi
+
+  includes="$(jq '.scope.include | length' "$meta")"
+  excludes="$(jq '.scope.exclude | length' "$meta")"
+
+  if [ "$includes" -gt 0 ]; then
+    echo "[PASS] scope includes: $includes"
+  else
+    echo "[FAIL] scope has no allowed entries"
+    errors=$((errors+1))
+  fi
+  echo "[INFO] scope excludes: $excludes"
+
+  current="$(jq -r '.current_target // empty' "$meta")"
+  if [ -n "$current" ]; then
+    current_value="$(target_value_by_name "$dir" "$current")"
+    if [ -n "$current_value" ]; then
+      if scope_matches "$current_value" "$meta"; then
+        echo "[PASS] active target is in scope: $current -> $current_value"
+      else
+        echo "[FAIL] active target is out of scope: $current -> $current_value"
+        errors=$((errors+1))
+      fi
+    else
+      echo "[FAIL] active target does not exist: $current"
+      errors=$((errors+1))
+    fi
+  else
+    echo "[INFO] no active target"
+  fi
+
+  while IFS=$'\t' read -r name current_value; do
+    [ -n "$name" ] || continue
+    if scope_matches "$current_value" "$meta"; then
+      echo "[PASS] target in scope: $name -> $current_value"
+    else
+      echo "[FAIL] target out of scope: $name -> $current_value"
+      errors=$((errors+1))
+    fi
+  done < <(jq -r '.targets[]? | [.name,.value] | @tsv' "$meta")
+
+  if [ -f "$dir/08-evidence/index.tsv" ]; then
+    if [ -s "$dir/08-evidence/SHA256SUMS" ]; then
+      local evidence_errors=0 expected_hash rel actual_hash file
+      while read -r expected_hash rel; do
+        [ -n "$rel" ] || continue
+        file="$dir/08-evidence/$rel"
+        if [ ! -f "$file" ]; then
+          echo "[FAIL] missing evidence referenced by manifest: $rel"
+          evidence_errors=$((evidence_errors+1))
+          continue
+        fi
+        actual_hash="$(sha256sum "$file" | awk '{print $1}')"
+        if [ "$expected_hash" != "$actual_hash" ]; then
+          echo "[FAIL] evidence hash mismatch: $rel"
+          evidence_errors=$((evidence_errors+1))
+        fi
+      done < "$dir/08-evidence/SHA256SUMS"
+      if [ "$evidence_errors" -eq 0 ]; then
+        echo "[PASS] evidence manifest integrity"
+      else
+        errors=$((errors+evidence_errors))
+      fi
+    else
+      echo "[FAIL] evidence index exists but SHA256SUMS is missing"
+      errors=$((errors+1))
+    fi
+  else
+    echo "[INFO] no evidence registered"
+  fi
+
+  while IFS= read -r file; do
+    [ -n "$file" ] || continue
+    if ! sed -n 's/^\*\*Severity:\*\* //p' "$file" | sed 's/[[:space:]]*$//' | head -n1 |
+      grep -Eq '^(critical|high|medium|low|info)$'; then
+      echo "[FAIL] invalid finding severity: $(basename "$file")"
+      errors=$((errors+1))
+    fi
+    if ! sed -n 's/^\*\*Status:\*\* //p' "$file" | sed 's/[[:space:]]*$//' | head -n1 |
+      grep -Eq '^(open|validated|accepted|remediated)$'; then
+      echo "[FAIL] invalid finding status: $(basename "$file")"
+      errors=$((errors+1))
+    fi
+  done < <(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print | sort)
+
+  local report_hash_errors=0 expected_report_hash report_name report_actual_hash
+  if [ -s "$dir/10-report/REPORT-SHA256SUMS" ]; then
+    while read -r expected_report_hash report_name; do
+      case "$report_name" in
+        report.md|report.html) ;;
+        *) continue ;;
+      esac
+      if [ ! -f "$dir/10-report/$report_name" ]; then
+        echo "[FAIL] missing report artifact referenced by checksum: $report_name"
+        report_hash_errors=$((report_hash_errors+1))
+        continue
+      fi
+      report_actual_hash="$(sha256sum "$dir/10-report/$report_name" | awk '{print $1}')"
+      if [ "$expected_report_hash" != "$report_actual_hash" ]; then
+        echo "[FAIL] report hash mismatch: $report_name"
+        report_hash_errors=$((report_hash_errors+1))
+      fi
+    done < "$dir/10-report/REPORT-SHA256SUMS"
+    if [ "$report_hash_errors" -eq 0 ]; then
+      echo "[PASS] report checksum integrity"
+    else
+      errors=$((errors+report_hash_errors))
+    fi
+  else
+    echo "[INFO] report checksum not generated yet"
+  fi
+
+  if [ "$errors" -eq 0 ]; then
+    echo "Engagement validation: PASS"
+    return 0
+  fi
+
+  echo "Engagement validation: FAIL ($errors)"
+  return 1
+}
+
 report_generate(){
   need_jq
   local dir meta report html title status current
@@ -756,7 +910,10 @@ PY
   fi
 
   if command -v sha256sum >/dev/null 2>&1; then
-    sha256sum "$report" "$html" > "$dir/10-report/REPORT-SHA256SUMS"
+    (
+      cd "$dir/10-report"
+      sha256sum report.md report.html
+    ) > "$dir/10-report/REPORT-SHA256SUMS"
   fi
   ok "Report generated: $report"
   ok "HTML generated:  $html"
@@ -830,8 +987,18 @@ close_engagement(){
   need_jq
   local dir meta tmp
   dir="$(require_engagement)" || exit 1
+
+  [ "$(jq -r '.status // "unknown"' "$dir/engagement.json")" = "open" ] ||
+    die "Engagement is already closed or has an unsupported status."
+
+  validate_engagement || die "Refusing to close engagement: validation failed."
+
+  for artifact in "$dir/10-report/report.md" "$dir/10-report/report.html" "$dir/10-report/REPORT-SHA256SUMS"; do
+    [ -s "$artifact" ] || die "Refusing to close engagement: missing report artifact $(basename "$artifact")."
+  done
+
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
   ok "Engagement closed. Data remains locally intact."
@@ -875,6 +1042,7 @@ FINDINGS
   lab finding summary
 
 REPORTING
+  lab validate
   lab report
 
 KALI TOOL PROFILES
@@ -933,6 +1101,7 @@ case "${1:-}" in
       *) die "Usage: lab finding {new|list}" ;;
     esac
     ;;
+  validate) validate_engagement ;;
   report) report_generate ;;
   tools)
     shift
