@@ -123,6 +123,7 @@ check "Fastfetch deployment" grep -Fq "fastfetch; do" install.sh
 check "VirtualBox doctor detection" grep -Fq "virtualbox-guest-utils.service" scripts/doctor.sh
 check "Lab doctor command" grep -Fq "doctor) shift; lab_doctor" scripts/lab
 check "Lab finding summary command" grep -Fq "summary) finding_summary" scripts/lab
+check "Project roadmap docs" test -s docs/ROADMAP.md
 check "Lab engagement health docs" test -s docs/LAB-TEST-MATRIX.md
 check "VirtualBox topology docs" test -s docs/VIRTUALBOX-LAB-TOPOLOGY.md
 check "VirtualBox host helper docs" test -s docs/VIRTUALBOX-HOST-HELPER.md
