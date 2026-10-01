@@ -125,6 +125,7 @@ check "Lab doctor command" grep -Fq "doctor) shift; lab_doctor" scripts/lab
 check "Lab finding summary command" grep -Fq "summary) finding_summary" scripts/lab
 check "Lab engagement health docs" test -s docs/LAB-TEST-MATRIX.md
 check "VirtualBox topology docs" test -s docs/VIRTUALBOX-LAB-TOPOLOGY.md
+check "VirtualBox host helper docs" test -s docs/VIRTUALBOX-HOST-HELPER.md
 check "Lab workflow health docs" grep -Fq "lab doctor" docs/REDTEAM-WORKFLOW.md
 check "Polybar restack" grep -Fq "wm-restack = bspwm" config/polybar/config.ini
 check "Polybar IPC" grep -Fq "enable-ipc = true" config/polybar/config.ini
@@ -348,6 +349,8 @@ check "Lab authorization metadata" grep -Fq 'authorization: {status: "pending"' 
 check "Lab authorization execution gate" grep -Fq "authorization_is_confirmed" scripts/lab
 check "Lab engagement timeline" grep -Fq "timeline_event" scripts/lab
 check "Lab report timeline" grep -Fq "Engagement timeline" scripts/lab
+check "VirtualBox host helper script" test -s tools/virtualbox/xlfr4n-lab-vbox.ps1
+check "VirtualBox helper defaults to plan-safe mode" grep -Fq "[switch]$Apply" tools/virtualbox/xlfr4n-lab-vbox.ps1
 check "Lab strict doctor authorization gate" grep -Fq "authorization       confirmed" scripts/lab
 check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
 check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
