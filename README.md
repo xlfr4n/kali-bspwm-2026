@@ -789,7 +789,10 @@ Crear un engagement:
 ~~~bash
 lab init NOMBRE
 lab status
+lab doctor
 ~~~
+
+lab doctor es una comprobación read-only de la estructura y coherencia del engagement. No ejecuta herramientas ofensivas.
 
 Registrar alcance:
 ~~~bash
@@ -820,12 +823,15 @@ Findings:
 ~~~bash
 lab finding new "Example finding" medium
 lab finding list
+lab finding summary
 ~~~
 
 Reporting:
 ~~~bash
 lab report
 ~~~
+
+Phase validation matrix: docs/LAB-TEST-MATRIX.md.
 
 Estructura:
 ~~~text
