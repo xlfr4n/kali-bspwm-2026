@@ -25,6 +25,7 @@ assert_contains(){
 }
 
 lab init CI-Smoke
+lab authorization set confirmed CI-SMOKE
 lab scope allow 192.0.2.0/24
 lab scope deny 192.0.2.10
 lab scope check 192.0.2.20
@@ -38,6 +39,7 @@ lab target use smoke
 lab target list | grep -Fq smoke
 lab doctor
 lab doctor --strict
+lab authorization status | grep -Fxq confirmed
 lab finding summary | grep -Fq 'low        1'
 
 printf 'ci evidence\n' > "$TMP/artifact.txt"
