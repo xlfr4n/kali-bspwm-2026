@@ -580,7 +580,7 @@ evidence_list(){
 
 evidence_verify(){
   need_cmd sha256sum
-  local dir file expected actual rel source failures=0
+  local dir file expected actual rel failures=0
   dir="$(require_engagement)" || exit 1
   file="$dir/08-evidence/index.tsv"
   [ -s "$file" ] || die "No evidence index exists."
@@ -677,7 +677,8 @@ finding_set(){
   id="${1:-}"
   field="${2:-}"
   value="${3:-}"
-  [ -n "$id" ] && [ -n "$field" ] && [ -n "$value" ] || die "Usage: lab finding set F-001 status|severity VALUE"
+  [[ "$id" =~ ^F-[0-9]{3,}$ ]] || die "Invalid finding ID: $id"
+  [ -n "$field" ] && [ -n "$value" ] || die "Usage: lab finding set F-001 status|severity VALUE"
   file="$(find "$dir/09-findings" -maxdepth 1 -type f -name "$id-*.md" -print -quit 2>/dev/null)"
   [ -n "$file" ] && [ -f "$file" ] || die "Finding not found: $id"
   tmp="$file.tmp.$"
