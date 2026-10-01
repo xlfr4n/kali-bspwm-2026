@@ -475,6 +475,7 @@ status(){
   printf 'Name       : %s\n' "$(jq -r '.name' "$dir/engagement.json")"
   printf 'Status     : %s\n' "$(jq -r '.status' "$dir/engagement.json")"
   printf 'Authorization: %s\n' "$(jq -r '.authorization.status // "pending"' "$dir/engagement.json")"
+  printf 'Auth ref    : %s\n' "$(jq -r '.authorization.reference // "—"' "$dir/engagement.json")"
   printf 'Workspace  : %s\n' "$dir"
   printf 'Scope      : %s allowed / %s excluded\n' \
     "$(jq '.scope.include | length' "$dir/engagement.json")" \
@@ -916,6 +917,8 @@ report_generate(){
     echo
     echo "**Engagement:** $title  "
     echo "**Status:** $status  "
+    echo "**Authorization:** $(jq -r '.authorization.status // "pending"' "$meta")  "
+    echo "**Authorization reference:** $(jq -r '.authorization.reference // "—"' "$meta")  "
     echo "**Generated:** $(timestamp)  "
     echo "**Active target:** $current"
     echo
