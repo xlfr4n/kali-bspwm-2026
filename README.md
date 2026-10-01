@@ -121,7 +121,7 @@ It does not replace Kali with a full desktop environment. The core remains:
         ↓
     xLFr4n UI
 
-Polybar, Tint2, Rofi, Ghostty + tmux,  Picom, Dunst, Fastfetch, Zsh and the session helpers build the user-facing layer.
+Polybar, Tint2, Rofi, Ghostty + tmux, Picom, Dunst, Fastfetch, Zsh and the session helpers build the user-facing layer.
 
 The project targets a Kali guest. Host Windows, VirtualBox and VMware settings are not changed automatically.
 
@@ -383,13 +383,11 @@ The wallpaper helper keeps an index/cache so login does not repeatedly rescan th
 
 Ghostty is the only graphical terminal and tmux is the persistence/multiplexer layer. The terminal helper has no alternate graphical backend.
 
-Check the selected backend:
+Check the Ghostty backend:
 
     xlfr4n-terminal --backend
 
-Force a backend for one launch:
-
-    xlfr4n-terminal --backend
+The graphical terminal backend is intentionally fixed to Ghostty; `--backend` reports the resolved binary path.
 
 Operational path:
 
