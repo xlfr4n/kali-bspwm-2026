@@ -41,6 +41,8 @@ printf 'ci evidence\n' > "$TMP/artifact.txt"
 lab evidence add "$TMP/artifact.txt" smoke
 lab evidence manifest
 lab finding new "CI smoke finding" low
+lab finding new "CI high finding" high
+lab finding summary > "$TMP/finding-summary.txt"
 lab report
 
 ENGAGEMENT="$(cat "$HOME/.config/xlfr4n/lab/current")"
@@ -52,5 +54,9 @@ assert_file "$ENGAGEMENT/10-report/report.html"
 assert_file "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
 assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
 assert_contains "$ENGAGEMENT/10-report/report.md" "smoke"
+assert_contains "$TMP/finding-summary.txt" "Total       : 2"
+assert_contains "$TMP/finding-summary.txt" "High        : 1"
+assert_contains "$TMP/finding-summary.txt" "Low         : 1"
+assert_contains "$TMP/finding-summary.txt" "Open        : 2"
 
 echo "Lab smoke test: PASS"
