@@ -4,34 +4,52 @@
 
 ## 🇪🇸 Español
 
-| Fase | Área | Estado actual | Validación pendiente |
+| Fase | Área | Automatización / código | Gate pendiente |
 |---|---|---|---|
-| L0 | CI / guardas | ✅ | cierre de esta rama |
-| L1 | Engagement core | ✅ | ejercicios controlados |
-| L2 | Desktop/VM | ✅ | nueva prueba completa solo al cerrar el bloque |
-| L3 | VirtualBox aislado | 🟡 | auditoría real del host, red y snapshots |
-| L4 | Active Directory | 🟡 | DC01 + WS01 reales y reset |
-| L5 | Web Lab | 🟡 | WEB01 real + smoke desde Kali |
-| L6 | Evidence/Findings/Report | 🟡 | ejercicio end-to-end real |
-| L7 | Rollback / release | 🟡 | reinstalación, snapshot y documentación final |
+| L0 | CI / guardas | ✅ Verde en GitHub Actions | Ninguno |
+| L1 | Engagement core | ✅ Smoke de scope → target → evidence → finding → report | Ejercicio real controlado |
+| L2 | Desktop / VM | ✅ Checks estáticos + doctor/session-profile | Smoke visual final en la VM |
+| L3 | VirtualBox aislado | ✅ Helper audit/plan/apply endurecido | Host real + red + snapshots |
+| L4 | Active Directory | ✅ Provision/join/validate implementados | DC01 + WS01 reales |
+| L5 | Web Lab | ✅ Compose + health + smoke + aislamiento | WEB01 real + smoke desde Kali |
+| L6 | Evidence / Findings / Report | ✅ Hashing + finding summary + informe ES/EN | Engagement end-to-end real |
+| L7 | Rollback / release | ✅ Baseline create/restore + logs | Restore real + reinstalación final |
 
-### Regla
+### Regla de cierre
 
-Una implementación no se marca como validada hasta existir una prueba reproducible. Las VMs y snapshots reales quedan separadas de la automatización de GitHub.
+Una fase no se marca como **cerrada** hasta que su gate de infraestructura correspondiente haya producido evidencia reproducible. GitHub Actions certifica el software; no sustituye la comprobación del host VirtualBox ni de las VMs reales.
+
+### Orden de aceptación
+
+```text
+main + CI verde
+  ↓
+L2 · doctor + smoke visual
+  ↓
+L3 · Internal Network + baseline snapshots
+  ↓
+L4 · DC01 + WS01 + DNS/domain validation
+  ↓
+L5 · WEB01 + health/smoke
+  ↓
+L6 · engagement → evidence → finding → report
+  ↓
+L7 · evidence manifest → snapshot restore → clean re-check
+```
 
 ## 🇬🇧 English
 
-| Phase | Area | Current state | Remaining validation |
+| Phase | Area | Automation / code | Remaining gate |
 |---|---|---|---|
-| L0 | CI / guardrails | ✅ | close this branch |
-| L1 | Engagement core | ✅ | controlled exercises |
-| L2 | Desktop/VM | ✅ | full retest only after this block closes |
-| L3 | Isolated VirtualBox | 🟡 | real host, network and snapshot audit |
-| L4 | Active Directory | 🟡 | real DC01 + WS01 and reset |
-| L5 | Web Lab | 🟡 | real WEB01 + smoke from Kali |
-| L6 | Evidence/Findings/Report | 🟡 | real end-to-end exercise |
-| L7 | Rollback / release | 🟡 | reinstall, snapshot and final documentation |
+| L0 | CI / guardrails | ✅ Green in GitHub Actions | None |
+| L1 | Engagement core | ✅ Scope → target → evidence → finding → report smoke | Real controlled exercise |
+| L2 | Desktop / VM | ✅ Static checks + doctor/session-profile | Final VM visual smoke |
+| L3 | Isolated VirtualBox | ✅ Hardened audit/plan/apply helper | Real host + network + snapshots |
+| L4 | Active Directory | ✅ Provision/join/validate implemented | Real DC01 + WS01 |
+| L5 | Web Lab | ✅ Compose + health + smoke + isolation | Real WEB01 + Kali smoke |
+| L6 | Evidence / Findings / Report | ✅ Hashing + finding summary + ES/EN report | Real end-to-end engagement |
+| L7 | Rollback / release | ✅ Baseline create/restore + logging | Real restore + final reinstall |
 
-An implementation becomes validated only when it has a reproducible test. Real VMs and snapshots remain separate from GitHub automation.
+A phase is only **closed** after its corresponding infrastructure gate produces reproducible evidence. GitHub Actions certifies the software; it does not replace validation of the real VirtualBox host or lab VMs.
 
-**⚡ xLFr4n · build → test → evidence → reset.**
+**⚡ xLFr4n · isolate → provision → validate → exercise → evidence → reset.**

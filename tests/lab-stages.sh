@@ -28,6 +28,9 @@ check 'Web read-only filesystem' grep -Fq 'read_only: true' tools/web-lab/compos
 check 'VirtualBox atomic apply guard' grep -Fq 'notPoweredOff' tools/virtualbox/xlfr4n-lab-vbox.ps1
 check 'VirtualBox post-apply verification' grep -Fq 'Post-apply verification failed' tools/virtualbox/xlfr4n-lab-vbox.ps1
 check 'Snapshot existence guard' grep -Fq 'was not found on' tools/virtualbox/xlfr4n-lab-snapshot.ps1
+check 'Snapshot create mode' grep -Fq 'Type CREATE' tools/virtualbox/xlfr4n-lab-snapshot.ps1
+check 'Snapshot duplicate guard' grep -Fq 'already exists' tools/virtualbox/xlfr4n-lab-snapshot.ps1
+check 'Snapshot plan/apply guard' grep -Fq -- '-Plan and -Apply cannot be used together.' tools/virtualbox/xlfr4n-lab-snapshot.ps1
 check 'Snapshot reset confirmation' grep -Fq 'RESET' tools/virtualbox/xlfr4n-lab-snapshot.ps1
 check 'Web search smoke route' grep -Fq 'synthetic search surface' tools/web-lab/test.sh
 bash -n tools/web-lab/reset.sh
