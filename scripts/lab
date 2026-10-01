@@ -670,6 +670,32 @@ EOF
   ok "Finding created: $file"
 }
 
+finding_set(){
+  local dir id field value file tmp
+  dir="$(require_engagement)" || exit 1
+  id="${1:-}"
+  field="${2:-}"
+  value="${3:-}"
+  [ -n "$id" ] && [ -n "$field" ] && [ -n "$value" ] || die "Usage: lab finding set F-001 status|severity VALUE"
+  file="$(find "$dir/09-findings" -maxdepth 1 -type f -name "$id-*.md" -print -quit 2>/dev/null)"
+  [ -n "$file" ] && [ -f "$file" ] || die "Finding not found: $id"
+  tmp="$file.tmp.$"
+  case "$field" in
+    status)
+      case "$value" in open|confirmed|accepted|remediated|closed) ;; *) die "Invalid finding status: $value" ;; esac
+      sed -E "s/^\\*\\*Status:\\*\\* .*/**Status:** $value/" "$file" > "$tmp"
+      ;;
+    severity)
+      case "$value" in low|medium|high|critical|info) ;; *) die "Invalid finding severity: $value" ;; esac
+      sed -E "s/^\\*\\*Severity:\\*\\* .*/**Severity:** $value/" "$file" > "$tmp"
+      ;;
+    *) rm -f "$tmp"; die "Editable finding field: status or severity" ;;
+  esac
+  mv -f "$tmp" "$file"
+  timeline_event "$dir" "finding $id updated: $field=$value"
+  ok "Finding updated: $id $field=$value"
+}
+
 finding_list(){
   local dir
   dir="$(require_engagement)" || exit 1
@@ -1186,8 +1212,9 @@ case "${1:-}" in
     case "${1:-list}" in
       new) shift; finding_new "$@" ;;
       list) finding_list ;;
+      set) shift; finding_set "$@" ;;
       summary) finding_summary ;;
-      *) die "Usage: lab finding {new|list|summary}" ;;
+      *) die "Usage: lab finding {new|list|summary|set}" ;;
     esac
     ;;
   report) report_generate ;;
