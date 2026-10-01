@@ -58,12 +58,12 @@ case "$choice" in
   DOCK*) dock --toggle ;;
   REPAIR*) dock --restart ;;
   DESKTOP*) desktop-style --apply ;;
+  LABSTATUS*) xlfr4n-terminal --title Kali-Engagement -- lab status ;;
+  LABTOOLS*) xlfr4n-terminal --title Kali-RedTeam-Tools -- lab tools status ;;
+  LAB*) dock-launch lab ;;
   TARGET*) settarget ;;
   THEME*) theme-switch ;;
   WALLPAPER*) wallpaper --random ;;
-  LAB*) dock-launch lab ;;
-LABSTATUS*) xlfr4n-terminal --title Kali-Engagement -- lab status ;;
-LABTOOLS*) xlfr4n-terminal --title Kali-RedTeam-Tools -- lab tools status ;;
   MONITOR*) monitor-refresh ;;
   NETWORK*) dock-launch network ;;
   DOCTOR*) xlfr4n-terminal --title Kali-Doctor -- doctor.sh ;;
