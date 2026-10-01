@@ -991,7 +991,7 @@ case "${1:-}" in
       new) shift; finding_new "$@" ;;
       list) finding_list ;;
       summary) finding_summary ;;
-      *) die "Usage: lab finding {new|list}" ;;
+      *) die "Usage: lab finding {new|list|summary}" ;;
     esac
     ;;
   report) report_generate ;;
