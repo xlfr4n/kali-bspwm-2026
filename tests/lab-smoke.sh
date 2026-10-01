@@ -54,44 +54,6 @@ assert_file "$ENGAGEMENT/08-evidence/SHA256SUMS"
 assert_file "$ENGAGEMENT/10-report/report.md"
 assert_file "$ENGAGEMENT/10-report/report.html"
 assert_file "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
-grep -Eq '  report\.mdassert_contains "$ENGAGEMENT/10-report/report.md" "## Finding Summary"
-assert_contains "$ENGAGEMENT/10-report/report.md" "Total       : 2"
-assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
-assert_contains "$ENGAGEMENT/10-report/report.md" "smoke"
-assert_contains "$TMP/finding-summary.txt" "Total       : 2"
-assert_contains "$TMP/finding-summary.txt" "High        : 1"
-assert_contains "$TMP/finding-summary.txt" "Low         : 1"
-assert_contains "$TMP/finding-summary.txt" "Open        : 2"
-assert_contains "$TMP/validation-before-report.txt" "Engagement validation: PASS"
-assert_contains "$TMP/validation-after-report.txt" "Engagement validation: PASS"
-
-lab close
-if lab exec --target smoke -- true >/dev/null 2>&1; then
-  echo "Closed engagement unexpectedly allowed execution." >&2
-  exit 1
-fi
-
-echo "Lab smoke test: PASS"
- "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
-grep -Eq '  report\.htmlassert_contains "$ENGAGEMENT/10-report/report.md" "## Finding Summary"
-assert_contains "$ENGAGEMENT/10-report/report.md" "Total       : 2"
-assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
-assert_contains "$ENGAGEMENT/10-report/report.md" "smoke"
-assert_contains "$TMP/finding-summary.txt" "Total       : 2"
-assert_contains "$TMP/finding-summary.txt" "High        : 1"
-assert_contains "$TMP/finding-summary.txt" "Low         : 1"
-assert_contains "$TMP/finding-summary.txt" "Open        : 2"
-assert_contains "$TMP/validation-before-report.txt" "Engagement validation: PASS"
-assert_contains "$TMP/validation-after-report.txt" "Engagement validation: PASS"
-
-lab close
-if lab exec --target smoke -- true >/dev/null 2>&1; then
-  echo "Closed engagement unexpectedly allowed execution." >&2
-  exit 1
-fi
-
-echo "Lab smoke test: PASS"
- "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
 assert_contains "$ENGAGEMENT/10-report/report.md" "## Finding Summary"
 assert_contains "$ENGAGEMENT/10-report/report.md" "Total       : 2"
 assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
@@ -100,6 +62,8 @@ assert_contains "$TMP/finding-summary.txt" "Total       : 2"
 assert_contains "$TMP/finding-summary.txt" "High        : 1"
 assert_contains "$TMP/finding-summary.txt" "Low         : 1"
 assert_contains "$TMP/finding-summary.txt" "Open        : 2"
+grep -Eq '  report\.md "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
+grep -Eq '  report\.html "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
 assert_contains "$TMP/validation-before-report.txt" "Engagement validation: PASS"
 assert_contains "$TMP/validation-after-report.txt" "Engagement validation: PASS"
 
