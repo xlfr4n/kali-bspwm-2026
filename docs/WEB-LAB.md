@@ -34,3 +34,31 @@ The web lab uses resettable internal targets with deterministic URLs, test data 
 Separate simple HTTP services, authenticated applications, APIs and intentionally vulnerable training applications into clear tiers.
 
 Keep the targets internal to the lab network and make reset procedures part of the test plan. Preserve sanitized evidence in the engagement workspace.
+
+## 🧪 Local target / Objetivo local
+
+### 🇪🇸 Español
+
+El repositorio incluye un objetivo web autocontenido en `tools/web-lab/` para disponer de un servicio controlado y reiniciable antes de usar objetivos externos o más complejos:
+
+```bash
+cd tools/web-lab
+chmod +x reset.sh
+./reset.sh
+docker compose ps
+```
+
+La aplicación usa datos sintéticos y se debe publicar solo en la red del laboratorio. El estado se resetea reconstruyendo el contenedor.
+
+### 🇬🇧 English
+
+The repository includes a self-contained resettable web target in `tools/web-lab/`:
+
+```bash
+cd tools/web-lab
+chmod +x reset.sh
+./reset.sh
+docker compose ps
+```
+
+The application uses synthetic data and should be exposed only on the lab network. Reset is performed by rebuilding the container.
