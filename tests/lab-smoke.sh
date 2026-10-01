@@ -36,6 +36,11 @@ fi
 
 lab target add 192.0.2.20 smoke
 lab target use smoke
+if lab exec --target smoke -- sh -c 'printf blocked' >/dev/null 2>&1; then
+  echo "Unauthorized execution unexpectedly passed." >&2
+  exit 1
+fi
+lab authorization set confirmed CI-SMOKE
 lab target list | grep -Fq smoke
 lab doctor
 lab doctor --strict
