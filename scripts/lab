@@ -52,6 +52,13 @@ set_current(){
   printf '%s\n' "$1" > "$CURRENT_FILE"
 }
 
+timeline_event(){
+  local dir="$1"
+  shift
+  mkdir -p "$dir/notes"
+  printf '[%s] %s\n' "$(timestamp)" "$*" >> "$dir/notes/timeline.log"
+}
+
 ensure_layout(){
   local dir="$1"
   mkdir -p \
