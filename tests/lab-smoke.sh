@@ -55,6 +55,11 @@ lab report
 
 ENGAGEMENT="$(cat "$HOME/.config/xlfr4n/lab/current")"
 assert_file "$ENGAGEMENT/engagement.json"
+assert_file "$ENGAGEMENT/notes/timeline.log"
+assert_contains "$ENGAGEMENT/notes/timeline.log" "authorization changed to confirmed"
+assert_contains "$ENGAGEMENT/notes/timeline.log" "scope allow: 192.0.2.0/24"
+assert_contains "$ENGAGEMENT/notes/timeline.log" "target added: smoke"
+assert_contains "$ENGAGEMENT/notes/timeline.log" "active target selected: smoke"
 assert_file "$ENGAGEMENT/08-evidence/index.tsv"
 assert_file "$ENGAGEMENT/08-evidence/SHA256SUMS"
 assert_file "$ENGAGEMENT/10-report/report.md"
@@ -63,5 +68,6 @@ assert_file "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
 assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
 assert_contains "$ENGAGEMENT/10-report/report.md" "smoke"
 assert_contains "$ENGAGEMENT/10-report/report.md" "- low: 1"
+assert_contains "$ENGAGEMENT/10-report/report.md" "## Engagement timeline"
 
 echo "Lab smoke test: PASS"
