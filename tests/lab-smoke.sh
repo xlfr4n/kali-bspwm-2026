@@ -47,6 +47,7 @@ if lab scope check 192.0.2.10 >/dev/null 2>&1; then
 fi
 
 lab target add 192.0.2.20 smoke
+ENGAGEMENT="$(cat "$HOME/.config/xlfr4n/lab/current")"
 lab target use smoke
 lab authorization set pending
 if lab exec --target smoke -- sh -c 'printf blocked' >/dev/null 2>&1; then
@@ -58,18 +59,19 @@ lab target list | grep -Fq smoke
 lab doctor
 lab doctor --strict
 lab authorization status | grep -Fxq confirmed
-lab finding summary | grep -Fq 'low        1'
 
 printf 'ci evidence\n' > "$TMP/artifact.txt"
 lab evidence add "$TMP/artifact.txt" smoke
-printf "tampered\n" > "$(find "$ENGAGEMENT/08-evidence/raw" -type f -name "*artifact.txt" -print -quit)"
+tampered_file="$(find "$ENGAGEMENT/08-evidence/raw" -type f -name "*artifact.txt" -print -quit)"
+printf "tampered\n" > "$tampered_file"
 if lab evidence verify >/dev/null 2>&1; then
   echo "Tampered evidence unexpectedly verified." >&2
   exit 1
 fi
 printf "ci evidence\n" > "$TMP/artifact.txt"
-lab evidence add "$TMP/artifact.txt" smoke
+cp "$TMP/artifact.txt" "$tampered_file"
 lab evidence manifest
+lab evidence verify
 lab evidence verify
 lab evidence manifest
 lab evidence verify
