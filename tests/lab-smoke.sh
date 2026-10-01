@@ -37,6 +37,7 @@ lab target add 192.0.2.20 smoke
 lab target use smoke
 lab target list | grep -Fq smoke
 lab doctor
+lab doctor --strict
 lab finding summary | grep -Fq 'low        1'
 
 printf 'ci evidence\n' > "$TMP/artifact.txt"
