@@ -325,7 +325,7 @@ check "Autostart single-instance lock" grep -Fq 'flock -n 9' scripts/autostart
 check "Autostart user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/autostart
 check "Polybar user-scoped cleanup" grep -Fq 'pkill -u "$UID"' config/polybar/launch.sh
 check "Dock user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/dock
-check "Fullscreen user-scoped cleanup" grep -Fq 'pkill -u "$UID"' scripts/fullscreen-toggle
+check "Fullscreen avoids global cleanup" bash -c '! grep -Eq "pkill|killall" scripts/fullscreen-toggle && grep -Fq "bspc node -t \"~fullscreen\"" scripts/fullscreen-toggle'
 check "Uninstall user-scoped cleanup" grep -Fq 'pkill -u "$UID"' uninstall.sh
 check "Polybar target action opens terminal" grep -Fq 'xlfr4n-terminal --title Kali-Target -- settarget' config/polybar/config.ini
 check "Polybar doctor action opens terminal" grep -Fq 'xlfr4n-terminal --title xLFr4n-Doctor -- doctor.sh' config/polybar/config.ini
