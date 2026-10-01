@@ -65,4 +65,10 @@ assert_contains "$TMP/finding-summary.txt" "Open        : 2"
 assert_contains "$TMP/validation-before-report.txt" "Engagement validation: PASS"
 assert_contains "$TMP/validation-after-report.txt" "Engagement validation: PASS"
 
+lab close
+if lab exec --target smoke -- true >/dev/null 2>&1; then
+  echo "Closed engagement unexpectedly allowed execution." >&2
+  exit 1
+fi
+
 echo "Lab smoke test: PASS"
