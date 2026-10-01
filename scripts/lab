@@ -1622,6 +1622,28 @@ esac
     fi
   done
 
+  if [ -s "$dir/10-report/REPORT-SHA256SUMS" ]; then
+    local report_hashes_ok=0 expected_hash report_name actual_hash
+    while read -r expected_hash report_name; do
+      [ -n "$report_name" ] || continue
+      case "$report_name" in report.md|report.html) ;; *) continue ;; esac
+      if [ ! -f "$dir/10-report/$report_name" ]; then
+        echo "[FAIL] missing report artifact referenced by checksum: $report_name"
+        errors=$((errors+1))
+        continue
+      fi
+      actual_hash="$(sha256sum "$dir/10-report/$report_name" | awk '{print $1}')"
+      if [ "$expected_hash" != "$actual_hash" ]; then
+        echo "[FAIL] report hash mismatch: $report_name"
+        errors=$((errors+1))
+      fi
+    done < "$dir/10-report/REPORT-SHA256SUMS"
+    report_hashes_ok=1
+    if [ "$report_hashes_ok" -eq 1 ] && [ "$errors" -eq 0 ]; then
+      echo "[PASS] report checksum integrity"
+    fi
+  fi
+
   if [ "$errors" -eq 0 ]; then
     echo "Engagement validation: PASS"
     return 0
