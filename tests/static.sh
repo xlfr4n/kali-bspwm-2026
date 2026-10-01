@@ -349,4 +349,4 @@ check "Lab web profile" grep -Fq "kali-tools-web" scripts/lab
 check "Polybar engagement status" grep -Fq "lab --status-short" config/polybar/config.ini
 check "Polybar engagement interval" grep -Fq "interval = 2" config/polybar/config.ini
 check "Menu engagement status" grep -Fq "LABSTATUS" scripts/kali-menu
-check "CI jq dependency" grep -Fq "desktop-file-validate jq" .github/workflows/shellcheck.yml
+check "CI jq dependency" grep -Eq "apt-get install .*jq" .github/workflows/shellcheck.yml
