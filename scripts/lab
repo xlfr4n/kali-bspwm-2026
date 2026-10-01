@@ -700,6 +700,10 @@ report_generate(){
     printf '| Name | Value |\n|---|---|\n'
     jq -r '.targets[]? | "| " + .name + " | " + .value + " |"' "$meta"
     echo
+    echo "## Finding Summary"
+    echo
+    finding_summary
+    echo
     echo "## Findings"
     echo
     if find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' | grep -q .; then
