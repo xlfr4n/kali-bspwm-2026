@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Install validation tools
-        run: sudo apt-get update && sudo apt-get install -y shellcheck jq docker-compose-plugin
+        run: sudo apt-get update && sudo apt-get install -y shellcheck jq
       - name: Lab asset checks
         run: bash tests/lab-stages.sh
       - name: ShellCheck lab scripts
