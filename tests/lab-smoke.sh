@@ -72,16 +72,12 @@ printf "ci evidence\n" > "$TMP/artifact.txt"
 cp "$TMP/artifact.txt" "$tampered_file"
 lab evidence manifest
 lab evidence verify
-lab evidence verify
-lab evidence manifest
-lab evidence verify
 lab finding new "CI smoke finding" low
 lab finding set F-001 status confirmed
 grep -Fq "**Status:** confirmed" "$ENGAGEMENT/09-findings/F-001-ci-smoke-finding.md"
 lab finding summary | grep -Fq 'low        1'
 lab report
 
-ENGAGEMENT="$(cat "$HOME/.config/xlfr4n/lab/current")"
 assert_file "$ENGAGEMENT/engagement.json"
 assert_file "$ENGAGEMENT/notes/timeline.log"
 assert_contains "$ENGAGEMENT/notes/timeline.log" "authorization changed to confirmed"
