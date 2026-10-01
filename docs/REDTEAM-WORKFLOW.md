@@ -145,6 +145,8 @@ lab finding summary
 
 `lab doctor` es read-only y valida el metadata JSON, la estructura de directorios y la coherencia del target activo. `lab doctor --strict` añade la puerta de scope y target activo antes de una práctica. No modifica el sistema ni ejecuta herramientas ofensivas.
 
+La puerta de ejecución también exige que `lab authorization status` sea `confirmed` y que el engagement siga `open`. El estado de autorización y su referencia quedan en `engagement.json`; no se almacenan secretos ni credenciales.
+
 ### 🇬🇧 English
 
 Before enabling additional tool profiles or starting a lab exercise, validate the engagement structure:
