@@ -85,6 +85,7 @@ topology_validate(){
   topology_check "network mode recorded" "^- Modo de red:|^- Network mode:"
   topology_check "network name recorded" "^- Nombre de red:|^- Network name:"
   topology_check "subnet recorded" "^- Subred:|^- Subnet:"
+  topology_check "operator address recorded" "^- Kali / operator IP:|^- Kali / operator IP:"
 
   if [ "$strict" -eq 1 ]; then
     topology_check "DC01 asset row" "^\| DC01 \| [^|]+ \| AD/DNS \|"
