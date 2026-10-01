@@ -703,13 +703,23 @@ PY
   ok "HTML generated:  $html"
 }
 
+attach_tmux_session(){
+  local session="$1"
+  if [ -n "${TMUX:-}" ]; then
+    tmux switch-client -t "$session"
+  else
+    exec tmux attach-session -t "$session"
+  fi
+}
+
 open_legacy(){
   need_cmd tmux
   local name="${1:-kali-lab}" dir="${2:-$PWD}"
   dir="$(realpath -m "$dir")"
   mkdir -p "$dir"
   if tmux has-session -t "$name" 2>/dev/null; then
-    exec tmux attach-session -t "$name"
+    attach_tmux_session "$name"
+    return
   fi
   mkdir -p "$dir"/{recon,loot,notes,evidence,web}
   tmux new-session -d -s "$name" -c "$dir" -n main
@@ -724,7 +734,7 @@ open_legacy(){
   tmux new-window -t "$name:" -n loot -c "$dir/loot"
   tmux select-window -t "$name:main"
   tmux select-pane -t "$name:main.0"
-  exec tmux attach-session -t "$name"
+  attach_tmux_session "$name"
 }
 
 open_lab(){
@@ -737,7 +747,8 @@ open_lab(){
   session="xLFr4n-$name"
 
   if tmux has-session -t "$session" 2>/dev/null; then
-    exec tmux attach-session -t "$session"
+    attach_tmux_session "$session"
+    return
   fi
 
   tmux new-session -d -s "$session" -c "$dir" -n main
@@ -758,7 +769,7 @@ open_lab(){
   tmux new-window -t "$session:" -n report -c "$dir/10-report"
   tmux select-window -t "$session:main"
   tmux select-pane -t "$session:main.0"
-  exec tmux attach-session -t "$session"
+  attach_tmux_session "$session"
 }
 
 ensure_default_engagement(){
