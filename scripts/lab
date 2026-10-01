@@ -761,7 +761,7 @@ report_generate(){
         xargs -0 -r grep -hE '^\*\*Severity:\*\* ' 2>/dev/null |
         grep -F -- "**Severity:** $severity" |
         wc -l | tr -d ' ')"
-      printf -- "- %s: %s\\n" "$severity" "$count"
+      printf -- "- %s: %s\n" "$severity" "$count"
     done
     echo
     if find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' | grep -q .; then
