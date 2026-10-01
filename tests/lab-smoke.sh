@@ -55,5 +55,6 @@ assert_file "$ENGAGEMENT/10-report/report.html"
 assert_file "$ENGAGEMENT/10-report/REPORT-SHA256SUMS"
 assert_contains "$ENGAGEMENT/10-report/report.md" "CI smoke finding"
 assert_contains "$ENGAGEMENT/10-report/report.md" "smoke"
+assert_contains "$ENGAGEMENT/10-report/report.md" "- low: 1"
 
 echo "Lab smoke test: PASS"
