@@ -62,7 +62,7 @@ if ($answer -cne 'APPLY') { throw 'Apply cancelled. Nothing changed.' }
 foreach ($vm in $VMNames) {
     $info = @(& $VBox showvminfo $vm --machinereadable)
     $state = ($info | Where-Object { $_ -like 'VMState=*' } | Select-Object -First 1)
-    if ($state -notmatch '="poweroff"') { throw "Refusing to modify $vm: it must be powered off." }
+    if ($state -notmatch '="poweroff"') { throw "Refusing to modify ${vm}: it must be powered off." }
     Invoke-VBox $VBox @('modifyvm',$vm,"--nic$AdapterIndex",'intnet',"--intnet$AdapterIndex",$NetworkName)
     Write-Host "[OK] $vm -> $NetworkName"
 }
