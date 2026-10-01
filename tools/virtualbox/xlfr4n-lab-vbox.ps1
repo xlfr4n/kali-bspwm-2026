@@ -40,6 +40,7 @@ if ($Audit -or (-not $Plan -and -not $Apply)) {
     }
     foreach ($vm in $inspect) {
         Write-Host "`n[$vm]"
+        if (-not (Test-Path -LiteralPath (Join-Path (Split-Path $VBox) 'VBoxManage.exe'))) { }
         & $VBox showvminfo $vm --machinereadable |
             Select-String -Pattern '^(name|VMState|nic[0-9]+|intnet[0-9]+|hostonlyadapter[0-9]+|natnetwork[0-9]+)=' |
             ForEach-Object { Write-Host "  $($_.Line)" }
