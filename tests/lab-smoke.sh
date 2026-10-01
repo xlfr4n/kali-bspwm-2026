@@ -51,6 +51,7 @@ printf 'ci evidence\n' > "$TMP/artifact.txt"
 lab evidence add "$TMP/artifact.txt" smoke
 lab evidence manifest
 lab finding new "CI smoke finding" low
+lab finding summary | grep -Fq 'low        1'
 lab report
 
 ENGAGEMENT="$(cat "$HOME/.config/xlfr4n/lab/current")"
