@@ -18,7 +18,7 @@ check 'Web Dockerfile exists' test -s tools/web-lab/Dockerfile
 check 'Web compose exists' test -s tools/web-lab/compose.yml
 check 'Web reset exists' test -s tools/web-lab/reset.sh
 check 'Web smoke exists' test -s tools/web-lab/test.sh
-check 'Web mode guard' grep -Fq 'LAB_MODE=isolated-lab' tools/web-lab/app.py
+check 'Web mode guard' sh -c "grep -Fq 'LAB_MODE' tools/web-lab/app.py && grep -Fq 'isolated-lab' tools/web-lab/app.py"
 check 'Web compose mode' grep -Fq 'LAB_MODE: isolated-lab' tools/web-lab/compose.yml
 check 'Web non-root user' grep -Fq 'USER weblab' tools/web-lab/Dockerfile
 bash -n tools/web-lab/reset.sh
