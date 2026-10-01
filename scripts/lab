@@ -47,6 +47,15 @@ require_engagement(){
   printf '%s\n' "$dir"
 }
 
+
+require_open_engagement(){
+  need_jq
+  local dir status
+  dir="$(require_engagement)" || return 1
+  status="$(jq -r '.status // "unknown"' "$dir/engagement.json")"
+  [ "$status" = "open" ] || die "Engagement is not open (status=$status). Re-open is not supported; create or select an open engagement."
+  printf '%s\n' "$dir"
+}
 set_current(){
   mkdir -p "$LAB_CONFIG"
   printf '%s\n' "$1" > "$CURRENT_FILE"
@@ -139,7 +148,7 @@ target_value_by_name(){
 target_add(){
   need_jq
   local dir value name meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   value="${1:-}"
   name="${2:-target-$(date +%H%M%S)}"
   [ -n "$value" ] || die "Usage: lab target add VALUE [NAME]"
@@ -149,7 +158,7 @@ target_add(){
   meta="$dir/engagement.json"
   jq -e --arg n "$name" '.targets[]? | select(.name == $n)' "$meta" >/dev/null 2>&1 &&
     die "Target name already exists: $name"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg name "$name" --arg value "$value" --arg now "$(timestamp)" \
     '.targets += [{name:$name,value:$value,added_at:$now}] | .updated_at=$now' \
     "$meta" > "$tmp"
@@ -174,13 +183,13 @@ target_list(){
 target_use(){
   need_jq
   local dir name value meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   name="${1:-}"
   [ -n "$name" ] || die "Usage: lab target use NAME"
   value="$(target_value_by_name "$dir" "$name")"
   [ -n "$value" ] || die "Unknown target: $name"
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg name "$name" --arg now "$(timestamp)" '.current_target=$name | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
   ok "Active target: $name -> $value"
@@ -189,11 +198,11 @@ target_use(){
 target_remove(){
   need_jq
   local dir name meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   name="${1:-}"
   [ -n "$name" ] || die "Usage: lab target remove NAME"
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg name "$name" --arg now "$(timestamp)" \
     'del(.targets[] | select(.name == $name)) |
      if .current_target == $name then .current_target=null else .current_target end |
@@ -214,12 +223,12 @@ scope_list(){
 scope_change(){
   need_jq
   local action="${1:-}" value="${2:-}" dir meta tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   [ "$action" = "allow" ] || [ "$action" = "deny" ] || die "Usage: lab scope {allow|deny} VALUE"
   [ -n "$value" ] || die "Usage: lab scope {allow|deny} VALUE"
   [[ "$value" =~ ^[A-Za-z0-9._:/?%#@*+-]+$ ]] || die "Scope contains unsupported characters."
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   if [ "$action" = "allow" ]; then
     jq --arg v "$value" --arg now "$(timestamp)" '.scope.include |= (if index($v) then . else . + [$v] end) | .updated_at=$now' "$meta" > "$tmp"
   else
@@ -352,7 +361,7 @@ status(){
 
 notes_add(){
   local dir message file
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   message="${*:-}"
   [ -n "$message" ] || die "Usage: lab note TEXT..."
   file="$dir/notes/timeline.log"
@@ -364,7 +373,7 @@ exec_command(){
   need_jq
   need_cmd tee
   local dir target_name target_value command_log start end rc
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   [ "${1:-}" = "--target" ] || die "Usage: lab exec --target NAME -- COMMAND [ARGS...]"
   target_name="${2:-}"
   [ -n "$target_name" ] || die "Target name is required."
@@ -410,7 +419,7 @@ exec_command(){
 evidence_add(){
   need_cmd sha256sum
   local dir source label safe base dest hash file rel
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   source="${1:-}"
   label="${2:-}"
   [ -f "$source" ] || die "Evidence file not found: $source"
@@ -443,7 +452,7 @@ evidence_list(){
 evidence_manifest(){
   need_cmd sha256sum
   local dir tmp
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   tmp="$dir/08-evidence/SHA256SUMS.tmp"
   (
     cd "$dir/08-evidence"
@@ -463,7 +472,7 @@ next_finding_id(){
 
 finding_new(){
   local dir title severity id slug file
-  dir="$(require_engagement)" || exit 1
+  dir="$(require_open_engagement)" || exit 1
   title="${1:-}"
   severity="${2:-medium}"
   [ -n "$title" ] || die "Usage: lab finding new TITLE [low|medium|high|critical|info]"
@@ -871,8 +880,18 @@ close_engagement(){
   need_jq
   local dir meta tmp
   dir="$(require_engagement)" || exit 1
+
+  [ "$(jq -r '.status // "unknown"' "$dir/engagement.json")" = "open" ] ||
+    die "Engagement is already closed or has an unsupported status."
+
+  validate_engagement || die "Refusing to close engagement: validation failed."
+
+  for artifact in "$dir/10-report/report.md" "$dir/10-report/report.html" "$dir/10-report/REPORT-SHA256SUMS"; do
+    [ -s "$artifact" ] || die "Refusing to close engagement: missing report artifact $(basename "$artifact")."
+  done
+
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
   ok "Engagement closed. Data remains locally intact."
