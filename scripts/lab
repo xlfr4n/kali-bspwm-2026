@@ -534,6 +534,81 @@ finding_list(){
   find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -printf '%f\n' 2>/dev/null | sort || true
 }
 
+finding_summary(){
+  local dir total=0
+  dir="$(require_engagement)" || exit 1
+
+  printf '⚡ xLFr4n // FINDING SUMMARY\n'
+  for severity in critical high medium low info; do
+    local count
+    count="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print0 2>/dev/null |
+      xargs -0 -r grep -hE '^\\*\\*Severity:\\*\\* ' 2>/dev/null |
+      grep -F -- "**Severity:** $severity" |
+      wc -l | tr -d ' ')"
+    printf '%-10s %s\n' "$severity" "$count"
+    total=$((total + count))
+  done
+  printf '%-10s %s\n' "total" "$total"
+}
+
+lab_doctor(){
+  need_jq
+  local dir meta current ok_count fail_count
+  ok_count=0
+  fail_count=0
+
+  check_doctor(){
+    local label="$1"
+    shift
+    if "$@" >/dev/null 2>&1; then
+      printf '[OK]   %s\n' "$label"
+      ok_count=$((ok_count + 1))
+    else
+      printf '[FAIL] %s\n' "$label"
+      fail_count=$((fail_count + 1))
+    fi
+  }
+
+  printf '⚡ xLFr4n // LAB DOCTOR\n'
+  if ! dir="$(engagement_dir)"; then
+    printf '[FAIL] active engagement\n'
+    printf '\\nSummary: 0 OK, 1 FAIL\\n'
+    return 1
+  fi
+
+  meta="$dir/engagement.json"
+  check_doctor "engagement metadata" test -s "$meta"
+  check_doctor "valid JSON metadata" jq -e . "$meta"
+  check_doctor "scope document" test -s "$dir/00-scope/SCOPE.md"
+  check_doctor "recon directory" test -d "$dir/01-recon"
+  check_doctor "enumeration directory" test -d "$dir/02-enumeration"
+  check_doctor "web directory" test -d "$dir/03-web"
+  check_doctor "AD directory" test -d "$dir/04-active-directory"
+  check_doctor "credentials directory" test -d "$dir/05-credentials"
+  check_doctor "exploitation directory" test -d "$dir/06-exploitation"
+  check_doctor "post-exploitation directory" test -d "$dir/07-post-exploitation"
+  check_doctor "evidence raw directory" test -d "$dir/08-evidence/raw"
+  check_doctor "evidence command directory" test -d "$dir/08-evidence/commands"
+  check_doctor "findings directory" test -d "$dir/09-findings"
+  check_doctor "report directory" test -d "$dir/10-report"
+  check_doctor "notes directory" test -d "$dir/notes"
+  check_doctor "loot directory" test -d "$dir/loot"
+
+  current="$(jq -r '.current_target // empty' "$meta")"
+  if [ -z "$current" ]; then
+    printf '[INFO] active target       none\n'
+  elif jq -e --arg n "$current" '.targets[]? | select(.name == $n)' "$meta" >/dev/null 2>&1; then
+    printf '[OK]   active target       %s\n' "$current"
+    ok_count=$((ok_count + 1))
+  else
+    printf '[FAIL] active target       points to a missing target\n'
+    fail_count=$((fail_count + 1))
+  fi
+
+  printf '\\nSummary: %d OK, %d FAIL\\n' "$ok_count" "$fail_count"
+  return $((fail_count > 0 ? 1 : 0))
+}
+
 tools_profiles(){
   cat <<'EOF'
 ⚡ xLFr4n // RED TEAM PROFILES
@@ -845,6 +920,7 @@ case "${1:-}" in
   init) shift; init_engagement "$@" ;;
   status) status ;;
   status-short|--status-short) status_short ;;
+  doctor) lab_doctor ;;
   scope)
     shift
     case "${1:-list}" in
@@ -880,6 +956,7 @@ case "${1:-}" in
     case "${1:-list}" in
       new) shift; finding_new "$@" ;;
       list) finding_list ;;
+      summary) finding_summary ;;
       *) die "Usage: lab finding {new|list}" ;;
     esac
     ;;
