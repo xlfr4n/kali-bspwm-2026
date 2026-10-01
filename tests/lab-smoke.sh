@@ -10,6 +10,7 @@ cleanup(){ rm -rf "$TMP"; }
 trap cleanup EXIT
 
 export HOME="$TMP/home"
+export XDG_CONFIG_HOME="$HOME/.config"
 export XLFR4N_LAB_ROOT="$TMP/Lab"
 export PATH="$ROOT/scripts:$PATH"
 
