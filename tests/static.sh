@@ -346,6 +346,8 @@ check "Lab engagement initializer" grep -Fq "lab init NAME" scripts/lab
 check "Lab scope gate" grep -Fq "scope_matches" scripts/lab
 check "Lab authorization metadata" grep -Fq 'authorization: {status: "pending"' scripts/lab
 check "Lab authorization execution gate" grep -Fq "authorization_is_confirmed" scripts/lab
+check "Lab engagement timeline" grep -Fq "timeline_event" scripts/lab
+check "Lab report timeline" grep -Fq "Engagement timeline" scripts/lab
 check "Lab strict doctor authorization gate" grep -Fq "authorization       confirmed" scripts/lab
 check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
 check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
