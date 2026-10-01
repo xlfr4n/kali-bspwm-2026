@@ -559,8 +559,8 @@ finding_summary(){
     [ -n "$file" ] || continue
     total=$((total + 1))
 
-    severity="$(sed -n 's/^\*\*Severity:\*\* //p' "$file" | head -n1)"
-    state="$(sed -n 's/^\*\*Status:\*\* //p' "$file" | head -n1)"
+    severity="$(sed -n 's/^\*\*Severity:\*\* //p' "$file" | sed 's/[[:space:]]*$//' | head -n1)"
+    state="$(sed -n 's/^\*\*Status:\*\* //p' "$file" | sed 's/[[:space:]]*$//' | head -n1)"
 
     case "$severity" in
       critical|high|medium|low|info) severity_counts["$severity"]=$((severity_counts["$severity"] + 1)) ;;
