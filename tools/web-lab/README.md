@@ -2,7 +2,7 @@
 
 ## 🇪🇸 Español
 
-Objetivo web local para ejercicios controlados. Todos los datos son sintéticos y el servicio está pensado para ejecutarse dentro de la red aislada del laboratorio.
+Objetivo web local para ejercicios controlados. Todos los datos son sintéticos y el servicio está pensado para ejecutarse dentro de la red aislada del laboratorio. El contenedor exige `LAB_MODE=isolated-lab` para arrancar, reduciendo el riesgo de ejecución accidental.
 
 ```bash
 cd tools/web-lab
