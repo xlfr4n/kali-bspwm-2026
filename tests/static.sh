@@ -358,6 +358,7 @@ check "Web lab application" test -s tools/web-lab/app.py
 check "Web lab compose" test -s tools/web-lab/compose.yml
 check "Web lab reset helper" test -s tools/web-lab/reset.sh
 check "Web lab smoke helper" test -s tools/web-lab/test.sh
+check "Web lab isolated mode guard" grep -Fq "LAB_MODE=isolated-lab" tools/web-lab/app.py tools/web-lab/compose.yml
 check "Lab strict doctor authorization gate" grep -Fq "authorization       confirmed" scripts/lab
 check "Lab topology commands" grep -Fq "topology_validate" scripts/lab
 check "Lab topology template" grep -Fq "TOPOLOGY.md" scripts/lab
