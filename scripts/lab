@@ -534,6 +534,61 @@ finding_list(){
   find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -printf '%f\n' 2>/dev/null | sort || true
 }
 
+finding_summary(){
+  local dir
+  dir="$(require_engagement)" || exit 1
+
+  declare -A severity_counts=(
+    [critical]=0
+    [high]=0
+    [medium]=0
+    [low]=0
+    [info]=0
+    [unknown]=0
+  )
+  declare -A status_counts=(
+    [open]=0
+    [validated]=0
+    [accepted]=0
+    [remediated]=0
+    [unknown]=0
+  )
+
+  local total=0 file severity state
+  while IFS= read -r file; do
+    [ -n "$file" ] || continue
+    total=$((total + 1))
+
+    severity="$(sed -n 's/^\*\*Severity:\*\* //p' "$file" | head -n1)"
+    state="$(sed -n 's/^\*\*Status:\*\* //p' "$file" | head -n1)"
+
+    case "$severity" in
+      critical|high|medium|low|info) severity_counts["$severity"]=$((severity_counts["$severity"] + 1)) ;;
+      *) severity_counts[unknown]=$((severity_counts[unknown] + 1)) ;;
+    esac
+
+    case "$state" in
+      open|validated|accepted|remediated) status_counts["$state"]=$((status_counts["$state"] + 1)) ;;
+      *) status_counts[unknown]=$((status_counts[unknown] + 1)) ;;
+    esac
+  done < <(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print | sort)
+
+  echo "⚡ xLFr4n // FINDING SUMMARY"
+  printf 'Total       : %d\n' "$total"
+  printf 'Critical    : %d\n' "${severity_counts[critical]}"
+  printf 'High        : %d\n' "${severity_counts[high]}"
+  printf 'Medium      : %d\n' "${severity_counts[medium]}"
+  printf 'Low         : %d\n' "${severity_counts[low]}"
+  printf 'Info        : %d\n' "${severity_counts[info]}"
+  printf 'Unknown Sev : %d\n' "${severity_counts[unknown]}"
+  echo
+  printf 'Open        : %d\n' "${status_counts[open]}"
+  printf 'Validated   : %d\n' "${status_counts[validated]}"
+  printf 'Accepted    : %d\n' "${status_counts[accepted]}"
+  printf 'Remediated  : %d\n' "${status_counts[remediated]}"
+  printf 'Unknown St  : %d\n' "${status_counts[unknown]}"
+}
+
 tools_profiles(){
   cat <<'EOF'
 ⚡ xLFr4n // RED TEAM PROFILES
@@ -813,6 +868,7 @@ EVIDENCE
 FINDINGS
   lab finding new "TITLE" [low|medium|high|critical|info]
   lab finding list
+  lab finding summary
 
 REPORTING
   lab report
@@ -869,6 +925,7 @@ case "${1:-}" in
     case "${1:-list}" in
       new) shift; finding_new "$@" ;;
       list) finding_list ;;
+      summary) finding_summary ;;
       *) die "Usage: lab finding {new|list}" ;;
     esac
     ;;
