@@ -910,7 +910,10 @@ PY
   fi
 
   if command -v sha256sum >/dev/null 2>&1; then
-    sha256sum "$report" "$html" > "$dir/10-report/REPORT-SHA256SUMS"
+    (
+      cd "$dir/10-report"
+      sha256sum report.md report.html
+    ) > "$dir/10-report/REPORT-SHA256SUMS"
   fi
   ok "Report generated: $report"
   ok "HTML generated:  $html"
@@ -984,8 +987,18 @@ close_engagement(){
   need_jq
   local dir meta tmp
   dir="$(require_engagement)" || exit 1
+
+  [ "$(jq -r '.status // "unknown"' "$dir/engagement.json")" = "open" ] ||
+    die "Engagement is already closed or has an unsupported status."
+
+  validate_engagement || die "Refusing to close engagement: validation failed."
+
+  for artifact in "$dir/10-report/report.md" "$dir/10-report/report.html" "$dir/10-report/REPORT-SHA256SUMS"; do
+    [ -s "$artifact" ] || die "Refusing to close engagement: missing report artifact $(basename "$artifact")."
+  done
+
   meta="$dir/engagement.json"
-  tmp="$meta.tmp.$$"
+  tmp="$meta.tmp.$"
   jq --arg now "$(timestamp)" '.status="closed" | .updated_at=$now' "$meta" > "$tmp"
   mv -f "$tmp" "$meta"
   ok "Engagement closed. Data remains locally intact."
@@ -1029,6 +1042,7 @@ FINDINGS
   lab finding summary
 
 REPORTING
+  lab validate
   lab report
 
 KALI TOOL PROFILES
@@ -1087,6 +1101,7 @@ case "${1:-}" in
       *) die "Usage: lab finding {new|list}" ;;
     esac
     ;;
+  validate) validate_engagement ;;
   report) report_generate ;;
   tools)
     shift
