@@ -364,7 +364,9 @@ check "Lab topology template" grep -Fq "TOPOLOGY.md" scripts/lab
 check "Lab topology strict command" grep -Fq "validate [--strict]" scripts/lab
 check "Lab target registry" grep -Fq "target add VALUE [NAME]" scripts/lab
 check "Lab evidence hashing" grep -Fq "sha256sum" scripts/lab
+check "Lab evidence verification" grep -Fq "evidence_verify" scripts/lab
 check "Lab findings" grep -Fq "finding new" scripts/lab
+check "Lab finding lifecycle" grep -Fq "finding_set" scripts/lab
 check "Lab report generation" grep -Fq "report_generate" scripts/lab
 check "Lab official profiles" grep -Fq "kali-tools-top10" scripts/lab
 check "Lab AD profile" grep -Fq "kali-tools-windows-resources" scripts/lab
