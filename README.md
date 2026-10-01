@@ -870,6 +870,9 @@ The Red Team layer turns the workspace into a reproducible engagement workflow w
 
 Create an engagement, define explicit allow/deny scope, register targets, select the active target, preserve evidence, create findings and generate reports.
 
+Before active command execution, the engagement must remain `open`, authorization must be `confirmed`, and the selected target must match the registered scope.
+Use `lab doctor --strict` to validate those gates without executing offensive tooling.
+
 No offensive tooling is started automatically. Tool selection and active operations remain explicit operator actions.
 
 The engagement structure is documented in docs/LAB-ARCHITECTURE.md, tool profiles in docs/TOOL-PROFILES.md, evidence handling in docs/EVIDENCE.md and delivery in docs/REPORTING.md.
