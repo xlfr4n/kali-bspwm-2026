@@ -755,6 +755,15 @@ report_generate(){
     echo
     echo "## Findings"
     echo
+    echo "### Severity summary"
+    for severity in critical high medium low info; do
+      count="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -print0 2>/dev/null |
+        xargs -0 -r grep -hE '^\*\*Severity:\*\* ' 2>/dev/null |
+        grep -F -- "**Severity:** $severity" |
+        wc -l | tr -d ' ')"
+      printf -- "- %s: %s\\n" "$severity" "$count"
+    done
+    echo
     if find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' | grep -q .; then
       while IFS= read -r file; do
         echo
