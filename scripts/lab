@@ -581,12 +581,35 @@ evidence_list(){
 
 evidence_verify(){
   need_cmd sha256sum
-  local dir file expected actual rel failures=0
+  local dir file timestamp expected rel failures=0
   dir="$(require_engagement)" || exit 1
   file="$dir/08-evidence/index.tsv"
   [ -s "$file" ] || die "No evidence index exists."
 
-  while IFS=
+  while IFS=$'\t' read -r timestamp expected rel source; do
+    [ "$timestamp" = "timestamp" ] && continue
+    [ -n "$rel" ] || continue
+    if [ ! -f "$dir/$rel" ]; then
+      printf '[FAIL] missing: %s\n' "$rel"
+      failures=$((failures + 1))
+      continue
+    fi
+    actual="$(sha256sum "$dir/$rel" | cut -d ' ' -f1)"
+    if [ "$actual" = "$expected" ]; then
+      printf '[OK]   %s\n' "$rel"
+    else
+      printf '[FAIL] hash mismatch: %s\n' "$rel"
+      failures=$((failures + 1))
+    fi
+  done < "$file"
+
+  printf '\nSummary: %d FAIL\n' "$failures"
+  return "$failures"
+}
+
+evidence_manifest(){
+  need_cmd sha256sum
+  local dir tmp
   dir="$(require_engagement)" || exit 1
   tmp="$dir/08-evidence/SHA256SUMS.tmp"
   (
@@ -597,7 +620,6 @@ evidence_verify(){
   mv -f "$tmp" "$dir/08-evidence/SHA256SUMS"
   ok "Evidence manifest generated: $dir/08-evidence/SHA256SUMS"
 }
-
 next_finding_id(){
   local dir="$1" max
   max="$(find "$dir/09-findings" -maxdepth 1 -type f -name 'F-*.md' -printf '%f\n' 2>/dev/null |
