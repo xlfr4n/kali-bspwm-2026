@@ -703,6 +703,30 @@ PY
   ok "HTML generated:  $html"
 }
 
+open_legacy(){
+  need_cmd tmux
+  local name="${1:-kali-lab}" dir="${2:-$PWD}"
+  dir="$(realpath -m "$dir")"
+  mkdir -p "$dir"
+  if tmux has-session -t "$name" 2>/dev/null; then
+    exec tmux attach-session -t "$name"
+  fi
+  mkdir -p "$dir"/{recon,loot,notes,evidence,web}
+  tmux new-session -d -s "$name" -c "$dir" -n main
+  tmux split-window -h -t "$name:main" -c "$dir"
+  tmux split-window -v -t "$name:main.1" -c "$dir"
+  tmux send-keys -t "$name:main.1" 'printf "%s\\n" "⚡ xLFr4n // RECON"; exec zsh' C-m
+  tmux send-keys -t "$name:main.0" 'xlfr4n-banner --static' C-m
+  tmux send-keys -t "$name:main.2" 'btop' C-m
+  tmux new-window -t "$name:" -n recon -c "$dir/recon"
+  tmux new-window -t "$name:" -n web -c "$dir/web"
+  tmux new-window -t "$name:" -n notes -c "$dir/notes"
+  tmux new-window -t "$name:" -n loot -c "$dir/loot"
+  tmux select-window -t "$name:main"
+  tmux select-pane -t "$name:main.0"
+  exec tmux attach-session -t "$name"
+}
+
 open_lab(){
   need_jq
   need_cmd tmux
@@ -861,5 +885,5 @@ case "${1:-}" in
   close) close_engagement ;;
   help|--help|-h) help ;;
   "") open_lab ;;
-  *) ensure_default_engagement; open_lab ;;
+  *) open_legacy "$@" ;;
 esac
