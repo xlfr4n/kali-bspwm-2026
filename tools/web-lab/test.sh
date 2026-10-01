@@ -14,4 +14,6 @@ curl -fsS "$BASE_URL/api/users/1" | jq -e '.username == "alice"' >/dev/null
 echo '[OK] synthetic user'
 curl -fsS "$BASE_URL/api/admin/users" | jq -e 'length == 3' >/dev/null
 echo '[OK] synthetic admin dataset'
+curl -fsS --get --data-urlencode 'q=xLFr4n-smoke' "$BASE_URL/search" | grep -Fq 'xLFr4n-smoke'
+echo '[OK] synthetic search surface'
 echo 'Web Lab smoke: PASS'
