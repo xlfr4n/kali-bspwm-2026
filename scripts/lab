@@ -59,6 +59,44 @@ timeline_event(){
   printf '[%s] %s\n' "$(timestamp)" "$*" >> "$dir/notes/timeline.log"
 }
 
+topology_show(){
+  local dir
+  dir="$(require_engagement)" || exit 1
+  cat "$dir/00-scope/TOPOLOGY.md"
+}
+
+topology_validate(){
+  local dir strict=0 failures=0
+  dir="$(require_engagement)" || exit 1
+  [ "${1:-}" = "--strict" ] && strict=1
+
+  topology_check(){
+    local label="$1" pattern="$2"
+    if grep -Eq "$pattern" "$dir/00-scope/TOPOLOGY.md"; then
+      printf "[OK]   %s\n" "$label"
+    else
+      printf "[FAIL] %s\n" "$label"
+      failures=$((failures + 1))
+    fi
+  }
+
+  printf "⚡ xLFr4n // TOPOLOGY VALIDATION\n"
+  topology_check "hypervisor recorded" "^- Hipervisor:|^- Hypervisor:"
+  topology_check "network mode recorded" "^- Modo de red:|^- Network mode:"
+  topology_check "network name recorded" "^- Nombre de red:|^- Network name:"
+  topology_check "subnet recorded" "^- Subred:|^- Subnet:"
+
+  if [ "$strict" -eq 1 ]; then
+    topology_check "DC01 asset row" "^\| DC01 \| [^|]+ \| AD/DNS \|"
+    topology_check "WS01 asset row" "^\| WS01 \| [^|]+ \| Windows client \|"
+    topology_check "WEB01 asset row" "^\| WEB01 \| [^|]+ \| Web target \|"
+    topology_check "snapshot recorded" "Snapshot utilizado antes del ejercicio:[^[:space:]]|Snapshot used before exercise:[^[:space:]]"
+  fi
+
+  printf "\\nSummary: %d FAIL\\n" "$failures"
+  return "$failures"
+}
+
 authorization_status(){
   local dir
   dir="$(require_engagement)" || exit 1
@@ -102,6 +140,56 @@ ensure_layout(){
     "$dir/08-evidence/screenshots" "$dir/08-evidence/scans" \
     "$dir/08-evidence/pcaps" "$dir/08-evidence/commands" \
     "$dir/09-findings" "$dir/10-report" "$dir/notes" "$dir/loot"
+
+  if [ ! -s "$dir/00-scope/TOPOLOGY.md" ]; then
+    cat > "$dir/00-scope/TOPOLOGY.md" <<'EOF'
+# ⚡ xLFr4n // Lab Topology
+
+## 🇪🇸 Español
+
+### Entorno
+- Hipervisor:
+- Modo de red:
+- Nombre de red:
+- Subred:
+- Gateway / DNS:
+- Kali / operator IP:
+
+### Activos
+| Nombre | IP | Rol | VM | Snapshot baseline |
+|---|---|---|---|---|
+| DC01 | | AD/DNS | | |
+| WS01 | | Windows client | | |
+| WEB01 | | Web target | | |
+
+### Reset
+- Snapshot utilizado antes del ejercicio:
+- Procedimiento de recuperación:
+- Última validación:
+
+## 🇬🇧 English
+
+### Environment
+- Hypervisor:
+- Network mode:
+- Network name:
+- Subnet:
+- Gateway / DNS:
+- Kali / operator IP:
+
+### Assets
+| Name | IP | Role | VM | Baseline snapshot |
+|---|---|---|---|---|
+| DC01 | | AD/DNS | | |
+| WS01 | | Windows client | | |
+| WEB01 | | Web target | | |
+
+### Reset
+- Snapshot used before exercise:
+- Recovery procedure:
+- Last validation:
+EOF
+  fi
 }
 
 init_engagement(){
@@ -992,6 +1080,8 @@ ENGAGEMENT
   lab doctor [--strict]
   lab authorization status
   lab authorization set {pending|confirmed|expired} [REFERENCE]
+  lab topology show
+  lab topology validate [--strict]
   lab close
 
 SCOPE
@@ -1041,8 +1131,15 @@ case "${1:-}" in
   status) status ;;
   status-short|--status-short) status_short ;;
   doctor) shift; lab_doctor "$@" ;;
-  authorization)
+  topology)
     shift
+    case "${1:-show}" in
+      show) topology_show ;;
+      validate) shift; topology_validate "$@" ;;
+      *) die "Usage: lab topology {show|validate [--strict]}" ;;
+    esac
+    ;;
+  authorization)    shift
     case "${1:-status}" in
       status) authorization_status ;;
       set) shift; authorization_change "$@" ;;
