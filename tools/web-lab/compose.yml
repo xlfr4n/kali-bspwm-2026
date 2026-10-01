@@ -1,0 +1,14 @@
+services:
+  weblab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xlfr4n-weblab
+    restart: unless-stopped
+    environment:
+      LAB_PORT: '8080'
+      LAB_MODE: isolated-lab
+    ports:
+      - '8080:8080'
+    security_opt:
+      - no-new-privileges:true
