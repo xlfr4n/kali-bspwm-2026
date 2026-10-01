@@ -6,6 +6,10 @@ from urllib.parse import parse_qs, urlparse
 
 HOST = '0.0.0.0'
 PORT = int(os.environ.get('LAB_PORT', '8080'))
+LAB_MODE = os.environ.get('LAB_MODE', '')
+
+if LAB_MODE != 'isolated-lab':
+    raise SystemExit("Set LAB_MODE=isolated-lab to start the xLFr4n training target.")
 
 USERS = {
     1: {'id': 1, 'username': 'alice', 'role': 'user'},
