@@ -1,4 +1,4 @@
-# 🔐 Security — Kali BSPWM 2026
+# 🔐 Security — xLFr4n // Kali BSPWM
 
 > **xLFr4n security standard · ES + EN**
 
