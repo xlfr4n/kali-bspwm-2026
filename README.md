@@ -373,7 +373,9 @@ Commands:
 
 The default session wallpaper is:
 
-    /usr/share/backgrounds/kali/kali-hack-16x9.jpg
+    /usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg
+
+The Red Sticker artwork is intentionally framed by black semi-transparent Polybar safe zones at the top and bottom. The central artwork remains unobscured while the xLFr4n metadata rails stay readable.
 
 The wallpaper helper keeps an index/cache so login does not repeatedly rescan the filesystem.
 
