@@ -1,4 +1,4 @@
-# 🤝 Code of Conduct — Kali BSPWM 2026
+# 🤝 Code of Conduct — xLFr4n // Kali BSPWM
 
 This repository follows a simple **xLFr4n** standard: technical rigor without hostility.
 
