@@ -6,10 +6,10 @@
 
 <p align="center">
 
-[![CI](https://img.shields.io/github/actions/workflow/status/xlfr4n/kali-bspwm-2026/shellcheck.yml?label=CI&logo=github)](https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/xlfr4n/xLFr4n-Kali-BSPWM/shellcheck.yml?label=CI&logo=github)](https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions)
 ![Kali Linux](https://img.shields.io/badge/Kali-Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)
 ![BSPWM](https://img.shields.io/badge/BSPWM-X11-111827?style=flat-square)
-![License](https://img.shields.io/github/license/xlfr4n/kali-bspwm-2026?style=flat-square)
+![License](https://img.shields.io/github/license/xlfr4n/xLFr4n-Kali-BSPWM?style=flat-square)
 
 </p>
 
