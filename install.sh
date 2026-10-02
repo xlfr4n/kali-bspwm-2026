@@ -83,7 +83,7 @@ EXTRA_PACKAGES=(
   fonts-font-awesome fonts-jetbrains-mono
   xdg-utils
   libnotify-bin pipx python3-venv
-  kali-tweaks kali-wallpapers-2026
+  kali-tweaks kali-wallpapers-2026 kali-wallpapers-2023
   wireshark firefox-esr
 )
 
