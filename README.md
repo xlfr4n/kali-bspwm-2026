@@ -6,7 +6,7 @@
 
 <p align="center">
 
-[![CI](https://img.shields.io/github/actions/workflow/status/xlfr4n/kali-bspwm-2026/shellcheck.yml?label=CI&logo=github)](https://github.com/xlfr4n/kali-bspwm-2026/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/xlfr4n/kali-bspwm-2026/shellcheck.yml?label=CI&logo=github)](https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions)
 ![Kali Linux](https://img.shields.io/badge/Kali-Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)
 ![BSPWM](https://img.shields.io/badge/BSPWM-X11-111827?style=flat-square)
 ![License](https://img.shields.io/github/license/xlfr4n/kali-bspwm-2026?style=flat-square)
@@ -151,8 +151,8 @@ For a VM, the installer detects the hypervisor where possible.
 ## Instalación nueva
 
     cd ~/Downloads
-    git clone https://github.com/xlfr4n/kali-bspwm-2026.git
-    cd kali-bspwm-2026
+    git clone https://github.com/xlfr4n/xLFr4n-Kali-BSPWM.git
+    cd xLFr4n-Kali-BSPWM
 
     chmod +x install.sh uninstall.sh
     ./install.sh
@@ -169,7 +169,7 @@ Select BSPWM in the display manager.
 
 Use this when only the repository configuration changed:
 
-    cd ~/Downloads/kali-bspwm-2026
+    cd ~/Downloads/xLFr4n-Kali-BSPWM
     git pull --ff-only
     ./install.sh --deploy
     bspc wm -r
@@ -184,7 +184,7 @@ The important distinction:
 
 ## Actualización completa
 
-    cd ~/Downloads/kali-bspwm-2026
+    cd ~/Downloads/xLFr4n-Kali-BSPWM
     git pull --ff-only
     ./install.sh
     reboot
