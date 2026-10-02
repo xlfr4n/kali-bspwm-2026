@@ -41,7 +41,8 @@ polybar_config_check() {
 visual_layout_check() {
   local cfg="$HOME/.config/polybar/config.ini"
   grep -Fq "[bar/main]" "$cfg" &&
-  grep -Fq "background = #00000000" "$cfg" &&
+  grep -Fq 'background = ${colors.safe}' "$cfg" &&
+  grep -Fq "height = 34pt" "$cfg" &&
   grep -Fq "border-size = 0pt" "$cfg" &&
   grep -Fq "[bar/workspace]" "$cfg" &&
   grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc" &&
