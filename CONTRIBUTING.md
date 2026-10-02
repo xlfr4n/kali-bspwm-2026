@@ -1,4 +1,4 @@
-# ⚡ Contributing to Kali BSPWM 2026
+# ⚡ Contributing to xLFr4n // Kali BSPWM
 
 > **xLFr4n repository standard · ES + EN**
 
