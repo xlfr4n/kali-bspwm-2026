@@ -6,8 +6,8 @@ La capa visual mantiene Kali + BSPWM ligero y añade ergonomía inspirada en int
 
 ### 🎨 Lenguaje visual
 
-- Barra superior transparente y sin borde.
-- Barra inferior transparente y sin borde, alineada al borde físico inferior.
+- Barra superior negra semitransparente, sin borde, usada como zona segura de legibilidad.
+- Barra inferior negra semitransparente, sin borde, alineada al borde físico inferior; protege fecha, hora y workspaces.
 - Escritorios 1→9 compactos abajo a la izquierda.
 - Fecha y hora abajo a la derecha; la fecha larga es española por defecto y admite `XLFR4N_DATE_LOCALE=system` para seguir el locale de la sesión.
 - Dock Tint2 centrado con iconos reales, con carril propio separado del rail de workspaces.
@@ -27,8 +27,8 @@ The visual layer keeps Kali + BSPWM lightweight while adding modern desktop ergo
 
 ### 🎨 Visual language
 
-- Transparent, borderless top rail.
-- Transparent, borderless bottom rail.
+- Black semi-transparent, borderless top safe-zone rail.
+- Black semi-transparent, borderless bottom safe-zone rail aligned to the physical edge.
 - 1→9 workspaces sit at the lower-left edge, on the same vertical lane as the dock icons.
 - Date and time sit at the lower-right edge, on the same vertical lane as the dock icons.
 - Centered Tint2 real-icon launcher dock with its own lane, separated from the workspace rail.
@@ -65,6 +65,6 @@ The desktop uses a shared feedback layer so important actions have a visible res
 
 `xlfr4n-launch` → application request → “LAUNCH” → “READY/OPEN”. Workspace launch paths share the same notification language.
 
-`wallpaper --default` → uses `/usr/share/backgrounds/kali/kali-hack-16x9.jpg` as the session wallpaper.
+`wallpaper --default` → uses `/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg` as the session wallpaper.
 
 Dunst keeps history and stacks these notifications to avoid a cascade of windows.
