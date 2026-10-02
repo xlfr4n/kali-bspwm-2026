@@ -25,3 +25,10 @@ The engineering rule stays simple: compatibility, readability and reversibility 
 ---
 
 <p align="center"><strong>⚡ xLFr4n</strong> · Terminal first · Desktop owned · Reproducible always</p>
+
+
+## Canonical ecosystem standard
+
+This project follows the shared [xLFr4n ecosystem standard](https://github.com/xlfr4n/xLFr4n/blob/main/ECOSYSTEM.md).
+
+> **⚡ xLFr4n — One signature. Different laboratories.**
