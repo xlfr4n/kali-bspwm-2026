@@ -141,9 +141,13 @@ check "Workspace rail full icon lane" grep -Fq "height = 48pt" config/polybar/co
 check "Workspace rail edge offset" grep -Fq "offset-x = 0%" config/polybar/config.ini
 check "Dock edge offset" grep -Fq "offset-y = 0pt" config/polybar/config.ini
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
-check "BSPWM bottom padding disabled" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
+check "BSPWM bottom padding reserves metadata lane" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
+check "BSPWM top padding reserves safe zone" grep -Fq "top_padding 46" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
-check "Top rail transparent" grep -Fq "background = #00000000" config/polybar/config.ini
+check "Top rail black safe zone" grep -Fq 'background = ${colors.safe}' config/polybar/config.ini
+check "Top rail height" grep -Fq "height = 34pt" config/polybar/config.ini
+check "Bottom rail black safe zone" grep -Fq 'background = ${colors.safe}' config/polybar/config.ini
+check "Bottom rail height" grep -Fq "height = 64pt" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
 check "Date and time right modules" grep -Fq "modules-right = date time" config/polybar/config.ini
@@ -268,7 +272,8 @@ check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
 check "Workspace rail script" grep -Fq "polybar workspace" scripts/workspace-rail
 check "Workspace rail staged after dock" grep -Fq "workspace-rail" scripts/autostart
 check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
-check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
+check "Wallpaper fixed default" grep -Fq '/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg' scripts/wallpaper
+check "Wallpaper package dependency" grep -Fq 'kali-wallpapers-2023' install.sh
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
 check "Default wallpaper preserves source image" grep -Fq 'XLFR4N_WALLPAPER_RAW=1 set_wallpaper "$DEFAULT_WALLPAPER"' scripts/wallpaper
 check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
