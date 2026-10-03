@@ -22,7 +22,7 @@ border_color = #00000000 0
 panel_monitor = primary
 panel_position = bottom center horizontal
 panel_items = L
-panel_size = 860 64
+panel_size = 900 72
 panel_margin = 0 0
 panel_padding = 0 0 0
 panel_background_id = 0
@@ -39,10 +39,10 @@ mouse_pressed_icon_asb = 100 0 -10
 #-------------------------------------
 # Launcher
 #-------------------------------------
-launcher_padding = 5 0 4
+launcher_padding = 6 0 5
 launcher_background_id = 0
 launcher_icon_background_id = 0
-launcher_icon_size = 42
+launcher_icon_size = 48
 launcher_icon_asb = 100 0 0
 launcher_icon_theme = Papirus-Dark
 launcher_icon_theme_override = 1
