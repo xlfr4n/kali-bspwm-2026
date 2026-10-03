@@ -41,8 +41,8 @@ polybar_config_check() {
 visual_layout_check() {
   local cfg="$HOME/.config/polybar/config.ini"
   grep -Fq "[bar/main]" "$cfg" &&
-  grep -Fq 'background = ${colors.safe}' "$cfg" &&
-  grep -Fq "height = 34pt" "$cfg" &&
+  grep -Fq "background = #00000000" "$cfg" &&
+  grep -Fq "height = 28pt" "$cfg" &&
   grep -Fq "border-size = 0pt" "$cfg" &&
   grep -Fq "[bar/workspace]" "$cfg" &&
   grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc" &&
@@ -158,6 +158,7 @@ check "Audio stack" sh -c 'command -v wpctl >/dev/null 2>&1 || command -v pactl 
 check "BSPWM config" bspwm_config_check
 check "Polybar config" polybar_config_check
 check "Final visual layout" visual_layout_check
+check "Wallpaper safe-zone generator" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v1\"" "$HOME/.local/bin/wallpaper"
 check "Workspace rail spacing" grep -Fq "offset-y = 0pt" "$HOME/.config/polybar/config.ini"
 check "BSPWM frameless windows" grep -Fq "border_width 0" "$HOME/.config/bspwm/bspwmrc"
 check "Ghostty backend" ghostty_backend_check
