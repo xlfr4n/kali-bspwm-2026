@@ -6,6 +6,9 @@ STATE_DIR="$HOME/.config/wallpaper-state"
 STATE_FILE="$STATE_DIR/current"
 INDEX_FILE="$HOME/.cache/xlfr4n/wallpapers.index"
 INDEX_TTL_MINUTES=360
+FRAME_VERSION="red-sticker-safe-zones-v1"
+FRAME_TOP_PERCENT=7
+FRAME_BOTTOM_PERCENT=10
 DEFAULT_WALLPAPER="${XLFR4N_DEFAULT_WALLPAPER:-/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg}"
 mkdir -p "$STATE_DIR"
 
@@ -60,6 +63,12 @@ prepare_wallpaper() {
   local cache_dir="$HOME/.cache/xlfr4n/wallpapers"
   local key=""
   local output=""
+  local framed=0
+  local width=""
+  local height=""
+  local top=0
+  local bottom=0
+  local draw=""
 
   [ "${XLFR4N_WALLPAPER_RAW:-0}" = "1" ] && {
     printf '%s\n' "$image"
@@ -76,14 +85,39 @@ prepare_wallpaper() {
   fi
 
   mkdir -p "$cache_dir"
-  key="$(printf '%s' "$image" | sha256sum | cut -d' ' -f1)"
-  output="$cache_dir/${key}-dark.jpg"
+
+  if [ "$image" = "$DEFAULT_WALLPAPER" ] && [ "${XLFR4N_WALLPAPER_SAFE_ZONES:-1}" = "1" ]; then
+    framed=1
+  fi
+
+  key="$(printf '%s|%s|%s|%s' "$image" "$FRAME_VERSION" "$FRAME_TOP_PERCENT" "$FRAME_BOTTOM_PERCENT" | sha256sum | cut -d' ' -f1)"
+  output="$cache_dir/${key}-prepared.jpg"
 
   if [ ! -s "$output" ] || [ "$image" -nt "$output" ]; then
-    "$tool" "$image" -modulate 82,92,100 -strip -quality 92 "$output" >/dev/null 2>&1 || {
-      printf '%s\n' "$image"
-      return 0
-    }
+    if [ "$framed" -eq 1 ]; then
+      read -r width height < <("$tool" "$image" -format '%w %h' info: 2>/dev/null || true)
+      if [ -n "$width" ] && [ -n "$height" ]; then
+        top=$((height * FRAME_TOP_PERCENT / 100))
+        bottom=$((height * FRAME_BOTTOM_PERCENT / 100))
+        draw="rectangle 0,0 $((width - 1)) $((top - 1)) rectangle 0,$((height - bottom)) $((width - 1)) $((height - 1))"
+      fi
+    fi
+
+    if [ -n "$draw" ]; then
+      "$tool" "$image" \
+        -modulate 82,92,100 \
+        -fill '#000000' \
+        -draw "$draw" \
+        -strip -quality 92 "$output" >/dev/null 2>&1 || {
+        printf '%s\n' "$image"
+        return 0
+      }
+    else
+      "$tool" "$image" -modulate 82,92,100 -strip -quality 92 "$output" >/dev/null 2>&1 || {
+        printf '%s\n' "$image"
+        return 0
+      }
+    fi
   fi
 
   printf '%s\n' "$output"
@@ -104,7 +138,7 @@ set_wallpaper() {
 case "${1:-}" in
   --default)
     [ -f "$DEFAULT_WALLPAPER" ] || { echo "Default wallpaper not found: $DEFAULT_WALLPAPER" >&2; exit 1; }
-    XLFR4N_WALLPAPER_RAW=1 set_wallpaper "$DEFAULT_WALLPAPER"
+    set_wallpaper "$DEFAULT_WALLPAPER"
     ;;
   --random|"")
     index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
