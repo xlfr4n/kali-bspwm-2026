@@ -158,7 +158,7 @@ check "Date and time right modules" grep -Fq "modules-right = date time" config/
 check "Adaptive network module" grep -Fq "exec = ~/.local/bin/network-status" config/polybar/config.ini
 check "Optional battery module" grep -Fq "exec = ~/.local/bin/battery-status" config/polybar/config.ini
 check "Dock terminal id" grep -Fq "xLFr4n-terminal.desktop" config/tint2/tint2rc
-check "Tint2 dock width" grep -Fq "panel_size = 860 64" config/tint2/tint2rc
+check "Tint2 dock size" grep -Fq "panel_size = 900 72" config/tint2/tint2rc
 check "Tint2 no window strut" grep -Fq "strut_policy = follow_size" config/tint2/tint2rc
 check "Tint2 dock edge margin" grep -Fq "panel_margin = 0 0" config/tint2/tint2rc
 check "Dock code id" grep -Fq "xLFr4n-code.desktop" config/tint2/tint2rc
