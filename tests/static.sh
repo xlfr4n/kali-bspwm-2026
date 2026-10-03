@@ -144,9 +144,9 @@ check "Top rail transparent over framed wallpaper" grep -Fq "background = #00000
 check "Top rail geometry" grep -Fq "height = 28pt" config/polybar/config.ini
 check "Bottom rail transparent over framed wallpaper" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Bottom rail geometry" grep -Fq "height = 48pt" config/polybar/config.ini
-check "Wallpaper safe-zone version" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v1\"" scripts/wallpaper
-check "Wallpaper top safe-zone" grep -Fq "FRAME_TOP_PERCENT=7" scripts/wallpaper
-check "Wallpaper bottom safe-zone" grep -Fq "FRAME_BOTTOM_PERCENT=10" scripts/wallpaper
+check "Wallpaper safe-zone version" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v2\"" scripts/wallpaper
+check "Wallpaper top safe-zone" grep -Fq "FRAME_TOP_PERCENT=4" scripts/wallpaper
+check "Wallpaper bottom safe-zone" grep -Fq "FRAME_BOTTOM_PERCENT=8" scripts/wallpaper
 check "Wallpaper safe-zone toggle" grep -Fq "XLFR4N_WALLPAPER_SAFE_ZONES" scripts/wallpaper
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
 check "BSPWM bottom padding reserves metadata lane" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
@@ -279,7 +279,7 @@ check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
 check "Wallpaper fixed default" grep -Fq '/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg' scripts/wallpaper
 check "Wallpaper package dependency" grep -Fq 'kali-wallpapers-2023' install.sh
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
-check "Default wallpaper preserves source image" grep -Fq 'XLFR4N_WALLPAPER_RAW=1 set_wallpaper "$DEFAULT_WALLPAPER"' scripts/wallpaper
+check "Wallpaper raw override" grep -Fq 'XLFR4N_WALLPAPER_RAW:-0' scripts/wallpaper
 check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
 check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
@@ -363,3 +363,6 @@ check "CI jq dependency" grep -Eq "apt-get install .*jq" .github/workflows/shell
 check "Lab smoke test" test -x tests/lab-smoke.sh
 check "CI lab smoke step" grep -Fq "bash tests/lab-smoke.sh" .github/workflows/shellcheck.yml
 check "CI shellcheck smoke script" grep -Fq "shellcheck tests/lab-smoke.sh" .github/workflows/shellcheck.yml
+
+check "Bottom dock icon size" grep -Fq "launcher_icon_size = 48" config/tint2/tint2rc
+check "Fallback dock icon size" grep -Fq 'icon-size 48' scripts/dock
