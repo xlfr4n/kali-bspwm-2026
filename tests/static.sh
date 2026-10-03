@@ -140,14 +140,18 @@ check "Workspace rail at bottom edge" grep -Fq "offset-y = 0pt" config/polybar/c
 check "Workspace rail full icon lane" grep -Fq "height = 48pt" config/polybar/config.ini
 check "Workspace rail edge offset" grep -Fq "offset-x = 0%" config/polybar/config.ini
 check "Dock edge offset" grep -Fq "offset-y = 0pt" config/polybar/config.ini
+check "Top rail transparent over framed wallpaper" grep -Fq "background = #00000000" config/polybar/config.ini
+check "Top rail geometry" grep -Fq "height = 28pt" config/polybar/config.ini
+check "Bottom rail transparent over framed wallpaper" grep -Fq "background = #00000000" config/polybar/config.ini
+check "Bottom rail geometry" grep -Fq "height = 48pt" config/polybar/config.ini
+check "Wallpaper safe-zone version" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v1\"" scripts/wallpaper
+check "Wallpaper top safe-zone" grep -Fq "FRAME_TOP_PERCENT=7" scripts/wallpaper
+check "Wallpaper bottom safe-zone" grep -Fq "FRAME_BOTTOM_PERCENT=10" scripts/wallpaper
+check "Wallpaper safe-zone toggle" grep -Fq "XLFR4N_WALLPAPER_SAFE_ZONES" scripts/wallpaper
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
 check "BSPWM bottom padding reserves metadata lane" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
-check "BSPWM top padding reserves safe zone" grep -Fq "top_padding 46" config/bspwm/bspwmrc
+check "BSPWM top padding matches rail" grep -Fq "top_padding 38" config/bspwm/bspwmrc
 check "Workspace time module" grep -Fq "[module/time]" config/polybar/config.ini
-check "Top rail black safe zone" grep -Fq 'background = ${colors.safe}' config/polybar/config.ini
-check "Top rail height" grep -Fq "height = 34pt" config/polybar/config.ini
-check "Bottom rail black safe zone" grep -Fq 'background = ${colors.safe}' config/polybar/config.ini
-check "Bottom rail height" grep -Fq "height = 64pt" config/polybar/config.ini
 check "Workspace HUD width" grep -Fq "width = 94%" config/polybar/config.ini
 check "Workspace click support" grep -Fq "enable-click = true" config/polybar/config.ini
 check "Date and time right modules" grep -Fq "modules-right = date time" config/polybar/config.ini
