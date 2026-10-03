@@ -375,7 +375,7 @@ The default session wallpaper is:
 
     /usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg
 
-The Red Sticker artwork is intentionally framed by black semi-transparent Polybar safe zones at the top and bottom. The central artwork remains unobscured while the xLFr4n metadata rails stay readable.
+The Red Sticker wallpaper is prepared at runtime with solid black top/bottom safe zones in the cached wallpaper image. Polybar remains transparent, so the central artwork stays unobscured while xLFr4n metadata remains readable.
 
 The wallpaper helper keeps an index/cache so login does not repeatedly rescan the filesystem.
 
